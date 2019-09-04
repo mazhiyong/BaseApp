@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/dp_30"/>
+                    <gradient android:type="linear" android:useLevel="true" android:startColor="#ff006569" android:endColor="#ff22ccb9" android:angle="180"/>
+                    <solid android:color="@color/btn_login_press" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item android:state_enabled="false">
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/dp_30"/>
+                    <gradient android:type="linear" android:useLevel="true" android:startColor="#ff006569" android:endColor="#ff22ccb9" android:angle="180"/>
+                    <solid android:color="@color/btn_login_disabled" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item >
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="@dimen/dp_30"/>
+                    <gradient android:type="linear" android:useLevel="true" android:startColor="#ff006569" android:endColor="#ff22ccb9" android:angle="180"/>
+<!--
+                    <solid android:color="@color/btn_login_normal" />
+-->
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

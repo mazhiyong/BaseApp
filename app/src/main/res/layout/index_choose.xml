@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBlack2">
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="主图"
+        android:textColor="@color/white" />
+
+    <RadioGroup
+        android:id="@+id/rgMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/text1"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/maText"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:button="@null"
+            android:gravity="center"
+            android:text="MA"
+            android:textColor="@drawable/selector_color_text2" />
+
+        <RadioButton
+            android:id="@+id/bollText"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:button="@null"
+            android:gravity="center"
+            android:text="BOLL"
+            android:textColor="@drawable/selector_color_red_white" />
+
+        <RadioButton
+            android:id="@+id/mainHide"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:button="@null"
+            android:gravity="center"
+            android:text="隐藏"
+            android:textColor="@drawable/selector_color_red_white" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/text1"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="副图"
+        android:textColor="@color/white" />
+
+    <RadioGroup
+        android:id="@+id/rgSub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/text2"
+        android:layout_toEndOf="@id/text2"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/macdText"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:button="@null"
+            android:gravity="center"
+            android:text="MACD"
+            android:textColor="@drawable/selector_color_red_white" />
+
+        <RadioButton
+            android:id="@+id/kdjText"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:button="@null"
+            android:gravity="center"
+            android:text="KDJ"
+            android:textColor="@drawable/selector_color_red_white" />
+
+        <RadioButton
+            android:id="@+id/rsiText"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:button="@null"
+            android:gravity="center"
+            android:text="RSI"
+            android:textColor="@drawable/selector_color_red_white" />
+
+        <RadioButton
+            android:id="@+id/wrText"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:button="@null"
+            android:gravity="center"
+            android:text="WR"
+            android:textColor="@drawable/selector_color_red_white" />
+
+        <RadioButton
+            android:id="@+id/subHide"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:button="@null"
+            android:gravity="center"
+            android:text="隐藏"
+            android:textColor="@drawable/selector_color_red_white" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/rgThird"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text2"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/fenText"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:button="@null"
+            android:gravity="center"
+            android:text="分时"
+            android:textColor="@drawable/selector_color_red_white" />
+
+        <RadioButton
+            android:id="@+id/kText"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:button="@null"
+            android:gravity="center"
+            android:text="k线图"
+            android:textColor="@drawable/selector_color_red_white" />
+    </RadioGroup>
+</RelativeLayout>

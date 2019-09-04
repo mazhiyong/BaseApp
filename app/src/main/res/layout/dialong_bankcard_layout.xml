@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/all_lay"
+    >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_bankcard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_gravity="center_horizontal"
+        android:layout_above="@+id/bottom_lay"
+        >
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/bottom_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/body_bg"
+        android:layout_alignParentBottom="true"
+        >
+
+
+
+        <LinearLayout
+            android:id="@+id/add_card_lay"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:text="+ 添加其他银行卡"
+                android:textSize="16sp"
+                android:id="@+id/tv_add_card"
+                android:textColor="@color/black"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:id="@+id/datetop_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:background="@color/divide_line"/>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/dp_10"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:background="@color/divide_line"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:text="取  消"
+                android:padding="@dimen/item_padding"
+                android:textSize="16sp"
+                android:id="@+id/tv_cancel"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divide_hight"
+            android:background="@color/divide_line"/>
+    </LinearLayout>
+</RelativeLayout>
+
+

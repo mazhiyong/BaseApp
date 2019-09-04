@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/body_bg"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+    <com.lr.biyou.mywidget.view.PageView
+        android:id="@+id/page_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:layout_marginTop="@dimen/margin_top"
+                        android:background="@color/divide_line"/>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:focusable="false"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        app:cardPreventCornerOverlap="false">
+
+                        <LinearLayout
+                            android:paddingLeft="@dimen/dp_15"
+                            android:paddingRight="@dimen/dp_15"
+                            android:paddingTop="@dimen/item_padding"
+                            android:paddingBottom="@dimen/item_padding"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:textSize="@dimen/sp_15"
+                                android:text="@string/borrow_man"
+                                android:textColor="@color/black"/>
+
+
+                            <TextView
+                                android:id="@+id/jkren_value_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:gravity="left|center_vertical"
+                                android:text=""
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:focusable="false"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        app:cardPreventCornerOverlap="false">
+
+                        <LinearLayout
+                            android:paddingLeft="@dimen/dp_15"
+                            android:paddingRight="@dimen/dp_15"
+                            android:paddingTop="@dimen/item_padding"
+                            android:paddingBottom="@dimen/item_padding"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:textSize="@dimen/sp_15"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:text="@string/borrow_money"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+
+
+                            <TextView
+                                android:id="@+id/jkjine_value_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:gravity="left|center_vertical"
+                                android:text=""
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:focusable="false"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        app:cardPreventCornerOverlap="false">
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/dp_15"
+                            android:paddingRight="@dimen/dp_15"
+                            android:paddingTop="@dimen/item_padding"
+                            android:paddingBottom="@dimen/item_padding"
+                            android:orientation="horizontal"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:text="@string/borrow_limit"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+
+
+                            <TextView
+                                android:id="@+id/jkqixian_value_tv"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:gravity="left|center_vertical"
+                                android:text=""
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:focusable="false"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        app:cardPreventCornerOverlap="false">
+
+                        <LinearLayout
+                            android:paddingLeft="@dimen/dp_15"
+                            android:paddingRight="@dimen/dp_15"
+                            android:paddingTop="@dimen/item_padding"
+                            android:paddingBottom="@dimen/item_padding"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:text="@string/pay_zhouqi"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+
+
+                            <TextView
+                                android:id="@+id/hkzhouqi_value_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:gravity="left|center_vertical"
+                                android:text=""
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <LinearLayout
+                        android:id="@+id/other_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@color/white"
+                        >
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divide_hight"
+                            android:background="@color/divide_line"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/dp_15"
+                            android:paddingRight="@dimen/dp_15"
+                            android:paddingTop="@dimen/item_padding"
+                            android:paddingBottom="@dimen/item_padding"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:text="@string/other_info"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_15"/>
+                            <TextView
+                                android:id="@+id/other_value_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:gravity="left|center_vertical"
+                                android:text=""
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divide_hight"
+                            android:background="@color/divide_line"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:visibility="gone"
+                        android:background="@color/divide_line"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+
+                        android:focusable="false"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:visibility="gone"
+                        app:cardPreventCornerOverlap="false">
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="@dimen/item_padding"
+                                android:gravity="left|center_vertical"
+                                android:text="@string/lilv_style"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+
+
+                            <TextView
+                                android:id="@+id/lilvfangshi_value_tv"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:gravity="left|center_vertical"
+                                android:text=""
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:focusable="false"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        app:cardPreventCornerOverlap="false">
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/dp_15"
+                            android:paddingRight="@dimen/dp_15"
+                            android:paddingTop="@dimen/item_padding"
+                            android:paddingBottom="@dimen/item_padding"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:text="@string/daikuan_kind"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+
+
+                            <TextView
+                                android:id="@+id/dkzhonglei_value_tv"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:gravity="left|center_vertical"
+                                android:text=""
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:focusable="false"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        app:cardPreventCornerOverlap="false">
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/dp_15"
+                            android:paddingRight="@dimen/dp_15"
+                            android:paddingTop="@dimen/item_padding"
+                            android:paddingBottom="@dimen/item_padding"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:text="@string/daikuan_use"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+
+
+                            <TextView
+                                android:id="@+id/dkyongtu_value_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:gravity="left|center_vertical"
+                                android:text=""
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:focusable="false"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        app:cardPreventCornerOverlap="false">
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/dp_15"
+                            android:paddingRight="@dimen/dp_15"
+                            android:paddingTop="@dimen/item_padding"
+                            android:paddingBottom="@dimen/item_padding"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:text="@string/pay_style"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+
+
+                            <TextView
+                                android:id="@+id/hkfangshi_value_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:gravity="left|center_vertical"
+                                android:text=""
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:focusable="false"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        app:cardPreventCornerOverlap="false">
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/dp_15"
+                            android:paddingRight="@dimen/dp_15"
+                            android:paddingTop="@dimen/item_padding"
+                            android:paddingBottom="@dimen/item_padding"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:text="@string/borrow_pay_man"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+
+
+                            <TextView
+                                android:id="@+id/chujieren_value_tv"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:gravity="left|center_vertical"
+                                android:text=""
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@color/divide_line"/>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        app:cardPreventCornerOverlap="false">
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/dp_15"
+                            android:paddingRight="@dimen/dp_15"
+                            android:paddingTop="@dimen/item_padding"
+                            android:paddingBottom="@dimen/item_padding"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:text="@string/check_result"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"/>
+
+
+                            <Switch
+                                android:id="@+id/tongyi_value_switch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:checked="true"
+                                android:switchMinWidth="@dimen/dp_20"
+                                android:textSize="2sp"
+                                android:thumb="@drawable/switch_selector"
+                                android:track="@drawable/switch_track_selector"/>
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+
+
+
+
+                    <RelativeLayout
+                        android:id="@+id/refuse_edit_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/dp_15"
+                        android:paddingRight="@dimen/dp_15"
+                        android:paddingTop="@dimen/item_padding"
+                        android:paddingBottom="@dimen/item_padding"
+                        android:background="@color/white" >
+
+                        <EditText
+                            android:id="@+id/resuse_des_edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/refuse_memo"
+                            android:textSize="@dimen/sp_14"
+                            android:gravity="left|top"
+                            android:background="@null"
+                            android:minLines="4"
+                            />
+                        <TextView
+                            android:id="@+id/count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/resuse_des_edit"
+                            android:layout_alignRight="@+id/resuse_des_edit"
+                            android:gravity="right"
+                            android:padding="@dimen/dp_10"
+                            android:textColor="@color/gray_text2"
+                            android:text="100"
+                            android:textSize="@dimen/sp_12" />
+                        <View
+                            android:layout_below="@+id/resuse_des_edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_0_5"
+                            android:background="@color/divide_line"
+                           />
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/xiyi_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/dp_15"
+                        android:paddingRight="@dimen/dp_15"
+                        android:paddingTop="@dimen/item_padding"
+                        android:paddingBottom="@dimen/item_padding"
+                        android:orientation="horizontal">
+                        <CheckBox
+                            android:id="@+id/cb_xieyi"
+                            android:layout_width="@dimen/dp_17"
+                            android:checked="true"
+                            android:layout_height="@dimen/dp_17"
+                            android:layout_marginTop="@dimen/dp_1"
+                            android:button="@null"
+                            android:background="@drawable/cart_select_selector"
+                            />
+                        <TextView
+                            android:id="@+id/xieyi_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/sp_15"
+                            android:lineSpacingExtra="@dimen/dp_5"
+                            />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_submit"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/but_height"
+                        android:layout_margin="@dimen/dp_20"
+                        android:background="@drawable/btn_next"
+                        android:text="@string/but_submit"
+                        android:textSize="@dimen/sp_17"
+                        android:textColor="@color/btn_login_text"
+                        />
+                </LinearLayout>
+
+            </ScrollView>
+        </LinearLayout>
+    </com.lr.biyou.mywidget.view.PageView>
+</LinearLayout>

@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/body_bg"
+    >
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+    <com.lr.biyou.mywidget.view.PageView
+        android:id="@+id/page_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.github.jdsjlzx.recyclerview.LRecyclerView
+                    android:id="@+id/refresh_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constrainedHeight="true"
+                    app:layout_constraintVertical_bias="0"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:layout_constraintBottom_toTopOf="@+id/bottom_lay"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@color/body_bg"
+                    >
+                </com.github.jdsjlzx.recyclerview.LRecyclerView>
+
+
+                <LinearLayout
+                    android:id="@+id/bottom_lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constrainedHeight="true"
+                    app:layout_constraintVertical_bias="0"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:layout_constraintTop_toBottomOf="@+id/refresh_list_view"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"
+                        />
+                    <Button
+                        android:id="@+id/but_next"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/but_height"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:background="@drawable/btn_next"
+                        android:text="@string/but_sure"
+                        android:textSize="@dimen/sp_17"
+                        android:textColor="@color/btn_login_text"
+
+                        />
+
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </com.lr.biyou.mywidget.view.PageView>
+
+
+</LinearLayout>

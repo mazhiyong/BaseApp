@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_vertical"
+    android:layout_height="wrap_content"
+    android:id="@+id/linearLayout2"
+    android:layout_width="wrap_content">
+
+    <TextView
+        android:id="@+id/tvEntrustTime"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace1"
+        android:text="@string/entrustTime"
+        android:visibility="gone"
+        android:textColor="@color/colorGray2" />
+
+    <TextView
+        android:id="@+id/tvContract"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace2"
+        android:text="@string/contract"
+        android:textColor="@color/colorGray2" />
+
+    <TextView
+        android:id="@+id/tvCoinInfo"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace2"
+        android:text="@string/coinInfo"
+        android:textColor="@color/colorGray2" />
+
+    <TextView
+        android:id="@+id/tvType"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace2"
+        android:text="@string/type1"
+        android:textColor="@color/colorGray2" />
+
+    <TextView
+        android:id="@+id/tvNumber"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace6"
+        android:text="@string/number"
+        android:textColor="@color/colorGray2" />
+
+    <TextView
+        android:id="@+id/tvRemaining"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace6"
+        android:text="@string/remaining"
+        android:textColor="@color/colorGray2" />
+
+    <TextView
+        android:id="@+id/tvProfitLess"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace6"
+        android:text="@string/profitLess"
+        android:textColor="@color/colorGray2" />
+
+    <TextView
+        android:id="@+id/tvMultiple"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/haveTrade"
+        android:text="@string/multiple"
+        android:textColor="@color/colorGray2" />
+
+    <TextView
+        android:id="@+id/tvOpenAveragePrice"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace6"
+        android:text="@string/openAveragePrice"
+        android:textColor="@color/colorGray2" />
+</LinearLayout>

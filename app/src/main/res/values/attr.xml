@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 是否开启抗锯齿 -->
+    <attr name="antiAlias" format="boolean" />
+    <!-- 圆弧起始角度，3点钟方向为0，顺时针递增，小于0或大于360进行取余 -->
+    <attr name="startAngle" format="float" />
+    <!-- 圆弧度数 -->
+    <attr name="sweepAngle" format="float" />
+    <!-- 设置动画时间 -->
+    <attr name="animTime" format="integer" />
+    <!-- 绘制内容的数值 -->
+    <attr name="maxValue" format="float" />
+    <attr name="value" format="float" />
+    <!-- 绘制内容的单位 -->
+    <attr name="unit" format="string|reference" />
+    <attr name="unitSize" format="dimension" />
+    <attr name="unitColor" format="color|reference" />
+    <!-- 绘制内容相应的提示语 -->
+    <attr name="hint" format="string|reference" />
+    <attr name="hintSize" format="dimension" />
+    <attr name="hintColor" format="color|reference" />
+    <!-- 精度，默认为0 -->
+    <attr name="precision" format="integer" />
+    <attr name="valueSize" format="dimension" />
+    <attr name="valueColor" format="color|reference" />
+    <!-- 背景圆弧颜色，默认白色 -->
+    <attr name="bgArcColor" format="color|reference" />
+    <!-- 圆弧宽度 -->
+    <attr name="arcWidth" format="dimension" />
+    <!-- 圆弧颜色， -->
+    <attr name="arcColors" format="color|reference" />
+    <!-- 文字的偏移量 相对于圆半径而言，默认三分之一 -->
+    <attr name="textOffsetPercentInRadius" format="float" />
+    <!-- 背景圆弧宽度 -->
+    <attr name="bgArcWidth" format="dimension" />
+    <!-- 线条数 -->
+    <attr name="dottedLineCount" format="integer" />
+    <!-- 圆弧跟虚线之间的距离 -->
+    <attr name="lineDistance" format="integer" />
+    <!-- 线条宽度 -->
+    <attr name="dottedLineWidth" format="dimension" />
+    <!-- 进度条的前景色 起始颜色-->
+    <attr name="foreStartColor" format="color" />
+    <!-- 进度条的前景色 结束颜色-->
+    <attr name="foreEndColor" format="color" />
+
+    <declare-styleable name="CircleProgressBar">
+        <attr name="antiAlias" />
+        <attr name="startAngle" />
+        <attr name="sweepAngle" />
+        <attr name="animTime" />
+        <attr name="maxValue" />
+        <attr name="value" />
+        <attr name="unit" />
+        <attr name="unitSize" />
+        <attr name="unitColor" />
+        <attr name="hint" />
+        <attr name="hintSize" />
+        <attr name="hintColor" />
+        <attr name="precision" />
+        <attr name="valueSize" />
+        <attr name="valueColor" />
+        <attr name="bgArcColor" />
+        <attr name="arcWidth" />
+        <attr name="arcColors" />
+        <attr name="textOffsetPercentInRadius" />
+        <attr name="bgArcWidth" />
+        <attr name="dottedLineCount" />
+        <attr name="lineDistance" />
+        <attr name="dottedLineWidth" />
+        <attr name="foreStartColor" />
+        <attr name="foreEndColor" />
+
+    </declare-styleable>
+
+
+    <declare-styleable name="CountDownProgress">
+
+        <!-- 圆实心的颜色 -->
+        <attr name="circSolidColor" format="color"/>
+        <!-- 圆边框的颜色 -->
+        <attr name="circFrameColor" format="color"/>
+        <!-- 进度条的颜色 -->
+        <attr name="progressColor" format="color"/>
+        <!-- 文字的颜色 -->
+        <attr name="textColor1" format="color"/>
+
+    </declare-styleable>
+
+    <declare-styleable name="waveSideBar">
+        <attr name="textColor" format="color|reference"/>
+        <attr name="backgroundColor" format="color|reference"/>
+        <attr name="chooseTextColor" format="color|reference"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="hintTextSize" format="dimension"/>
+        <attr name="radius" format="dimension"/>
+        <attr name="circleRadius" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="SwipeMenuView">
+        <attr name="swipeEnable" format="boolean"/>
+        <attr name="ios" format="boolean"/>
+        <attr name="leftSwipe" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="PasswordEditText">
+        <!-- 密码的个数 -->
+        <attr name="passwordNumber" format="integer"/>
+        <!-- 密码圆点的半径 -->
+        <attr name="passwordRadius" format="dimension" />
+        <!-- 密码圆点的颜色 -->
+        <attr name="passwordColor" format="color" />
+        <!-- 分割线的颜色 -->
+        <attr name="divisionLineColor" format="color" />
+        <!-- 分割线的大小 -->
+        <attr name="divisionLineSize" format="dimension" />
+        <!-- 背景边框的颜色 -->
+        <attr name="bgColor" format="color" />
+        <!-- 背景边框的大小 -->
+        <attr name="bgSize" format="dimension" />
+        <!-- 背景边框的圆角大小 -->
+        <attr name="bgCorner" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundIndicatorView">
+        <!--最大数值-->
+        <attr name="maxNum" format="integer"/>
+        <!--圆盘起始角度-->
+        <attr name="startAngle2" format="integer"/>
+        <!--圆盘扫过的角度-->
+        <attr name="sweepAngle2" format="integer"/>
+    </declare-styleable>
+
+ <declare-styleable name="CircularImage">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+  <declare-styleable name="roundedimageview">
+        <attr name="border_thickness" format="dimension" />
+        <attr name="border_inside_color" format="color" />
+        <attr name="border_outside_color" format="color"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="PullToZoomView">
+        <attr name="headerView" format="reference" />
+        <attr name="contentView" format="reference" />
+        <attr name="zoomView" format="reference" />
+        <attr name="isHeaderParallax" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="SwipeBackLayout">
+        <attr name="edge_size" format="dimension"/>
+        <attr name="edge_flag">
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
+            <enum name="bottom" value="2" />
+            <enum name="all" value="3" />
+        </attr>
+        <attr name="shadow_left" format="reference"/>
+        <attr name="shadow_right" format="reference"/>
+        <attr name="shadow_bottom" format="reference"/>
+    </declare-styleable>
+
+    <attr name="SwipeBackLayoutStyle" format="reference"/>
+
+
+    <declare-styleable name="GridLinearLayout">
+        <attr name="verticalSpace" format="dimension"/>
+        <attr name="horizontalSpace" format="dimension"/>
+        <attr name="rows" format="integer"/>
+        <attr name="columns" format="integer"/>
+    </declare-styleable>
+</resources>

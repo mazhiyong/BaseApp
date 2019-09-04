@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:background="@color/black"
+                android:id="@+id/content_lay"
+                android:layout_height="match_parent">
+
+
+    <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+        android:id="@+id/big_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+      />
+    <com.lr.biyou.mywidget.photoview.PhotoView
+        android:id="@+id/big_photo_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+      />
+    <com.lr.biyou.utils.imageload.CircleProgressView
+        android:id="@+id/progressView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:progress="0"
+        app:cpv_radius="@dimen/dp_30"
+        app:cpv_innerPadding="@dimen/dp_2"
+        app:cpv_outerColor="@color/white"
+        app:cpv_outerSize="@dimen/dp_1"
+        app:cpv_progressTextVisible="true"
+        app:cpv_progressNormalColor="@color/transparent"
+        app:cpv_progressReachColor="@color/white"
+        app:cpv_progressStyle="FillInnerArc"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        />
+</RelativeLayout>

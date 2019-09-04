@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="@color/body_bg"
+                android:orientation="vertical">
+
+
+    <com.lr.biyou.mywidget.view.PageView
+        android:id="@+id/page_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/line_view">
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:clickable="true"
+                        app:cardPreventCornerOverlap="false"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        android:background="@color/white"
+                        android:focusable="false">
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dp_20"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="left|center_vertical"
+                                android:text="@string/borrow_left_money"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_15"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/money_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="left|center_vertical"
+                                android:textColor="@color/font_c"
+                                android:padding="@dimen/dp_5"
+                                android:textSize="@dimen/sp_25"
+                                android:layout_gravity="center"/>
+                            <TextView
+                                android:id="@+id/jiekuan_zonge_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="left|center_vertical"
+                                android:paddingLeft="@dimen/dp_20"
+                                android:paddingRight="@dimen/dp_20"
+                                android:paddingTop="@dimen/dp_5"
+                                android:paddingBottom="@dimen/dp_5"
+                                android:layout_marginBottom="@dimen/dp_15"
+                                android:background="@drawable/jiekuan_corners"
+                                android:layout_gravity="center"/>
+
+
+                            <TextView
+                                android:id="@+id/tiqian_huankuan_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/tiqian_huankuan"
+                                android:layout_marginLeft="@dimen/dp_30"
+                                android:layout_marginRight="@dimen/dp_30"
+                                android:background="@drawable/tiqian_huankuan_corners"
+                                android:padding="@dimen/dp_8"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/font_c"
+                                android:layout_marginBottom="@dimen/dp_15"
+                                android:layout_marginTop="@dimen/dp_5"
+                                android:layout_gravity="center"/>
+
+
+
+                            <LinearLayout
+                                android:id="@+id/bohui_yuanyin_lay"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/lightgoldenrodyellow"
+                                android:layout_marginTop="@dimen/dp_5"
+                                android:orientation="vertical"
+                                >
+
+                                <View
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/divide_hight"
+                                    android:background="@color/limit_buy_border_bg"/>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="@dimen/dp_10"
+                                    android:paddingRight="@dimen/dp_10"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingTop="@dimen/dp_6"
+                                        android:paddingBottom="@dimen/dp_6"
+                                        android:src="@drawable/tip_icon"/>
+                                    <TextView
+                                        android:id="@+id/bohui_yuanyin_tv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:textSize="@dimen/sp_14"
+                                        android:paddingTop="@dimen/dp_6"
+                                        android:paddingBottom="@dimen/dp_6"
+                                        android:textColor="@color/ju_text"
+                                        android:text=""/>
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/divide_hight"
+                                    android:background="@color/limit_buy_border_bg"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_10"
+                        android:background="@color/body_bg"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/borrow_info_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:clickable="true"
+                        app:cardPreventCornerOverlap="false"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        android:background="@color/white"
+                        android:focusable="false">
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/title_item_height"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            >
+
+                            <ImageView
+                                android:src="@drawable/jiekuan_info"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:paddingLeft="@dimen/dp_15"
+                                android:paddingRight="@dimen/dp_10"
+                                android:paddingTop="@dimen/dp_10"
+                                android:paddingBottom="@dimen/dp_10"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_15"
+                                android:text="@string/borrow_info" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/android_list_idex"
+                                android:paddingRight="@dimen/dp_15"
+                                />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/borrow_file_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:focusable="false">
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/title_item_height"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:paddingLeft="@dimen/dp_15"
+                                android:paddingRight="@dimen/dp_10"
+                                android:paddingTop="@dimen/dp_10"
+                                android:paddingBottom="@dimen/dp_10"
+                                android:src="@drawable/fujian_icon"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:src="@drawable/android_list_idex"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/black"
+                                android:text="@string/borrow_file" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/android_list_idex"
+                                android:paddingRight="@dimen/dp_15"
+                                />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/borrow_hetong_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:focusable="false">
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/title_item_height"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:paddingLeft="@dimen/dp_15"
+                                android:paddingRight="@dimen/dp_10"
+                                android:paddingTop="@dimen/dp_10"
+                                android:paddingBottom="@dimen/dp_10"
+                                android:src="@drawable/hetong_icon"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:src="@drawable/android_list_idex"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_15"
+                                android:text="@string/borrow_hetong_info" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/android_list_idex"
+                                android:paddingRight="@dimen/dp_15"
+                                />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <View
+                        android:id="@+id/shoutuo_pay_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/borrow_pay_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:focusable="false">
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/title_item_height"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:paddingLeft="@dimen/dp_15"
+                                android:paddingRight="@dimen/dp_10"
+                                android:paddingTop="@dimen/dp_10"
+                                android:paddingBottom="@dimen/dp_10"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/shoutou_pay_icon"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:src="@drawable/android_list_idex"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_15"
+                                android:text="@string/borrow_pay_info" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/android_list_idex"
+                                android:paddingRight="@dimen/dp_15"
+                                />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <View
+                        android:id="@+id/huankuan_plan_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/borrow_repayplan_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:focusable="false">
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/title_item_height"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:paddingLeft="@dimen/dp_15"
+                                android:paddingRight="@dimen/dp_10"
+                                android:paddingTop="@dimen/dp_10"
+                                android:paddingBottom="@dimen/dp_10"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/huankuan_plan_icon"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:src="@drawable/android_list_idex"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_15"
+                                android:text="@string/borrow_repay_plan" />
+
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/android_list_idex"
+                                android:paddingRight="@dimen/dp_15"
+                                />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+
+
+                    <View
+                        android:id="@+id/huankuan_his_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@color/divide_line"/>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/borrow_repayshistory_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:focusable="false">
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/title_item_height"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:paddingLeft="@dimen/dp_15"
+                                android:paddingRight="@dimen/dp_10"
+                                android:paddingTop="@dimen/dp_10"
+                                android:paddingBottom="@dimen/dp_10"
+                                android:src="@drawable/huankuan_history"
+                                android:scaleType="centerInside"
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:src="@drawable/android_list_idex"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_15"
+                                android:text="@string/borrow_repay_his" />
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/android_list_idex"
+                                android:paddingRight="@dimen/dp_15"
+                                />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:id="@+id/jiekuan_use_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/borrow_card_lay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:focusable="false">
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/title_item_height"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@color/transparent"
+                                android:paddingLeft="@dimen/dp_15"
+                                android:paddingRight="@dimen/dp_10"
+                                android:paddingTop="@dimen/dp_10"
+                                android:paddingBottom="@dimen/dp_10"
+                                android:scaleType="centerInside"
+                                android:src="@drawable/jiekuan_user_card"
+
+                                />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:src="@drawable/android_list_idex"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_15"
+                                android:text="@string/borrow_check" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/android_list_idex"
+                                android:paddingRight="@dimen/dp_15"
+
+                                />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:id="@+id/bottom_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divide_hight"
+                        android:background="@color/divide_line"/>
+
+                    <Button
+                        android:id="@+id/chexiao_sq_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/but_height"
+                        android:text="@string/chexiao_sq"
+                        android:background="@drawable/btn_next"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_17"
+                        android:visibility="gone"
+                        android:layout_margin="@dimen/dp_20"/>
+
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+    </com.lr.biyou.mywidget.view.PageView>
+    <ImageView
+        android:id="@+id/status_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_5"
+        android:layout_marginTop="@dimen/more_item_height"
+        />
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"
+        />
+
+    <View
+        android:id="@+id/line_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_top"
+        android:background="@color/body_bg"
+        android:layout_below="@+id/top_layout"/>
+
+</RelativeLayout>

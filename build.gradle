@@ -1,0 +1,48 @@
+apply from: "config.gradle"
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        mavenLocal()
+        google()
+        jcenter{url "http://jcenter.bintray.com/"}
+    }
+    dependencies {
+
+        classpath 'com.android.tools.build:gradle:3.4.2'
+        //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8' // 添加这行
+
+        //Bugly(Tinker)
+        classpath "com.tencent.bugly:tinker-support:latest.release"
+
+        //classpath 'com.tencent.bugly:symtabfileuploader:latest.release'*/
+
+
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+       // maven{ url "http://maven.aliyun.com/nexus/content/groups/public/"}
+        mavenLocal()
+        maven {
+            url "https://jitpack.io"
+        }
+        maven {
+            url "http://mvn.gt.igexin.com/nexus/content/repositories/releases/"
+        }
+        google()
+        jcenter{url "http://jcenter.bintray.com/"}
+
+        maven {url  "https://dl.bintray.com/rongcloud/maven"}
+
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+

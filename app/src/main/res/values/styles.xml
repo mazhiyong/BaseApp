@@ -1,0 +1,268 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 这里面的内容改成你自己项目里的 -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+
+        <!--colorPrimaryDark对应状态栏的颜色-->
+        <item name="colorPrimaryDark">@color/white</item>
+        <!--colorPrimary对应ActionBar的颜色-->
+        <item name="colorPrimary">@color/white</item>
+        <!-- 底部导航栏的颜色 -->
+<!--
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/black</item>
+-->
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <!--colorAccent 对应EditText编辑时、RadioButton选中、CheckBox等选中时的颜色-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <!--<item name="android:textColorHint">@color/divide_line</item>-->
+        <item name="colorControlNormal">@color/divide_line</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <!--<item name="colorControlHighlight">@color/yellow</item>-->
+    </style>
+
+    <!-- 适用于开启滑动返回功能的 Activity -->
+    <style name="AppTheme.Transparent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+    <!-- 适用于开启滑动返回功能的 Activity -->
+    <style name="AppTheme.Transparent2">
+        <item name="android:windowBackground">@android:color/holo_blue_dark</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <!-- 适用于欢迎界面避免第一次进来白屏或黑屏 -->
+    <style name="AppTheme.Transparent.Splash">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+    </style>
+
+    <!-- 适用于欢迎界面避免第一次进来白屏或黑屏 -->
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_bg</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Transparent.Splash.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="AppTheme.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="AppTheme.Transparent.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!--<style name="Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>-->
+
+    <style name="title_bar_style">
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingLeft">0.0dip</item>
+        <item name="android:paddingRight">0.0dip</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/title_item_height</item>
+    </style>
+
+    <style name="title_text_style">
+        <item name="android:textSize">@dimen/sp_17</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <style name="page_view_text">
+        <item name="android:textColor">@color/page_view_text_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lineSpacingExtra">3dp</item>
+        <item name="android:drawablePadding">15dp</item>
+    </style>
+
+
+    <style name="title_back_but">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">20dp</item>
+    </style>
+
+
+    <style name="bottomAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/photo_dialog_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/photo_dialog_out_anim</item>
+    </style>
+
+
+    <style name="Dialog" parent="android:style/Theme.Dialog">
+        <item name="android:background">#00000000</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+
+    </style>
+
+
+    <!--Our Floating Activity -->
+    <style name="YourTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="TextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
+
+    <declare-styleable name="CircleProgressView">
+        <attr name="cpv_progressNormalColor" format="color"/>
+        <attr name="cpv_progressReachColor" format="color"/>
+        <attr name="cpv_progressTextColor" format="color"/>
+        <attr name="cpv_progressTextSize" format="dimension"/>
+        <attr name="cpv_progressTextOffset" format="dimension"/>
+        <attr name="cpv_progressNormalSize" format="dimension"/>
+        <attr name="cpv_progressReachSize" format="dimension"/>
+        <attr name="cpv_radius" format="dimension"/>
+        <attr name="cpv_progressTextVisible" format="boolean"/>
+        <attr name="cpv_progressStartArc" format="integer"/>
+        <attr name="cpv_progressTextSkewX" format="dimension"/>
+        <attr name="cpv_progressTextPrefix" format="string"/>
+        <attr name="cpv_progressTextSuffix" format="string"/>
+        <attr name="cpv_innerBackgroundColor" format="color"/>
+        <attr name="cpv_progressStyle" format="enum">
+            <enum name="Normal" value="0"/>
+            <enum name="FillInner" value="1"/>
+            <enum name="FillInnerArc" value="2"/>
+        </attr>
+        <attr name="cpv_innerProgressColor" format="color"/>
+        <attr name="cpv_innerPadding" format="dimension"/>
+        <attr name="cpv_outerColor" format="color"/>
+        <attr name="cpv_outerSize" format="dimension"/>
+        <attr name="cpv_reachCapRound" format="boolean"/>
+    </declare-styleable>
+
+
+
+
+    <style name="PopupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/base_slide_left_in</item>
+        <item name="android:windowExitAnimation">@anim/base_slide_left_out</item>
+    </style>
+
+    <style name="tablayout_home_title" parent="Widget.Design.TabLayout">
+        <item name="tabGravity">center</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabIndicatorColor">@color/colorBlue</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabTextAppearance">@style/customTextAppearance</item>
+    </style>
+
+    <style name="customTextAppearance" parent="TextAppearance.AppCompat.Title.Inverse">
+        <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorGray3</item>
+    </style>
+
+    <style name="tablayout_home" parent="Widget.Design.TabLayout">
+        <item name="tabGravity">fill</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabIndicator">@null</item>
+        <item name="tabTextAppearance">@style/customTextAppearance</item>
+    </style>
+
+    <style name="tablayout_home_left" parent="Widget.Design.TabLayout">
+        <item name="tabGravity">fill</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabIndicatorColor">@color/colorBlue</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabTextAppearance">@style/customTextAppearance</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <!--<item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>-->
+        <item name="android:windowBackground">@color/colorWhite</item>
+    </style>
+
+
+
+    <style name="tablayout_kline" parent="Widget.Design.TabLayout">
+        <item name="tabGravity">fill</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabIndicator">@null</item>
+        <item name="tabTextAppearance">@style/customTextAppearance</item>
+    </style>
+
+    <style name="tablayout_coin_type" parent="Widget.Design.TabLayout">
+        <item name="tabGravity">fill</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabPaddingStart">0dp</item>
+        <item name="tabPaddingEnd">0dp</item>
+        <item name="tabIndicatorColor">@color/colorBlue</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabTextAppearance">@style/customTextAppearance</item>
+    </style>
+
+    <style name="edittext" parent="Theme.AppCompat.Light">
+        <!-- AppCompatEditText默认状态状态设置底线颜色 -->
+        <item name="colorControlNormal">@color/colorBottomUnCheck</item>
+        <!-- AppCompatEditText选择的底线颜色 -->
+        <item name="colorControlActivated">@color/colorBottomCheck</item>
+        <item name="android:textCursorDrawable">@drawable/shape_cursor</item>
+    </style>
+
+    <!-- PopupWindow弹出/隐藏动画 12-28 -->
+    <style name="MyPopupWindow_anim_style">
+        <item name="android:windowEnterAnimation">@anim/popup_enter</item>
+        <item name="android:windowExitAnimation">@anim/popup_exit</item>
+    </style>
+
+    <!-- PopupWindow弹出/隐藏动画 12-28 -->
+    <style name="popup_more_operate">
+        <item name="android:windowEnterAnimation">@anim/popup_enter1</item>
+        <item name="android:windowExitAnimation">@anim/popup_exit1</item>
+    </style>
+
+    <!-- PopupWindow弹出/隐藏动画 12-28 -->
+    <style name="dialogRightToLeft">
+        <item name="android:windowEnterAnimation">@anim/right_to_left</item>
+        <item name="android:windowExitAnimation">@anim/left_to_right</item>
+    </style>
+
+    <style name="anim_menu_bottombar">
+        <item name="android:windowEnterAnimation">@anim/menu_bottombar_in</item>
+        <item name="android:windowExitAnimation">@anim/menu_bottombar_out</item>
+    </style>
+
+    <style name="ToolBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="actionOverflowButtonStyle">@style/OverFlowButton</item>
+    </style>
+
+    <style name="OverFlowButton" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/trade_head_right_pop_normal</item>
+    </style>
+</resources>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="waveSideBarLetters">
+        <item>\u0023</item>
+        <item>\u2606</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>I</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+        <item>M</item>
+        <item>N</item>
+        <item>O</item>
+        <item>P</item>
+        <item>Q</item>
+        <item>R</item>
+        <item>S</item>
+        <item>T</item>
+        <item>U</item>
+        <item>V</item>
+        <item>W</item>
+        <item>X</item>
+        <item>Y</item>
+        <item>Z</item>
+    </array>
+    <string-array name="home_tab">
+        <item>首页</item>
+        <item>行情</item>
+    </string-array>
+
+    <string-array name="left_view">
+        <item>订单管理</item>
+        <item>安全中心</item>
+        <item>关于我们</item>
+        <item>联系客服</item>
+        <item>设置</item>
+    </string-array>
+
+    <string-array name="left_tab_view">
+        <item>USDT交易区</item>
+        <item>ETH交易区</item>
+        <item>BTC交易区</item>
+    </string-array>
+
+    <string-array name="total_tab">
+        <item>USDT</item>
+        <item>HUSD</item>
+        <item>BTC</item>
+        <item>ETH</item>
+        <item>HT</item>
+    </string-array>
+
+    <string-array name="coin_info_tab">
+        <item>深度</item>
+        <item>成交</item>
+        <item>简介</item>
+    </string-array>
+
+    <string-array name="trade_style">
+        <item>普通</item>
+        <item>大宗</item>
+    </string-array>
+
+    <string-array name="pay_method">
+        <item>全部</item>
+        <item>银行卡</item>
+        <item>支付宝</item>
+        <item>微信</item>
+        <item>PayPal</item>
+        <item>西联汇款</item>
+    </string-array>
+
+    <string-array name="legal_coin">
+        <item>人民币(CNY)</item>
+        <item>美元(USD)</item>
+        <item>新元(SGD)</item>
+        <item>卢比(INR)</item>
+        <item>越南盾(VND)</item>
+        <item>加元(CAD)</item>
+    </string-array>
+
+    <string-array name="country">
+        <item>全部</item>
+        <item>中国</item>
+        <item>新西兰</item>
+        <item>新加坡</item>
+        <item>印度</item>
+        <item>越南</item>
+        <item>加拿大</item>
+        <item>澳大利亚</item>
+    </string-array>
+
+    <string-array name="tradeCoinName">
+        <item>BTC</item>
+        <item>ETH</item>
+        <item>USDT</item>
+        <item>EOS</item>
+        <item>XRP</item>
+        <item>LTC</item>
+        <item>HT</item>
+        <item>HUSD</item>
+    </string-array>
+    <string-array name="tradeMore">
+        <item>划转</item>
+        <item>订单记录</item>
+        <item>收款方式</item>
+        <item>修改密码</item>
+    </string-array>
+
+    <string-array name="accountStyle">
+        <item>资金账户</item>
+        <item>币币账户</item>
+        <item>法币账户</item>
+        <item>合约账户</item>
+    </string-array>
+
+    <string-array name="assetsLogFilter">
+        <item>全部</item>
+        <item>提币</item>
+        <item>充币</item>
+        <item>系统</item>
+        <item>点卡</item>
+        <item>转入</item>
+        <item>转出</item>
+    </string-array>
+
+    <string-array name="accountList">
+        <item>账户</item>
+        <item>币币账户</item>
+        <item>法币账户</item>
+        <item>合约账户</item>
+    </string-array>
+
+    <string-array name="transferTitle">
+        <item>全部</item>
+        <item>等待</item>
+        <item>成功</item>
+        <item>失败</item>
+    </string-array>
+    <string-array name="safeCenter">
+        <item>绑定手机</item>
+        <item>绑定邮箱</item>
+        <item>收款方式</item>
+        <item>实名认证</item>
+        <item>登录密码</item>
+        <item>交易密码</item>
+    </string-array>
+
+    <string-array name="sellNum">
+        <item>卖5</item>
+        <item>卖4</item>
+        <item>卖3</item>
+        <item>卖2</item>
+        <item>卖1</item>
+    </string-array>
+    <string-array name="buyNum">
+        <item>买1</item>
+        <item>买2</item>
+        <item>买3</item>
+        <item>买4</item>
+        <item>买5</item>
+    </string-array>
+
+    <string-array name="priceType">
+        <item>限价</item>
+        <item>市价</item>
+    </string-array>
+
+    <string-array name="entrustTabLayout">
+        <item>未完成委托</item>
+        <item>已完成委托</item>
+    </string-array>
+
+    <string-array name="tradeType">
+        <item>未成交</item>
+        <item>已成交</item>
+        <item>已取消</item>
+        <item>我的委托</item>
+    </string-array>
+
+    <string-array name="handDirection">
+        <item>买入</item>
+        <item>卖出</item>
+    </string-array>
+
+    <string-array name="rechargeLogTitle">
+        <item>全部</item>
+        <item>等待</item>
+        <item>成功</item>
+        <item>失败</item>
+    </string-array>
+
+    <string-array name="withdrawLogTitle">
+        <item>全部</item>
+        <item>等待</item>
+        <item>失败</item>
+        <item>成功</item>
+        <item>撤销</item>
+    </string-array>
+
+    <string-array name="timeChoose">
+        <item>1分</item>
+        <item>5分</item>
+        <item>15分</item>
+        <item>30分</item>
+        <item>1小时</item>
+        <item>1天</item>
+        <item>1周</item>
+    </string-array>
+
+    <string-array name="timeChooseParams">
+        <item>1min</item>
+        <item>5min</item>
+        <item>15min</item>
+        <item>30min</item>
+        <item>60min</item>
+        <item>1day</item>
+        <item>1week</item>
+    </string-array>
+
+    <string-array name="klineTimeParams">
+        <item>60</item>
+        <item>300</item>
+        <item>900</item>
+        <item>1800</item>
+        <item>3600</item>
+        <item>86400</item>
+        <item>604800</item>
+    </string-array>
+
+    <string-array name="otcTradeTitle">
+        <item>购买</item>
+        <item>出售</item>
+        <item>发布</item>
+    </string-array>
+
+    <string-array name="leverTitle">
+        <item>交易</item>
+        <item>持仓</item>
+        <item>委托</item>
+        <item>已成交</item>
+        <item>已撤销</item>
+    </string-array>
+
+    <string-array name="leverDownTitle">
+        <item>持仓</item>
+        <item>委托</item>
+    </string-array>
+
+    <string-array name="accountChoose">
+        <item>逐仓</item>
+        <item>全仓</item>
+    </string-array>
+
+    <string-array name="homeTab">
+        <!--<item>我的收藏</item>-->
+        <item>涨幅榜</item>
+        <item>交易量榜</item>
+    </string-array>
+    <string-array name="lockCycle">
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>180</item>
+        <item>365</item>
+    </string-array>
+
+    <string-array name="filterChoose">
+        <item>全部</item>
+        <item>5万以下</item>
+        <item>5万-20万</item>
+        <item>20万以上</item>
+    </string-array>
+
+    <string-array name="receiptType">
+        <item>银行卡</item>
+        <item>支付宝</item>
+        <item>微信</item>
+    </string-array>
+</resources>

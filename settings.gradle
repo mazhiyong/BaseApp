@@ -1,0 +1,1 @@
+include ':app', ':IDCardLib', ':livenesslib', ':websocketlib', ':KLineChartLib', ':framelibrary', ':IMLib', ':RedPacket', ':IMKit', ':RCSticker'

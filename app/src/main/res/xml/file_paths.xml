@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 国内由于rom比较多，会产生各种路径，比如华为的/system/media/，以及外置sdcard -->
+
+    <!--   <root-path
+           name="root"
+           path="" />
+       <files-path
+           name="files"
+           path="" />
+
+       <cache-path
+           name="cache"
+           path="" />
+
+       <external-path
+           name="external"
+           path="" />
+
+       <external-files-path
+           name="external_file_path"
+           path="" />
+       <external-cache-path
+           name="external_cache_path"
+           path="" />-->
+
+    <root-path
+        name="root"
+        path="" />
+    <!-- 代表的根目录Context.getFilesDir() -->
+    <files-path
+        name="files"
+        path="" />
+    <!-- 代表的根目录getCacheDir() -->
+    <cache-path
+        name="cache"
+        path="" />
+    <!-- 代表的根目录Environment.getExternalStorageDirectory() -->
+    <external-path
+        name="external"
+        path="" />
+    <external-files-path
+        name="external_files"
+        path="" />
+    <external-cache-path
+        name="external_cache"
+        path="" />
+    <external-path
+        name="external_storage_root"
+        path="" />
+    <external-path
+        name="external_storage_files"
+        path="" />
+    <external-path
+        name="external_storage_cache"
+        path="" />
+    <root-path
+        name="root_path"
+        path="" />
+</paths>
+

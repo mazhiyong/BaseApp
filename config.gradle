@@ -1,0 +1,73 @@
+ext {
+//这里的ext是必须的
+    versions = [
+            compileSdkVersion   : 28,
+            buildToolsVersion   : "28.0.3",
+            minSdkVersion       : 19,
+            targetSdkVersion    : 28,
+            versionCode         : 8,
+            versionName         : "V1.0.0 Beta",
+    ]
+
+    libraries = [
+            retrofit          : "2.0.0-beta2",
+            rxandroid         : "1.1.0",
+            dagger            : "2.0",
+            javax_annotation  : "10.0-b28",
+            butterknife       : "7.0.1",
+            glide             : "3.6.1",
+            recycler_animators: "2.1.0",
+            circleimageview   : "2.0.0"
+    ]
+
+
+
+    dependencies = [
+
+            "multidex"          : 'androidx.multidex:multidex:2.0.0',
+            "junit"             : "junit:junit:4.12",
+            "butterknife"       : "com.jakewharton:butterknife:10.0.0",
+            "butterknife-compiler"       : "com.jakewharton:butterknife-compiler:10.0.0",
+
+            "gson"              : "com.google.code.gson:gson:2.8.1",
+
+            "rxlifecycle"       : "com.trello.rxlifecycle2:rxlifecycle:2.0.1",
+            "rxlifecycle-android"       : "com.trello.rxlifecycle2:rxlifecycle-android:2.0.1",
+            "rxlifecycle-components"       : "com.trello.rxlifecycle2:rxlifecycle-components:2.0.1",
+            "rxjava"            : "io.reactivex.rxjava2:rxjava:2.1.6",
+            "rxandroid"         : "io.reactivex.rxjava2:rxandroid:2.0.1",
+            "retrofit"         : "com.squareup.retrofit2:retrofit:2.3.0",
+            "converter-gson"         : "com.squareup.retrofit2:converter-gson:2.3.0",
+            "adapter-rxjava"         : "com.squareup.retrofit2:adapter-rxjava2:2.3.0",
+            "logging-interceptor"         :"com.squareup.okhttp3:logging-interceptor:3.9.0",
+
+            "volley"                 : "eu.the4thfloor.volley:com.android.volley:2015.05.28",
+
+            "bga-swipebacklayout"    : "cn.bingoogolapple:bga-swipebacklayout:1.1.9@aar",
+
+            "statusbaruitl"     : "com.jaeger.statusbaruitl:library:1.4.0",
+
+            "LRecyclerView"     : "com.github.jdsjlzx:LRecyclerView:1.5.0",
+
+            "LoopViewPagerLayout"     : "com.github.why168:LoopViewPagerLayout:2.1.5",
+
+            "recyclerview-animators"     : "jp.wasabeef:recyclerview-animators:2.2.3",
+
+            "yanzhenjie-permission"     : "com.yanzhenjie:permission:2.0.0-rc12",
+
+            "glide"             : "com.github.bumptech.glide:glide:4.7.1",
+            "glide-compiler"    : "com.github.bumptech.glide:compiler:4.7.11",
+            "glide-transformations"    : "jp.wasabeef:glide-transformations:3.3.0",
+
+            "wheelview": "com.wx.wheelview:wheelview:1.3.3",
+
+            "picture_library": "com.github.LuckSiege.PictureSelector:picture_library:v2.2.3",
+
+            "crashreport": "com.tencent.bugly:crashreport:latest.release",
+            //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+            "crashreport-native": "com.tencent.bugly:nativecrashreport:latest.release"
+            //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+
+
+    ]
+}

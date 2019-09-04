@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+              android:orientation="vertical"
+                android:background="@color/body_bg"
+                >
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+
+    <ScrollView
+        android:id="@+id/personal_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/body_bg"
+
+        android:fadingEdge="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+            <TextView
+
+                android:id="@+id/msg_code_tip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/code_phone_tip"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:background="@color/divide_line"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                android:background="@color/white">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/msg_code"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/black"
+                    android:padding="@dimen/dp_10"/>
+                <EditText
+                    android:id="@+id/msg_code_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:inputType="phone"
+                    android:hint="@string/msg_code_hint"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/black"
+                    android:maxLength="6"
+                    android:background="@null"/>
+                <TextView
+                    android:id="@+id/msg_code_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_background_corners"
+                    android:textSize="@dimen/sp_15"
+                    android:text="@string/get_msg_again"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_10"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:background="@color/divide_line"
+                />
+
+
+
+            <Button
+                android:id="@+id/but_next"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/but_height"
+                android:layout_margin="@dimen/dp_18"
+                android:background="@drawable/btn_next"
+                android:textSize="@dimen/sp_17"
+                android:text="@string/but_submit"
+                android:textColor="@color/btn_login_text"
+                 />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:background="@color/white" >
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divide_line"/>
+
+    <LinearLayout
+        android:id="@+id/shop_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_5"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_5">
+
+            <CheckBox
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/cart_select_selector"
+                android:button="@null"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/shop_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="天仓小铺旗舰店"/>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:id="@+id/check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/main"
+            android:layout_alignTop="@+id/main"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_5" >
+
+            <CheckBox
+                android:id="@+id/cart_item_checkbox"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_gravity="center_vertical"
+                android:button="@null"
+                android:background="@drawable/cart_select_selector"
+                android:gravity="center_vertical" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:layout_toRightOf="@+id/check"
+            android:layout_alignParentTop="true"
+            >
+
+            <ImageView
+                android:id="@+id/cart_item_image"
+                android:layout_width="@dimen/dp_90"
+                android:layout_height="@dimen/dp_90"
+                android:focusable="false"
+                android:src="@drawable/ic_launcher"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/cart_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="11.0dip"
+                android:layout_marginRight="15.0dip"
+                android:layout_toRightOf="@id/cart_item_image"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="iPhone5S"
+                android:textColor="#ff000000"
+                android:textSize="13.0dip" />
+
+            <ImageView
+                android:id="@+id/delete_view"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/delete_icon"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/cart_item_name"
+                android:layout_below="@id/cart_item_name"
+                android:textColor="@color/font_c" />
+
+            <LinearLayout
+                android:id="@+id/num_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/cart_item_name"
+                android:layout_alignBottom="@+id/cart_item_image"
+                android:orientation="horizontal"
+                android:gravity="center_vertical" >
+
+                <TextView
+                    android:id="@+id/cart_item_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="@color/title_bg"
+                    android:text="0.00"/>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_weight="1"/>
+
+                <include
+                    layout="@layout/product_num"
+                    />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/tongji_lay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/check"
+            android:padding="@dimen/dp_10"
+            android:layout_below="@+id/main"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小计:"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/dp_5"
+                android:textColor="@color/title_bg"/>
+            <TextView
+                android:id="@+id/more_prcie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.00"
+                android:layout_gravity="center"
+                android:textColor="@color/title_bg"/>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_1"
+                android:layout_weight="1"></View>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/divide_line"/>
+</LinearLayout>

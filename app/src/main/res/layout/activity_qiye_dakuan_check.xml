@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+              android:orientation="vertical"
+                android:background="@color/body_bg"
+                >
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+
+    <ScrollView
+        android:id="@+id/personal_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/body_bg"
+        android:fadingEdge="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/qiye_dakuan_top_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:paddingTop="@dimen/item_padding"
+                    android:paddingBottom="@dimen/item_padding"
+                    android:textColor="@color/grey"
+                    android:lineSpacingExtra="@dimen/dp_3"
+                    android:text="@string/qiye_dakuan_tip"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divide_hight"
+                    android:background="@color/divide_line"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15"
+                android:paddingTop="@dimen/item_padding"
+                android:paddingBottom="@dimen/item_padding"
+
+                android:background="@color/white">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/qiye_check_money"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_15"
+                    />
+                <EditText
+                    android:id="@+id/money_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:hint="@string/qiye_check_money_hint"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textColor="@color/black"
+                    android:inputType="numberDecimal"
+                    android:maxLength="11"
+                    android:textSize="@dimen/sp_15"
+                    android:background="@null"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:background="@color/divide_line"
+                />
+
+            <Button
+                android:id="@+id/but_next"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/but_height"
+                android:layout_margin="@dimen/dp_18"
+                android:background="@drawable/btn_next"
+                android:text="@string/but_next"
+                android:textSize="@dimen/sp_17"
+                android:textColor="@color/btn_login_text"
+                 />
+            <TextView
+                android:id="@+id/qiye_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/dp_18"
+                android:layout_marginRight="@dimen/dp_18"
+                android:textColor="@color/grey"
+                android:visibility="gone"
+                android:text="@string/qiye_money_time"/>
+
+            <TextView
+                android:id="@+id/qiye_modify_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_18"
+                android:layout_marginRight="@dimen/dp_18"
+                android:textColor="@color/grey"
+                android:text="@string/qiye_modify_zhanghu"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

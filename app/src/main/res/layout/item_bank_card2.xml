@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:id="@+id/all_content_view"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:clipChildren="false"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/bank_card_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/bank_bg"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp_5"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image_view"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginRight="@dimen/dp_10"
+                    app:civ_border_color="@color/white"
+                    app:civ_border_width="@dimen/dp_3"
+                    app:civ_circle_background_color="@color/white"
+                    android:src="@drawable/def"
+                    />
+
+                <TextView
+                    android:id="@+id/bank_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/image_view"
+                    android:layout_alignTop="@+id/image_view"
+                    android:layout_alignBottom="@+id/image_view"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    android:gravity="center"
+                    android:text="交通银行"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_20"
+                    android:src="@drawable/kj_bank_icon"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:layout_toRightOf="@+id/bank_name_tv"
+                    android:layout_alignTop="@+id/bank_name_tv"
+                    android:layout_alignBottom="@+id/bank_name_tv"
+                    />
+
+                <TextView
+                    android:id="@+id/type_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_5"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:layout_toRightOf="@+id/bank_name_tv"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_13"
+                    android:visibility="gone"
+                    android:background="@drawable/tixian_corners"
+                    android:text="充值卡"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/dp_15"
+                    android:layout_below="@+id/bank_name_tv"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/bank_card_value_tv"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="**** **** **** 6666"
+                        android:textSize="@dimen/sp_21"
+                        android:textColor="@color/white"
+                        />
+
+                    <TextView
+                        android:id="@+id/modify_bank_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingBottom="@dimen/dp_3"
+                        android:paddingTop="@dimen/dp_3"
+                        android:layout_marginRight="@dimen/dp_5"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_10"
+                        android:text="@string/bank_card_unbind"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@color/white"
+                        android:background="@drawable/change_card_corners"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:layout_marginBottom="@dimen/dp_5"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toLeftOf="@+id/right_but_lay"
+                                android:layout_marginRight="@dimen/dp_5"
+                                android:gravity="center_vertical"
+                                android:visibility="gone"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp_5"
+                                    android:layout_marginRight="@dimen/dp_5"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/sp_14"
+                                    android:text="余额"
+                                    />
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/money_tv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/sp_14"
+                                        android:text="***"
+                                        android:layout_marginRight="@dimen/dp_5"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constrainedWidth="true"
+                                        app:layout_constraintHorizontal_bias="0"
+                                        app:layout_constraintHorizontal_chainStyle="packed"
+                                        app:layout_constraintLeft_toLeftOf="parent"
+                                        app:layout_constraintRight_toLeftOf="@+id/toggle_money"
+                                        />
+
+                                    <ImageView
+                                        android:id="@+id/toggle_money"
+                                        android:layout_width="@dimen/dp_17"
+                                        android:layout_height="@dimen/dp_17"
+                                        android:layout_marginStart="@dimen/dp_5"
+                                        android:button="@null"
+                                        android:src="@drawable/switch_in_bank"
+                                        app:layout_constrainedWidth="true"
+                                        app:layout_constraintLeft_toRightOf="@+id/money_tv"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintHorizontal_chainStyle="packed"
+                                        app:layout_constraintRight_toRightOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"/>
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/right_but_lay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:visibility="gone"
+                                    android:id="@+id/qianyue_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/dp_10"
+                                    android:paddingTop="@dimen/dp_5"
+                                    android:paddingBottom="@dimen/dp_5"
+                                    android:paddingLeft="@dimen/dp_10"
+                                    android:paddingRight="@dimen/dp_10"
+                                    android:text="@string/bank_card_qianyue"
+                                    android:textSize="@dimen/sp_12"
+                                    android:textColor="@color/white"
+                                    android:background="@drawable/change_card_corners"
+                                    />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginRight="@dimen/dp_15"
+                    android:paddingTop="@dimen/dp_5"
+                    android:paddingBottom="@dimen/dp_5"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:gravity="center"
+                    android:text="Ⅱ 类户"
+                    android:visibility="gone"
+                    android:background="@drawable/tixian_corners"
+                    android:textColor="@color/white"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/shuiyin_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_70"
+        android:layout_alignRight="@+id/bank_card_lay"
+        android:layout_alignBottom="@+id/bank_card_lay"
+        android:layout_alignLeft="@+id/bank_card_lay"
+        android:layout_marginRight="@dimen/dp_10"
+        android:scaleType="fitEnd"
+        android:alpha="0.14"
+        />
+
+</RelativeLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/loading_background"
+              android:orientation="vertical" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_60"
+                    android:layout_marginBottom="@dimen/dp_40"
+                    android:orientation="vertical" >
+
+                    <com.lr.biyou.utils.face.RotaterView
+                        android:id="@+id/result_rotater"
+                        android:layout_width="@dimen/dp_100"
+                        android:layout_height="@dimen/dp_100"
+                        android:layout_centerInParent="true"
+                        />
+
+                    <ImageView
+                        android:id="@+id/result_status"
+                        android:layout_width="@dimen/dp_83"
+                        android:layout_height="@dimen/dp_83"
+                        android:layout_centerInParent="true"
+                        android:scaleType="centerCrop"
+
+                        android:src="@drawable/result_success" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/result_text_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="success"
+                    android:textColor="#ffffffff"
+                    android:textSize="@dimen/dp_30" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <LinearLayout
+                android:id="@+id/ll_result_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/iv_best"
+                    android:layout_width="@dimen/dp_160"
+                    android:layout_height="@dimen/dp_160"
+                    android:layout_marginBottom="@dimen/dp_30"
+                    />
+                <ImageView
+                    android:id="@+id/iv_env"
+                    android:layout_width="@dimen/dp_160"
+                    android:layout_height="@dimen/dp_160"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/activity_result_bottomLinear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp_30"
+                android:paddingRight="@dimen/dp_30" >
+
+                <Button
+                    android:id="@+id/result_next"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/but_height"
+                    android:background="@drawable/btn_next"
+                    android:textColor="@color/btn_login_text"
+                    android:layout_marginBottom="@dimen/dp_50"
+                    android:textSize="@dimen/sp_17"
+                    android:text="@string/but_submit" />
+
+                <Button
+                    android:id="@+id/result_redolivenessdetection"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/but_height"
+                    android:textSize="@dimen/sp_17"
+                    android:layout_marginBottom="@dimen/dp_50"
+                    android:text="@string/meglive_liveness_again"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+</LinearLayout>

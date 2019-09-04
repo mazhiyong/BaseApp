@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/dp_10"
+    app:cardElevation="0dp"
+    app:cardPreventCornerOverlap="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp_35"
+            android:layout_marginBottom="@dimen/dp_35"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_20"
+            android:textSize="@dimen/sp_16"
+            android:lineSpacingExtra="@dimen/dp_5"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text=""/>
+        <View
+            android:id="@+id/divide2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divide_hight"
+            android:layout_below="@+id/progress_lay"
+            android:background="@color/divide_line" />
+
+        <LinearLayout
+            android:id="@+id/bottom_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divide2"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/bt_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/but_height"
+                android:layout_weight="1"
+                android:background="@drawable/btn_trade_reset"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10"
+                android:gravity="center"
+                android:text="@string/camera_cancel"
+                android:textSize="@dimen/small_middle_text_size"
+                android:textColor="@color/gray" />
+
+            <View
+                android:id="@+id/divide3"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:background="@color/divide_line" />
+
+            <Button
+                android:id="@+id/bt_sure"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/but_height"
+                android:layout_weight="1"
+                android:background="@drawable/btn_trade_sure"
+                android:paddingBottom="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10"
+                android:text="@string/but_sure"
+                android:gravity="center"
+                android:textSize="@dimen/small_middle_text_size"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

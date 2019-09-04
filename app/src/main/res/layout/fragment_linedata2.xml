@@ -1,0 +1,203 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/body_bg">
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_below="@+id/index_top_layout"
+                android:paddingLeft="@dimen/dp_20"
+                android:paddingRight="@dimen/dp_20"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:background="@color/white"
+                android:checkedButton="@+id/rb_left"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/rb_left"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/order_title_left"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_7"
+                    android:paddingBottom="@dimen/dp_7"
+                    android:text="日趋势图"
+                    android:textSize="@dimen/sp_15"
+
+                    android:textColor="@drawable/order_title_font2" />
+
+                <RadioButton
+                    android:id="@+id/rb_right"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/order_title_right"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_7"
+                    android:paddingBottom="@dimen/dp_7"
+                    android:textSize="@dimen/sp_15"
+                    android:text="月趋势图"
+                    android:textColor="@drawable/order_title_font2" />
+            </RadioGroup>
+
+
+            <LinearLayout
+                android:id="@+id/date_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dp_10"
+                android:background="@color/white"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/start_time_value_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/dp_5"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:drawableRight="@drawable/icon_date"
+                    android:textSize="@dimen/sp_14"
+                    android:background="@color/body_bg"
+                    android:text="2019-12-03"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/zhi"
+                    android:padding="@dimen/dp_5"
+                    android:layout_gravity="center_vertical"
+                    />
+                <TextView
+                    android:id="@+id/end_time_value_tv"
+                    android:layout_width="0dp"
+                    android:background="@color/body_bg"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp_5"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:text="2019-12-13"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/sp_14"
+                    android:drawableRight="@drawable/icon_date"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="查询"
+                    android:id="@+id/query_bt"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textSize="@dimen/dp_16"
+                    android:background="@color/body_bg"
+                    android:paddingTop="@dimen/dp_3"
+                    android:paddingBottom="@dimen/dp_3"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:padding="@dimen/dp_10"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="@dimen/dp_30"
+                        android:layout_height="@dimen/dp_3"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/line_color2"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_5"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="预警池水位"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@color/black"
+                        />
+                    <TextView
+                        android:layout_width="@dimen/dp_30"
+                        android:layout_height="@dimen/dp_3"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/sp_10"
+                        android:background="@color/line_color"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_5"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="应收账款池水位"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@color/black"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="单位:万元"
+                        android:textSize="@dimen/sp_12"
+                        />
+                </LinearLayout>
+
+                <com.lr.biyou.mywidget.view.MyLineChartView
+                    android:id="@+id/linechaer_view"
+                    android:layout_width="match_parent"
+                    android:background="@color/white"
+                    android:visibility="gone"
+                    android:layout_height="@dimen/dp_300"/>
+
+                <com.lr.biyou.mywidget.line.MyLineChart
+                    android:id="@+id/chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_300"
+                    />
+                <com.lr.biyou.mywidget.line.MyLineChart
+                    android:id="@+id/chart2"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_300"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

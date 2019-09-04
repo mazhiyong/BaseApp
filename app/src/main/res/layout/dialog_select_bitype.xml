@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/body_bg"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:text="币币"
+        android:layout_marginTop="@dimen/dp_30"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_18"
+        android:gravity="center"
+        android:layout_height="@dimen/dp_30">
+    </TextView>
+    <com.androidkun.xtablayout.XTabLayout
+        android:layout_width="match_parent"
+        android:id="@+id/tab_child"
+        app:xTabIndicatorColor="@color/blue1"
+        android:layout_gravity="center_vertical"
+        app:xTabDividerWidth="@dimen/dp_0"
+        app:xTabDividerColor="@color/white"
+        app:xTabTextSize="@dimen/sp_14"
+        android:layout_marginTop="@dimen/dp_5"
+        app:xTabDividerWidthWidthText="true"
+        app:xTabSelectedTextColor="@color/blue1"
+        android:layout_height="@dimen/dp_40">
+    </com.androidkun.xtablayout.XTabLayout>
+    <View
+        android:id="@+id/divide_line"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divide_hight"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divide_line" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/body_bg"
+              android:descendantFocusability="blocksDescendants"
+              android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:visibility="gone"
+        android:layout_height="@dimen/dp_40" >
+
+        <View
+            android:id="@+id/datetop_line"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divide_line"
+            />
+
+        <TextView
+            android:id="@+id/cancel_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_10"
+            android:layout_below="@+id/datetop_line"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="@string/but_cancle"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_10"
+            android:layout_below="@+id/datetop_line"
+            android:layout_centerHorizontal="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            />
+        <TextView
+            android:id="@+id/sure_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dp_10"
+            android:layout_below="@+id/datetop_line"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:text="@string/but_sure"
+            android:layout_alignParentRight="true"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divide_line" />
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divide_hight"
+        android:background="@color/divide_line"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/hezuo_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+</LinearLayout>

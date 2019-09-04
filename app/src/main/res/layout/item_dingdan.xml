@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divide_hight"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/divide_line"/>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/trade_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="0dp"
+        android:background="@color/transparent"
+        app:cardElevation="0dp"
+        android:foreground="?android:attr/selectableItemBackground">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_margin="@dimen/dp_10"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/type_tv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="usdt"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/dp_16"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/lay"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:background="@color/white"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_weight="2"
+                    android:orientation="vertical"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="时间"
+                        android:gravity="left"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/gray"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/time_tv"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_width="wrap_content"
+                        android:text="可用"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="数量"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/gray"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/number_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:text="可用"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_12" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/dongjie_lay"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="价格"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/gray"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/price_tv"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_width="wrap_content"
+                        android:text="可用"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/bili_lay"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:text="已售比例"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/gray"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/bili_tv"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_width="wrap_content"
+                        android:text="可用"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:text="状态"
+                        android:gravity="right"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/gray"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/state_tv"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_width="match_parent"
+                        android:text="可用"
+                        android:gravity="right"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divide_hight"
+        android:background="@color/divide_line"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="    " />
+</LinearLayout>

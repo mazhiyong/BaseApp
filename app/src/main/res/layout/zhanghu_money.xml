@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:background="@color/body_bg">
+    <com.androidkun.xtablayout.XTabLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:id="@+id/tab_layout"
+        app:xTabIndicatorColor="@color/blue1"
+        app:xTabDividerWidth="@dimen/dp_0"
+        app:xTabDividerColor="@color/white"
+        app:xTabDividerWidthWidthText="true"
+        app:xTabSelectedTextColor="@color/blue1"
+        android:layout_height="@dimen/dp_40">
+    </com.androidkun.xtablayout.XTabLayout>
+    <View
+        android:id="@+id/divide_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divide_hight"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divide_line" />
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:orientation="vertical">
+        <TextView
+            android:text="总资产折合（BTC）"
+            android:textColor="@color/gray"
+            android:alpha="0.6"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/money_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_22"
+                android:text="19210291092"/>
+            <TextView
+                android:layout_marginLeft="@dimen/dp_5"
+                android:id="@+id/money_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/sp_14"
+                android:alpha="0.6"
+                android:text="≈ 1001CNY"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <com.lr.biyou.mywidget.view.PageView
+        android:id="@+id/page_view"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <com.github.jdsjlzx.recyclerview.LRecyclerView
+                    android:id="@+id/refresh_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </com.github.jdsjlzx.recyclerview.LRecyclerView>
+            </LinearLayout>
+        </LinearLayout>
+    </com.lr.biyou.mywidget.view.PageView>
+</LinearLayout>

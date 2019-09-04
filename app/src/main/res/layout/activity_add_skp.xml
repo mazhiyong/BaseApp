@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/body_bg"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:layout_marginTop="@dimen/dp_10"
+                android:background="@color/divide_line"/>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/gong_si_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="false">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:paddingTop="@dimen/item_padding"
+                    android:paddingBottom="@dimen/item_padding"
+                    android:orientation="horizontal"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_15"
+
+                            android:text="@string/gongsi" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:visibility="invisible"
+                            android:textSize="@dimen/sp_15"
+
+                            android:text="@string/four_zi" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/gong_si_value_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:paddingRight="@dimen/dp_10"
+                        android:hint="@string/please_choose"
+                        android:layout_marginLeft="@dimen/item_padding"
+                        android:textColor="@color/black"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:textSize="@dimen/sp_15"
+
+                        android:gravity="right"
+                        />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/android_list_idex"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+
+                android:background="@color/divide_line"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="false">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:orientation="horizontal"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_15"
+                            android:text="@string/shoukuan_ren" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:textSize="@dimen/sp_15"
+
+                            android:visibility="invisible"
+                            android:text="@string/four_zi" />
+                    </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/name_tv"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_shoukuan_ren"
+                        android:background="@null"
+                        android:paddingTop="@dimen/item_padding"
+                        android:paddingBottom="@dimen/item_padding"
+                        android:paddingRight="@dimen/dp_10"
+                        android:textSize="@dimen/sp_15"
+                        android:layout_marginLeft="@dimen/item_padding"
+                        />
+                    <ImageView
+                        android:id="@+id/people_image_view"
+                        android:layout_width="@dimen/dp_35"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:src="@drawable/default_headimg"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:id="@+id/other_line"
+                android:background="@color/divide_line"/>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="false">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:orientation="horizontal"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_15"
+
+                            android:text="@string/shoukuan_zhanghu" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:visibility="invisible"
+                            android:textSize="@dimen/sp_15"
+
+                            android:text="@string/four_zi" />
+                    </RelativeLayout>
+
+
+                    <EditText
+                        android:id="@+id/sk_zhanghu_eidt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:paddingRight="@dimen/dp_10"
+                        android:layout_marginLeft="@dimen/item_padding"
+                        android:inputType="number"
+                        android:textSize="@dimen/sp_15"
+                        android:paddingTop="@dimen/item_padding"
+                        android:paddingBottom="@dimen/item_padding"
+                        android:hint="@string/hint_bank_zhanghu"
+                        />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:background="@color/divide_line"/>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/name_bank_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="false">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:orientation="horizontal"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_15"
+
+                            android:text="@string/kaihu_bank" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:textSize="@dimen/sp_15"
+                            android:visibility="invisible"
+                            android:text="@string/four_zi" />
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:id="@+id/kaihu_bank_value_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:paddingRight="@dimen/dp_10"
+                        android:layout_marginLeft="@dimen/item_padding"
+                        android:textSize="@dimen/sp_15"
+                        android:gravity="right"
+                        android:paddingTop="@dimen/item_padding"
+                        android:paddingBottom="@dimen/item_padding"
+                        android:hint="@string/bank_jiaoyan"
+                        android:textColor="@color/black"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        />
+
+                    <ImageView
+                        android:id="@+id/bank_name_arrow_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/android_list_idex"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:background="@color/divide_line"/>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/kaihu_bank_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="false">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:paddingTop="@dimen/item_padding"
+                    android:paddingBottom="@dimen/item_padding"
+                    android:orientation="horizontal"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_15"
+
+                            android:text="@string/kaihu_dian" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:visibility="invisible"
+                            android:textSize="@dimen/sp_15"
+
+                            android:text="@string/four_zi" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/kaihu_bank_dian_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:paddingRight="@dimen/dp_10"
+                        android:hint="@string/please_choose"
+                        android:layout_marginLeft="@dimen/item_padding"
+                        android:textSize="@dimen/sp_15"
+
+                        android:textColor="@color/black"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:gravity="right"
+                        />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/android_list_idex"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:background="@color/divide_line"/>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="false">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:orientation="horizontal"
+                    >
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_15"
+
+                            android:text="@string/jine_yuan" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:visibility="invisible"
+                            android:textSize="@dimen/sp_15"
+
+                            android:text="@string/four_zi" />
+                    </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/jine_value_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:paddingRight="@dimen/dp_10"
+                        android:paddingTop="@dimen/item_padding"
+                        android:paddingBottom="@dimen/item_padding"
+                        android:textSize="@dimen/sp_15"
+                        android:inputType="numberDecimal"
+                        android:maxLength="14"
+                        android:layout_marginLeft="@dimen/item_padding"
+                        android:hint="@string/hint_pay_jine"
+                        />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:background="@color/divide_line"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:focusable="false">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_15"
+                    android:orientation="horizontal"
+                    >
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_15"
+
+                            android:text="@string/trade_des" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:visibility="invisible"
+                            android:textSize="@dimen/sp_15"
+
+                            android:text="@string/four_zi" />
+                    </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/zhaiyao_value_edit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:paddingRight="@dimen/dp_10"
+                        android:layout_marginLeft="@dimen/item_padding"
+                        android:paddingTop="@dimen/item_padding"
+                        android:paddingBottom="@dimen/item_padding"
+                        android:textSize="@dimen/sp_15"
+
+                        android:hint="@string/hint_zhaiyao"
+                        />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:background="@color/divide_line"/>
+
+
+            <Button
+                android:id="@+id/but_next"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/but_height"
+                android:background="@drawable/btn_next"
+                android:layout_marginTop="@dimen/dp_30"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_17"
+                android:text="@string/but_submit"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

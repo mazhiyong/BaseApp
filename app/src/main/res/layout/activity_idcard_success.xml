@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+              android:orientation="vertical"
+                android:background="@color/body_bg"
+                >
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+
+    <ScrollView
+        android:id="@+id/personal_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/body_bg"
+
+        android:fadingEdge="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+
+
+            <ImageView
+                android:id="@+id/my_image"
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="wrap_content"
+                android:src="@drawable/idcard_result_logo"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_40"/>
+
+            <TextView
+                android:id="@+id/anzhuang_text_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_15"
+                android:textColor="@color/black"
+                android:text="@string/check_success"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15"
+                android:paddingTop="@dimen/dp_10"
+                android:lineSpacingExtra="@dimen/dp_3"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/install_cer_tip"/>
+
+            <LinearLayout
+                android:id="@+id/dianzi_zhang_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:text="电子印章效果："/>
+
+                <ImageView
+                    android:id="@+id/tv_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_35"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/dddd"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/but_checkl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/but_height"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:textSize="@dimen/sp_17"
+                android:background="@drawable/btn_next"
+                android:text="@string/install_cer"
+                android:textColor="@color/btn_login_text"
+                 />
+            <TextView
+                android:id="@+id/zan_no_anzhuang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/dp_20"
+                android:text="@string/no_install"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

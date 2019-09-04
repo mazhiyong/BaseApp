@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:fitsSystemWindows="true"
+              android:background="@color/white"
+    >
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_20"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:background="@color/white"
+        android:checkedButton="@+id/rb_but1"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/rb_but1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
+            android:text="@string/all"
+            android:textColor="@drawable/order_title_font" />
+
+        <RadioButton
+            android:id="@+id/rb_but2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
+            android:text="@string/zhaopai"
+            android:textColor="@drawable/order_title_font" />
+        <RadioButton
+            android:id="@+id/rb_but3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
+            android:text="@string/zhushi"
+            android:textColor="@drawable/order_title_font" />
+        <RadioButton
+            android:id="@+id/rb_but4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
+            android:text="@string/xiaochi"
+            android:textColor="@drawable/order_title_font" />
+        <RadioButton
+            android:id="@+id/rb_but5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
+            android:text="@string/yinpin"
+            android:textColor="@drawable/order_title_font" />
+    </RadioGroup>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/food_manager_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ></androidx.viewpager.widget.ViewPager>
+
+</LinearLayout>

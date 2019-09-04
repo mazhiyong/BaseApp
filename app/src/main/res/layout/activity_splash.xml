@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <ImageView
+        android:id="@+id/splash_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="fitXY"
+        android:background="@drawable/splash_bg" />
+
+    <ImageView
+        android:id="@+id/splash_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_120"
+        android:background="@drawable/ic_launcher"
+        android:visibility="invisible" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/splash_logo"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/dp_50" >
+
+        <ImageView
+            android:id="@+id/splash_loading_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:src="@drawable/ic_launcher"
+            android:textColor="@color/white" 
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/version_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_22"
+        android:gravity="center_horizontal"
+        android:text="1.0"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+    <com.lr.biyou.mywidget.view.CountDownProgressView
+        android:id="@+id/countdownProgressView"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:textSize="@dimen/sp_12"
+        app:circSolidColor="@color/divide_line"
+        app:circFrameColor="@color/divide_line"
+        app:progressColor="@color/font_c"
+        app:textColor1="@color/font_c"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_25"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_alignParentRight="true"
+
+        />
+
+    <LinearLayout
+        android:id="@+id/tiaoguo_lay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:paddingRight="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_1"
+        android:paddingLeft="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_1"
+        android:background="@drawable/tiaoguo_bg"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="跳过:"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small_text_size2" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="3"
+            android:paddingLeft="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_5"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small_text_size2"  />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="秒"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small_text_size2" />
+
+    </LinearLayout>
+</RelativeLayout>

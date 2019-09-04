@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/resuse_des_edit"
+            android:layout_alignRight="@+id/resuse_des_edit"
+            android:gravity="right"
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/black"
+            android:text="@string/chexiao_title"
+            android:textSize="@dimen/sp_15" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divide_hight"
+            android:background="@color/divide_line"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/refuse_edit_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white" >
+
+        <EditText
+            android:id="@+id/resuse_des_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/refuse_edit_hint"
+            android:textSize="@dimen/sp_14"
+            android:padding="@dimen/item_padding"
+            android:gravity="left|top"
+            android:background="@null"
+            android:minLines="4"
+            />
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/resuse_des_edit"
+            android:layout_alignRight="@+id/resuse_des_edit"
+            android:gravity="right"
+            android:padding="@dimen/dp_10"
+            android:textColor="@color/gray_text2"
+            android:text="100"
+            android:textSize="@dimen/sp_12" />
+        <View
+            android:layout_below="@+id/resuse_des_edit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0_5"
+            android:background="@color/divide_line"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/cancle_but"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/but_height"
+            android:layout_weight="1"
+            android:textSize="@dimen/sp_17"
+            android:text="@string/but_cancle"
+            android:background="@drawable/btn_trade_reset"/>
+        <Button
+            android:id="@+id/submit_but"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/but_height"
+            android:layout_weight="1"
+            android:textSize="@dimen/sp_17"
+            android:textColor="@color/white"
+            android:text="@string/but_submit"
+            android:background="@drawable/btn_trade_sure"/>
+
+    </LinearLayout>
+</LinearLayout>

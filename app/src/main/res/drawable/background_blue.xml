@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:width="@dimen/dp_80" android:height="@dimen/dp_20">
+        <shape android:shape="rectangle">
+            <stroke android:width="@dimen/dp_1" android:color="@color/btn_login_normal" />
+            <corners android:radius="@dimen/dp_5" />
+        </shape>
+    </item>
+
+</selector>

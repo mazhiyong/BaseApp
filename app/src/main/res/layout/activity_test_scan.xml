@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+    <cn.bingoogolapple.qrcode.zxing.ZXingView
+        android:id="@+id/zxingview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:qrcv_animTime="1000"
+        app:qrcv_barCodeTipText="将条码放入框内，即可自动扫描"
+        app:qrcv_barcodeRectHeight="@dimen/dp_120"
+        app:qrcv_borderColor="@android:color/white"
+        app:qrcv_borderSize="@dimen/dp_1"
+        app:qrcv_cornerColor="@color/font_c"
+        app:qrcv_cornerDisplayType="center"
+        app:qrcv_cornerLength="@dimen/dp_20"
+        app:qrcv_cornerSize="@dimen/dp_3"
+        app:qrcv_customScanLineDrawable="@drawable/scan_icon_scanline"
+        app:qrcv_isAutoZoom="true"
+        app:qrcv_isBarcode="false"
+        app:qrcv_isOnlyDecodeScanBoxArea="false"
+        app:qrcv_isScanLineReverse="true"
+        app:qrcv_isShowDefaultGridScanLineDrawable="false"
+        app:qrcv_isShowDefaultScanLineDrawable="true"
+        app:qrcv_isShowLocationPoint="true"
+        app:qrcv_isShowTipBackground="true"
+        app:qrcv_isShowTipTextAsSingleLine="false"
+        app:qrcv_isTipTextBelowRect="true"
+        app:qrcv_maskColor="#66000000"
+        app:qrcv_qrCodeTipText="将二维码/条码放入框内，即可自动扫描"
+        app:qrcv_rectWidth="@dimen/dp_220"
+        app:qrcv_scanLineColor="@color/colorPrimaryDark"
+        app:qrcv_scanLineMargin="0dp"
+        app:qrcv_scanLineSize="@dimen/dp_0_5"
+        app:qrcv_tipTextColor="@android:color/white"
+        app:qrcv_tipTextSize="12sp"
+        app:qrcv_topOffset="@dimen/dp_65"
+        app:qrcv_verticalBias="0.5"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="bottom"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/light_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_close"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/dp_140"
+            android:padding="@dimen/dp_30"
+
+            />
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/select_image_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="从相册选取二维码"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp_50"
+        android:textSize="@dimen/sp_12"
+        android:visibility="gone"
+        android:padding="@dimen/dp_5"
+        android:background="@drawable/btn_next"/>
+    <LinearLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_item_height"
+        android:orientation="horizontal" >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent">
+
+            <LinearLayout
+                android:id="@+id/left_back_lay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/dp_14"
+                android:paddingRight="@dimen/dp_10"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/back_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/back_arrow_w"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:contentDescription="@null"
+                    />
+
+                <TextView
+                    android:id="@+id/back_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/white"
+                    android:text="@string/but_back"/>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/title_text"
+                style="@style/title_text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_140"
+                android:textColor="@color/black"
+                android:text="@string/action_settings"
+                android:singleLine="true"
+                />
+
+            <LinearLayout
+                android:id="@+id/right_lay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/right_text_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_gravity="center"/>
+
+                <ImageView
+                    android:id="@+id/right_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:layout_gravity="center"
+                    android:paddingLeft="@dimen/dp_5"
+                    android:paddingRight="@dimen/dp_15"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+
+            <View
+                android:id="@+id/divide_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:layout_alignParentBottom="true"
+                android:visibility="invisible"
+                android:background="@color/divide_line"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/dp_10"
+        android:background="#66000000"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/flashLightLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/flashLightIv"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                app:srcCompat="@drawable/ic_close" />
+
+            <TextView
+                android:id="@+id/flashLightTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:gravity="center"
+                android:text="打开闪光灯"
+                android:textSize="@dimen/sp_12"
+                android:textColor="#ffffff" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/albumLayout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/albumIv"
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:tint="#ffffffff"
+                app:srcCompat="@drawable/ic_photo" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:gravity="center"
+                android:text="相册"
+                android:textSize="@dimen/sp_12"
+                android:textColor="#ffffff" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</RelativeLayout>

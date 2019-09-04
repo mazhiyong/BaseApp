@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/content_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/dp_10"
+        android:orientation="horizontal">
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:orientation="vertical"
+            >
+
+
+            <TextView
+                android:id="@+id/name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_loading_value"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_text_15"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/divide_hight"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"/>
+
+        <CheckBox
+            android:id="@+id/check_box"
+            android:layout_width="@dimen/dp_20"
+            android:layout_height="@dimen/dp_20"
+            android:gravity="right"
+            android:checked="true"
+            android:button="@null"
+            android:layout_gravity="center_vertical|right"
+            android:background="@drawable/cart_select_selector"/>
+
+    </LinearLayout>
+
+</LinearLayout>

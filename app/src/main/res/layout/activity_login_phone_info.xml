@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+              android:orientation="vertical"
+                android:background="@color/body_bg"
+                >
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+
+    <ScrollView
+        android:id="@+id/personal_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/body_bg"
+
+        android:fadingEdge="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/my_image"
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="@dimen/dp_150"
+                android:src="@drawable/phone_logo"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_60"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_10"
+                android:textColor="@color/black"
+                android:text="@string/bind_phone_num"/>
+
+            <TextView
+                android:id="@+id/login_phone_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_15"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_10"
+                android:text="******"/>
+
+
+
+
+            <Button
+                android:id="@+id/but_checkl"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/but_height"
+                android:layout_marginTop="@dimen/dp_18"
+                android:layout_marginLeft="@dimen/dp_18"
+                android:layout_marginRight="@dimen/dp_18"
+                android:background="@drawable/btn_next"
+                android:text="@string/change_phone_num"
+                android:textSize="@dimen/sp_17"
+                android:textColor="@color/btn_login_text"
+                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_18"
+                android:layout_marginRight="@dimen/dp_18"
+                android:text="@string/phone_change_tip"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

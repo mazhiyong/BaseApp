@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:id="@+id/jiantou_lay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <com.flyco.dialog.view.TriangleView
+            android:id="@+id/triangle_view"
+            android:layout_gravity="center"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_12"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_below="@+id/jiantou_lay"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_bubble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5"
+            android:lineSpacingExtra="@dimen/dp_3"
+            android:textColor="@color/white"
+            android:textSize="12sp"/>
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

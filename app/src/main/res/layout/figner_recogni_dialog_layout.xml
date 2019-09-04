@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="@dimen/dp_180"
+              android:minHeight="@dimen/dp_120"
+              android:minWidth="@dimen/dp_180"
+              android:layout_gravity="center"
+              android:orientation="vertical"
+              android:background="@drawable/background_corners"
+              android:layout_height="@dimen/dp_120">
+
+    <ImageView
+        android:layout_width="@dimen/dp_25"
+        android:src="@drawable/finger"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_gravity="center"
+        android:layout_height="@dimen/dp_25"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/dp_6"
+        android:textSize="14sp"
+        android:id="@+id/tvshow_finger_message"
+        android:layout_gravity="center"
+        android:textColor="#222222"
+        android:textStyle="bold"
+        android:text="@string/finger_show_msg"
+        android:layout_height="@dimen/dp_18"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:textSize="12sp"
+        android:layout_gravity="center"
+        android:textColor="#222222"
+        android:text="@string/finger_recogni_tip"
+        android:layout_height="@dimen/dp_16"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:background="#C9C9C9"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginBottom="@dimen/dp_8"
+        android:layout_height="@dimen/divide_hight"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="@string/but_cancle"
+        android:id="@+id/tvcancel_finger_recogn"
+        android:layout_gravity="center"
+        android:textSize="16sp"
+
+        android:layout_height="wrap_content"/>
+</LinearLayout>

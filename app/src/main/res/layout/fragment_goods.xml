@@ -1,0 +1,138 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="hello_blank_fragment" />
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/but_test"
+        android:visibility="gone"
+        android:text="test"/>
+
+    <com.github.jdsjlzx.recyclerview.LRecyclerView
+        android:id="@+id/refresh_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_bar_view"
+        android:background="@color/body_bg">
+
+    </com.github.jdsjlzx.recyclerview.LRecyclerView>
+
+
+    <ImageView
+        android:id="@+id/cart_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dp_80"
+        android:visibility="gone"
+        android:src="@drawable/bau"/>
+
+    <TextView
+        android:id="@+id/list_cart_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/cart_view"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_centerHorizontal="true"
+        android:text="1"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textSize="@dimen/small_text_size"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/title_bar_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_item_height"
+        android:layout_alignParentTop="true"
+        android:background="@color/greenyellow"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/city_lay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/dp_5"
+                android:src="@drawable/ic_launcher"
+                 />
+
+            <TextView
+                android:id="@+id/city_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/dp_8"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/index_search_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_3"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/icon_search"
+            android:drawablePadding="@dimen/dp_5"
+            android:padding="@dimen/dp_5"
+            android:text="搜索商品"
+            android:textColor="@color/grey" />
+
+        <LinearLayout
+            android:id="@+id/index_kind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="@dimen/dp_28"
+                android:layout_height="@dimen/dp_28"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="@dimen/dp_5"
+                android:text="登录" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingRight="@dimen/dp_5"
+                android:text="分类"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/index_search_button"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_5"
+            android:background="@color/transparent"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_launcher"
+            android:visibility="gone" />
+    </LinearLayout>
+</RelativeLayout>

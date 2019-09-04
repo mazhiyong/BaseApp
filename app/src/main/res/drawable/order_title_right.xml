@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_enabled="false"><shape>
+            <corners android:bottomLeftRadius="0dp" android:bottomRightRadius="@dimen/dp_10" android:topLeftRadius="0dp" android:topRightRadius="@dimen/dp_10" />
+            <solid android:color="@color/white" />
+            <stroke android:width="@dimen/dp_1" android:color="@color/font_c" />
+        </shape>
+    </item>
+    <item android:state_pressed="true"><shape>
+            <corners android:bottomLeftRadius="0dp" android:bottomRightRadius="@dimen/dp_10" android:topLeftRadius="0dp" android:topRightRadius="@dimen/dp_10" />
+            <solid android:color="@color/font_c" />
+            <stroke android:width="@dimen/dp_1" android:color="@color/font_c" />
+        </shape>
+    </item>
+       <item android:state_checked="true"><shape>
+            <corners android:bottomLeftRadius="0dp" android:bottomRightRadius="@dimen/dp_10" android:topLeftRadius="0dp" android:topRightRadius="@dimen/dp_10" />
+            <solid android:color="@color/font_c" />
+            <stroke android:width="@dimen/dp_1" android:color="@color/font_c" />
+        </shape>
+    </item>
+    <item><shape>
+            <corners android:bottomLeftRadius="0dp" android:bottomRightRadius="@dimen/dp_10" android:topLeftRadius="0dp" android:topRightRadius="@dimen/dp_10" />
+            <solid android:color="@color/white" />
+            <stroke android:width="@dimen/dp_1" android:color="@color/font_c" />
+        </shape>
+    </item>
+
+</selector>

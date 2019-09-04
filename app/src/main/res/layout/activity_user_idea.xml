@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:fitsSystemWindows="true"
+    >
+
+    <com.lr.biyou.mywidget.view.PageView
+        android:id="@+id/page_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+            <com.github.jdsjlzx.recyclerview.LRecyclerView
+                android:id="@+id/refresh_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            </com.github.jdsjlzx.recyclerview.LRecyclerView>
+
+
+            <LinearLayout
+                android:id="@+id/editTextBodyLl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@color/btn_green_pressed"
+                >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="@dimen/dp_5"
+                    >
+
+                    <EditText
+                        android:id="@+id/circleEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_6"
+                        android:layout_weight="1"
+                        android:background="@color/transparent"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="@dimen/small_middle_text_size"
+                        android:hint="send_comment"
+                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:layout_below="@+id/circleEt"
+                        android:background="@color/whitesmoke"></View>
+                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/sendTv"
+                    android:layout_width="@dimen/dp_50"
+                    android:layout_height="@dimen/dp_35"
+                    android:layout_marginLeft="@dimen/dp_6"
+                    android:gravity="center"
+                    android:padding="@dimen/dp_5"
+                    android:src="@drawable/ic_launcher"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </com.lr.biyou.mywidget.view.PageView>
+</RelativeLayout>

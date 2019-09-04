@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivEmptyContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:adjustViewBounds="true"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_empty"
+        app:layout_constraintBottom_toTopOf="@id/tvEmptyContent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_percent="0.3" />
+
+    <TextView
+        android:id="@+id/tvEmptyContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="暂无相关数据"
+        android:textColor="@color/colorGray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/ivEmptyContent"
+        app:layout_constraintStart_toStartOf="@id/ivEmptyContent"
+        app:layout_constraintTop_toBottomOf="@id/ivEmptyContent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

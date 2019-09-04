@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/body_bg"
+                android:clipToPadding="false">
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+
+    <ProgressBar
+        android:id="@+id/pb_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dp_2"
+        android:indeterminateOnly="false"
+        android:layout_below="@+id/top_layout"
+        android:max="100" >
+    </ProgressBar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/pb_bar"
+        android:orientation="vertical" >
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/tips_bg"
+        android:layout_centerInParent="true"
+        android:padding="@dimen/dp_15"
+        >
+
+        <ImageView
+            android:id="@+id/load_imageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/loading_anim"
+            android:layout_gravity="center"
+            android:textColor="@color/white" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_15"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="正在解析，请稍后"/>
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

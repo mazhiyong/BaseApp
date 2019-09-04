@@ -1,0 +1,42 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="@dimen/dp_10" />
+
+            <gradient
+                android:angle="0"
+                android:centerColor="@color/btn_login_disabled"
+                android:centerY="0.75"
+                android:endColor="@color/btn_login_disabled"
+                android:startColor="@color/btn_login_disabled" />
+        </shape>
+    </item>
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <shape>
+                <corners android:radius="@dimen/dp_10" />
+
+                <gradient
+                    android:angle="0"
+                    android:centerColor="@color/magenta"
+                    android:centerY="0.75"
+                    android:endColor="@color/magenta"
+                    android:startColor="@color/magenta" />
+            </shape>
+        </clip>
+    </item>
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="@dimen/dp_10" />
+
+                <gradient
+                    android:angle="0"
+                    android:endColor="@color/font_c"
+                    android:startColor="@color/font_c" />
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>

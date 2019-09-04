@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/dp_10"
+    app:cardElevation="@dimen/dp_2"
+    app:cardPreventCornerOverlap="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text=""
+            android:textColor="@color/btn_login_normal"
+            android:textSize="16sp" />
+
+        <View
+            android:id="@+id/divide"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@id/tv_title"
+            android:background="@color/divide_line" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:background="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divide"
+            android:padding="@dimen/dp_20"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="@dimen/dp_15" />
+
+
+        <View
+            android:id="@+id/divide2"
+            android:layout_below="@+id/tv_message"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divide_line" />
+
+        <LinearLayout
+            android:id="@+id/bottom_lay"
+            android:layout_below="@+id/divide2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/but_height"
+                android:layout_weight="1"
+                android:background="@drawable/btn_trade_reset"
+                android:text="取消"
+                android:layout_margin="@dimen/dp_5"
+                android:textSize="@dimen/small_middle_text_size"
+                android:textColor="@color/gray_text3" />
+
+            <View
+                android:id="@+id/divide3"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="@color/divide_line" />
+
+            <Button
+                android:id="@+id/confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/but_height"
+                android:layout_weight="1"
+                android:background="@drawable/btn_trade_sure"
+                android:text="@string/but_sure"
+                android:layout_margin="@dimen/dp_5"
+                android:textSize="@dimen/small_middle_text_size"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

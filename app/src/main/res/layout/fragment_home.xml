@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsvAllView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorGray8"
+            android:fillViewport="true"
+            android:focusable="true"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <View
+                    android:id="@+id/clTopView"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_0"
+                    android:background="@color/colorWhite"
+                    app:layout_constraintBottom_toBottomOf="@id/vpQuotesInfo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/xBanner" />
+
+                <com.stx.xhb.xbanner.XBanner
+                    android:id="@+id/xBanner"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_160"
+                    app:AutoPlayTime="3000"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    app:isClipChildrenMode="true"
+                    app:isShowIndicatorOnlyOne="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:pageChangeDuration="1000"
+                    app:placeholderDrawable="@drawable/icon1_banner"
+                    app:pointContainerPosition="BOTTOM"
+                    app:pointLeftRightPadding="0dp"
+                    app:pointNormal="@drawable/shape_point_normal"
+                    app:pointSelect="@drawable/shape_point_select"
+                    app:pointsContainerBackground="@color/colorTransparent"
+                    app:pointsPosition="CENTER"
+                    app:tipTextSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/ivHomeNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_0"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@null"
+                    android:src="@drawable/icon1_tongzhi"
+                    app:layout_constraintBottom_toBottomOf="@id/marqueeView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/marqueeView" />
+
+                <com.sunfusheng.marqueeview.MarqueeView
+                    android:id="@+id/marqueeView"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:paddingStart="@dimen/dp_5"
+                    android:paddingEnd="@dimen/dp_5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/tvMore"
+                    app:layout_constraintStart_toEndOf="@id/ivHomeNews"
+                    app:layout_constraintTop_toBottomOf="@id/xBanner"
+                    app:mvAnimDuration="1000"
+                    app:mvDirection="bottom_to_top"
+                    app:mvInterval="5000"
+                    app:mvSingleLine="true"
+                    app:mvTextColor="@color/normalColor"
+                    app:mvTextSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tvMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp_15"
+                    android:text="@string/more_set"
+                    android:textColor="@color/colorBlue"
+                    app:layout_constraintBottom_toBottomOf="@id/ivHomeNews"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/marqueeView"
+                    app:layout_constraintTop_toTopOf="@id/ivHomeNews" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/dp_15"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:layout_marginEnd="@dimen/dp_15"
+                    android:background="@color/colorGray8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/marqueeView" />
+
+                <include
+                    android:id="@+id/llItemCoin"
+                    layout="@layout/item_coin_info"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view3" />
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/vpQuotesInfo"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@id/llItemCoin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/llItemCoin" />
+
+                <LinearLayout
+                    android:id="@+id/ivInvite"
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:padding="@dimen/dp_5"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_invite_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/vpQuotesInfo" >
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_weight="2"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:layout_marginRight="@dimen/dp_5"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:layout_height="@dimen/dp_80">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_5"
+                            android:layout_gravity="center_vertical"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:text="快捷买币"
+                                android:layout_gravity="center_vertical"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/sp_22"
+                                android:textColor="@color/black"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:layout_marginTop="@dimen/dp_10"
+                                android:layout_width="wrap_content"
+                                android:text="支持BTC、ETH、USDT购买"
+                                android:layout_gravity="center_vertical"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/sp_12"
+                                android:textColor="@color/gray_light"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                        <ImageView
+                            android:layout_gravity="center_vertical"
+                            android:src="@drawable/icon_pay"
+                            android:layout_width="@dimen/dp_45"
+                            android:layout_height="@dimen/dp_45" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginLeft="@dimen/dp_5"
+                        android:layout_marginRight="@dimen/dp_5"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_height="@dimen/dp_80">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp_5"
+                            android:background="@color/white"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="@dimen/dp_25"
+                                android:src="@drawable/icon_a2_s"
+                                android:layout_gravity="center_vertical"
+                                android:layout_height="@dimen/dp_25" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:text="币币交易"
+                                android:layout_marginLeft="@dimen/dp_10"
+                                android:layout_gravity="center_vertical"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/black"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp_5"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@color/white"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="@dimen/dp_25"
+                                android:src="@drawable/icon_a3_s"
+                                android:layout_gravity="center_vertical"
+                                android:layout_height="@dimen/dp_25" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:text="合约交易"
+                                android:layout_marginLeft="@dimen/dp_10"
+                                android:layout_gravity="center_vertical"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/black"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+                
+                
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tlRank"
+                    android:background="@color/white"
+                    android:layout_width="@dimen/dp_0"
+                    app:tabMode="fixed"
+                    android:layout_height="@dimen/dp_40"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivInvite"
+                    app:tabSelectedTextColor="@color/colorBlue" />
+
+                <LinearLayout
+                    android:id="@+id/lay2"
+                    app:layout_constraintTop_toBottomOf="@id/tlRank"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:padding="@dimen/dp_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/textView56"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:layout_height="wrap_content"
+                        android:text="名称"
+                        android:textColor="@color/colorGray2" />
+
+                    <TextView
+                        android:id="@+id/textView57"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="价格"
+                        android:textColor="@color/colorGray2" />
+
+                    <TextView
+                        android:id="@+id/textView58"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:text="涨幅榜" />
+
+                </LinearLayout>
+
+                <com.lr.biyou.mywidget.view.PageView
+                    android:id="@+id/page_view"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lay2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                    <LinearLayout
+                        android:id="@+id/content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical" >
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvList"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:layout_marginRight="@dimen/dp_10"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                        </androidx.recyclerview.widget.RecyclerView>
+                    </LinearLayout>
+                </com.lr.biyou.mywidget.view.PageView>
+
+                <LinearLayout
+                    android:id="@+id/llRankPlace"
+                    android:layout_width="0dp"
+                    android:layout_height="12dp"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lay2">
+
+                    <include layout="@layout/item_rank" />
+
+                    <include layout="@layout/item_rank" />
+
+                    <include layout="@layout/item_rank" />
+
+                    <include layout="@layout/item_rank" />
+
+                    <include layout="@layout/item_rank" />
+
+                    <include layout="@layout/item_rank" />
+
+                    <include layout="@layout/item_rank" />
+
+                    <include layout="@layout/item_rank" />
+
+                    <include layout="@layout/item_rank" />
+
+                    <include layout="@layout/item_rank" />
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <include
+            android:id="@+id/clLoadingView"
+            layout="@layout/layout_loading"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/clErrorView"
+            layout="@layout/layout_error"
+            android:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+

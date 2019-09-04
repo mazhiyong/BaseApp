@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--tools:openDrawer="start">-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBlack2">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clToolbar"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:padding="@dimen/dp_5"
+                android:src="@drawable/icon_back2"
+                app:layout_constraintBottom_toBottomOf="@id/toolBar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/toolBar" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolBar"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="@dimen/dp_46"
+                app:layout_constraintEnd_toStartOf="@id/ivSelf"
+                app:layout_constraintStart_toEndOf="@id/ivBack"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvCoinName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="币种名称"
+                    android:textColor="@color/colorWhite1"
+                    android:textSize="@dimen/sp_16" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <ImageView
+                android:id="@+id/ivSelf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/selector_self"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/toolBar"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_0"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toTopOf="@id/llOperate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/clToolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_10"
+                    app:layout_constraintBottom_toBottomOf="@id/llPrice"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.6">
+
+                    <TextView
+                        android:id="@+id/tvCoinPrice"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="@dimen/sp_24"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/tvCnyPrice"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="spread" />
+
+                    <TextView
+                        android:id="@+id/tvCnyPrice"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:text="@string/defaultCny5"
+                        android:textColor="@color/colorBlack3"
+                        android:textSize="@dimen/sp_13"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/tvUpRatio"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvCoinPrice" />
+
+                    <TextView
+                        android:id="@+id/tvUpRatio"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:text="0.00 %"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="@dimen/sp_13"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tvCnyPrice"
+                        app:layout_constraintTop_toBottomOf="@id/tvCoinPrice" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/llPrice"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp_5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent="0.4">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_5">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="高"
+                            android:textColor="@color/colorBlack3"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvHighPrice"
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0.00"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/sp_13"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/textView"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_5">
+
+                        <TextView
+                            android:id="@+id/textView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="低"
+                            android:textColor="@color/colorBlack3"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvLowPrice"
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0.00"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/sp_13"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/textView1"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/dp_5">
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="24H"
+                            android:textColor="@color/colorBlack3"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv24H"
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0.00"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/sp_13"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/textView2"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tlTimeChoose"
+                    style="@style/tablayout_kline"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_40"
+                    app:layout_constraintEnd_toStartOf="@id/ivKlineSet"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/llPrice"
+                    app:tabSelectedTextColor="@color/colorBlue" />
+
+                <ImageView
+                    android:id="@+id/ivKlineSet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_40"
+                    android:adjustViewBounds="true"
+                    android:padding="@dimen/dp_5"
+                    android:src="@drawable/ic_kline_setting"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tlTimeChoose" />
+
+                <com.github.fujianlian.klinechart.KLineChartView
+                    android:id="@+id/kLineChartView"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_0"
+                    android:paddingEnd="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tlTimeChoose" />
+
+                <TextView
+                    android:id="@+id/tvDataNotice"
+                    android:layout_width="@dimen/dp_0"
+                    android:layout_height="@dimen/dp_0"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintBottom_toBottomOf="@id/kLineChartView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/kLineChartView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/llOperate"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlack4"
+            android:padding="@dimen/dp_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/tvBuyIn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_fall_bg"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="买入"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvSellOut"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_weight="1"
+                android:background="@drawable/shape_rise_bg"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="卖出"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/colorBlack4">
+
+        <TextView
+            android:id="@+id/rbCoinCoin"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="币币"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tlLeftCoinTitle"
+            style="@style/tablayout_home_left"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_40"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rbCoinCoin"
+            app:tabSelectedTextColor="@color/colorBlue" />
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:longClickable="false"
+            android:drawableStart="@drawable/icon_sou2"
+            android:drawablePadding="@dimen/dp_5"
+            android:hint="搜索币种"
+            android:padding="@dimen/dp_5"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorBlack3"
+            android:textSize="@dimen/sp_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivClear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tlLeftCoinTitle" />
+
+        <ImageView
+            android:id="@+id/ivClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_5"
+            android:src="@drawable/icon0_guanbi"
+            app:layout_constraintBottom_toBottomOf="@id/etSearch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/etSearch"
+            app:layout_constraintTop_toTopOf="@id/etSearch" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCoinType"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etSearch"
+            tools:listitem="@layout/item_coin_type" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

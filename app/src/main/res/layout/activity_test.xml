@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue1">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="hello_blank_fragment" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/but_testdd"
+        android:text="testddd"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/but_height"
+        android:background="@drawable/btn_ok"
+        android:text="登 录"
+        android:textColor="@color/btn_login_text"
+        android:enabled="false"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_selected="true">
+        <shape>
+            <corners android:bottomLeftRadius="@dimen/dp_30" android:bottomRightRadius="@dimen/dp_30" android:topLeftRadius="@dimen/dp_30" android:topRightRadius="@dimen/dp_30" />
+
+            <solid android:color="@color/but_bg" />
+
+            <stroke android:width="2px" android:color="@color/font_c" />
+        </shape>
+    </item>
+    <item android:state_enabled="false">
+        <shape>
+            <corners android:bottomLeftRadius="@dimen/dp_30" android:bottomRightRadius="@dimen/dp_30" android:topLeftRadius="@dimen/dp_30" android:topRightRadius="@dimen/dp_30" />
+
+            <solid android:color="@color/type_bg2" />
+
+            <stroke android:width="2px" android:color="@color/divide_line" />
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape>
+            <corners android:bottomLeftRadius="@dimen/dp_30" android:bottomRightRadius="@dimen/dp_30" android:topLeftRadius="@dimen/dp_30" android:topRightRadius="@dimen/dp_30" />
+
+            <solid android:color="@color/but_bg" />
+
+            <stroke android:width="2px" android:color="@color/font_c" />
+        </shape>
+    </item>
+    <item android:state_checked="true">
+        <shape>
+            <corners android:bottomLeftRadius="@dimen/dp_30" android:bottomRightRadius="@dimen/dp_30" android:topLeftRadius="@dimen/dp_30" android:topRightRadius="@dimen/dp_30" />
+
+            <solid android:color="@color/but_bg" />
+
+            <stroke android:width="2px" android:color="@color/font_c" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <corners android:bottomLeftRadius="@dimen/dp_30" android:bottomRightRadius="@dimen/dp_30" android:topLeftRadius="@dimen/dp_30" android:topRightRadius="@dimen/dp_30" />
+
+            <solid android:color="@color/type_bg2" />
+
+            <stroke android:width="2px" android:color="@color/type_bg2" />
+        </shape>
+    </item>
+
+</selector>

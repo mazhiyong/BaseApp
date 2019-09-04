@@ -1,0 +1,36 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.versions['compileSdkVersion']
+    buildToolsVersion rootProject.ext.versions['buildToolsVersion']
+    useLibrary 'org.apache.http.legacy'
+    defaultConfig {
+        minSdkVersion rootProject.ext.versions['minSdkVersion']
+        targetSdkVersion rootProject.ext.versions['targetSdkVersion']
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets{
+        main{
+            jniLibs.srcDir(['libs'])
+        }
+    }
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0-alpha4', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    testImplementation rootProject.ext.dependencies['junit']
+}

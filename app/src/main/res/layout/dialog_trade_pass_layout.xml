@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:background="@color/body_bg"
+              android:orientation="vertical"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dp_10"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/dp_10"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/black"
+            android:text="支付密码"/>
+
+
+    </LinearLayout>
+
+    <com.lr.biyou.mywidget.view.PasswordEditText
+        android:id="@+id/password_edit_text"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dp_23"
+        android:layout_marginRight="@dimen/dp_45"
+        android:background="@null"
+        android:padding="@dimen/dp_10"
+        app:bgCorner="@dimen/dp_1"
+        app:bgColor="@color/gray_text3"
+        app:divisionLineColor="@color/gray_text3"
+        app:divisionLineSize="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/dp_45"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:id="@+id/forget_trade_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="忘记密码?"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/blue"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_15"
+
+        />
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divide_hight"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@color/divide_line"/>
+    <com.lr.biyou.mywidget.view.CustomerKeyboard
+        android:id="@+id/custom_key_board"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:layout_gravity="bottom"/>
+
+
+
+</LinearLayout>

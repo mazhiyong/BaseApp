@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+
+    >
+
+    <TextView
+        android:id="@+id/tv_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <View
+        android:id="@+id/divide"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/tv_one"
+        android:background="@color/divide_line" />
+
+    <TextView
+        android:id="@+id/tv_two"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divide"
+        android:padding="@dimen/dp_20"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="@dimen/dp_3"
+        android:textSize="@dimen/dp_15" />
+
+
+
+
+
+    <View
+        android:id="@+id/divide2"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@+id/tv_two"
+        android:background="@color/divide_line" />
+
+    <LinearLayout
+        android:id="@+id/bottom_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divide2"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/but_height"
+            android:layout_weight="1"
+            android:background="@color/body_bg"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10"
+            android:text="取消"
+            android:textSize="@dimen/small_middle_text_size"
+            android:layout_margin="@dimen/dp_10"
+            android:textColor="@color/gray" />
+
+        <View
+            android:id="@+id/divide3"
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@color/divide_line" />
+
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/but_height"
+            android:layout_weight="1"
+            android:background="@drawable/btn_next"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10"
+            android:text="@string/but_sure"
+            android:textSize="@dimen/small_middle_text_size"
+            android:layout_margin="@dimen/dp_10"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</RelativeLayout>

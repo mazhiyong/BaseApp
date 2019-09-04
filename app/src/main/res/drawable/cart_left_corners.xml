@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<item android:state_enabled="false"><shape>
+            <corners android:bottomLeftRadius="5px" android:bottomRightRadius="0px" android:topLeftRadius="5px" android:topRightRadius="0px" />
+
+            <solid android:color="@color/title_bg" />
+
+            <stroke android:width="2px" android:color="@color/title_bg" />
+        </shape></item>
+    <item android:state_pressed="true"><shape>
+            <corners android:bottomLeftRadius="5px" android:bottomRightRadius="0px" android:topLeftRadius="5px" android:topRightRadius="0px" />
+
+            <solid android:color="@color/title_bg" />
+
+            <stroke android:width="2px" android:color="@color/title_bg" />
+        </shape></item>
+          <item android:state_checked="true"><shape>
+            <corners android:bottomLeftRadius="5px" android:bottomRightRadius="0px" android:topLeftRadius="5px" android:topRightRadius="0px" />
+
+            <solid android:color="@color/title_bg" />
+
+            <stroke android:width="2px" android:color="@color/title_bg" />
+        </shape></item>
+    <item><shape>
+            <corners android:bottomLeftRadius="5px" android:bottomRightRadius="0px" android:topLeftRadius="5px" android:topRightRadius="0px" />
+
+            <solid android:color="@color/white" />
+
+            <stroke android:width="2px" android:color="@color/title_bg" />
+        </shape></item>-->
+
+
+    <item android:state_enabled="false">
+        <shape
+            android:shape="oval"
+            android:useLevel="false">
+            <solid android:color="@color/line" />
+            <stroke
+                android:width="@dimen/dp_1"
+                android:color="@color/line" />
+            <size
+                android:width="@dimen/dp_10"
+                android:height="@dimen/dp_10" />
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape
+            android:shape="oval">
+            <solid android:color="@color/line" />
+            <size
+                android:width="@dimen/dp_10"
+                android:height="@dimen/dp_10" />
+        </shape>
+    </item>
+    <item android:state_checked="true">
+        <shape
+            android:shape="oval">
+            <solid android:color="@color/line" />
+            <size
+                android:width="@dimen/dp_10"
+                android:height="@dimen/dp_10" />
+        </shape>
+    </item>
+    <item>
+        <shape
+            android:shape="oval"
+            android:useLevel="false">
+            <solid android:color="@color/line" />
+            <stroke
+                android:width="@dimen/dp_1"
+                android:color="@color/line" />
+            <size
+                android:width="@dimen/dp_10"
+                android:height="@dimen/dp_10" />
+        </shape>
+    </item>
+
+</selector>

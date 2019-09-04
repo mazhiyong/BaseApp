@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <shape
+            android:shape="oval"
+            android:useLevel= "false">
+            <solid android:color="@color/white70" />
+            <stroke
+                android:width="@dimen/dp_1"
+                android:color="#fcfcfc" />
+            <size
+                android:width="@dimen/dp_10"
+                android:height="@dimen/dp_10" />
+        </shape>
+    </item>
+    <item android:state_enabled="false">
+        <shape
+            android:shape="oval"
+            android:useLevel="false">
+            <solid android:color="@color/white70" />
+            <stroke
+                android:width="@dimen/dp_1"
+                android:color="#fcfcfc" />
+            <size
+                android:width="@dimen/dp_10"
+                android:height="@dimen/dp_10" />
+        </shape>
+    </item>
+    <item android:state_pressed="true">
+        <shape
+            android:shape="oval"
+            android:useLevel= "false">
+            <solid android:color="@color/white70" />
+            <stroke
+                android:width="@dimen/dp_1"
+                android:color="#fcfcfc" />
+            <size
+                android:width="@dimen/dp_10"
+                android:height="@dimen/dp_10" />
+        </shape>
+    </item>
+
+    <item>
+        <shape
+            android:shape="oval"
+            android:useLevel="false">
+            <solid android:color="@color/white70" />
+            <stroke
+                android:width="@dimen/dp_1"
+                android:color="#fcfcfc" />
+            <size
+                android:width="@dimen/dp_10"
+                android:height="@dimen/dp_10" />
+        </shape>
+    </item>
+
+
+
+</selector>

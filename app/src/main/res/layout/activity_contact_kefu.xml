@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+
+        <ImageView
+            android:id="@+id/code_iv"
+            android:layout_width="@dimen/dp_245"
+            android:layout_marginTop="@dimen/dp_45"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="@dimen/dp_245" />
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_30"
+            android:layout_marginRight="@dimen/dp_30"
+            android:lineSpacingExtra="@dimen/dp_5"
+            android:layout_width="match_parent"
+            android:gravity="center_horizontal"
+            android:text="扫一扫上面的二维码图案，加我微信"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/sp_12"
+            android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

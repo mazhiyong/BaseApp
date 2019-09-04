@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/body_bg"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/login_phone_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
+        android:clickable="true"
+        android:layout_marginTop="@dimen/dp_20"
+        app:cardPreventCornerOverlap="false"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/white"
+        android:background="@color/white"
+        android:focusable="false">
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_item_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:padding="@dimen/dp_10"
+                android:scaleType="centerInside"
+                />
+
+            <TextView
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:gravity="left|center_vertical"
+                android:text="@string/finger_login" />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_marginRight="@dimen/dp_10"
+                android:id="@+id/switch_finger_login"
+                android:thumb="@drawable/switch_selector"
+                android:track="@drawable/switch_track_selector"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="12sp"
+        android:layout_margin="@dimen/dp_10"
+        android:text="@string/finger_tips"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

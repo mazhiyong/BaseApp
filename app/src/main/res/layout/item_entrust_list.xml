@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvEntrustTime"
+        android:layout_width="@dimen/dp_90"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace8"
+        android:padding="@dimen/dp_3"
+        android:textColorHint="@color/colorWhite" />
+
+    <TextView
+        android:id="@+id/tvCoinInfo"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace2"
+        android:padding="@dimen/dp_3"
+        android:textColorHint="@color/colorWhite" />
+
+    <TextView
+        android:id="@+id/tvTradeDec"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace3"
+        android:padding="@dimen/dp_3"
+        android:textColorHint="@color/colorWhite" />
+
+    <TextView
+        android:id="@+id/tvEntrustNumber"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace4"
+        android:padding="@dimen/dp_3"
+        android:textColorHint="@color/colorWhite" />
+
+    <TextView
+        android:id="@+id/tvEntrustAmount"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace4"
+        android:padding="@dimen/dp_3"
+        android:textColorHint="@color/colorWhite" />
+
+    <TextView
+        android:id="@+id/tvTradeedAmount"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace5"
+        android:padding="@dimen/dp_3"
+        android:textColorHint="@color/colorWhite" />
+
+    <TextView
+        android:id="@+id/tvEntrustPrice"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace6"
+        android:padding="@dimen/dp_3"
+        android:textColorHint="@color/colorWhite" />
+
+    <TextView
+        android:id="@+id/tvEntrustStatus"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/defaultPlace7"
+        android:padding="@dimen/dp_3"
+        android:textColorHint="@color/colorWhite" />
+</LinearLayout>

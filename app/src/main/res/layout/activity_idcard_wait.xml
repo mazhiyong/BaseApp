@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/body_bg"
+    >
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+
+    <ScrollView
+        android:id="@+id/personal_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/body_bg"
+
+        android:fadingEdge="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+
+
+            <ImageView
+                android:id="@+id/my_image"
+                android:layout_width="@dimen/dp_150"
+                android:layout_height="wrap_content"
+                android:src="@drawable/idcard_result_logo"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_40"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dp_15"
+                android:textColor="@color/black"
+                android:text="@string/submit_success"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/dp_20"
+                android:text="@string/wait_tip"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/service_phone"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

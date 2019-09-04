@@ -1,0 +1,15 @@
+<resources>
+    <string name="connect_fail">连接错误</string>
+    <string name="connect_out_time">连接超时</string>
+    <string name="server_error">服务器忙,稍后再试</string>
+    <string name="copy_success">复制成功</string>
+    <string name="copy_fail">复制失败</string>
+
+    <!--自定义状态视图-->
+    <string name="text_empty">还没有数据呢！</string>
+    <string name="load_failed">加载失败，请点我重试</string>
+    <string name="loading">加载中…</string>
+    <string name="text_nonet">网络异常！</string>
+    <string name="text_retry">点击重试</string>
+
+</resources>
