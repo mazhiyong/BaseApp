@@ -40,7 +40,6 @@ public class FBTradeListAdapter extends ListBaseAdapter {
     public FBTradeListAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
         mContext = context;
-        LogUtilDebug.i("show", "init adapter");
     }
 
     @Override
@@ -52,7 +51,7 @@ public class FBTradeListAdapter extends ListBaseAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final Map<String, Object> item = mDataList.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
-        String type = item.get("kind")+"";
+        String type = item.get("direction")+"";
         if (type.equals("0")){
             viewHolder.tvBuy.setBackgroundResource(R.drawable.btn_next);
             viewHolder.tvBuy.setText("购买");
@@ -62,8 +61,8 @@ public class FBTradeListAdapter extends ListBaseAdapter {
         }
         viewHolder.nameTv.setText(item.get("name") + "");
         viewHolder.tvPrice.setText(UtilTools.getRMBMoney(item.get("price")+""));
-        viewHolder.tvProgress.setText("进度 "+item.get("progress"));
-        viewHolder.tvNumber.setText("数量 " + item.get("number")+"  "+item.get("type"));
+        viewHolder.tvProgress.setText("进度 "+item.get("tempo"));
+        viewHolder.tvNumber.setText("数量 " + item.get("number")+"  "+item.get("symbol"));
 
 //        viewHolder.itemLay.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -81,25 +80,44 @@ public class FBTradeListAdapter extends ListBaseAdapter {
                 }
             }
         });
+        if ((item.get("bank")+"").equals("0")){
+            viewHolder.ivQianbao.setVisibility(View.GONE);
+        }else {
+            viewHolder.ivQianbao.setVisibility(View.VISIBLE);
+        }
+
+        if ((item.get("alipay")+"").equals("0")){
+            viewHolder.ivAlipay.setVisibility(View.GONE);
+        }else {
+            viewHolder.ivAlipay.setVisibility(View.VISIBLE);
+        }
+
+        if ((item.get("wechat")+"").equals("0")){
+            viewHolder.ivWeipay.setVisibility(View.GONE);
+        }else {
+            viewHolder.ivWeipay.setVisibility(View.VISIBLE);
+        }
+
+
 
         viewHolder.ivQianbao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext,"钱包",Toast.LENGTH_LONG).show();
+                //Toast.makeText(mContext,"钱包支付",Toast.LENGTH_LONG).show();
             }
         });
 
         viewHolder.ivAlipay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext,"支付宝",Toast.LENGTH_LONG).show();
+                //Toast.makeText(mContext,"支付宝",Toast.LENGTH_LONG).show();
             }
         });
 
         viewHolder.ivWeipay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext,"微信",Toast.LENGTH_LONG).show();
+                //Toast.makeText(mContext,"微信",Toast.LENGTH_LONG).show();
             }
         });
 

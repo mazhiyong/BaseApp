@@ -252,7 +252,7 @@ public class MyShouMoneyActivity extends BasicActivity implements RequestView, R
                         ((LineDataFragment2) fragments[index]).getShouMoneyInfoLine();
                         break;
                     case 1:
-                        ((FBTradeFragment) fragments[index]).getShouMoneyInfoList();
+
                         break;
                 }
             }

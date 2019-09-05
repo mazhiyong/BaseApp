@@ -171,7 +171,13 @@ public class MethodUrl {
     public static final String NOTICE_LIST_ITEM = "Home/noticeDetails";//公告列表
     public static final String LIST_INFO = "Home/listInfo";//首页实时数据
 
+
+
+
     public static final String USER_INFO = "Personal/index";//获取用户基本信息
+    public static final String USER_HEAD_IMAGE = "Personal/portrait";//用户头像上传
+    public static final String USER_NAME = "Personal/editName";//修改昵称
+    public static final String UPDATE_PAYCODE = "Personal/editPwd";//修改支付密码
     public static final String IS_IDENTITY = "Personal/isIdentity";//是否实名认证
     public static final String IDENTITY_ACTIVE = "Personal/identityActive";//实名认证操作
     public static final String PAY_WAY_LIST = "Personal/paymentMethod";//收款方式列表
@@ -180,8 +186,10 @@ public class MethodUrl {
     public static final String UPDATE_ALIPAY = "Personal/alipayEdit";//添加支付宝支付方式
     public static final String UPDATE_WECHAT = "Personal/wechatEdit";//添加微信支付方式
     public static final String CONTACT_US = "Personal/contactUs";//联系我们
+    public static final String ABOUT_US = "Personal/aboutUs";//关于我们
     public static final String INVIAT_ATION = "Personal/invitation";//邀请链接
-    public static final String EDIT_ACCOUNT = "Personal/editAccount";//修改账户
+    public static final String EDIT_ACCOUNT = "Personal/editAccount";//修改账户手机号
+    public static final String SAFE_CENTER = "Personal/safetyCenter";//安全中心
 
 
 
@@ -215,7 +223,14 @@ public class MethodUrl {
 
 
     public static final String OTC_TRADE = "Outside/getPair";//法币列表交易区
-    public static final String FB_ENTRUSTLIST = "Outside/myEntrust";//法币买卖挂单列表
+    public static final String HISTORY_DINGDAN = "Outside/myMatch";//订单历史
+    public static final String FB_ENTRUSTLIST = "Outside/entrustList";//法币买卖挂单列表
+    public static final String USER_ENTRUSTLIST = "Outside/myEntrust";//用户挂单记录
+    public static final String USER_ENTRUST_DEAL = "outside_trade/index";//买卖挂单操作
+    public static final String USER_BUY_DEAL = "outside_trade/tradeEntrust";//用户买卖操作
+    public static final String DING_INFO = "outside_trade/tradeMatch";//订单详情
+
+
 
 
 

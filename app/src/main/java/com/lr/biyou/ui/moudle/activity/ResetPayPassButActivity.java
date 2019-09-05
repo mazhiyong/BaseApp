@@ -20,10 +20,16 @@ import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
+import com.lr.biyou.ui.moudle1.activity.UserInfoActivity;
+import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.secret.RSAUtils;
+import com.lr.biyou.utils.tool.JSONUtil;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.RegexUtil;
+import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 import com.jaeger.library.StatusBarUtil;
+import com.zhangke.websocket.util.LogUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,15 +75,16 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
     View divideLine;
     @BindView(R.id.et_old_password)
     EditText etOldPassword;
+    @BindView(R.id.old_lay)
+    LinearLayout oldLay;
 
 
-    private String mAuthCode = "";
-    private String mPhone = "";
+
     private String mType = "";
-    private String mKind = "";
-    private String mInvcode = "";
 
     private String mRequestTag = "";
+
+    private  String paycode = "";
 
 
     @Override
@@ -90,26 +97,23 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle != null) {
-            mAuthCode = bundle.getString("authcode") + "";
-            mPhone = bundle.getString("phone") + "";
-            mType = bundle.getString("type") + "";
-            mKind = bundle.getString("kind") + "";
-            mInvcode = bundle.getString("invcode") + "";
-        }
-
         mTitleText.setText("安全中心");
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
 
-//        //重置密码
-//        if (mType.equals("0")) {
-//            mTitleText.setText(getResources().getString(R.string.reset_login_pass));
-//        } else { //设置密码
-//            mTitleText.setText(getResources().getString(R.string.set_login_pass));
-//        }
+        if (!UtilTools.empty(MbsConstans.PAY_CODE)){
+            paycode = MbsConstans.PAY_CODE;
+        }else {
+            paycode = SPUtils.get(ResetPayPassButActivity.this, MbsConstans.SharedInfoConstans.PAY_CODE, "").toString();
+        }
+
+        if (UtilTools.empty(paycode)){ //设置支付密码
+            mType = "0";
+            oldLay.setVisibility(View.GONE);
+        }else {
+            mType = "1";
+            oldLay.setVisibility(View.VISIBLE); //重置支付密码
+        }
 
 
         mTogglePwd1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -144,22 +148,40 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
     }
 
 
-    private void submitAction() {
-        if (mType.equals("0")) {
-            mRequestTag = MethodUrl.RESET_PASSWORD;
-        } else {
-            mRequestTag = MethodUrl.REGIST_ACTION;
+    /**
+     * 获取用户信息
+     */
+    private void getUserInfoAction() {
+        mRequestTag = MethodUrl.USER_INFO;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(ResetPayPassButActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
-        String password = mNewPassEdit.getText() + "";
-        String passwordAgain = mNewPassAgainEdit.getText() + "";
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_INFO, map);
+    }
 
 
-        if (UtilTools.isEmpty(mNewPassEdit, getString(R.string.pass_word))) {
+    private void submitAction() {
+        mRequestTag = MethodUrl.UPDATE_PAYCODE;
+
+        String oldpassword =etOldPassword.getText().toString();
+        String password = etPassword.getText().toString();
+        String passwordAgain = etPasswordAgain.getText().toString();
+        if (mType.equals("1") && UtilTools.empty(oldpassword)) {
+            showToastMsg("请输入原支付密码");
+            return;
+        }
+
+        if (UtilTools.empty(password)) {
+            showToastMsg("请输入支付密码");
             return;
         }
 
 
-        if (UtilTools.isEmpty(mNewPassAgainEdit, getString(R.string.pass_word))) {
+        if (UtilTools.empty(passwordAgain)) {
+            showToastMsg("请再次输入支付密码");
             return;
         }
         if (!password.equals(passwordAgain)) {
@@ -167,7 +189,7 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
             return;
         }
 
-        int s = RegexUtil.isLetterDigit(password);
+        /*int s = RegexUtil.isLetterDigit(password);
         switch (s) {
             case 0:
                 break;
@@ -180,27 +202,22 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
             case 3:
                 showToastMsg(getResources().getString(R.string.set_new_pass_tip));
                 return;
-        }
+        }*/
 
         // String pass = AESHelper.encrypt(password, AESHelper.password);
-        String pass = RSAUtils.encryptContent(password, RSAUtils.publicKey);
+        //String pass = RSAUtils.encryptContent(password, RSAUtils.publicKey);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        //注册
-        if (mType.equals("1")) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("authcode", mAuthCode);
-            map.put("password", pass);
-            map.put("telephone", mPhone);
-            map.put("firmkind", mKind);
-            map.put("invcode", mInvcode);
-            mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.REGIST_ACTION, map);
-        } else { //重置密码
-            Map<String, String> map = new HashMap<>();
-            map.put("authcode", mAuthCode);
-            map.put("password", pass);
-            map.put("tel", mPhone);
-            mRequestPresenterImp.requestPutToRes(mHeaderMap, MethodUrl.RESET_PASSWORD, map);
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(ResetPayPassButActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("old_password",oldpassword);
+        map.put("payment_password",password);
+        map.put("repayment_password",passwordAgain);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.UPDATE_PAYCODE, map);
+
+        paycode = password;
 
     }
 
@@ -215,7 +232,7 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
                 finish();
                 break;
             case R.id.bt_sure:
-                //submitAction();
+                submitAction();
                 break;
 
         }
@@ -236,20 +253,51 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         Intent intent;
         switch (mType) {
-            case MethodUrl.RESET_PASSWORD:
-                showToastMsg("重置密码成功");
-                //backTo(LoginActivity.class, false);
-                closeAllActivity();
+            case MethodUrl.UPDATE_PAYCODE:
+                switch (tData.get("code")+""){
+                    case "0": //请求成功
+                        if (mType.equals("0")){
+                            showToastMsg("设置成功");
+                        }else {
+                            showToastMsg("重置成功");
+                        }
 
-                intent = new Intent(ResetPayPassButActivity.this, LoginActivity.class);
-                startActivity(intent);
+                        SPUtils.put(ResetPayPassButActivity.this, MbsConstans.SharedInfoConstans.PAY_CODE, paycode);
+
+                        finish();
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(ResetPayPassButActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+
+                }
                 break;
-            case MethodUrl.REGIST_ACTION:
-                showToastMsg("注册成功");
-                closeAllActivity();
+            case MethodUrl.USER_INFO:
+                switch (tData.get("code")+""){
+                    case "0": //请求成功
+                        MbsConstans.USER_MAP = (Map<String, Object>) tData.get("data");
+                        if (!UtilTools.empty(MbsConstans.USER_MAP)){
+                            SPUtils.put(ResetPayPassButActivity.this, MbsConstans.SharedInfoConstans.LOGIN_INFO, JSONUtil.getInstance().objectToJson(MbsConstans.USER_MAP));
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg")+"");
+                        break;
 
-                intent = new Intent(ResetPayPassButActivity.this, LoginActivity.class);
-                startActivity(intent);
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(ResetPayPassButActivity.this, LoginActivity.class);
+                        startActivity(intent);
+
+                        break;
+
+                }
                 break;
             case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
                 MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
@@ -269,10 +317,5 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
         dealFailInfo(map, mType);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

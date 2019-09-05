@@ -17,7 +17,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.github.fujianlian.klinechart.draw.MACDDraw;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.lr.biyou.R;
@@ -34,7 +33,6 @@ import com.lr.biyou.ui.moudle3.fragment.HeYueFragment;
 import com.lr.biyou.ui.moudle1.fragment.HomeFragment;
 import com.lr.biyou.ui.moudle4.fragment.OTCFragment;
 import com.lr.biyou.ui.moudle5.fragment.ZiChanFragment;
-import com.lr.biyou.ui.temporary.activity.UserInfoActivity;
 import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;
 import com.lr.biyou.utils.tool.JSONUtil;
@@ -54,8 +52,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 
 public class MainActivity extends BasicActivity implements RequestView {
     @BindView(R.id.btn_cart)
@@ -201,7 +197,7 @@ public class MainActivity extends BasicActivity implements RequestView {
         mRequestTag = MethodUrl.USER_INFO;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(MainActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();

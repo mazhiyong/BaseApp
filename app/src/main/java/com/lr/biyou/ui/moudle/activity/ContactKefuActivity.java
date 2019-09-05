@@ -82,7 +82,7 @@ public class ContactKefuActivity extends BasicActivity implements RequestView, S
         mRequestTag = MethodUrl.CONTACT_US;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(ContactKefuActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(ContactKefuActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();

@@ -226,7 +226,7 @@
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 用户信息页面 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.UserInfoActivity"
+            android:name="com.lr.biyou.ui.moudle1.activity.UserInfoActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 用户信息页面 -->
@@ -989,6 +989,15 @@
         <!--  委托列表  -->
         <activity
             android:name="com.lr.biyou.ui.moudle4.activity.WeiTuoListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
+
+        <!--  修改昵称  -->
+        <activity
+            android:name=".ui.moudle.activity.UpdateNichengActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">

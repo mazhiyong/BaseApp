@@ -41,12 +41,15 @@ import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.BankCardSelectDialog;
 import com.lr.biyou.mywidget.dialog.CancelDialog;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.ui.moudle.activity.ResetPayPassButActivity;
 import com.lr.biyou.ui.temporary.activity.ApplyAmountActivity;
 import com.lr.biyou.ui.temporary.activity.PDFLookActivity;
 import com.lr.biyou.ui.temporary.activity.ResultMoneyActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
+import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
 import com.jaeger.library.StatusBarUtil;
@@ -152,6 +155,9 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
     View zhanghuIne;
     @BindView(R.id.count_tv)
     TextView countTv;
+    @BindView(R.id.icon)
+    ImageView Icon;
+
 
     private String mRequestTag = "";
 
@@ -188,6 +194,11 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
 
     private String mPayType = "2";
 
+
+    private String mID = "";
+    //订单状态：0待支付，1已付款 2已完成 4超时取消 5卖家取消 6买家取消
+    private String status = "0";
+
     @Override
     public int getContentView() {
         return R.layout.pay_money_layout;
@@ -219,6 +230,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
 
         if (bundle != null) {
             String kind = bundle.getString("kind");
+            mID = bundle.getString("id");
             if (!UtilTools.empty(kind) && kind.equals("0")) {
                 payTypeTv.setText("请付款");
                 payTimeTv.setText("请在15:00内完成付款");
@@ -265,8 +277,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
         });
 
         showProgressDialog();
-        //bankCardInfoAction();
-        //getConfigAction();
+        getDingdanInfoAction();
     }
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
@@ -282,59 +293,21 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
     };
 
 
-    /**
-     * 服务协议的显示信息
-     */
-    private void setXieyi() {
-
-        String tip = "已阅读并同意《还款申请书》";
-        int dian = tip.length();
-        if (tip.contains("《")) {
-            dian = tip.indexOf("《");
-        } else {
-            dian = tip.length();
-        }
-
-       /* 用来标识在 Span 范围内的文本前后输入新的字符时是否把它们也应用这个效果
-        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE(前后都不包括)
-        Spanned.SPAN_INCLUSIVE_EXCLUSIVE(前面包括，后面不包括)
-        Spanned.SPAN_EXCLUSIVE_INCLUSIVE(前面不包括，后面包括)
-        Spanned.SPAN_INCLUSIVE_INCLUSIVE(前后都包括)*/
-        SpannableString ss = new SpannableString(tip);
-        ss.setSpan(new TextSpanClick(false), dian, tip.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.data_col)), 0, dian, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.xiey_color)), dian, tip.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mXieyiTv.setText(ss);
-        //添加点击事件时，必须设置
-        mXieyiTv.setMovementMethod(LinkMovementMethod.getInstance());
-
-        mXieyiCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // mButNext.setEnabled(true);
-                } else {
-                    //mButNext.setEnabled(false);
-                }
-            }
-        });
-        mArrowView.setVisibility(View.INVISIBLE);
-
-    }
-
 
     /**
      * 获取还款申请配置信息
      */
-    private void getConfigAction() {
-        // mButNext.setEnabled(false);
+    private void getDingdanInfoAction() {
 
-        mRequestTag = MethodUrl.repayConfig;
-        Map<String, String> map = new HashMap<>();
-        map.put("loansqid", mDataMap.get("loansqid") + "");
+        mRequestTag = MethodUrl.DING_INFO;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(PayMoneyActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("id",mID);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestGetToMap(mHeaderMap, MethodUrl.repayConfig, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.DING_INFO, map);
     }
 
     /**
@@ -361,132 +334,9 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
         showProgressDialog();
     }
 
-    /**
-     * 生成还款申请书
-     */
-    private void createRepay() {
-
-        if (UtilTools.isEmpty(mTvRepayCapital, "金额")) {
-            showToastMsg("金额不能为空");
-            //mButNext.setEnabled(true);
-            return;
-        }
-        String money = mTvRepayCapital.getText() + "";
-
-        double shuru = Double.valueOf(money);
-        if (shuru > mMoney) {
-            showToastMsg("输入金额不能大于" + UtilTools.fromDouble(mMoney) + "元");
-            //mButNext.setEnabled(true);
-            return;
-        }
-        /*double lx = UtilTools.divide(mRequestLixi,100);
-
-        double allMoney = UtilTools.add(shuru,lx);
-        if(allMoney > mYuEMoney){
-            showToastMsg("账户余额不足");
-            mButNext.setEnabled(true);
-            return;
-        }*/
-        if (shuru == 0) {
-            showToastMsg("输入余额不能为0");
-            //mButNext.setEnabled(true);
-            return;
-        }
-
-        if (UtilTools.empty(mZhifuNameTv.getText().toString().trim())) {
-            showToastMsg("请选择支付方式");
-            //mButNext.setEnabled(true);
-            return;
-        }
 
 
-        mYuanyin = mYuanyinET.getText().toString().trim();
 
-        mRequestTag = MethodUrl.repayCreate;
-        Map<String, Object> map = new HashMap<>();
-        map.put("loansqid", mDataMap.get("loansqid") + "");//借款编号
-        map.put("backbejn", mTvRepayCapital.getText() + "");//归还本金
-        map.put("memo", mYuanyin);  //还款原因
-        double l = UtilTools.divide(Double.valueOf(mRequestLixi), 100);
-        map.put("backlixi", l + "");//归还利息
-        map.put("backtype", mPayType);
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.repayCreate, map);
-        showProgressDialog();
-    }
-
-    /**
-     * 获取用户银行卡列表
-     */
-    private void bankCardInfoAction() {
-        mRequestTag = MethodUrl.bankCard;
-        Map<String, String> map = new HashMap<>();
-        Map<String, String> mHeadermap = new HashMap<>();
-        mRequestPresenterImp.requestGetToRes(mHeadermap, MethodUrl.bankCard, map);
-        showProgressDialog();
-    }
-
-    /**
-     * 还款提交申请
-     */
-    private void submitData() {
-
-        if (!mXieyiCheckBox.isChecked()) {
-            //mButNext.setEnabled(true);
-            showToastMsg(getResources().getString(R.string.xieyi_tips));
-            return;
-        }
-
-        mRequestTag = MethodUrl.repayApply;
-        Map<String, Object> map = new HashMap<>();
-        map.put("rtnbillid", mPayCreateMap.get("rtnbillid") + "");//还款申请编号
-        map.put("loansqid", mDataMap.get("loansqid") + "");//借款编号
-        map.put("backbejn", mBenjin + "");//归还本金
-        map.put("memo", mYuanyin);  //还款原因
-        double l = UtilTools.divide(Double.valueOf(mLixi), 100);
-        map.put("backlixi", l + "");//归还利息
-        map.put("backtype", mPayType);//还款账户类型(1：结算账户还款;2：资金账户还款
-        mHuankuanMap = map;
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        LogUtilDebug.i("还款参数打印", map);
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.repayApply, map);
-        showProgressDialog();
-    }
-
-    /**
-     * 余额查询
-     */
-    private void YueMoney() {
-        mRequestTag = MethodUrl.allZichan;
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        Map<String, String> map = new HashMap<>();
-        //还款账户类型(1：结算账户还款;2：资金账户还款
-        if ((mZhifuNameTv.getText().toString().trim()).equals("结算账户还款")) {
-            // map.put("qry_type","accid");
-            // map.put("accid",mBankMap.get("accid")+"");
-        } else {
-            map.put("qry_type", "acct");
-        }
-        mRequestPresenterImp.requestGetToMap(mHeaderMap, MethodUrl.allZichan, map);
-        showProgressDialog();
-    }
-
-
-    //二类户余额查询
-    private void erLeiHuMoney() {
-        if (mBankMap == null || mBankMap.isEmpty()) {
-            showToastMsg("请选择支付方式");
-            return;
-        }
-
-        mRequestTag = MethodUrl.erleiMoney;
-        Map<String, String> map = new HashMap<>();
-        map.put("patncode", mBankMap.get("patncode") + "");
-        map.put("crdno", mBankMap.get("accid") + "");
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestGetToMap(mHeaderMap, MethodUrl.erleiMoney, map);
-        showProgressDialog();
-    }
 
     @Override
     public void viewEnable() {
@@ -513,45 +363,6 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
         return values;
     }
 
-    /**
-     * 显示银行卡信息
-     */
-    private void showCard(String str) {
-       /* Spannable mSpannableString = new SpannableString(str);
-
-        //匹配小括号里面内容
-        List<Map<String, Object>> values = this.getBeginAndEnd(
-                Pattern.compile("(?<=\\()[^\\)]+"), str);
-
-        if (values == null || values.size() <= 0) {
-            values = this.getBeginAndEnd(Pattern.compile("(?<=\\()[^\\)]+"), str);
-        }
-
-
-        for (Map<String, Object> value : values) {
-            int begin = Integer.parseInt(value.get("BEGIN").toString());
-            int end = Integer.parseInt(value.get("END").toString());
-             mSpannableString.setSpan(new AbsoluteSizeSpan(UtilTools.sp2px(this,12)), begin, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            // mSpannableString.setSpan(new
-            // StyleSpan(android.graphics.Typeface.BOLD), begin, end,
-            // Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //粗体
-            mSpannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this,R.color.black)), begin, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); // 设置前景色为洋红色
-
-        }
-        mZhifuNameTv.setText(mSpannableString);*/
-
-
-        Spannable mSpan = new SpannableString(str);
-        List<Map<String, Object>> values2 = this.getBeginAndEnd(Pattern.compile("\\d+"), str);
-        for (Map<String, Object> value : values2) {
-            int begin = Integer.parseInt(value.get("BEGIN").toString());
-            int end = Integer.parseInt(value.get("END").toString());
-            mSpan.setSpan(new AbsoluteSizeSpan(UtilTools.sp2px(this, 16)), begin, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            mSpan.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.gray_text2)), begin, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);  //设置前景色为洋红色
-        }
-        mZhifuNameTv.setText(mSpan);
-
-    }
 
     @OnClick({R.id.cancel, R.id.order, R.id.back_img, R.id.iv_select_pay, R.id.left_back_lay, R.id.toggle_money})
     public void onViewClicked(View view) {
@@ -563,71 +374,9 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
             case R.id.order://完成付款
 
                 break;
-
-            case R.id.toggle_money:
-                boolean b = mToggleMoney.isSelected();
-                if (!b) {
-                    //erLeiHuMoney();
-                    YueMoney();
-                    mYueTv.setText(MbsConstans.RMB + " " + UtilTools.getNormalMoney("0"));
-                    mToggleMoney.setSelected(true);
-
-                } else {
-                    mToggleMoney.setSelected(false);
-                    mYueTv.setText("****");
-                }
-                break;
-            case R.id.iv_select_pay:
-               /* if (mDialog != null){
-                    mDialog.showAtLocation(Gravity.BOTTOM,0,0);
-                }else {
-                    bankCardInfoAction();
-                    mIsShow = true;
-                }*/
-                //选择支付方式   还款账户类型(0：银行卡; 1 支付宝 2 微信支付  )
-                List<Map<String, Object>> mTypeList = SelectDataUtil.getPayWayValues();
-
-
-                mKindSelectDialog = new KindSelectDialog(this, true, mTypeList, 10);
-                mKindSelectDialog.setSelectBackListener(this);
-                mKindSelectDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
-                break;
-//            case R.id.but_next:
-//                //mButNext.setEnabled(false);
-//                if (mType.equals("1")) {
-//                    //submitData();
-//                    if (!mXieyiCheckBox.isChecked()) {
-//                       // mButNext.setEnabled(true);
-//                        showToastMsg(getResources().getString(R.string.xieyi_tips));
-//                        return;
-//                    }
-//                    if (isCheck) {
-//                        submitData();
-//                    } else {
-//
-//                        PermissionsUtils.requsetRunPermission(PayMoneyActivity.this, new RePermissionResultBack() {
-//                            @Override
-//                            public void requestSuccess() {
-//                                netWorkWarranty();
-//                            }
-//
-//                            @Override
-//                            public void requestFailer() {
-//                                toast(R.string.failure);
-//                                //mButNext.setEnabled(true);
-//                            }
-//                        }, Permission.Group.CAMERA, Permission.Group.STORAGE);
-//
-//
-//                    }
-//                    //enterNextPage();
-//                    // submitData();
-//                } else {
-//                    createRepay();
-//                }
-//                break;
             case R.id.back_img:
                 finish();
+                break;
             case R.id.left_back_lay:
                 finish();
                 break;
@@ -647,367 +396,87 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
-
-        //{smstoken=sms_token@3948602038bb8ecf912e0ede4a577ebd, send_tel=151****3298}
         Intent intent;
         switch (mType) {
-            case MethodUrl.erleiMoney:
-                double yue = Double.valueOf(tData.get("acctbal") + "");
-                mYuEMoney = UtilTools.divide(yue, 100);
-                mYueTv.setText(MbsConstans.RMB + " " + UtilTools.getNormalMoney(tData.get("acctbal") + ""));
-                mToggleMoney.setSelected(true);
-                break;
-            case MethodUrl.bankCard:
-                String result = tData.get("result") + "";
-                if (UtilTools.empty(result)) {
+            case MethodUrl.DING_INFO:
+                switch (tData.get("code")+""){
+                    case "0": //请求成功
+                        Map<String,Object> mapData = (Map<String, Object>) tData.get("");
+                        if (!UtilTools.empty(mapData)){
+                            Map<String,Object> mapAppendInfo = (Map<String, Object>) mapData.get("appendinfo");
+                            if (!UtilTools.empty(mapAppendInfo)){
+                                payTimeTv.setText(mapAppendInfo.get("tips")+"");
+                                payTypeTv.setText(mapAppendInfo.get("title")+"");
+                                payMoneyTv.setText(UtilTools.getRMBMoney(mapAppendInfo.get("total")+""));
 
-                } else {
-                    mDataList = JSONUtil.getInstance().jsonToList(result);
-                }
-                if (mDataList != null && mDataList.size() > 0) {
+                                dingdanNumberTv.setText(mapAppendInfo.get("order")+"");
+                                dingdanMoneyTv.setText(UtilTools.getRMBMoney(mapAppendInfo.get("price")+""));
+                                dingdanAmountTv.setText(mapAppendInfo.get("number")+"");
 
-                    mBankList = new ArrayList<>(mDataList);
-                    /*for (Map<String,Object> mm : mDataList){
-                        String accid = mm.get("accid")+"";
-                        String isDefault = mm.get("isdefault")+"";
-                        if (!UtilTools.empty(accid) && isDefault.equals("1")){
+                                status = mapAppendInfo.get("status")+"";
+                                switch (mapAppendInfo.get("ico")+""){
+                                    case "1": //闹钟
+                                        Icon.setImageResource(R.drawable.wait);
+                                        break;
+                                    case "2": //对号
+                                        Icon.setImageResource(R.drawable.icon4_1yes);
+                                        break;
+                                    case "3": //叉号
+                                        Icon.setImageResource(R.drawable.icon4_1no);
 
-                            mBankList.add(mm);
+                                        break;
+                                }
+
+                            }
+
+                            Map<String,Object> mapBtn= (Map<String, Object>) mapData.get("btn");
+                            if (!UtilTools.empty(mapBtn)){
+                                cancel.setText(mapBtn.get("cancel")+"");
+                                order.setText(mapBtn.get("confirm")+"");
+                            }
+
+
+                            Map<String,Object> mapPayWay= (Map<String, Object>) mapData.get("receivables");
+
+
+
+
                         }
-                    }*/
-                    mBankMap = mBankList.get(0);
-                    mDialog = new BankCardSelectDialog(this, true, mBankList, 30);
-                    mDialog.setSelectBackListener(this);
-
-                    String accid = mBankMap.get("accid") + "";
-                    String weihao = accid.substring(accid.length() - 4, accid.length());
-                    String s = mBankMap.get("bankname") + "(" + weihao + ")";
-                    showCard(s);
-
-                    erLeiHuMoney();
-
-                    GlideUtils.loadImage(PayMoneyActivity.this, mBankMap.get("logopath") + "", mBankImageView);
-                    if (mIsShow) {
-                        mDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
-                    }
-                } else {
-                    showToastMsg("暂无银行卡信息");
-                }
-                mIsShow = false;
-                break;
-            case MethodUrl.repayApply://还款提交数据
-                isCheck = false;
-                showToastMsg("提交成功");
-                intent = new Intent(this, ResultMoneyActivity.class);
-                intent.putExtra(MbsConstans.ResultType.RESULT_KEY, MbsConstans.ResultType.RESULT_HUANKUAN);
-                intent.putExtra("DATA", (Serializable) mHuankuanMap);
-                startActivity(intent);
-                finish();
-                break;
-            case MethodUrl.repayCreate://生成还款申请书
-                intent = new Intent(PayMoneyActivity.this, PayMoneyActivity.class);
-                intent.putExtra("DATA", (Serializable) mDataMap);
-                intent.putExtra("DATA2", (Serializable) tData);
-                intent.putExtra("TYPE", "1");
-                intent.putExtra("LIXI", mRequestLixi + "");
-                intent.putExtra("BENJIN", mTvRepayCapital.getText() + "");
-                intent.putExtra("MAXMONEY", mMoney);
-                intent.putExtra("PAYTYPE", mPayType + "");
-                startActivity(intent);
-                //mButNext.setEnabled(true);
-                break;
-            case MethodUrl.repayLixi://利息
-
-                double lixi2 = Double.valueOf(tData.get("repaylx") + "");
-                mRequestLixi = lixi2;
-                double d2 = UtilTools.divide(lixi2, 100);
-                mTvPrincipal.setText(UtilTools.fromDouble(d2) + "");
-                break;
-            case MethodUrl.repayConfig://配置信息
-                //bankCardInfoAction();
-                //mButNext.setEnabled(true);
-
-                mPayConfig = tData;
-                double dd = Double.valueOf(mPayConfig.get("backbejn") + "");
-                mMoney = UtilTools.divide(dd, 100);
-                mTvRepayCapital.setText(UtilTools.fromDouble(mMoney) + "");
-
-                UtilTools.setMoneyEdit(mTvRepayCapital, mMoney);
-
-                double lixi = Double.valueOf(mPayConfig.get("repaylx") + "");
-                mRequestLixi = lixi;
-                double d = UtilTools.divide(lixi, 100);
-                mTvPrincipal.setText(UtilTools.fromDouble(d) + "");
-                mTvLoanBalance.setText(UtilTools.getRMBMoney(mPayConfig.get("backbejn") + ""));
 
 
-                String s = mPayConfig.get("zftype") + "";
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg")+"");
+                        break;
 
-                // 还款账户类型(1：结算账户还款;2：资金账户还款)
-                if (s.equals("0")) {
-                    mPayType = "1";
-                } else if (s.equals("1")) {
-                    mPayType = "2";
-                } else {
-                    mPayType = "2";
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(PayMoneyActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+
                 }
 
-                if (mPayType.equals("1")) {
-                    mZhanghuYueLay.setVisibility(View.GONE);
-                }
 
-                Map<String, Object> mTypeMap = SelectDataUtil.getMapByKey(mPayType, SelectDataUtil.getNameCodeByType("repayAcct"));
-                mZhifuNameTv.setText(mTypeMap.get(mPayType) + "");
                 break;
-            case MethodUrl.allZichan: //查询余额
-                mYueTv.setText(UtilTools.getRMBMoney(tData.get("use_amt") + ""));
-                mToggleMoney.setSelected(true);
-                break;
+
 
             case MethodUrl.REFRESH_TOKEN:
                 MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
                 mIsRefreshToken = false;
-                for (String stag : mRequestTagList) {
-                    switch (stag) {
-                        case MethodUrl.bankCard:
-                            //bankCardInfoAction();
-                            break;
-                        case MethodUrl.repayConfig:
-                            getConfigAction();
-                            break;
-                        case MethodUrl.repayApply://还款提交数据
-                            submitData();
-                            break;
-                        case MethodUrl.repayCreate://生成还款申请书
-                            createRepay();
-                            break;
-                        case MethodUrl.repayLixi://利息
-                            getLixiAction();
-                            break;
-                        case MethodUrl.erleiMoney:
-                            erLeiHuMoney();
-                            break;
-                        case MethodUrl.allZichan:
-                            YueMoney();
-                            break;
-                    }
-                }
-                mRequestTagList = new ArrayList<>();
                 break;
         }
     }
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
-
-        switch (mType) {
-            case MethodUrl.allZichan:
-                mToggleMoney.setSelected(false);
-                mYueTv.setText("****");
-                break;
-            case MethodUrl.erleiMoney:
-                mToggleMoney.setSelected(false);
-                mYueTv.setText("****");
-                break;
-            case MethodUrl.repayApply://还款提交数据
-                isCheck = false;
-                //mButNext.setEnabled(true);
-                finish();
-                break;
-            case MethodUrl.repayCreate://生成还款申请书
-                //mButNext.setEnabled(true);
-
-                break;
-            case MethodUrl.repayLixi://利息
-                break;
-            case MethodUrl.repayConfig://配置信息
-                //mButNext.setEnabled(false);
-                String msg = map.get("errmsg") + "";
-
-                break;
-        }
         dealFailInfo(map, mType);
         //mButNext.setEnabled(true);
     }
 
-
-   /* private TipMsgDialog mTipMsgDialog;
-    private void showZhangDialog(String msg){
-        if (mTipMsgDialog == null){
-            mTipMsgDialog = new TipMsgDialog(this,true);
-            mTipMsgDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-                @Override
-                public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                    if (keyCode==KeyEvent.KEYCODE_BACK&&event.getRepeatCount()==0) {
-                        dialog.dismiss();
-                        finish();
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                }
-            });
-            View.OnClickListener onClickListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    switch (v.getId()){
-                        case R.id.cancel:
-                            mTipMsgDialog.dismiss();
-                            finish();
-                            break;
-                        case R.id.confirm:
-                            mTipMsgDialog.dismiss();
-                            break;
-                        case R.id.tv_right:
-                            mTipMsgDialog.dismiss();
-                            finish();
-                            break;
-                    }
-                }
-            };
-            mTipMsgDialog.setCanceledOnTouchOutside(false);
-            mTipMsgDialog.setCancelable(true);
-            mTipMsgDialog.setOnClickListener(onClickListener);
-        }
-        mTipMsgDialog.initValue("温馨提示",msg);
-        mTipMsgDialog.show();
-    }*/
-
-
     @Override
     public void onSelectBackListener(Map<String, Object> map, int type) {
-        switch (type) {
-            case 30:
-                mBankMap = map;
-                erLeiHuMoney();
-                String accid = mBankMap.get("accid") + "";
-                String weihao = accid.substring(accid.length() - 4, accid.length());
-                String s = mBankMap.get("bankname") + "(" + weihao + ")";
-                showCard(s);
-                GlideUtils.loadImage(PayMoneyActivity.this, map.get("logopath") + "", mBankImageView);
-                break;
-            case 10:
-                mPayType = map.get("code") + "";
-                mZhifuNameTv.setText(map.get("name") + "");
-                if (mPayType.equals("0")){
-                    bankPayLay.setVisibility(View.VISIBLE);
-                    mobilePayLay.setVisibility(View.GONE);
-                    ivIcon.setImageResource(R.drawable.icon4_bank);
-                }
-                if (mPayType.equals("1")){
-                    bankPayLay.setVisibility(View.GONE);
-                    mobilePayLay.setVisibility(View.VISIBLE);
-                    ivIcon.setImageResource(R.drawable.icon4_alipay);
-                }
-                if (mPayType.equals("2")){
-                    bankPayLay.setVisibility(View.GONE);
-                    mobilePayLay.setVisibility(View.VISIBLE);
-                    ivIcon.setImageResource(R.drawable.icon4_wechat);
-                }
 
-
-                break;
-        }
-    }
-
-
-    private boolean isCheck = false;
-    private static final int PAGE_INTO_LIVENESS = 101;
-
-    private void enterNextPage() {
-        //startActivityForResult(new Intent(this, LivenessActivity.class), PAGE_INTO_LIVENESS);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
-        super.onActivityResult(requestCode, resultCode, data);
-
-        Intent intent = null;
-        Bundle bundle;
-        if (requestCode == 1) {
-            switch (resultCode) {//人脸识别还款
-                case MbsConstans.FaceType.FACE_CHECK_HUANKUAN:
-                    bundle = data.getExtras();
-                    if (bundle == null) {
-                        isCheck = false;
-                        //mButNext.setEnabled(true);
-                    } else {
-                        showProgress();
-                        isCheck = true;
-                        //mButNext.setEnabled(false);
-                        submitData();
-                    }
-                    break;
-                default:
-                    //mButNext.setEnabled(true);
-                    break;
-
-            }
-
-        } else if (requestCode == PAGE_INTO_LIVENESS) {//人脸识别返回来的数据
-            if (resultCode == RESULT_OK) {
-                bundle = data.getExtras();
-                bundle.putInt(MbsConstans.FaceType.FACE_KEY, MbsConstans.FaceType.FACE_CHECK_HUANKUAN);
-                intent = new Intent(PayMoneyActivity.this, ApplyAmountActivity.class);
-                intent.putExtras(bundle);
-                //设置返回数据
-                startActivityForResult(intent, 1);
-            } else {
-                //mButNext.setEnabled(true);
-            }
-        }
-    }
-
-    /**
-     * 联网授权
-     */
-    private void netWorkWarranty() {
-
-//        final String uuid = ConUtil.getUUIDString(this);
-//
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Manager manager = new Manager(PayMoneyActivity.this);
-//                LivenessLicenseManager licenseManager = new LivenessLicenseManager(PayMoneyActivity.this);
-//                manager.registerLicenseManager(licenseManager);
-//                manager.takeLicenseFromNetwork(uuid);
-//                if (licenseManager.checkCachedLicense() > 0) {
-//                    //授权成功
-//                    mHandler.sendEmptyMessage(1);
-//                } else {
-//                    //授权失败
-//                    mHandler.sendEmptyMessage(2);
-//                }
-//            }
-//        }).start();
-    }
-
-
-    @SuppressLint("HandlerLeak")
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-
-            switch (msg.what) {
-                case 1:
-                    enterNextPage();
-                    break;
-                case 2:
-                    showToastMsg("人脸验证授权失败");
-                    //mButNext.setEnabled(true);
-                    break;
-            }
-        }
-    };
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
 

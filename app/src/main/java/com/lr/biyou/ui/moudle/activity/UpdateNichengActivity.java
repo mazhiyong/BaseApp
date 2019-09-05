@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
@@ -20,7 +21,6 @@ import com.lr.biyou.bean.MessageEvent;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
-import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.ui.moudle1.activity.UserInfoActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.tool.JSONUtil;
@@ -38,7 +38,7 @@ import butterknife.OnClick;
 /**
  * 安全中心  二维码校验 界面
  */
-public class SecurityCheckActivity extends BasicActivity implements RequestView, SelectBackListener {
+public class UpdateNichengActivity extends BasicActivity implements RequestView, SelectBackListener {
     @BindView(R.id.back_img)
     ImageView mBackImg;
     @BindView(R.id.title_text)
@@ -74,7 +74,7 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
 
     @Override
     public int getContentView() {
-        return R.layout.activity_security_check;
+        return R.layout.activity_update_nicheng;
     }
 
     @Override
@@ -85,29 +85,12 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
 
         mTimeCount = new TimeCount(1 * 60 * 1000, 1000);
 
-        mTitleText.setText("安全中心");
+        mTitleText.setText("修改用户名");
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
 
-        Bundle bundle =getIntent().getExtras();
-       /* if (bundle != null){
-            type =bundle.getString("TYPE");
-            String account= bundle.getString("DATA");
-           *//* if (type.equals("0")){
-                etPhoneEmail.setHint("请输入邮箱帐号");
-            }else {
-                etPhoneEmail.setHint("请输入手机号");
-            }*//*
-            etPhoneEmail.setHint("请输入手机/邮箱帐号");
-            etPhoneEmail.setText(account);
-        }*/
-        etPhoneEmail.setHint("请输入手机/邮箱帐号");
 
     }
-
-
-
-
 
 
     @OnClick({R.id.back_img, R.id.left_back_lay,R.id.tv_code,R.id.bt_next})
@@ -123,13 +106,17 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
             case R.id.tv_code:
                 //获取短信验证码
                 if (UtilTools.empty(etPhoneEmail.getText().toString())){
-                    showToastMsg("请输入手机/邮箱账号");
+                    showToastMsg("请输入用户名信息");
                     return;
                 }
                 mTimeCount.start();
                 getMsgcodeAction();
                 break;
             case R.id.bt_next:
+                if (UtilTools.empty(etPhoneEmail.getText().toString())){
+                    showToastMsg("请输入用户名信息");
+                    return;
+                }
                 registAction();
                 break;
 
@@ -137,26 +124,16 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
     }
 
     private void registAction() {
-        if (UtilTools.empty(etPhoneEmail.getText().toString())){
-            showToastMsg("请输入手机/邮箱账号");
-            return;
-        }
-        if (UtilTools.empty(etCode.getText().toString())){
-            showToastMsg("请输入验证码");
-            return;
-        }
 
-
-        mRequestTag = MethodUrl.EDIT_ACCOUNT;
+        mRequestTag = MethodUrl.USER_NAME;
         Map<String,Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(SecurityCheckActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(UpdateNichengActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
-        map.put("account",etPhoneEmail.getText().toString());
-        map.put("code",etCode.getText().toString());
+        map.put("name",etPhoneEmail.getText().toString());
         Map<String, String> mHeaderMap = new HashMap<>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.EDIT_ACCOUNT, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_NAME, map);
 
     }
 
@@ -176,12 +153,13 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
         mRequestTag = MethodUrl.USER_INFO;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(SecurityCheckActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(UpdateNichengActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_INFO, map);
     }
+
 
 
     @Override
@@ -202,25 +180,12 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
                 showToastMsg(getResources().getString(R.string.code_phone_tip));
                 etCode.setText(tData.get("data")+"");
                 break;
-            case MethodUrl.EDIT_ACCOUNT:
-
+            case MethodUrl.USER_NAME:
                 switch (tData.get("code")+""){
                     case "0": //请求成功
-                        showToastMsg("账号修改成功");
+                        showToastMsg("修改成功");
+                        //MbsConstans.USER_MAP = (Map<String, Object>) tData.get("data");
                         getUserInfoAction();
-                        //SPUtils.put(SecurityCheckActivity.this, MbsConstans.SharedInfoConstans.LOGIN_ACCOUNT, etPhoneEmail.getText()+"");
-
-                        //更新UserInfo
-                       /* //Eventbus  发送事件
-                        MessageEvent event = new MessageEvent();
-                        event.setType(MbsConstans.MessageEventType.UPDATE_USERINFO);
-                        Map<Object,Object> map = new HashMap<>();
-                        event.setMessage(map);
-
-                        EventBus.getDefault().post(event);
-
-                        finish();
-*/
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg")+"");
@@ -228,20 +193,21 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
 
                     case "1": //token过期
                         closeAllActivity();
-                        Intent intent = new Intent(SecurityCheckActivity.this, LoginActivity.class);
+                        Intent intent = new Intent(UpdateNichengActivity.this, LoginActivity.class);
                         startActivity(intent);
 
                         break;
 
                 }
+
                 break;
+
             case MethodUrl.USER_INFO:
                 switch (tData.get("code")+""){
                     case "0": //请求成功
                         MbsConstans.USER_MAP = (Map<String, Object>) tData.get("data");
                         if (!UtilTools.empty(MbsConstans.USER_MAP)){
-                            SPUtils.put(SecurityCheckActivity.this, MbsConstans.SharedInfoConstans.LOGIN_INFO, JSONUtil.getInstance().objectToJson(MbsConstans.USER_MAP));
-                            finish();
+                            SPUtils.put(UpdateNichengActivity.this, MbsConstans.SharedInfoConstans.LOGIN_INFO, JSONUtil.getInstance().objectToJson(MbsConstans.USER_MAP));
                         }
                         break;
                     case "-1": //请求失败
@@ -250,14 +216,13 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
 
                     case "1": //token过期
                         closeAllActivity();
-                        Intent intent = new Intent(SecurityCheckActivity.this, LoginActivity.class);
+                        Intent intent = new Intent(UpdateNichengActivity.this, LoginActivity.class);
                         startActivity(intent);
 
                         break;
 
                 }
 
-                break;
         }
 
     }

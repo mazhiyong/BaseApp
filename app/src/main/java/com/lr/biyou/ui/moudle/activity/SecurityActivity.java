@@ -83,6 +83,12 @@ public class SecurityActivity extends BasicActivity implements RequestView, Sele
         divideLine.setVisibility(View.GONE);
 
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (UtilTools.empty(MbsConstans.USER_MAP)) {
             String s = SPUtils.get(SecurityActivity.this, MbsConstans.SharedInfoConstans.LOGIN_INFO, "").toString();
             MbsConstans.USER_MAP = JSONUtil.getInstance().jsonMap(s);
@@ -96,9 +102,7 @@ public class SecurityActivity extends BasicActivity implements RequestView, Sele
         }else {
             typeTv.setText("手机号");
         }
-
     }
-
 
     @OnClick({R.id.back_img, R.id.left_back_lay, R.id.phone_lay, R.id.email_lay, R.id.code_lay, R.id.exit_tv})
     public void onViewClicked(View view) {
@@ -177,12 +181,6 @@ public class SecurityActivity extends BasicActivity implements RequestView, Sele
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
     @OnClick(R.id.divide_line)
     public void onViewClicked() {

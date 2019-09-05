@@ -120,7 +120,7 @@ public class YaoQingActivity extends BasicActivity implements RequestView {
         mRequestTag = MethodUrl.INVIAT_ATION;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(YaoQingActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(YaoQingActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
 

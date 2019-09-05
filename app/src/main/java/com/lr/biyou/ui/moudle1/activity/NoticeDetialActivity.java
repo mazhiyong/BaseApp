@@ -17,8 +17,6 @@ import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle.activity.MainActivity;
-import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 import com.jaeger.library.StatusBarUtil;
@@ -59,7 +57,7 @@ public class NoticeDetialActivity extends BasicActivity implements RequestView, 
 
     @Override
     public int getContentView() {
-        return R.layout.activity_about_us;
+        return R.layout.activity_notice_detials;
     }
 
     @Override
@@ -89,7 +87,7 @@ public class NoticeDetialActivity extends BasicActivity implements RequestView, 
         mRequestTag = MethodUrl.NOTICE_LIST_ITEM;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(NoticeDetialActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(NoticeDetialActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("id", mapData.get("id") + "");

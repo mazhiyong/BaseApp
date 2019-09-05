@@ -28,10 +28,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_marginLeft="@dimen/dp_5"
+            android:text="￥ "
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/blue1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
             android:id="@+id/price_tv"
             android:layout_marginRight="@dimen/dp_15"
-            android:layout_marginLeft="@dimen/dp_5"
-            android:text="￥ 8.8"
+            android:text="0.00"
             android:layout_gravity="center_vertical"
             android:textSize="@dimen/sp_14"
             android:textColor="@color/blue1"
@@ -77,7 +84,7 @@
         android:layout_height="wrap_content">
         <EditText
             android:id="@+id/etNumber"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_margin="@dimen/dp_12"
@@ -114,7 +121,7 @@
     </LinearLayout>
     <TextView
         android:id="@+id/number_tv"
-        android:text="交易数量 723.58 USDT"
+        android:text="交易数量 0 USDT"
         android:textSize="@dimen/sp_12"
         android:layout_marginRight="@dimen/dp_15"
         android:textColor="@color/gray_light"
@@ -141,7 +148,7 @@
             android:id="@+id/money_tv"
             android:layout_marginRight="@dimen/dp_15"
             android:layout_marginLeft="@dimen/dp_5"
-            android:text="￥1000.00"
+            android:text="￥0.00"
             android:layout_gravity="center_vertical"
             android:textSize="@dimen/sp_18"
             android:textColor="@color/blue1"

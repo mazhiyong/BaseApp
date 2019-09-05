@@ -129,7 +129,7 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
         mRequestTag = MethodUrl.IDENTITY_ACTIVE;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(IdCardEditActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(IdCardEditActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("real_name", mName);

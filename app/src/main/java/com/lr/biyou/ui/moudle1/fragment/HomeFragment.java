@@ -31,7 +31,6 @@ import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.ContactKefuActivity;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle.activity.MainActivity;
 import com.lr.biyou.ui.moudle1.activity.NoticeListActivity;
 import com.lr.biyou.ui.moudle1.activity.PayListActivity;
 import com.lr.biyou.ui.moudle.activity.SecurityActivity;
@@ -43,6 +42,7 @@ import com.lr.biyou.ui.moudle1.adapter.MoreTypeAdapter;
 import com.lr.biyou.ui.moudle5.activity.ChoseBiTypeActivity;
 import com.lr.biyou.ui.moudle5.activity.HuaZhuanActivity;
 import com.lr.biyou.ui.moudle5.activity.TiBiActivity;
+import com.lr.biyou.ui.moudle1.activity.UserInfoActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.tool.AnimUtil;
 import com.lr.biyou.utils.tool.JSONUtil;
@@ -261,7 +261,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         mRequestTag = MethodUrl.BANNNER_INFO;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -272,7 +272,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         mRequestTag = MethodUrl.LIST_INFO;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("type", biType);
@@ -641,7 +641,8 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         }
 
         tvPhone.setText(MbsConstans.USER_MAP.get("account") + "");
-        tvUID.setText(MbsConstans.USER_MAP.get("id") + "");
+        tvUID.setText("UID: "+MbsConstans.USER_MAP.get("id") );
+
 
 
         final View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -650,7 +651,8 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                 Intent intent;
                 switch (v.getId()) {
                     case R.id.lay_info:
-
+                        intent = new Intent(getActivity(), UserInfoActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.lay_chongbi:
                         intent = new Intent(getActivity(), ChoseBiTypeActivity.class);
@@ -717,7 +719,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         mRequestTag = MethodUrl.IS_IDENTITY;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();

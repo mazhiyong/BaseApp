@@ -432,14 +432,14 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         coinCoinSeekBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString())){
+                if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString().replaceAll(",","").trim())){
                     showToastMsg("请输入价格");
                     return;
                 }
                 switch (checkedId){
                     case R.id.rb_number1: //10
                         if (mKindType.equals("0")){ //买入
-                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString());
+                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
                             int number = (int) (maxNumber*0.1f);
                             etNumber.setText(number+"");
                         }else { //卖出
@@ -449,7 +449,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         break;
                     case R.id.rb_number2: //20
                         if (mKindType.equals("0")){ //买入
-                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString());
+                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
                             int number = (int) (maxNumber*0.2f);
                             etNumber.setText(number+"");
                         }else { //卖出
@@ -460,7 +460,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                     case R.id.rb_number3: //50
                         if (mKindType.equals("0")){ //买入
-                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString());
+                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
                             int number = (int) (maxNumber*0.5f);
                             etNumber.setText(number+"");
                         }else { //卖出
@@ -471,7 +471,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                     case R.id.rb_number4: //100
                         if (mKindType.equals("0")){ //买入
-                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString());
+                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
                             int number = (int) (maxNumber*1.0f);
                             etNumber.setText(number+"");
                         }else { //卖出
@@ -613,9 +613,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mRequestTag = MethodUrl.GUADAN_TRADE;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
-        map.put("token","a147ff5721babca2e7c7b976023af933");
+        map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("area",area);
         map.put("symbol",symbol);
         map.put("number",etNumber.getText()+"");

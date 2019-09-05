@@ -230,7 +230,7 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
         Map<String, Object> signMap = new HashMap<>();
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(AddPayWayActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(AddPayWayActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, Object> fileMap = new HashMap<>();
@@ -262,7 +262,7 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
                 mHeaderMap = new HashMap<>();
                 map = new HashMap<>();
                 if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-                    MbsConstans.ACCESS_TOKEN = SPUtils.get(AddPayWayActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+                    MbsConstans.ACCESS_TOKEN = SPUtils.get(AddPayWayActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
                 }
                 map.put("token",MbsConstans.ACCESS_TOKEN);
                 map.put("bank_name", etName.getText()+"");
@@ -286,7 +286,7 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
                 mHeaderMap = new HashMap<>();
                 map = new HashMap<>();
                 if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-                    MbsConstans.ACCESS_TOKEN = SPUtils.get(AddPayWayActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+                    MbsConstans.ACCESS_TOKEN = SPUtils.get(AddPayWayActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
                 }
                 map.put("token",MbsConstans.ACCESS_TOKEN);
                 map.put("alipay_name", etName.getText()+"");
@@ -309,7 +309,7 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
                 mHeaderMap = new HashMap<>();
                 map = new HashMap<>();
                 if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-                    MbsConstans.ACCESS_TOKEN = SPUtils.get(AddPayWayActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+                    MbsConstans.ACCESS_TOKEN = SPUtils.get(AddPayWayActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
                 }
                 map.put("token",MbsConstans.ACCESS_TOKEN);
                 map.put("wechat_name", etName.getText()+"");
@@ -442,7 +442,7 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
                         PermissionsUtils.requsetRunPermission(AddPayWayActivity.this, new RePermissionResultBack() {
                             @Override
                             public void requestSuccess() {
-                                showToastMsg(R.string.successfully);
+                                //showToastMsg(R.string.successfully);
                                 localPic();
                             }
 
@@ -457,7 +457,7 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
                         PermissionsUtils.requsetRunPermission(AddPayWayActivity.this, new RePermissionResultBack() {
                             @Override
                             public void requestSuccess() {
-                                showToastMsg(R.string.successfully);
+                                //showToastMsg(R.string.successfully);
                                 photoPic();
                             }
 

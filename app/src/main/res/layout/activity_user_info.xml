@@ -3,7 +3,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:background="@color/body_bg"
+              android:background="@color/white"
               android:orientation="vertical">
         <include
             android:id="@+id/top_layout"
@@ -50,18 +50,24 @@
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
                                             android:gravity="left|center_vertical"
-                                            android:textSize="@dimen/sp_15"
+                                            android:textSize="@dimen/sp_14"
                                             android:textColor="@color/black"
                                             android:text="@string/head_img" />
 
                                         <de.hdodenhof.circleimageview.CircleImageView
                                             android:id="@+id/head_img_view"
-                                            android:layout_width="@dimen/dp_50"
-                                            android:layout_height="@dimen/dp_50"
+                                            android:layout_width="@dimen/dp_45"
+                                            android:layout_height="@dimen/dp_45"
                                             android:layout_marginBottom="@dimen/dp_5"
                                             android:layout_marginTop="@dimen/dp_5"
                                             android:src="@drawable/head"
                                             />
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:layout_width="@dimen/dp_10"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginLeft="@dimen/dp_10"
+                                            android:src="@drawable/android_list_idex"
+                                            android:layout_height="@dimen/dp_10" />
                                 </LinearLayout>
                         </androidx.cardview.widget.CardView>
 
@@ -95,10 +101,9 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="match_parent"
                                             android:gravity="left|center_vertical"
-                                            android:src="@drawable/android_list_idex"
                                             android:textSize="@dimen/sp_15"
                                             android:textColor="@color/black"
-                                            android:text="@string/login_phone_num" />
+                                            android:text="昵称" />
                                         <View
                                             android:layout_width="0dp"
                                             android:layout_height="@dimen/dp_2"
@@ -107,29 +112,40 @@
                                             android:id="@+id/phone_tv"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:textSize="@dimen/sp_15"
-                                            android:textColor="@color/black"
+                                            android:textSize="@dimen/sp_13"
+                                            android:text="小马哥"
+                                            android:textColor="@color/gray"
                                             />
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:layout_width="@dimen/dp_10"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginLeft="@dimen/dp_10"
+                                            android:src="@drawable/android_list_idex"
+                                            android:layout_height="@dimen/dp_10" />
                                 </LinearLayout>
                         </androidx.cardview.widget.CardView>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/divide_hight"
+                            android:visibility="gone"
                             android:background="@color/divide_line"/>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/item_padding"
+                            android:visibility="gone"
                             android:background="@color/body_bg"/>
 
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/divide_hight"
+                            android:visibility="gone"
                             android:background="@color/divide_line"/>
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="0dp"
+                            android:visibility="gone"
                             app:cardElevation="0dp"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:focusable="false">
@@ -168,10 +184,12 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/divide_hight"
+                            android:visibility="gone"
                             android:background="@color/divide_line"/>
 
 
                         <androidx.cardview.widget.CardView
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="0dp"
@@ -212,6 +230,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/divide_hight"
+                            android:visibility="gone"
                             android:background="@color/divide_line"/>
 
 
@@ -220,6 +239,7 @@
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="0dp"
                             app:cardElevation="0dp"
+                            android:visibility="gone"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:focusable="false">
                                 <LinearLayout
@@ -257,6 +277,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/divide_hight"
+                            android:visibility="gone"
                             android:background="@color/divide_line"/>
 
 
@@ -265,6 +286,7 @@
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="0dp"
                             app:cardElevation="0dp"
+                            android:visibility="gone"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:focusable="false">
                                 <LinearLayout
@@ -300,10 +322,12 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/divide_hight"
+                            android:visibility="gone"
                             android:background="@color/divide_line"/>
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/more_info_lay"
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="0dp"
@@ -334,12 +358,14 @@
                             android:id="@+id/more_info_line"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/divide_hight"
+                            android:visibility="gone"
                             android:background="@color/divide_line"/>
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/divide_hight"
                             android:layout_marginTop="@dimen/dp_30"
+                            android:visibility="gone"
                             android:background="@color/divide_line"/>
                         <androidx.cardview.widget.CardView
                             android:id="@+id/logout_lay"
@@ -347,6 +373,7 @@
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="0dp"
                             app:cardElevation="0dp"
+                            android:visibility="gone"
                             android:clickable="true"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:focusable="false">

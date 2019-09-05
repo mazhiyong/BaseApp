@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.androidkun.xtablayout.XTabLayout;
 import com.flyco.dialog.utils.CornerUtils;
 import com.github.jdsjlzx.ItemDecoration.GridItemDecoration;
+import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnNetWorkErrorListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -44,6 +45,7 @@ import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.MainActivity;
+import com.lr.biyou.ui.moudle.activity.ResetPayPassButActivity;
 import com.lr.biyou.ui.moudle4.activity.DingDanListActivity;
 import com.lr.biyou.ui.temporary.activity.MyShouMoneyActivity;
 import com.lr.biyou.ui.moudle4.activity.PayMoneyActivity;
@@ -156,6 +158,9 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private String symbol ="";
     private String direction = "0"; //0 买  1卖
 
+    private int mPage = 1;
+    private String id = "";
+
 
     public FBTradeFragment() {
         // Required empty public constructor
@@ -244,8 +249,19 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                             for (Map<String,Object> map : mTabsData){
                                 tabChild.addTab(tabChild.newTab().setText(map.get("symbol")+""));
                             }
+
+
+                            symbol = mTabsData.get(tab_POSITION).get("symbol")+"";
+                            direction = "0";
+
+                            mPageView.setVisibility(View.VISIBLE);
+                            lay.setVisibility(View.GONE);
+
+                            //获取买卖挂单记录
+                            getEntrustListAction();
+
                         }
-                        switch (tab_POSITION) {
+                        /*switch (tab_POSITION) {
                             case 0:
                                 mPageView.setVisibility(View.VISIBLE);
                                 lay.setVisibility(View.GONE);
@@ -261,7 +277,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                 lay.setVisibility(View.GONE);
                                 initData3();
                                 break;
-                        }
+                        }*/
 
                         break;
                     case 1: //我要卖
@@ -270,8 +286,18 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                             for (Map<String,Object> map : mTabsData){
                                 tabChild.addTab(tabChild.newTab().setText(map.get("symbol")+""));
                             }
+
+                            symbol = mTabsData.get(tab_POSITION).get("symbol")+"";
+                            direction = "1";
+
+                            mPageView.setVisibility(View.VISIBLE);
+                            lay.setVisibility(View.GONE);
+
+                            //获取买卖挂单记录
+                            getEntrustListAction();
+
                         }
-                        switch (tab_POSITION) {
+                       /* switch (tab_POSITION) {
                             case 0:
                                 mPageView.setVisibility(View.VISIBLE);
                                 lay.setVisibility(View.GONE);
@@ -289,7 +315,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                 lay.setVisibility(View.GONE);
                                 initData6();
                                 break;
-                        }
+                        }*/
                         break;
                     case 2: //发布
                         tabChild.removeAllTabs();
@@ -325,7 +351,8 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                             case 2:
                                 mPageView.setVisibility(View.VISIBLE);
                                 lay.setVisibility(View.GONE);
-                                initData7();
+                                //获取用户挂单记录
+                                getUserTradeList();
                                 break;
                         }
                         break;
@@ -351,9 +378,16 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 tab_POSITION = tab.getPosition();
                 switch (TAB_POSITION) {
                     case 0://我要买
-                        
+                        symbol = mTabsData.get(tab_POSITION).get("symbol")+"";
+                        direction = "0";
 
-                        switch (tab_POSITION) {
+                        mPageView.setVisibility(View.VISIBLE);
+                        lay.setVisibility(View.GONE);
+
+                        //获取买卖挂单记录
+                        getEntrustListAction();
+
+                      /*  switch (tab_POSITION) {
                             case 0: //USDT
                                 mPageView.setVisibility(View.VISIBLE);
                                 lay.setVisibility(View.GONE);
@@ -369,10 +403,18 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                 lay.setVisibility(View.GONE);
                                 initData3();
                                 break;
-                        }
+                        }*/
                         break;
                     case 1: //我要卖
-                        switch (tab_POSITION) {
+                        symbol = mTabsData.get(tab_POSITION).get("symbol")+"";
+                        direction = "1";
+
+                        mPageView.setVisibility(View.VISIBLE);
+                        lay.setVisibility(View.GONE);
+
+                        //获取买卖挂单记录
+                        getEntrustListAction();
+                       /* switch (tab_POSITION) {
                             case 0: //USDT
                                 mPageView.setVisibility(View.VISIBLE);
                                 lay.setVisibility(View.GONE);
@@ -388,7 +430,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                 lay.setVisibility(View.GONE);
                                 initData6();
                                 break;
-                        }
+                        }*/
                         break;
                     case 2: //发布
                         switch (tab_POSITION) {
@@ -407,7 +449,8 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                             case 2: //挂单记录
                                 mPageView.setVisibility(View.VISIBLE);
                                 lay.setVisibility(View.GONE);
-                                initData7();
+                                //获取用户挂单记录
+                                getUserTradeList();
                                 break;
                         }
                         break;
@@ -430,13 +473,41 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         mRefreshListView.setLayoutManager(linearLayoutManager);
 
+        //刷新
         mRefreshListView.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // getShouMoneyInfoList();
+                mPage = 1;
+                switch (mRequestTag){
+                    case MethodUrl.FB_ENTRUSTLIST:
+                        getEntrustListAction();
+                        break;
+
+                    case MethodUrl.USER_ENTRUSTLIST:
+                        getUserTradeList();
+                        break;
+                }
+
             }
         });
 
+
+        //加载更多
+        mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                mPage = mPage + 1;
+                switch (mRequestTag){
+                    case MethodUrl.FB_ENTRUSTLIST:
+                        getEntrustListAction();
+                        break;
+
+                    case MethodUrl.USER_ENTRUSTLIST:
+                        getUserTradeList();
+                        break;
+                }
+            }
+        });
 
         setBarTextColor();
 
@@ -450,10 +521,6 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mSelectStartTime = sTime;
         mSelectEndTime = eTime;
 
-        initData1();
-        // responseData();
-
-        // getShouMoneyInfoList();
 
         List<Map<String,Object>> mDataList2 = SelectDataUtil.getBiType();
         mDialog=new KindSelectDialog(getActivity(),true,mDataList2,30);
@@ -465,7 +532,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mRequestTag = MethodUrl.OTC_TRADE;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(),MbsConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(),MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -475,14 +542,27 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private void  getEntrustListAction() {
         mRequestTag = MethodUrl.FB_ENTRUSTLIST;
         Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(),MbsConstans.ACCESS_TOKEN,"").toString();
-        }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("direction",direction);
+        map.put("symbol",symbol);
+        map.put("page",mPage+"");
+        map.put("size","10");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.FB_ENTRUSTLIST, map);
     }
 
+
+    private void getUserTradeList() {
+        mRequestTag = MethodUrl.USER_ENTRUSTLIST;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("page",mPage+"");
+        map.put("size","10");
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_ENTRUSTLIST, map);
+    }
 
 
 
@@ -538,10 +618,76 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                symbol = mTabsData.get(0).get("symbol")+"";
                            }
                         }
+                        break;
+                    case "1":
+                        if (getParentFragment().getActivity() != null){
+                            getParentFragment().getActivity().finish();
+                        }
+                        intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg")+"");
+                        break;
 
+                }
+                break;
+            case MethodUrl.FB_ENTRUSTLIST:
+                switch (tData.get("code")+""){
+                    case "0":
+                        Map<String,Object> mapData= (Map<String, Object>) tData.get("data");
+                        if (!UtilTools.empty(mapData)){
+                            mDataList = (List<Map<String, Object>>) mapData.get("list");
+                            if (mDataList != null && mDataList.size()>0){
+                                for (Map<String,Object> map : mDataList){
+                                    map.put("direction",direction);
+                                    map.put("symbol",symbol);
+                                }
+                                mPageView.showContent();
+                                responseData1();
+                                mRefreshListView.refreshComplete(10);
+                            }else {
+                                mPageView.showEmpty();
+                            }
+                        }
+                        break;
+                    case "1":
+                        if (getParentFragment().getActivity() != null){
+                            getParentFragment().getActivity().finish();
+                        }
+                        intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
+                        startActivity(intent);
 
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg")+"");
+                        mPageView.showNetworkError();
+                        break;
 
+                }
+                break;
 
+            case MethodUrl.USER_BUY_DEAL:
+                switch (tData.get("code")+""){
+                    case "0":
+                        showToastMsg(tData.get("msg")+"");
+                        switch (TAB_POSITION) {
+                            case 0:
+                                intent = new Intent(getParentFragment().getActivity(), PayMoneyActivity.class);
+                                intent.putExtra("kind", "0"); //购买
+                                intent.putExtra("id",tData.get("data")+"");//订单ID
+                                startActivity(intent);
+                                break;
+                            case 1:
+                                intent = new Intent(getParentFragment().getActivity(), PayMoneyActivity.class);
+                                intent.putExtra("kind", "1"); //出售
+                                intent.putExtra("id",tData.get("data")+"");//订单ID
+                                startActivity(intent);
+                                break;
+                            case 2:
+
+                                break;
+                        }
                         break;
                     case "1":
                         if (getParentFragment().getActivity() != null){
@@ -557,19 +703,40 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                 }
                 break;
-            case MethodUrl.shoumoneyList:
-                String result = tData.get("result") + "";
-                if (UtilTools.empty(result)) {
-                    responseData1();
-                } else {
-                    List<Map<String, Object>> list = JSONUtil.getInstance().jsonToList(result);
-                    if (list != null) {
-                        mDataList.clear();
-                        mDataList.addAll(list);
-                        responseData1();
-                    }
+
+            case MethodUrl.USER_ENTRUSTLIST:
+                switch (tData.get("code")+""){
+                    case "0":
+                        Map<String,Object> mapData= (Map<String, Object>) tData.get("data");
+                        if (!UtilTools.empty(mapData)){
+                            mDataList = (List<Map<String, Object>>) mapData.get("list");
+                            if (mDataList != null && mDataList.size()>0){
+                               /* for (Map<String,Object> map : mDataList){
+                                    map.put("direction",direction);
+                                    map.put("symbol",symbol);
+                                }*/
+                                mPageView.showContent();
+                                responseData7();
+                                mRefreshListView.refreshComplete(10);
+                            }else {
+                                mPageView.showEmpty();
+                            }
+                        }
+                        break;
+                    case "1":
+                        if (getParentFragment().getActivity() != null){
+                            getParentFragment().getActivity().finish();
+                        }
+                        intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
+                        startActivity(intent);
+
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg")+"");
+                        mPageView.showNetworkError();
+                        break;
+
                 }
-                mRefreshListView.refreshComplete(10);
                 break;
             case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
                 MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
@@ -614,170 +781,22 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
     @Override
     public void reLoadingData() {
+        switch (mRequestTag){
+            case MethodUrl.FB_ENTRUSTLIST:
+                getEntrustListAction();
+                break;
+
+            case MethodUrl.USER_ENTRUSTLIST:
+                getUserTradeList();
+                break;
+        }
         mLoadingWindow.showView();
-        // getShouMoneyInfoList();
+
+
 
     }
 
 
-
-
-    private void initData1() {
-        mDataList.clear();
-        for (int i = 0; i < 5; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("kind", "0");
-            map.put("name", "中*聪");
-            map.put("number", "100000");
-            map.put("type", "USDT");
-            map.put("progress", "60%");
-            map.put("price", "999");
-            mDataList.add(map);
-        }
-
-        responseData1();
-    }
-
-    private void initData2() {
-        mDataList.clear();
-        for (int i = 0; i < 5; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("kind", "0");
-            map.put("name", "中*聪");
-            map.put("number", "100000");
-            map.put("type", "BTC");
-            map.put("progress", "60%");
-            map.put("price", "999");
-            mDataList.add(map);
-        }
-
-        responseData2();
-    }
-
-    private void initData3() {
-        mDataList.clear();
-        for (int i = 0; i < 5; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("kind", "0");
-            map.put("name", "中*聪");
-            map.put("number", "100000");
-            map.put("type", "ETH");
-            map.put("progress", "60%");
-            map.put("price", "999");
-            mDataList.add(map);
-        }
-
-        responseData3();
-    }
-
-    private void initData4() {
-        mDataList.clear();
-        for (int i = 0; i < 5; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("kind", "1");
-            map.put("name", "中*聪");
-            map.put("number", "100000");
-            map.put("type", "USDT");
-            map.put("progress", "60%");
-            map.put("price", "999");
-            mDataList.add(map);
-        }
-
-        responseData4();
-    }
-
-    private void initData5() {
-        mDataList.clear();
-        for (int i = 0; i < 5; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("kind", "1");
-            map.put("name", "中*聪");
-            map.put("number", "100000");
-            map.put("type", "BTC");
-            map.put("progress", "60%");
-            map.put("price", "999");
-            mDataList.add(map);
-        }
-
-        responseData5();
-    }
-
-    private void initData6() {
-        mDataList.clear();
-        for (int i = 0; i < 5; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("kind", "1");
-            map.put("name", "中*聪");
-            map.put("number", "100000");
-            map.put("type", "ETH");
-            map.put("progress", "60%");
-            map.put("price", "999");
-            mDataList.add(map);
-        }
-
-        responseData6();
-    }
-
-    private void initData7() {
-        mDataList.clear();
-        for (int i = 0; i < 10; i++) {
-            Map<String, Object> map = new HashMap<>();
-            if (i % 2 == 0) {
-                map.put("type", "出售 USDT");
-            } else {
-                map.put("type", "购买 ETC");
-            }
-            map.put("pice", "6.91");
-            map.put("number", "100.10");
-            map.put("time", "2019/05/01 12:12:10");
-            map.put("state", "已完成");
-            map.put("bare", "50%");
-            mDataList.add(map);
-        }
-        responseData7();
-    }
-
-
-    //查询应收账款池图示信息
-    public void getShouMoneyInfoList() {
-        Map<String, Object> mapKehu = ((MyShouMoneyActivity) getActivity()).getSelectKehuMap();
-        if (mapKehu == null) {
-            ((MyShouMoneyActivity) getActivity()).showToastMsg("请选择付款方");
-            mLoadingWindow.cancleView();
-            return;
-        }
-        mRequestTag = MethodUrl.shoumoneyList;
-        Map<String, String> map = new HashMap<>();
-        map.put("paycustid", mapKehu.get("paycustid") + ""); //付款方客户号
-        map.put("status", mJieKuanStatus); //应收凭证状态(1正常，2已融资，3已核销，4已到期)
-        map.put("datetype", mDataType); //付款截止日查询类型（1近一周，2近一个月，3近三个月，4自定义）
-        if (mDataType.equals("4")) {
-            map.put("begindate", mSelectStartTime); //开始时间
-            map.put("enddate", mSelectEndTime);  //结束时间
-        }
-
-        map.put("keyword", mKeyword); //关键字
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestGetToRes(mHeaderMap, MethodUrl.shoumoneyList, map);
-    }
-
-    /* private void initData() {
-         Map<String,Object> map = new HashMap<>();
-         map.put("name","深圳市国投啥玩意有限责任公司");
-         map.put("number","18218219719");
-         map.put("date","2020-12-30");
-         map.put("pingzheng_money","10000000");
-         map.put("shou_money","800000");
-         map.put("should_money","20000");
-         map.put("state","正常");
-         map.put("person","江苏苏宁银行有限责任公司");
-
-         for (int i = 0; i <10 ; i++) {
-             mDataList.add(map);
-         }
-
-     }
- */
     public void setBarTextColor() {
         StatusBarUtil.setLightMode(getActivity());
     }
@@ -862,13 +881,23 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mBuyAdapter1.setmCallBack(new OnChildClickListener() {
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-                showDialog("购买 USDT", "￥ 100.00", "交易数量 1000.00 USDT", "按价格购买", "按数量购买");
+                id = mParentMap.get("id")+"";
+                if (direction.equals("0")){
+                    showDialog("购买 "+mParentMap.get("symbol"),
+                            mParentMap.get("price")+"", "交易数量 0 USDT",
+                            "按价格购买", "按数量购买");
+                }else {
+                    showDialog("出售 "+mParentMap.get("symbol"),
+                            mParentMap.get("price")+"", "交易数量 0 USDT",
+                            "按价格出售", "按数量出售");
+                }
+
             }
         });
     }
 
 
-    private void responseData2() {
+    /*private void responseData2() {
         if (mBuyAdapter2 == null) {
             mBuyAdapter2 = new FBTradeListAdapter(getActivity());
             mBuyAdapter2.addAll(mDataList);
@@ -918,9 +947,9 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 //            mRefreshListView.addItemDecoration(divider2);
 
         } else {
-           /* if (mPage == 1) {
+           *//* if (mPage == 1) {
                 mRepaymentAdapter.clear();
-            }*/
+            }*//*
 //            mBuyAdapter1.clear();
 //            mBuyAdapter1.addAll(mDataList);
 //            mBuyAdapter1.notifyDataSetChanged();
@@ -1006,9 +1035,9 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
 
         } else {
-           /* if (mPage == 1) {
+           *//* if (mPage == 1) {
                 mRepaymentAdapter.clear();
-            }*/
+            }*//*
 //            mBuyAdapter1.clear();
 //            mBuyAdapter1.addAll(mDataList);
 //            mBuyAdapter1.notifyDataSetChanged();
@@ -1093,9 +1122,9 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
 
         } else {
-           /* if (mPage == 1) {
+           *//* if (mPage == 1) {
                 mRepaymentAdapter.clear();
-            }*/
+            }*//*
 //            mBuyAdapter1.clear();
 //            mBuyAdapter1.addAll(mDataList);
 //            mBuyAdapter1.notifyDataSetChanged();
@@ -1180,9 +1209,9 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 //            mRefreshListView.addItemDecoration(divider2);
 
         } else {
-           /* if (mPage == 1) {
+           *//* if (mPage == 1) {
                 mRepaymentAdapter.clear();
-            }*/
+            }*//*
 //            mBuyAdapter1.clear();
 //            mBuyAdapter1.addAll(mDataList);
 //            mBuyAdapter1.notifyDataSetChanged();
@@ -1266,9 +1295,9 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 //                    .build();
 //            mRefreshListView.addItemDecoration(divider2);
         } else {
-           /* if (mPage == 1) {
+           *//* if (mPage == 1) {
                 mRepaymentAdapter.clear();
-            }*/
+            }*//*
 //            mBuyAdapter1.clear();
 //            mBuyAdapter1.addAll(mDataList);
 //            mBuyAdapter1.notifyDataSetChanged();
@@ -1301,7 +1330,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
             }
         });
 
-    }
+    }*/
 
     private void responseData7() {
         if (mdingdanAdapter == null) {
@@ -1399,6 +1428,10 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private XTabLayout diolog_tabLayout;
     private EditText etNumber;
 
+    private int tradeType = 0; //0 价格购买  1 数量购买
+    private String tradePrice = "";
+    private String tradeNumber = "";
+
 
     public void showDialog(String type, String price, String number, String tab1, String tab2) {
         initPopupWindow(type, price, number, tab1, tab2);
@@ -1486,6 +1519,11 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         diolog_tabLayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(XTabLayout.Tab tab) {
+                etNumber.setText("");
+                etNumber.setHint("请输入");
+                tvNumber.setText("交易数量 0 USDT");
+                tvMoney.setText("¥ 0.00");
+                tradeType = tab.getPosition();
                 switch (tab.getPosition()) {
                     case 0:
                         tvType.setText("CNY");
@@ -1507,6 +1545,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
             }
         });
 
+
         //取消
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1519,23 +1558,8 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         tvOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
-                switch (TAB_POSITION) {
-                    case 0:
-                        intent = new Intent(getParentFragment().getActivity(), PayMoneyActivity.class);
-                        intent.putExtra("kind", "0"); //购买
-                        startActivity(intent);
-                        break;
-                    case 1:
-                        intent = new Intent(getParentFragment().getActivity(), PayMoneyActivity.class);
-                        intent.putExtra("kind", "1"); //出售
-                        startActivity(intent);
-                        break;
-                    case 2:
-
-                        break;
-                }
-
+                //买卖下单操作
+                postDingdanAction();
             }
         });
 
@@ -1547,7 +1571,30 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length() > 0){
+                    switch (tradeType){
+                        case 0: //按价格够买
+                            tradePrice = s.toString();
 
+                            tradeNumber = Float.parseFloat(tradePrice)/Float.parseFloat(tvPrice.getText().toString().replaceAll(",","").trim())+"";
+                            tvNumber.setText("交易数量 "+UtilTools.getNormalMoney(tradeNumber)+" USDT");
+                            tvMoney.setText(UtilTools.getRMBMoney(tradePrice));
+
+                            break;
+                        case 1:  //按数量够买
+                            tradeNumber = s.toString();
+                            tradePrice = Float.parseFloat(tradeNumber)*Float.parseFloat(tvPrice.getText().toString().replaceAll(",","").trim())+"";
+                            tvNumber.setText("交易数量 "+UtilTools.getNormalMoney(tradeNumber)+" USDT");
+                            tvMoney.setText(UtilTools.getRMBMoney(tradePrice));
+
+                            break;
+
+                    }
+                }else {
+                    etNumber.setHint("请输入");
+                    tvNumber.setText("交易数量 0 USDT");
+                    tvMoney.setText("¥ 0.00");
+                }
             }
 
             @Override
@@ -1559,12 +1606,49 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
     }
 
+
+    private void postDingdanAction() {
+        mRequestTag = MethodUrl.USER_BUY_DEAL;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        //map.put("token","a147ff5721babca2e7c7b976023af933");
+        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("id", id);
+        map.put("number", tradeNumber);
+        //传参交易密码
+        String paycode = "";
+        if (!UtilTools.empty(MbsConstans.PAY_CODE)){
+            paycode = MbsConstans.PAY_CODE;
+        }else {
+            paycode = SPUtils.get(getParentFragment().getActivity(), MbsConstans.SharedInfoConstans.PAY_CODE, "").toString();
+        }
+
+        map.put("payment_password",paycode);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_BUY_DEAL, map);
+    }
+
     public void initViewData(String type, String price, String number, String tab1, String tab2) {
         tvTitle.setText(type);
-        tvPrice.setText(price);
+        tvPrice.setText(UtilTools.getNormalMoney(price));
         tvNumber.setText(number);
         tabDialog1.setText(tab1);
         tabDialog2.setText(tab2);
+        switch (TAB_POSITION) {
+            case 0:
+                tvBuy.setText("买入");
+                break;
+            case 1:
+                tvBuy.setText("出售");
+                break;
+        }
+
+        etNumber.setText("");
+        etNumber.setHint("请输入");
+        tvNumber.setText("交易数量 0 USDT");
+        tvMoney.setText("¥ 0.00");
     }
 
 

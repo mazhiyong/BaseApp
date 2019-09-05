@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_35"
+        android:layout_marginTop="@dimen/dp_35"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <EditText
+            android:id="@+id/et_phone_email"
+            android:layout_width="wrap_content"
+            android:hint="请输入用户昵称(聊天界面显示)"
+            android:background="@null"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_10"
+            android:maxLength="20"
+            android:textSize="@dimen/sp_15"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divide_hight"
+        android:layout_marginLeft="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_35"
+        android:background="@color/divide_line"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_35"
+        android:orientation="horizontal"
+        >
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:hint="@string/regist_account_phone_code"
+            android:background="@null"
+            android:id="@+id/et_code"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_10"
+            android:inputType="number"
+            android:textSize="@dimen/sp_15"
+            android:maxLength="6"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:visibility="gone"
+            android:layout_width="@dimen/dp_70"
+            android:id="@+id/iv_code"
+            android:layout_marginRight="@dimen/dp_15"
+            android:src="@drawable/back_card"
+            android:layout_height="@dimen/dp_35"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_code"
+            android:text="@string/regist_account_phone_code_send"
+            android:layout_marginRight="@dimen/dp_15"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_15"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divide_hight"
+        android:layout_marginLeft="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_35"
+        android:background="@color/divide_line"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/but_height"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginLeft="@dimen/dp_35"
+        android:layout_marginRight="@dimen/dp_35"
+        android:text="@string/confirm"
+        android:id="@+id/bt_next"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_next"
+        />
+
+
+</LinearLayout>

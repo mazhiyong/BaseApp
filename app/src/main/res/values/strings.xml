@@ -25,6 +25,7 @@
 
     <string name="phone_number">登录账号</string>
     <string name="pass_word">密码</string>
+    <string name="old_pass_word">原支付密码</string>
 
     <!--报表-->
     <string name="add_result">营收统计</string>
@@ -258,7 +259,7 @@
     <string name="base_info">基础资料</string>
     <string name="work_msg">职业资料</string>
 
-    <string name="base_msg">基本信息</string>
+    <string name="base_msg">个人信息</string>
     <string name="work_card_info">任职工作信息</string>
     <string name="perfect_info">完善资料</string>
     <string name="perfect_info_tip">请先完善您的资料再进行额度申请</string>

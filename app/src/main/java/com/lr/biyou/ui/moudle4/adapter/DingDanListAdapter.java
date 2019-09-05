@@ -43,18 +43,18 @@ public class DingDanListAdapter extends ListBaseAdapter {
 //        map.put("formto", "币币到法币");
 //        map.put("number", "100.00USDT");
 //        map.put("time", "05/01 12:12:10");
-        if (UtilTools.empty(item.get("bare"))){
+        if (UtilTools.empty(item.get("tempo"))){
             viewHolder.biliLay.setVisibility(View.GONE);
         }else {
             viewHolder.biliLay.setVisibility(View.VISIBLE);
-            viewHolder.biliTv.setText(item.get("bare")+"");
+            viewHolder.biliTv.setText(item.get("tempo")+"");
         }
 
-        viewHolder.typeTv.setText(item.get("type") + "");
+        viewHolder.typeTv.setText(item.get("title") + "");
         viewHolder.timeTv.setText(item.get("time") + "");
         viewHolder.numberTv.setText(item.get("number") + "");
-        viewHolder.priceTv.setText(item.get("pice") + "");
-        viewHolder.stateTv.setText(item.get("state") + "");
+        viewHolder.priceTv.setText(item.get("price") + "");
+        viewHolder.stateTv.setText(item.get("statusText") + "");
 
     //viewHolder.mStatusTv.setText(item.get("abstract")+"");
         /*if ((item.get("amt")+"").contains("-")){

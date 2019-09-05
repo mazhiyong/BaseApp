@@ -485,11 +485,11 @@ public class UtilTools {
 				s = "0";
 			}
 			Double d = Double.valueOf(s);
-			Double dd = divide(d,100);
+			//Double dd = divide(d,100);
 
 			DecimalFormat myformat = new DecimalFormat();
 			myformat.applyPattern("##,###.00");
-			String ss = myformat.format(dd);
+			String ss = myformat.format(d);
 			if (ss.startsWith(".")){
 				ss = "0"+ss;
 			}else if (ss.startsWith("-.")){
@@ -535,11 +535,11 @@ public class UtilTools {
 				s = "0";
 			}
 			Double d = Double.valueOf(s);
-			Double dd = divide(d,100);
+			//Double dd = divide(d,100);
 
 			DecimalFormat myformat = new DecimalFormat();
 			myformat.applyPattern("##,###.00");
-			String ss = myformat.format(dd);
+			String ss = myformat.format(d);
 			if (ss.startsWith(".")){
 				ss = "0"+ss;
 			}

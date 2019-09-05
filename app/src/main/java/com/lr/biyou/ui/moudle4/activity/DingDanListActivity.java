@@ -38,11 +38,13 @@ import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.DateSelectDialog;
 import com.lr.biyou.mywidget.view.PageView;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle4.adapter.DingDanListAdapter;
 import com.lr.biyou.ui.temporary.adapter.TradeDialogAdapter;
 import com.lr.biyou.utils.tool.AnimUtil;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
+import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
 import com.jaeger.library.StatusBarUtil;
@@ -137,23 +139,8 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
 
         initView();
         showProgressDialog();
-        //traderListAction();
+        traderListAction();
 
-        for (int i = 0; i <10 ; i++) {
-            Map<String,Object> map = new HashMap<>();
-            if(i%2 == 0){
-                map.put("type","出售 USDT");
-            }else {
-                map.put("type","购买 ETC");
-            }
-            map.put("pice","6.91");
-            map.put("number","100.00USDT");
-            map.put("time","2019/05/01 12:12:10");
-            map.put("state","已完成");
-
-            mDataList.add(map);
-        }
-        responseData();
     }
 
 
@@ -176,22 +163,21 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
         mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                traderListAction();
+               // traderListAction();
             }
         });
     }
     private void traderListAction(){
 
-        mRequestTag = MethodUrl.tradeList;
-        Map<String, String> map = new HashMap<>();
-        map.put("current_page",mPage+"");
-        map.put("ptncode",""); //合作方编号  ，默认所有
-        map.put("start_time",mStartTime);
-        map.put("end_time",mEndTime);
-        map.put("busi_type",mBusiType);
-        LogUtilDebug.i("打印log日志","@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+map);
+        mRequestTag = MethodUrl.HISTORY_DINGDAN;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(DingDanListActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestGetToRes(mHeaderMap, MethodUrl.tradeList, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.HISTORY_DINGDAN, map);
+
     }
 
 
@@ -556,22 +542,29 @@ public class DingDanListActivity extends BasicActivity implements RequestView,Re
 
         Intent intent ;
         switch (mType){
-            case MethodUrl.tradeList://
-                String result = tData.get("result")+"";
-                if (UtilTools.empty(result)){
-                    responseData();
-                }else {
-                    List<Map<String,Object>> list =   JSONUtil.getInstance().jsonToList(result);
-                    if (list != null){
-                        mDataList.clear();
-                        mDataList.addAll(list);
-                        responseData();
-                    }else {
+            case MethodUrl.HISTORY_DINGDAN://
+                switch ((tData.get("code") + "")) {
+                    case "0":
+                            mDataList = (List<Map<String, Object>>) tData.get("data");
+                            if (!UtilTools.empty(mDataList) && mDataList.size() > 0) {
+                                mPageView.showContent();
+                                responseData();
+                                mRefreshListView.refreshComplete(10);
+                            } else {
+                                mPageView.showEmpty();
+                            }
+                        break;
+                    case "1":
+                        closeAllActivity();
+                        intent = new Intent(DingDanListActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
 
-                    }
+                    case "-1":
+                        mPageView.showNetworkError();
+                        showToastMsg(tData.get("msg")+"");
+                        break;
                 }
-                mRefreshListView.refreshComplete(10);
-
                 break;
             case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
                 MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";

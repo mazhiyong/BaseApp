@@ -287,7 +287,7 @@ public class WeiTuoListActivity extends BasicActivity implements RequestView, Re
         mRequestTag = MethodUrl.CANCEL_WEITUO;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(WeiTuoListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(WeiTuoListActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("id", mParentMap.get("id") + "");

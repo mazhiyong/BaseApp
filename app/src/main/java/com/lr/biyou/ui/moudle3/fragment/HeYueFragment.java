@@ -700,7 +700,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.AVIABLE_MONEY;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(Objects.requireNonNull(getActivity()), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(Objects.requireNonNull(getActivity()), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("symbol", symbol);
@@ -713,7 +713,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.PAIR_DEPTH;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("symbol", symbol);
@@ -727,7 +727,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.CONTRACT_LEVER;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         //map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -739,7 +739,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.AREA_ALL;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         //map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -751,7 +751,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.COIN_ACCOUNT;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("symbol", symbol);
@@ -767,7 +767,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.CHICANG_LIST;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("symbol", symbol);
@@ -781,7 +781,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.WEITUO_LIST;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("symbol", symbol);
@@ -796,7 +796,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.CHENGJIAO_LIST;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("symbol", symbol);
@@ -810,7 +810,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.PING_CANG;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("id", mParentMap.get("id") + "");
@@ -823,7 +823,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.PING_CANG_ALL;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -834,7 +834,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.CHE_XIAO;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
         map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("id", mParentMap.get("id") + "");
@@ -846,9 +846,9 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.CONTRACT_TRADE;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
-        map.put("token","a147ff5721babca2e7c7b976023af933");
+        map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("symbol",symbol);
         map.put("mode",type);
         map.put("entrustType",mSelectType);

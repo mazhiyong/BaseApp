@@ -100,7 +100,7 @@
                     android:layout_marginRight="@dimen/dp_15"
                     android:layout_height="wrap_content">
                     <ImageView
-                        android:id="@id/image_view"
+                        android:id="@+id/icon"
                         android:layout_width="@dimen/dp_35"
                         android:src="@drawable/wait"
                         android:layout_gravity="center_vertical"
@@ -213,7 +213,7 @@
                    <TextView
                        android:id="@+id/dingdan_number_tv"
                        android:layout_width="wrap_content"
-                       android:text="1881298981982"
+                       android:text=""
                        android:layout_marginLeft="@dimen/dp_20"
                        android:textColor="@color/black"
                        android:textSize="@dimen/sp_15"
@@ -663,7 +663,7 @@
                     android:background="@drawable/background_corners_gray"
                     android:layout_width="@dimen/dp_0"
                     android:layout_weight="1"
-                    android:text="取消订单"
+                    android:text=""
                     android:gravity="center_horizontal"
                     android:padding="@dimen/dp_10"
                     android:textColor="@color/white"
@@ -674,7 +674,7 @@
                     android:background="@drawable/btn_next"
                     android:layout_width="@dimen/dp_0"
                     android:layout_weight="1"
-                    android:text="我已完成付款"
+                    android:text=""
                     android:gravity="center_horizontal"
                     android:padding="@dimen/dp_10"
                     android:textColor="@color/white"

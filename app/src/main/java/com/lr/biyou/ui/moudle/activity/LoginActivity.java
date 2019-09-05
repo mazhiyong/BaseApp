@@ -441,7 +441,7 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
                         MbsConstans.ACCESS_TOKEN = tData.get("data") + "";
                         //LogUtilDebug.i("show","token:"+tData.get("access_token"));
                         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
-                            MbsConstans.ACCESS_TOKEN = "a147ff5721babca2e7c7b976023";
+                            MbsConstans.ACCESS_TOKEN = "";
                         }
                         SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, MbsConstans.ACCESS_TOKEN);
                         SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.LOGIN_ACCOUNT, mAccount+"");
@@ -452,8 +452,7 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
 //                SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, MbsConstans.ACCESS_TOKEN);
 //
 //                getRefreshToken();//获取refreshToken
-//
-//                mFirmKind = tData.get("firmkind")+"";
+
                         intent = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(intent);
                         break;

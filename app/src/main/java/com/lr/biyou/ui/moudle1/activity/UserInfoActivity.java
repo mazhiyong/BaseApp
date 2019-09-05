@@ -1,4 +1,4 @@
-package com.lr.biyou.ui.temporary.activity;
+package com.lr.biyou.ui.moudle1.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +32,10 @@ import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.ui.moudle.activity.MainActivity;
+import com.lr.biyou.ui.moudle.activity.UpdateNichengActivity;
+import com.lr.biyou.ui.temporary.activity.MoreInfoManagerActivity;
+import com.lr.biyou.ui.temporary.activity.QiyeInfoShowActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;
@@ -40,6 +44,7 @@ import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.jaeger.library.StatusBarUtil;
+import com.lr.biyou.utils.tool.UtilTools;
 import com.yanzhenjie.permission.Permission;
 
 import java.io.ByteArrayOutputStream;
@@ -100,30 +105,24 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
     public void init() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
         mTitleText.setText(getResources().getString(R.string.base_msg));
-
-        if (MbsConstans.USER_MAP != null && !MbsConstans.USER_MAP.isEmpty()){
-            String moreInfo = MbsConstans.USER_MAP.get("cmpl_info")+"";
-            if (moreInfo.equals("1")){//是否完善信息（0：未完善，1：已完善）
-                mMoreInfoLay.setVisibility(View.VISIBLE);
-                mInfoLine.setVisibility(View.VISIBLE);
-            }else {
-                mMoreInfoLay.setVisibility(View.GONE);
-                mInfoLine.setVisibility(View.GONE);
-            }
-
-            mPhoneTv.setText(MbsConstans.USER_MAP.get("tel")+"");
-            mPhoneTv2.setText(MbsConstans.USER_MAP.get("tel")+"");
-            mNameTv.setText(MbsConstans.USER_MAP.get("name")+"");
-            mIdcardValueTv.setText(MbsConstans.USER_MAP.get("idno")+"");
-
-            initHeadPic();
-        }else {
-            getUserInfoAction();
-        }
+        mTitleText.setCompoundDrawables(null,null,null,null);
 
         // GlideUtils.loadImage(UserInfoActivity.this,"http://tupian.qqjay.com/u/2017/1201/2_161641_2.jpg",mHeadImageView);
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (MbsConstans.USER_MAP != null && !MbsConstans.USER_MAP.isEmpty()){
+            mPhoneTv.setText(MbsConstans.USER_MAP.get("name")+"");
+            GlideUtils.loadImage2(UserInfoActivity.this,MbsConstans.USER_MAP.get("portrait")+"",mHeadImageView,R.drawable.head);
+            //initHeadPic();
+        }else {
+            getUserInfoAction();
+        }
     }
 
     /**
@@ -132,7 +131,11 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
     private void getUserInfoAction() {
         mRequestTag = MethodUrl.USER_INFO;
         Map<String, Object> map = new HashMap<>();
-        Map<String,String> mHeaderMap = new HashMap<String,String>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(UserInfoActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_INFO, map);
     }
     private void logoutAction() {
@@ -152,7 +155,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
     }
 
 
-    @OnClick({R.id.head_img_lay, R.id.back_img, R.id.more_info_lay,R.id.logout_lay,R.id.left_back_lay})
+    @OnClick({R.id.head_img_lay, R.id.back_img, R.id.busines_name_lay,R.id.logout_lay,R.id.left_back_lay})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -167,8 +170,8 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
             case R.id.left_back_lay:
                 finish();
                 break;
-            case R.id.more_info_lay:
-                String kind = MbsConstans.USER_MAP.get("firm_kind") + "";//客户类型（0：个人，1：企业）
+            case R.id.busines_name_lay:
+               /* String kind = MbsConstans.USER_MAP.get("firm_kind") + "";//客户类型（0：个人，1：企业）
                 if (kind.equals("1")) {
                     intent = new Intent(UserInfoActivity.this, QiyeInfoShowActivity.class);
                     intent.putExtra("backtype","2");
@@ -176,9 +179,9 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                 }else {
                     intent = new Intent(UserInfoActivity.this, MoreInfoManagerActivity.class);
                     startActivity(intent);
-                }
-
-
+                }*/
+                intent = new Intent(UserInfoActivity.this, UpdateNichengActivity.class);
+                startActivity(intent);
                 break;
             case R.id.logout_lay:
                 new AlertDialog.Builder(this)
@@ -204,7 +207,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
     }
 
     private void ActionSheetDialogNoTitle() {
-        final String[] stringItems = {"从相册选择", "拍照"};
+        final String[] stringItems = { "拍照","从手机相册选择"};
         final ActionSheetDialog dialog = new ActionSheetDialog(UserInfoActivity.this, stringItems, null);
         dialog.isTitleShow(false).show();
 
@@ -218,22 +221,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                         PermissionsUtils.requsetRunPermission(UserInfoActivity.this, new RePermissionResultBack() {
                             @Override
                             public void requestSuccess() {
-                                toast(R.string.successfully);
-                                localPic();
-                            }
-
-                            @Override
-                            public void requestFailer() {
-                                toast(R.string.failure);
-                            }
-                        },Permission.Group.STORAGE);
-                        break;
-                    case 1:
-
-                        PermissionsUtils.requsetRunPermission(UserInfoActivity.this, new RePermissionResultBack() {
-                            @Override
-                            public void requestSuccess() {
-                                toast(R.string.successfully);
+                                //toast(R.string.successfully);
                                 photoPic();
                             }
 
@@ -242,6 +230,23 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                                 toast(R.string.failure);
                             }
                         },Permission.Group.STORAGE,Permission.Group.CAMERA);
+
+
+                        break;
+                    case 1:
+                        PermissionsUtils.requsetRunPermission(UserInfoActivity.this, new RePermissionResultBack() {
+                            @Override
+                            public void requestSuccess() {
+                                //toast(R.string.successfully);
+                                localPic();
+                            }
+
+                            @Override
+                            public void requestFailer() {
+                                toast(R.string.failure);
+                            }
+                        },Permission.Group.STORAGE);
+
                         break;
                 }
 
@@ -301,20 +306,6 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                 if (data != null) {
                     startPhotoZoom(data.getData());
                 }
-
-                //			if (data==null) {
-                //				return;
-                //			}
-                //			uri = data.getData();
-                //			String[] proj = { MediaStore.Images.Media.DATA };
-                //			Cursor cursor = getActivity().getContentResolver().query(uri, proj, null, null,null);
-                //			//Cursor cursor =
-                //			int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                //			cursor.moveToFirst();
-                //			path = cursor.getString(column_index);// 图片在的路径
-                //			Intent intent3=new Intent(getActivity(), ClipActivity.class);
-                //			intent3.putExtra("path", path);
-                //			startActivityForResult(intent3, 4);
                 break;
             // 如果是调用相机拍照时
             case 2:
@@ -435,6 +426,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
 
             // uploadAliPic(new Date().getTime()+".png",filepath);
 
+            //上传头像
             uploadPicAction();
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -443,13 +435,18 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
     }
 
     private void uploadPicAction() {
-        mRequestTag = MethodUrl.UPLOAD_FILE;
+
+        mRequestTag = MethodUrl.USER_HEAD_IMAGE;
         Map<String, Object> signMap = new HashMap<>();
         Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(UserInfoActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, Object> fileMap = new HashMap<>();
         fileMap.put("file",mHeadImgPath);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.postFileToMap(mHeaderMap, MethodUrl.UPLOAD_FILE,signMap, map,fileMap);
+        mRequestPresenterImp.postFileToMap(mHeaderMap, MethodUrl.USER_HEAD_IMAGE,signMap, map,fileMap);
     }
     private void submitPicPath() {
         mRequestTag = MethodUrl.headPath;
@@ -551,20 +548,52 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
         Intent intent;
         switch (mType) {
             case MethodUrl.USER_INFO:
-                MbsConstans.USER_MAP = tData;
-                SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.LOGIN_INFO, JSONUtil.getInstance().objectToJson(MbsConstans.USER_MAP));
-                initHeadPic();
+                switch (tData.get("code")+""){
+                    case "0": //请求成功
+                        MbsConstans.USER_MAP = (Map<String, Object>) tData.get("data");
+                        if (!UtilTools.empty(MbsConstans.USER_MAP)){
+                            SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.LOGIN_INFO, JSONUtil.getInstance().objectToJson(MbsConstans.USER_MAP));
+                            mPhoneTv.setText(MbsConstans.USER_MAP.get("name")+"");
+                            GlideUtils.loadImage2(UserInfoActivity.this,MbsConstans.USER_MAP.get("portrait")+"",mHeadImageView,R.drawable.head);
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(UserInfoActivity.this, LoginActivity.class);
+                        startActivity(intent);
+
+                        break;
+
+                }
+
                 break;
-            case MethodUrl.headPath:
-                showToastMsg("上传头像成功");
-                getUserInfoAction();
-                intent = new Intent();
+            case MethodUrl.USER_HEAD_IMAGE:
+                switch (tData.get("code")+""){
+                    case "0": //请求成功
+                        showToastMsg("上传头像成功");
+                        //MbsConstans.USER_MAP = (Map<String, Object>) tData.get("data");
+                        getUserInfoAction();
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(UserInfoActivity.this, LoginActivity.class);
+                        startActivity(intent);
+
+                        break;
+
+                }
+
+              /*  intent = new Intent();
                 intent.setAction(MbsConstans.BroadcastReceiverAction.USER_INFO_UPDATE);
-                sendBroadcast(intent);
-                break;
-            case MethodUrl.UPLOAD_FILE:
-                mHeadPath = tData;
-                submitPicPath();
+                sendBroadcast(intent);*/
                 break;
             case MethodUrl.LOGIN_ACTION://{verify_type=FACE, state=0}
                 closeAllActivity();

@@ -82,6 +82,7 @@ public class MbsConstans {
 	public static Map<String,Object> MONEY_INFO = null;
 	public static String ACCESS_TOKEN = "";
 	public static String REFRESH_TOKEN = "";
+	public static String PAY_CODE = "";
 
 	public static boolean LOGIN_OUT = false;
 	//记录列表更新时间的文件名称
@@ -224,6 +225,8 @@ public class MbsConstans {
 
 		public static String ACCESS_TOKEN = "ACCESS_TOKEN";
 		public static String REFRESH_TOKEN = "REFRESH_TOKEN";
+
+		public static String PAY_CODE = "PAY_CODE";
 
 		//记录列表更新时间的文件名称
 		public static String UPDATETIME = "DELIVERY_UPDATETIME";
