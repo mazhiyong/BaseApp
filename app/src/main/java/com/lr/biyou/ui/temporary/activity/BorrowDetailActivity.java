@@ -301,9 +301,7 @@ public class BorrowDetailActivity extends BasicActivity implements RequestView, 
                 getModifyAction();
                 break;
             case R.id.tiqian_huankuan_tv:
-                intent = new Intent(BorrowDetailActivity.this, PayMoneyActivity.class);
-                intent.putExtra("DATA", (Serializable) mDataMap);
-                startActivity(intent);
+
                 break;
             case R.id.chexiao_sq_button:
                 showDialog();

@@ -339,6 +339,11 @@
     <color name="transparent">#00000000</color>
     <!-- 透明 -->
 
+    <!-- 暗黑色 -->
+    <color name="an_black">#363E51</color>
+    <!-- 奶奶灰 -->
+    <color name="nn_gray">#8F97AB</color>
+
     <color name="body_bg">#f2f2f2</color>
     <color name="title_bg">#262F2F</color>
     <color name="head_bg">#313131</color>

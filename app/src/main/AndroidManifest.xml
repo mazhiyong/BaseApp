@@ -444,7 +444,7 @@
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 添加附件 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ShowDetailPictrue"
+            android:name="com.lr.biyou.ui.moudle.activity.ShowDetailPictrue"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
             android:theme="@style/YourTheme"
             android:windowSoftInputMode="stateHidden">
@@ -1002,7 +1002,21 @@
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
+        <!--  添加好友  -->
+        <activity
+            android:name=".ui.moudle2.activity.AddFriendActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
 
+        <!--  聊天消息通知列表  -->
+        <activity
+            android:name=".ui.moudle2.activity.ChatNoticeListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
 
 
 

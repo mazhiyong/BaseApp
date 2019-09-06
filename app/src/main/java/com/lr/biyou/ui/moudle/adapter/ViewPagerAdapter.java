@@ -1,4 +1,4 @@
-package com.lr.biyou.ui.temporary.adapter;
+package com.lr.biyou.ui.moudle.adapter;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -93,11 +93,11 @@ public class ViewPagerAdapter extends PagerAdapter {
         Map<String, Object> map = mImgList.get(position);
         ((ViewPager) container).addView(mRootView, 0);
 
-        String imgUrl = map.get("remotepath")+"";
-        if (imgUrl.contains("http")){
+        String imgUrl = map.get("url")+"";
+       /* if (imgUrl.contains("http")){
         }else {
             imgUrl = MbsConstans.PIC_URL+imgUrl;
-        }
+        }*/
 
         ProgressInterceptor.addListener(imgUrl, new ProgressListener() {
             @Override

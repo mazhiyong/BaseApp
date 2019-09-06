@@ -47,6 +47,7 @@ import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
+import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.IdCardEditActivity;
@@ -575,7 +576,26 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 buyAndSellAction();
                 break;
             case R.id.deal_all_iv:
-                pingCangAllAction();
+                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(getParentFragment().getActivity(),true);
+                sureOrNoDialog.initValue("提示","是否一键平仓？");
+                sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()){
+                            case R.id.cancel:
+                                sureOrNoDialog.dismiss();
+                                break;
+                            case R.id.confirm:
+                                sureOrNoDialog.dismiss();
+                                pingCangAllAction();
+                                break;
+                        }
+                    }
+                });
+                sureOrNoDialog.show();
+                sureOrNoDialog.setCanceledOnTouchOutside(false);
+                sureOrNoDialog.setCancelable(true);
+
                 break;
             case R.id.tvLimitPrice:
                 mDialog.showAtLocation(Gravity.BOTTOM, 0, 0);

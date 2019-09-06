@@ -1,4 +1,4 @@
-package com.lr.biyou.ui.temporary.activity;
+package com.lr.biyou.ui.moudle.activity;
 
 
 import android.content.Intent;
@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.lr.biyou.R;
-import com.lr.biyou.ui.temporary.adapter.ViewPagerAdapter;
+import com.lr.biyou.ui.moudle.adapter.ViewPagerAdapter;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.utils.imageload.CircleProgressView;
 import com.lr.biyou.basic.MbsConstans;

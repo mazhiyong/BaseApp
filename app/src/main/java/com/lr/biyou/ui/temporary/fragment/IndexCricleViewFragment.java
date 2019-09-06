@@ -968,9 +968,7 @@ public class  IndexCricleViewFragment extends BasicFragment implements RequestVi
                         mItemWaitdo.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent= new Intent(getActivity(), PayMoneyActivity.class);
-                                intent.putExtra("DATA",(Serializable) map);
-                                startActivity(intent);
+
                             }
                         });
                         break;

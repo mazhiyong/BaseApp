@@ -212,6 +212,8 @@ public class MethodUrl {
 
 
 
+
+
     public static final String ENTRUST_LIST = "Coin/queryEntrust";//委托单查询
     public static final String COIN_AREAALL = "Coin/areaAll";//交易区列表
     public static final String AREA_ITEM = "Coin/queryArea";//获取对应交易区币对列表
@@ -222,14 +224,32 @@ public class MethodUrl {
 
 
 
+
+
     public static final String OTC_TRADE = "Outside/getPair";//法币列表交易区
     public static final String HISTORY_DINGDAN = "Outside/myMatch";//订单历史
     public static final String FB_ENTRUSTLIST = "Outside/entrustList";//法币买卖挂单列表
-    public static final String USER_ENTRUSTLIST = "Outside/myEntrust";//用户挂单记录
-    public static final String USER_ENTRUST_DEAL = "outside_trade/index";//买卖挂单操作
     public static final String USER_BUY_DEAL = "outside_trade/tradeEntrust";//用户买卖操作
     public static final String DING_INFO = "outside_trade/tradeMatch";//订单详情
+    public static final String DING_CANCEL = "outside_trade/revocationMatch";//取消订单
+    public static final String BUYER_SURE = "outside_trade/confirmPay";//买家确认支付
+    public static final String SELLER_SURE = "outside_trade/confirmLoan";//卖家确认收到款
+    public static final String USER_ENTRUST_DEAL = "outside_trade/index";//买卖挂单操作
+    public static final String USER_ENTRUSTLIST = "Outside/myEntrust";//用户挂单记录
+    public static final String CANCEL_ENTRUSTLIST = "outside_trade/doRevocation";//撤销挂单
 
+
+
+
+
+    public static final String CHAT_QRCODE = "chat_user/myQrcode";//我的二维码
+    public static final String CHAT_SEARCH_FRIEND = "chat_user/selectFriend";//添加好友（搜索）
+    public static final String CHAT_ADD_FRIEND = "chat_user/addFriend";//添加好友操作
+    public static final String CHAT_FRIEND_APPLY = "chat_user/friendApply";//好友申请列表操作
+    public static final String CHAT_AGREE_REFUSE = "chat_user/checkApply";//同意拒绝好友申请
+    public static final String CHAT_MY_FRIENDS = "chat_user/myFriend";//获取好友列表
+    public static final String CHAT_RECENTLY_LIST = "Chat/recentChat";//最近聊天列表
+    public static final String CHAT_SEND_NEWS = "chat_user/chatActive";//发送消息
 
 
 

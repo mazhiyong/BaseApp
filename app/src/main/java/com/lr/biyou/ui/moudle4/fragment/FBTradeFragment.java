@@ -41,12 +41,14 @@ import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
+import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.MainActivity;
 import com.lr.biyou.ui.moudle.activity.ResetPayPassButActivity;
 import com.lr.biyou.ui.moudle4.activity.DingDanListActivity;
+import com.lr.biyou.ui.temporary.activity.BankCardActivity;
 import com.lr.biyou.ui.temporary.activity.MyShouMoneyActivity;
 import com.lr.biyou.ui.moudle4.activity.PayMoneyActivity;
 import com.lr.biyou.ui.moudle4.adapter.DingDanListAdapter;
@@ -139,9 +141,6 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private String mSelectEndTime = "";
     private String mSelectType = "";
 
-
-    private String mDataType = "";
-
     private AnimUtil mAnimUtil;
 
     private int TAB_POSITION = 0;
@@ -156,8 +155,9 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private KindSelectDialog mDialog;
 
     private String symbol ="";
-    private String direction = "0"; //0 买  1卖
+    private String direction = "1"; //0 买  1卖
 
+    private String direction2 = "1"; //0 买  1卖
     private int mPage = 1;
     private String id = "";
 
@@ -252,7 +252,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
 
                             symbol = mTabsData.get(tab_POSITION).get("symbol")+"";
-                            direction = "0";
+                            direction = "1";
 
                             mPageView.setVisibility(View.VISIBLE);
                             lay.setVisibility(View.GONE);
@@ -261,23 +261,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                             getEntrustListAction();
 
                         }
-                        /*switch (tab_POSITION) {
-                            case 0:
-                                mPageView.setVisibility(View.VISIBLE);
-                                lay.setVisibility(View.GONE);
-                                initData1();
-                                break;
-                            case 1:
-                                mPageView.setVisibility(View.VISIBLE);
-                                lay.setVisibility(View.GONE);
-                                initData2();
-                                break;
-                            case 2:
-                                mPageView.setVisibility(View.VISIBLE);
-                                lay.setVisibility(View.GONE);
-                                initData3();
-                                break;
-                        }*/
+
 
                         break;
                     case 1: //我要卖
@@ -288,7 +272,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                             }
 
                             symbol = mTabsData.get(tab_POSITION).get("symbol")+"";
-                            direction = "1";
+                            direction = "0";
 
                             mPageView.setVisibility(View.VISIBLE);
                             lay.setVisibility(View.GONE);
@@ -297,25 +281,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                             getEntrustListAction();
 
                         }
-                       /* switch (tab_POSITION) {
-                            case 0:
-                                mPageView.setVisibility(View.VISIBLE);
-                                lay.setVisibility(View.GONE);
-                                initData4();
-                                break;
 
-                            case 1:
-                                mPageView.setVisibility(View.VISIBLE);
-                                lay.setVisibility(View.GONE);
-                                initData5();
-                                break;
-
-                            case 2:
-                                mPageView.setVisibility(View.VISIBLE);
-                                lay.setVisibility(View.GONE);
-                                initData6();
-                                break;
-                        }*/
                         break;
                     case 2: //发布
                         tabChild.removeAllTabs();
@@ -335,6 +301,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                         switch (tab_POSITION) {
                             case 0:
+                                direction2 = "0";
                                 mPageView.setVisibility(View.GONE);
                                 lay.setVisibility(View.VISIBLE);
                                 tvDell.setText("发布购买");
@@ -342,6 +309,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                 break;
 
                             case 1:
+                                direction2 = "1";
                                 mPageView.setVisibility(View.GONE);
                                 lay.setVisibility(View.VISIBLE);
                                 tvDell.setText("发布出售");
@@ -379,7 +347,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 switch (TAB_POSITION) {
                     case 0://我要买
                         symbol = mTabsData.get(tab_POSITION).get("symbol")+"";
-                        direction = "0";
+                        direction = "1";
 
                         mPageView.setVisibility(View.VISIBLE);
                         lay.setVisibility(View.GONE);
@@ -407,7 +375,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         break;
                     case 1: //我要卖
                         symbol = mTabsData.get(tab_POSITION).get("symbol")+"";
-                        direction = "1";
+                        direction = "0";
 
                         mPageView.setVisibility(View.VISIBLE);
                         lay.setVisibility(View.GONE);
@@ -435,12 +403,14 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     case 2: //发布
                         switch (tab_POSITION) {
                             case 0: //购买
+                                direction2 = "0";
                                 mPageView.setVisibility(View.GONE);
                                 lay.setVisibility(View.VISIBLE);
                                 tvDell.setText("发布购买");
                                 tvDell.setBackgroundResource(R.drawable.btn_next_green);
                                 break;
                             case 1: //出售
+                                direction2 = "1";
                                 mPageView.setVisibility(View.GONE);
                                 lay.setVisibility(View.VISIBLE);
                                 tvDell.setText("发布出售");
@@ -513,7 +483,6 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
         //默认查询最近一周
 
-        mDataType = "1";
 
         String sTime = UtilTools.getWeekAgo(new Date(), -6);
         String eTime = UtilTools.getStringFromDate(new Date(), "yyyyMMdd");
@@ -522,9 +491,6 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mSelectEndTime = eTime;
 
 
-        List<Map<String,Object>> mDataList2 = SelectDataUtil.getBiType();
-        mDialog=new KindSelectDialog(getActivity(),true,mDataList2,30);
-        mDialog.setSelectBackListener(this);
     }
 
 
@@ -578,10 +544,34 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 break;
 
             case R.id.bitype_lay:
+                List<Map<String,Object>> mDataList2 = new ArrayList<>();
+                for (Map<String,Object> map:mTabsData) {
+                    Map<String,Object> map1 = new HashMap<>();
+                    map1.put("name",map.get("symbol")+"");
+                    mDataList2.add(map1);
+                }
+                mDialog=new KindSelectDialog(getActivity(),true,mDataList2,30);
+                mDialog.setSelectBackListener(this);
                 mDialog.showAtLocation(Gravity.BOTTOM,0,0);
                 break;
 
-            case R.id.tv_dell:
+            case R.id.tv_dell: //挂单买卖操作
+                if (BiTypeTv.getText().toString().equals("请选择币种类型")){
+                    showToastMsg("请选择币种类型");
+                    return;
+                }
+
+                if (UtilTools.empty(etPrice.getText()+"")){
+                    showToastMsg("请输入价格");
+                    return;
+                }
+
+                 if (UtilTools.empty(mEtNumber.getText()+"")){
+                     showToastMsg("请输入数量");
+                     return;
+                 }
+
+                 doDealAction();
 
                 break;
 
@@ -589,6 +579,22 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         }
 
     }
+
+    private void doDealAction() {
+        mRequestTag = MethodUrl.USER_ENTRUST_DEAL;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("price",etPrice.getText()+"");
+        map.put("number", mEtNumber.getText()+"");
+        map.put("symbol", BiTypeTv.getText()+"");
+        map.put("direction",direction2);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_ENTRUST_DEAL, map);
+    }
+
 
     @Override
     public void showProgress() {
@@ -674,13 +680,11 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         switch (TAB_POSITION) {
                             case 0:
                                 intent = new Intent(getParentFragment().getActivity(), PayMoneyActivity.class);
-                                intent.putExtra("kind", "0"); //购买
                                 intent.putExtra("id",tData.get("data")+"");//订单ID
                                 startActivity(intent);
                                 break;
                             case 1:
                                 intent = new Intent(getParentFragment().getActivity(), PayMoneyActivity.class);
-                                intent.putExtra("kind", "1"); //出售
                                 intent.putExtra("id",tData.get("data")+"");//订单ID
                                 startActivity(intent);
                                 break;
@@ -711,10 +715,6 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         if (!UtilTools.empty(mapData)){
                             mDataList = (List<Map<String, Object>>) mapData.get("list");
                             if (mDataList != null && mDataList.size()>0){
-                               /* for (Map<String,Object> map : mDataList){
-                                    map.put("direction",direction);
-                                    map.put("symbol",symbol);
-                                }*/
                                 mPageView.showContent();
                                 responseData7();
                                 mRefreshListView.refreshComplete(10);
@@ -734,6 +734,47 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     case "-1":
                         showToastMsg(tData.get("msg")+"");
                         mPageView.showNetworkError();
+                        break;
+
+                }
+                break;
+
+            case MethodUrl.USER_ENTRUST_DEAL:
+                switch (tData.get("code")+""){
+                    case "0":
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+                    case "1":
+                        if (getParentFragment().getActivity() != null){
+                            getParentFragment().getActivity().finish();
+                        }
+                        intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
+                        startActivity(intent);
+
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+
+                }
+                break;
+
+            case  MethodUrl.CANCEL_ENTRUSTLIST:
+                switch (tData.get("code")+""){
+                    case "0":
+                        showToastMsg(tData.get("msg")+"");
+                        getUserTradeList();
+                        break;
+                    case "1":
+                        if (getParentFragment().getActivity() != null){
+                            getParentFragment().getActivity().finish();
+                        }
+                        intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
+                        startActivity(intent);
+
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg")+"");
                         break;
 
                 }
@@ -882,7 +923,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
                 id = mParentMap.get("id")+"";
-                if (direction.equals("0")){
+                if (direction.equals("1")){
                     showDialog("购买 "+mParentMap.get("symbol"),
                             mParentMap.get("price")+"", "交易数量 0 USDT",
                             "按价格购买", "按数量购买");
@@ -1408,6 +1449,44 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
             mPageView.showContent();
         }
 
+        mdingdanAdapter.setmCallBack(new OnChildClickListener() {
+            @Override
+            public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
+                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(getParentFragment().getActivity(),true);
+                sureOrNoDialog.initValue("提示","确定要撤销当前挂单吗？");
+                sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()){
+                            case R.id.cancel:
+                                sureOrNoDialog.dismiss();
+                                break;
+                            case R.id.confirm:
+                                sureOrNoDialog.dismiss();
+                                cheXiaoGuadanAction(mParentMap);
+                                break;
+                        }
+                    }
+                });
+                sureOrNoDialog.show();
+                sureOrNoDialog.setCanceledOnTouchOutside(false);
+                sureOrNoDialog.setCancelable(true);
+            }
+        });
+
+    }
+
+
+    private void cheXiaoGuadanAction(Map<String,Object> mParentMap) {
+        mRequestTag = MethodUrl.CANCEL_ENTRUSTLIST;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("id", mParentMap.get("id")+"");
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CANCEL_ENTRUSTLIST, map);
     }
 
 
@@ -1666,8 +1745,8 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 break;
 
             case 30:
-                String str= (String) map.get("name");
-                BiTypeTv.setText(str);
+                String strSysbol= (String) map.get("name");
+                BiTypeTv.setText(strSysbol);
                 break;
 
         }

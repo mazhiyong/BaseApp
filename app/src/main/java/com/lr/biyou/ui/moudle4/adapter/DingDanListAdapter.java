@@ -1,6 +1,7 @@
 package com.lr.biyou.ui.moudle4.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lr.biyou.R;
+import com.lr.biyou.listener.OnChildClickListener;
 import com.lr.biyou.ui.moudle.adapter.ListBaseAdapter;
+import com.lr.biyou.ui.moudle4.activity.PayMoneyActivity;
 import com.lr.biyou.utils.tool.UtilTools;
 
 import java.util.Map;
@@ -24,6 +27,11 @@ public class DingDanListAdapter extends ListBaseAdapter {
 
 
     private LayoutInflater mLayoutInflater;
+    private OnChildClickListener mCallBack;
+
+    public void setmCallBack(OnChildClickListener mCallBack) {
+        this.mCallBack = mCallBack;
+    }
 
     public DingDanListAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
@@ -63,14 +71,19 @@ public class DingDanListAdapter extends ListBaseAdapter {
             viewHolder.mMoneyTv.setText("+"+UtilTools.getMoney(item.get("amt")+""));
         }*/
 
-        viewHolder.tradeLay.setOnClickListener(new View.OnClickListener()
-
-    {
+        viewHolder.tradeLay.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick (View v){
-//                Intent intent = new Intent(mContext, TradeDetailActivity.class);
-//                intent.putExtra("DATA", (Serializable) item);
-//                mContext.startActivity(intent);
+                 if (UtilTools.empty(item.get("tempo"))){ // 订单历史
+                     Intent intent = new Intent(mContext, PayMoneyActivity.class);
+                     intent.putExtra("id",item.get("id")+"");
+                     mContext.startActivity(intent);
+                }else { //挂单历史
+                     if (mCallBack != null) {
+                         mCallBack.onChildClickListener(viewHolder.tradeLay, position, item);
+                     }
+                 }
+
     }
     });
 

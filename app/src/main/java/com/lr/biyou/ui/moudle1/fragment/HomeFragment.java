@@ -505,7 +505,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
-
+        dealFailInfo(map,mType);
     }
 
     @OnClick({R.id.left_back_lay, R.id.tvMore, R.id.marqueeView})

@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.lr.biyou.R;
 import com.lr.biyou.ui.temporary.activity.ModifyFileActivity;
-import com.lr.biyou.ui.temporary.activity.ShowDetailPictrue;
+import com.lr.biyou.ui.moudle.activity.ShowDetailPictrue;
 import com.lr.biyou.listener.OnMyItemClickListener;
 import com.lr.biyou.utils.tool.UtilTools;
 

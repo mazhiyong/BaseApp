@@ -52,7 +52,7 @@ public class FBTradeListAdapter extends ListBaseAdapter {
         final Map<String, Object> item = mDataList.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
         String type = item.get("direction")+"";
-        if (type.equals("0")){
+        if (type.equals("1")){
             viewHolder.tvBuy.setBackgroundResource(R.drawable.btn_next);
             viewHolder.tvBuy.setText("购买");
         }else {

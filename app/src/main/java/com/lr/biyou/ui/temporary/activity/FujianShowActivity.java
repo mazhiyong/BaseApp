@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lr.biyou.R;
+import com.lr.biyou.ui.moudle.activity.ShowDetailPictrue;
 import com.lr.biyou.ui.temporary.adapter.ModifyShowImageAdapter;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
