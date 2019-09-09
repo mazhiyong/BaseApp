@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+        <include
+        android:id="@+id/top_layout"
+        layout="@layout/title_leftbut_bar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:focusable="true"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_gravity="center"
+        android:focusableInTouchMode="true"
+        android:background="@drawable/background_search"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/icon_search"
+            android:padding="@dimen/dp_10"
+            android:id="@+id/iv_search"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:background="@null"
+            android:id="@+id/et_search"
+            android:layout_gravity="center"
+            android:textSize="@dimen/sp_text_14"
+            android:hint="ID/手机号"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="我的微信二维码"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/gray"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/my_qrcode_iv"
+            android:layout_width="@dimen/dp_40"
+            android:layout_margin="@dimen/dp_10"
+            android:padding="@dimen/dp_10"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/friend_qrcode"
+            android:layout_height="@dimen/dp_40" />
+
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/user_icon_iv"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_width="@dimen/dp_60"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="@dimen/dp_60" />
+
+    <TextView
+        android:id="@+id/user_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/sp_25"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/add_tv"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/dp_20"
+        android:text="添加好友"
+        android:padding="@dimen/dp_8"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_next"
+        android:layout_height="wrap_content" />
+</LinearLayout>

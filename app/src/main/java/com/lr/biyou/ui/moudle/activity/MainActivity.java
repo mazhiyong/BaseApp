@@ -14,11 +14,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
@@ -27,10 +29,12 @@ import com.lr.biyou.bean.MessageEvent;
 import com.lr.biyou.db.IndexData;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.UpdateDialog;
+import com.lr.biyou.rongyun.common.IntentExtra;
+import com.lr.biyou.rongyun.ui.activity.CreateGroupActivity;
 import com.lr.biyou.service.DownloadService;
+import com.lr.biyou.ui.moudle1.fragment.HomeFragment;
 import com.lr.biyou.ui.moudle2.fragment.ChatViewFragment;
 import com.lr.biyou.ui.moudle3.fragment.HeYueFragment;
-import com.lr.biyou.ui.moudle1.fragment.HomeFragment;
 import com.lr.biyou.ui.moudle4.fragment.OTCFragment;
 import com.lr.biyou.ui.moudle5.fragment.ZiChanFragment;
 import com.lr.biyou.utils.permission.PermissionsUtils;
@@ -39,7 +43,6 @@ import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 import com.yanzhenjie.permission.Permission;
 
 import org.greenrobot.eventbus.EventBus;
@@ -84,6 +87,9 @@ public class MainActivity extends BasicActivity implements RequestView {
     private Intent mDownIntent;
 
     private IndexData mIndexData;
+
+
+    public static final int REQUEST_START_GROUP = 1;
 
     @Override
     public int getContentView() {
@@ -138,6 +144,49 @@ public class MainActivity extends BasicActivity implements RequestView {
         //mAutoScrollTextView = findViewById(R.id.scroll_text_view);
         //mAutoScrollTextView.setSelected(true);
 
+
+       /* //连接融云
+        //17319449662
+        String token1 = "kcX1ye0YGBlG7iWZ5jHpq3Q66evRHTAQkKthDvKlCzd8eLCcwj5jgjOIbvNeHYutzyYe1ed3QZTcsIDyo3AmMdK3Z331/2kt";
+        //15561400223
+        String token2 = "AUrI48u7jSC9yV8XmieXLxOUx7H8bap2AjZHooKpeeWhNSrnoHFlS2nmFye32TQGajQ85yilCTlPrNGB16o4rBnyf9oopTJ+";
+
+        if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {
+            String s = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
+            MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
+        }
+
+        RongIM.connect(MbsConstans.RONGYUN_MAP.get("token")+"", new RongIMClient.ConnectCallback() {
+
+            *//**
+             * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+             *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+             *//*
+            @Override
+            public void onTokenIncorrect() {
+                LogUtilDebug.i("show", "rongyun  getToken");
+            }
+
+            *//**
+             * 连接融云成功
+             * @param userid 当前 token 对应的用户 id
+             *//*
+            @Override
+            public void onSuccess(String userid) {
+                LogUtilDebug.i("show", "rongyun--onSuccess" + userid);
+            }
+
+            *//**
+             * 连接融云失败
+             * @param errorCode 错误码，可到官网 查看错误码对应的注释
+             *//*
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                LogUtilDebug.i("show", "rongyun--onError" + errorCode);
+            }
+        });
+
+*/
     }
 
 
@@ -393,6 +442,24 @@ public class MainActivity extends BasicActivity implements RequestView {
         }
     };
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_START_GROUP:
+                    ArrayList<String> memberList = data.getStringArrayListExtra(IntentExtra.LIST_STR_ID_LIST);
+                    Intent intent = new Intent(this, CreateGroupActivity.class);
+                    intent.putExtra(IntentExtra.LIST_STR_ID_LIST, memberList);
+                    startActivity(intent);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    }
     @Override
     public void showProgress() {
         showProgressDialog();

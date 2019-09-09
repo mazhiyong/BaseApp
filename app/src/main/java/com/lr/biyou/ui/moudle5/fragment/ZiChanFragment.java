@@ -219,7 +219,7 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
 
 //
 //        if (MbsConstans.USER_MAP == null) {
-//            getUserInfoAction();
+//            getFriendInfoAction();
 //        } else {
 //            String kind = MbsConstans.USER_MAP.get("firm_kind") + "";
 ////            if (kind.equals("1")) {//客户类型（0：车主，1：物流公司）

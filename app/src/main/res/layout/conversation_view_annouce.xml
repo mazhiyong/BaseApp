@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_annouce"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_45"
+    android:background="#9D5438"
+    android:clickable="true"
+    android:descendantFocusability="blocksDescendants"
+    >
+
+    <ImageView
+        android:id="@+id/iv_announce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/trade_default"
+        android:layout_marginLeft="@dimen/dp_15"
+        />
+
+    <ImageView
+        android:id="@+id/iv_announce_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_15"
+        android:src="@drawable/android_list_idex" />
+
+    <TextView
+        android:id="@+id/tv_announce_msg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_30"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_toLeftOf="@id/iv_announce_arrow"
+        android:layout_toRightOf="@id/iv_announce"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:lines="1"
+        android:textColor="#9D5438"
+        android:textSize="@dimen/sp_14" />
+</RelativeLayout>

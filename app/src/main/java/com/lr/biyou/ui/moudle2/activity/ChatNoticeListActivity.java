@@ -1,27 +1,16 @@
 package com.lr.biyou.ui.moudle2.activity;
 
-import android.animation.Animator;
 import android.content.Intent;
-import android.graphics.Color;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.flyco.dialog.utils.CornerUtils;
-import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnNetWorkErrorListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
@@ -34,19 +23,14 @@ import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.OnChildClickListener;
-import com.lr.biyou.listener.OnMyItemClickListener;
 import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
-import com.lr.biyou.mywidget.dialog.DateSelectDialog;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle1.adapter.NoticeListAdapter;
 import com.lr.biyou.ui.moudle2.adapter.ChatNoticeListAdapter;
-import com.lr.biyou.ui.temporary.adapter.TradeDialogAdapter;
 import com.lr.biyou.utils.tool.AnimUtil;
 import com.lr.biyou.utils.tool.SPUtils;
-import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
 
 import java.util.ArrayList;
@@ -59,7 +43,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 公告消息中心  界面
+ * 消息通知 界面
  */
 public class ChatNoticeListActivity extends BasicActivity implements RequestView,ReLoadingData,SelectBackListener{
 

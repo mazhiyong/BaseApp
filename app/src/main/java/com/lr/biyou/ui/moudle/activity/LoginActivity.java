@@ -6,10 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.StringRes;
-import androidx.core.content.ContextCompat;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
@@ -25,20 +21,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.StringRes;
+import androidx.core.content.ContextCompat;
+
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
-import com.lr.biyou.ui.temporary.activity.CheckWatiActivity;
-import com.lr.biyou.ui.temporary.activity.IdCardCheckActivity;
-import com.lr.biyou.ui.temporary.activity.IdCardMyActivity;
-import com.lr.biyou.ui.temporary.activity.QiyeCardInfoActivity;
-import com.lr.biyou.ui.temporary.activity.QiyeDakuanCheckActivity;
-import com.lr.biyou.ui.temporary.activity.QiyeInfoActivity;
+import com.lr.biyou.rongyun.common.ResultCallback;
+import com.lr.biyou.rongyun.im.IMManager;
+import com.lr.biyou.rongyun.model.UserCacheInfo;
+import com.lr.biyou.rongyun.sp.UserCache;
+import com.lr.biyou.utils.tool.JSONUtil;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.TextViewUtils;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,6 +87,10 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
 
     private String mFirmKind = "";
 
+    //存储当前最新一次登录的用户信息
+    private UserCache userCache;
+    private IMManager imManager;
+
 
     @Override
     public int getContentView() {
@@ -120,6 +123,9 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
         textViewUtils.build();
 
         mInstance = this;
+
+        userCache = new UserCache(getApplicationContext());
+        imManager = IMManager.getInstance();
 
         //getNameCodeInfo();
 
@@ -323,7 +329,7 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
     /* *//**
      * 获取用户基本信息
      *//*
-    private void getUserInfoAction() {
+    private void getFriendInfoAction() {
         Map<String, String> map = new HashMap<>();
         Map<String,String> mHeaderMap = new HashMap<String,String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_INFO, map);
@@ -435,23 +441,41 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
                 SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.NAME_CODE_DATA, result);
                 break;
             case MethodUrl.LOGIN_ACTION://登录操作返回结果
-
                 switch (tData.get("code")+""){
                     case "0":
                         MbsConstans.ACCESS_TOKEN = tData.get("data") + "";
                         //LogUtilDebug.i("show","token:"+tData.get("access_token"));
-                        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
+                      /*  if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
                             MbsConstans.ACCESS_TOKEN = "";
+                        }*/
+                        if (!UtilTools.empty(tData.get("ry_data")+"")){
+                            MbsConstans.RONGYUN_MAP = (Map<String, Object>) tData.get("ry_data");
+                            SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA, JSONUtil.getInstance().objectToJson(MbsConstans.RONGYUN_MAP));
                         }
+
+
                         SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, MbsConstans.ACCESS_TOKEN);
                         SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.LOGIN_ACCOUNT, mAccount+"");
                         SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.LOGIN_PASSWORD,mPassWord+"");
-//
-//                SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.LOGIN_ACCOUNT, mEditUid.getText()+"");
-//                //SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.LOGIN_PASSWORD,"别找了，没东西了");
-//                SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, MbsConstans.ACCESS_TOKEN);
-//
-//                getRefreshToken();//获取refreshToken
+
+                        LogUtilDebug.i("show","***********");
+                        imManager.connectIM(MbsConstans.RONGYUN_MAP.get("token")+"", true, new ResultCallback<String>() {
+                            @Override
+                            public void onSuccess(String s) {
+                                // 存储当前登录成功的用户信息
+                                UserCacheInfo info = new UserCacheInfo( MbsConstans.RONGYUN_MAP.get("id")+"",
+                                        MbsConstans.RONGYUN_MAP.get("token")+"",
+                                        mAccount+"", mPassWord+"", "86", null);
+                                userCache.saveUserCache(info);
+                                LogUtilDebug.i("show","链接rong融云成功");
+                        }
+
+                            @Override
+                            public void onFail(int errorCode) {
+                                LogUtilDebug.i("show","链接rong融云失败");
+                            }
+                        });
+
 
                         intent = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(intent);
@@ -473,67 +497,6 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
                 mIsRefreshToken = false;
                 getAuthInfoAction();//获取用户认证信息
                 break;
-            case MethodUrl.userAuthInfo://获取登录用户认证信息返回结果 {auth_times=1, auth_state=0, man_auth_proc=0}
-                mBtnLogin.setEnabled(true);
-                int authTimes = Integer.valueOf(tData.get("auth_times") + "");
-                String isAuth = tData.get("auth_state") + "";
-                String isMan = tData.get("man_auth_proc") + "";
-                if(isAuth.equals("1")) {//已经认证过了，。   直接跳到主界面
-                    intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    //}else if (isAuth.equals("0")) {//未认证 是否认证（0：未认证，1：已认证
-                }else {
-                    if (mFirmKind.equals("1")){
-                        String cominfostate = tData.get("cominfostate")+"";//企业信息状态 0:未完善 2:已完善
-                        if (cominfostate.equals("2")){//已完善企业基本信息的情况下
-                            String remitstate = tData.get("remitstate")+"";//打款认证状态(0:未打款,1:已打款,2:验证通过,3:验证失败)
-                            switch (remitstate){
-                                case "0"://如果未打款操作  跳到完善银行卡信息界面  完善企业银行卡 进行下一步操作
-                                    intent = new Intent(LoginActivity.this, QiyeCardInfoActivity.class);
-                                    startActivity(intent);
-                                    break;
-                                case "1"://已打款的情况  就跳到输入金额那个界面  进行输入金额验证
-                                    intent = new Intent(LoginActivity.this, QiyeDakuanCheckActivity.class);
-                                    intent.putExtra("remitid",tData.get("remitid")+"");
-                                    startActivity(intent);
-                                    break;
-                                case "2"://2:验证通过
-                                    intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                    break;
-                                case "3"://如果是验证失败  重新跳到完善银行卡信息界面  填写另外银行卡进行验证
-                                    intent = new Intent(LoginActivity.this, QiyeCardInfoActivity.class);
-                                    startActivity(intent);
-                                    break;
-                                default://企业信息已经完善，打款状态没有返回任何值的情况下  去维护银行卡信息然后后面操作
-                                    intent = new Intent(LoginActivity.this, QiyeCardInfoActivity.class);
-                                    startActivity(intent);
-                                    break;
-                            }
-                        }else {//未完善企业信息的情况
-                            intent = new Intent(LoginActivity.this, QiyeInfoActivity.class);
-                            startActivity(intent);
-                        }
-
-                    }else {
-                        //未认证 是否认证（0：未认证，1：已认证
-                        if (isMan.equals("1")) {//是否有进行中的人工认证（0：没有，1：有）
-                            intent = new Intent(LoginActivity.this, CheckWatiActivity.class);
-                            startActivity(intent);
-                        } else {//非人工认证的情况下
-                            if (authTimes < 3) {//认证次数小于三次继续认证
-                                intent = new Intent(LoginActivity.this, IdCardCheckActivity.class);
-                                startActivity(intent);
-                            } else if (authTimes >= 3) {////认证次数大于等于三次   人工认证
-                                intent = new Intent(LoginActivity.this, IdCardMyActivity.class);
-                                startActivity(intent);
-                            }
-                        }
-                    }
-                }
-                break;
         }
     }
 
@@ -542,7 +505,7 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
         mBtnLogin.setEnabled(true);
         String msg = map.get("errmsg") + "";
         showToastMsg(msg);
-        //dealFailInfo(map,mType);
+        dealFailInfo(map,mType);
     }
 
     @Override

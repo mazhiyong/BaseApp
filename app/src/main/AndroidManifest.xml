@@ -63,7 +63,56 @@
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
 
+    <!-- 融云permission -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="MediaStore.Images.Media.INTERNAL_CONTENT_URI"/>
+    <uses-permission android:name="MediaStore.Images.Media.EXTERNAL_CONTENT_URI"/>
 
+    <!-- ⼩米 配置开始 < -->
+    <permission
+        android:name="permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="cn.rongcloud.im.permission.MIPUSH_RECEIVE" />
+    <!-- ⼩米 配置结束 < -->
+    <!-- GCM 配置开始 < -->
+    <permission
+        android:name="permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="cn.rongcloud.im.permission.C2D_MESSAGE" />
+    <!-- GCM 配置结束 < -->
+    <!-- 华为 配置开始 < -->
+    <!--HMS-SDK引导升级HMS功能，访问OTA服务器需要网络权限-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--HMS-SDK引导升级HMS功能，保存下载的升级包需要SD卡写权限-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--检测网络状态-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--检测wifi状态-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--为了获取用户手机的IMEI，用来唯一的标识用户。-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!--如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- 华为 配置结束 < -->
+
+    <!-- MeiZu 配置开始 < -->
+    <!-- 兼容 flyme5.0 以下版本，魅族内部集成 pushSDK 必填，不然无法收到 消息-->
+    <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
+    <permission
+        android:name="rongyun.push.permission.MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="cn.rongcloud.im.push.permission.MESSAGE" />
+    <!-- 兼容 flyme3.0 配置权限-->
+    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
+    <!-- MeiZu 配置结束 < -->
+
+    <!-- OPPPO 权限配置-->
+    <uses-permission android:name="com.coloros.mcs.permission.SEND_MCS_MESSAGE" />
+    <!-- OPPO 配置结束-->
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <supports-screens
         android:anyDensity="true"
@@ -81,14 +130,14 @@
         android:roundIcon="@drawable/icon0_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon,android:label,android:allowBackup">
+        tools:replace="android:icon,android:label,android:allowBackup,android:name,android:networkSecurityConfig">
 
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
-        <meta-data
+      <!--  <meta-data
             tools:replace="android:value"
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="pwe86ga5pvvu6" />
+            android:value="k51hidwqk4j8b" />-->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.lr.biyou.FileProvider"
@@ -107,7 +156,6 @@
 
             <intent-filter android:label="@string/app_name_main">
                 <action android:name="android.intent.action.VIEW"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
@@ -122,10 +170,7 @@
                       android:host="gizmos" />
                 -->
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
 
         </activity>
         <activity
@@ -156,7 +201,12 @@
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.PerfectInfoActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
@@ -1018,22 +1068,535 @@
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
 
-
-
-        <!--  聊天界面   -->
+        <!--  选择联系人  -->
         <activity
-            android:name=".ui.moudle2.activity.ConversationActivity"
+            android:name=".ui.moudle2.activity.SelectContractListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
+        <!--  聊天详情  -->
+        <activity
+            android:name=".ui.moudle2.activity.ChatItemActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
+        <!--  投诉原因选择  -->
+        <activity
+            android:name=".ui.moudle2.activity.ChoseReasonTypeActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
+
+        <!--  投诉原因选择  -->
+        <activity
+            android:name=".ui.moudle2.activity.TousuActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
+
+
+
+        <!--  融云Activity  -->
+
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.SelectCountryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.ConversationActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.lr.biyou"
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
+
         </activity>
+
+        <!--聚合会话列表-->
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.SubConversationListActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.lr.biyou"
+                    android:path="/subconversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+        <!--聚合会话列表-->
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.NewFriendListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.GroupNoticeListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.SealSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.SearchFriendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.SearchHistoryMessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.GroupListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.PublicServiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.PublicServiceSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.PublicServiceInfoActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.lr.biyou"
+                    android:pathPrefix="/publicServiceProfile"
+                    android:scheme="rong" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.lr.biyou"
+                    android:pathPrefix="/publicServiceInfo"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.AccountSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.ChangeLanguageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.AboutSealTalkActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.WebViewActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.PrivateChatSettingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.GroupDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.GroupMemberListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.GroupNoticeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.UserDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.SelectSingleFriendActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.SelectGroupMemberActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.SelectFriendExcluedGroupActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.SelectForwardCreateChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.SelectCreateGroupActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.ForwardActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
+            />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.MyAccountActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.UpdateNameActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.UpdateStAccountActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.UpdateGenderActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.CreateGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.EditAliasActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.PrivacyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.UpdatePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.BlackListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.NewMessageRemindActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.MessageDonotDisturbSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.MemberMentionedExActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.QrCodeDisplayActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name="com.lr.biyou.rongyun.ui.activity.QrCodeDisplayWindowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentNoTitleActivity"
+            />
+
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.SealPicturePagerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.JoinGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.GroupManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.GroupManagementsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.GroupSetManagementsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.GroupSetNewGroupOwnerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.SelectForwardMoreContactActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name="com.lr.biyou.rongyun.ui.activity.ForwardSelectedDetailActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name="com.lr.biyou.rongyun.ui.activity.ScanActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name="com.lr.biyou.rongyun.ui.activity.AddFriendActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name="com.lr.biyou.rongyun.ui.activity.AddFriendFromContactActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name="com.lr.biyou.rongyun.ui.activity.InviteFriendFromContactActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name="com.lr.biyou.rongyun.ui.activity.RequestContactPermissionActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <!-- 请将CHANNAL改为app的发布渠道 < -->
+        <meta-data
+            android:name="InstallChannel"
+            android:value="CHANNAL" />
+
+        <!-- 高德地图-->
+        <!--
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="替换你申请的高德地图 ApiKey" />
+        -->
+
+        <!--
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="替换您申请的 UMeng AppKey" />
+        -->
+
+        <!--
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="替换您申请的 UMeng Channel" />
+        -->
+
+        <!-- push start-->
+        <receiver
+            android:name="com.lr.biyou.rongyun.push.SealNotificationReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
+            </intent-filter>
+        </receiver>
+
+
+        <!--第三方的推送 权限 广播 和服务-->
+
+        <!-- 小米 配置开始 < -->
+        <service
+            android:name="com.xiaomi.push.service.XMPushService"
+            android:enabled="true" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.xiaomi.mipush.sdk.MessageHandleService"
+            android:enabled="true" />
+        <!--注：此service必须在2.2.5版本以后（包括2.2.5版本）加入-->
+
+        <service
+            android:name="com.xiaomi.push.service.XMJobService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <!--注：此service必须在3.0.1版本以后（包括3.0.1版本）加入-->
+
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.xiaomi.push.service.receivers.PingReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.xiaomi.push.PING_TIMER" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="io.rong.push.platform.mi.MiMessageReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver>
+        <!-- 小米 配置结束 < -->
+
+        <!-- HMS 配置开始-->
+        <!--
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="替换为您申请的华为推送 AppId" />
+        -->
+
+        <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面-->
+        <!--<activity
+            android:name="com.huawei.hms.activity.BridgeActivity"
+            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent">
+            <meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui.Translucent" />
+        </activity>-->
+
+        <!-- 解决华为移动服务升级问题的透明界面（必须声明）-->
+        <activity
+            android:name="io.rong.push.platform.hms.common.HMSAgentActivity"
+            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent">
+            <meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui.Translucent" />
+        </activity>
+
+        <!--  <provider
+              android:name="com.huawei.hms.update.provider.UpdateProvider"
+              android:authorities="hms.update.provider"
+              android:exported="false"
+              android:grantUriPermissions="true"></provider>-->
+
+
+        <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
+
+
+        <receiver android:name="io.rong.push.platform.hms.HMSReceiver">
+            <intent-filter>
+                <!-- 必须,用于接收token -->
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
+                <!-- 必须，用于接收消息 -->
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
+                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
+                <action android:name="com.huawei.android.push.intent.CLICK" />
+                <!-- 可选，查看push通道是否连接，不查看则不需要 -->
+                <action android:name="com.huawei.intent.action.PUSH_STATE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
+            <intent-filter>
+
+                <!-- 接收通道发来的通知栏消息，兼容老版本Push -->
+                <action android:name="com.huawei.intent.action.PUSH" />
+            </intent-filter>
+        </receiver>
+        <!-- HMS 配置结束-->
+
+        <!-- [START firebase_service] -->
+        <!--
+        <service
+            android:name="io.rong.push.platform.google.RongFirebaseMessagingService"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+         -->
+        <!-- [END firebase_service] -->
+
+
+        <!-- MeiZu 配置开始 < -->
+        <receiver android:name="io.rong.push.platform.meizu.MeiZuReceiver">
+            <intent-filter>
+                <!-- 接收 push 消息 -->
+                <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
+                <!-- 接收 register 消息 -->
+                <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
+                <!-- 接收 unregister 消息-->
+                <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
+
+                <!-- 兼容低版本 Flyme3 推送服务配置 -->
+                <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
+                <action android:name="com.meizu.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.lr.biyou" />
+            </intent-filter>
+        </receiver>
+        <!-- MeiZu 配置结束 < -->
+
+
+        <!-- vivo 推送配置 开始 -->
+        <service
+            android:name="com.vivo.push.sdk.service.CommandClientService"
+            android:exported="true" />
+
+        <activity
+            android:name="com.vivo.push.sdk.LinkProxyClientActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.lr.biyou.rongyun.ui.activity.GroupReadReceiptDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 微信 接收微信的请求及返回值 -->
+        <activity android:name="com.lr.biyou.rongyun.wxapi.WXEntryActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="true"
+            android:taskAffinity="net.sourceforge.simcpux"
+            android:launchMode="singleTask"
+            />
+
+        <!--推送配置项-->
+        <!--
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="您申请的 vivo 推送 ApiKey" />
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="您申请的 vivo 推送 AppId" />
+         -->
+
+        <!-- push 应用定义消息 receiver 声明 -->
+        <receiver android:name="io.rong.push.platform.vivo.VivoPushMessageReceiver">
+            <intent-filter>
+                <!-- 接收 push 消息 -->
+                <action android:name="com.vivo.pushclient.action.RECEIVE" />
+            </intent-filter>
+        </receiver>
+        <!-- vivo 推送配置 结束 -->
+
+        <!-- OPPO push 配置开始-->
+        <service
+            android:name="com.coloros.mcssdk.PushService"
+            android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
+            <intent-filter>
+                <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
+            </intent-filter>
+        </service>
+        <!-- OPPO push 配置结束-->
+
+        <!--第三方推送的权限 广播 服务 配置结束-->
+        <!-- push end -->
+
+        <!-- bugly 配置 APP ID -->
+        <!--
+        <meta-data
+            android:name="BUGLY_APPID"
+            android:value="您申请 BUGLY 的 AppId" />
+        -->
 
     </application>
 

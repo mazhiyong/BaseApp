@@ -1,1 +1,1 @@
-include ':app', ':IDCardLib', ':livenesslib', ':websocketlib', ':KLineChartLib', ':framelibrary', ':IMLib', ':RedPacket', ':IMKit', ':RCSticker'
+include ':app', ':IDCardLib', ':livenesslib', ':websocketlib', ':KLineChartLib', ':framelibrary',  ':contactcard', ':pushpermission', ':recognizer'

@@ -250,6 +250,14 @@ public class MethodUrl {
     public static final String CHAT_MY_FRIENDS = "chat_user/myFriend";//获取好友列表
     public static final String CHAT_RECENTLY_LIST = "Chat/recentChat";//最近聊天列表
     public static final String CHAT_SEND_NEWS = "chat_user/chatActive";//发送消息
+    public static final String CHAT_MY_GROUPS = "chat_group/myGroup";//我的群组
+    public static final String CHAT_CREAT_GROUPS = "chat_group/createGroup";//创建群组
+    public static final String CHAT_GROUPS_INFO = "chat_group/groupInfo";//群组信息
+    public static final String CHAT_FRIEDN_INFO = "chat_user/friendDetail";//朋友信息
+    public static final String CHAT_CHANAGE_STATUS = "chat_user/editFriendStatus";//修改置顶聊天/消息免打扰状态
+    public static final String CHAT_REASON_LIST = "chat/complaintList";//投诉原因列表
+
+
 
 
 

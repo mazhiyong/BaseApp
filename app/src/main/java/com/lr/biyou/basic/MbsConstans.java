@@ -78,6 +78,7 @@ public class MbsConstans {
 
 	//{auth=1, firm_kind=1, head_pic=default, name=刘德华,
 	// uscc=91370105123D5P8C9U, tel=158****0123, comname=超神学院有限公司, idno=410725****3616, cmpl_info=1}
+	public static Map<String,Object> RONGYUN_MAP = null;
 	public static Map<String,Object> USER_MAP = null;
 	public static Map<String,Object> MONEY_INFO = null;
 	public static String ACCESS_TOKEN = "";
@@ -241,6 +242,8 @@ public class MbsConstans {
 		public static String LOGIN_ACCOUNT = "LOGIN_ACCOUNT";
 		//登录用户密码
 		public static String LOGIN_PASSWORD = "LOGIN_PASSWORD";
+		//登录用户的融云信息
+		public static String RONGYUN_DATA = "RONG_YUN";
 		//登录用户头像
 		public static String HEAD_IMG = "HEAD_IMG";
 		//登录用到的userKey

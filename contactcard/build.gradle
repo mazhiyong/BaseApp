@@ -1,0 +1,26 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api 'cn.rongcloud.sdk:im_kit:2.9.19'
+    //im_kit必须依赖im_lib，所以需要加入对应依赖
+    api 'cn.rongcloud.sdk:im_lib:2.9.19'
+    implementation 'androidx.fragment:fragment:1.0.0'
+}

@@ -20,8 +20,6 @@ import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.ShowDetailPictrue;
-import com.lr.biyou.ui.moudle4.activity.PayMoneyActivity;
-import com.lr.biyou.ui.temporary.activity.AddFileActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
@@ -33,11 +31,10 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 通知详情 界面
+ * 添加朋友 界面
  */
 public class AddFriendActivity extends BasicActivity implements RequestView, SelectBackListener {
     @BindView(R.id.back_img)
@@ -69,7 +66,7 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
     private KindSelectDialog mDialog;
     private Map<String, Object> mapData;
 
-    private String member_number ="";
+    private String friendId ="";
 
     private List<Map<String, Object>> mImageList = new ArrayList<>();
 
@@ -170,7 +167,7 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
             MbsConstans.ACCESS_TOKEN = SPUtils.get(AddFriendActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("member_number", member_number);
+        map.put("id", friendId);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_ADD_FRIEND, map);
     }
@@ -218,9 +215,9 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
                     case "0": //请求成功
                         if (!UtilTools.empty(tData.get("data")+"")){
                             Map<String,Object> map = (Map<String, Object>) tData.get("data");
-                            userNameTv.setText(map.get("")+"");
+                            userNameTv.setText(map.get("name")+"");
                             GlideUtils.loadImage(AddFriendActivity.this,map.get("portrait")+"",userIconIv);
-                            member_number = map.get("member_number")+"";
+                            friendId = map.get("id")+"";
                         }
                         break;
                     case "-1": //请求失败
@@ -236,7 +233,24 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
 
                 }
 
+                break;
 
+            case MethodUrl.CHAT_ADD_FRIEND:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(AddFriendActivity.this, LoginActivity.class);
+                        startActivity(intent);
+
+                        break;
+
+                }
                 break;
         }
     }

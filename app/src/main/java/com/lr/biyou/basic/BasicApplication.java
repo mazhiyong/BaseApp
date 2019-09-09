@@ -6,17 +6,21 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.multidex.MultiDex;
-import androidx.multidex.MultiDexApplication;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
+
+import com.facebook.stetho.Stetho;
 import com.lr.biyou.BuildConfig;
 import com.lr.biyou.R;
+import com.lr.biyou.rongyun.common.ErrorCode;
+import com.lr.biyou.rongyun.contact.PhoneContactManager;
+import com.lr.biyou.rongyun.im.IMManager;
+import com.lr.biyou.rongyun.utils.SearchUtils;
+import com.lr.biyou.rongyun.wx.WXManager;
 import com.lr.biyou.utils.tool.AppContextUtil;
-
-
-import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.SPCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
@@ -31,11 +35,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
+import io.rong.imlib.ipc.RongExceptionHandler;
 import okhttp3.OkHttpClient;
 
 import static com.wanou.framelibrary.okgoutil.OkGoUtils.TIMEOUT_SECOND;
+import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 public class BasicApplication extends MultiDexApplication {
 
@@ -115,7 +119,7 @@ public class BasicApplication extends MultiDexApplication {
 
 		Bugly.init(this, "5156cc29ea", false);
 
-		RongIM.init(this);
+		//RongIM.init(this);
 		new Handler().post(new Runnable() {
 			@Override
 			public void run() {
@@ -129,41 +133,33 @@ public class BasicApplication extends MultiDexApplication {
 		initWS2();
 		initWS3();
 
-		//连接融云
-		//17319449662
-		String token1 = "kcX1ye0YGBlG7iWZ5jHpq3Q66evRHTAQkKthDvKlCzd8eLCcwj5jgjOIbvNeHYutzyYe1ed3QZTcsIDyo3AmMdK3Z331/2kt";
-		//15561400223
-		String token2 = "AUrI48u7jSC9yV8XmieXLxOUx7H8bap2AjZHooKpeeWhNSrnoHFlS2nmFye32TQGajQ85yilCTlPrNGB16o4rBnyf9oopTJ+";
 
-		RongIM.connect(token1, new RongIMClient.ConnectCallback() {
+		// 初始化 bugly BUG 统计
+		//CrashReport.initCrashReport(getApplicationContext());
 
-			/**
-			 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-			 *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-			 */
-			@Override
-			public void onTokenIncorrect() {
+		ErrorCode.init(this);
 
-			}
+		/*
+		 * 以上部分在所有进程中会执行
+		 */
+		if (!getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+			return;
+		}
+		/*
+		 * 以下部分仅在主进程中进行执行
+		 */
+		// 初始化融云IM SDK，初始化 SDK 仅需要在主进程中初始化一次
+		IMManager.getInstance().init(this);
+		Stetho.initializeWithDefaults(this);
 
-			/**
-			 * 连接融云成功
-			 * @param userid 当前 token 对应的用户 id
-			 */
-			@Override
-			public void onSuccess(String userid) {
-				LogUtilDebug.i("show", "rongyun--onSuccess" + userid);
-			}
+		SearchUtils.init(this);
 
-			/**
-			 * 连接融云失败
-			 * @param errorCode 错误码，可到官网 查看错误码对应的注释
-			 */
-			@Override
-			public void onError(RongIMClient.ErrorCode errorCode) {
-				LogUtilDebug.i("show", "rongyun--onError" + errorCode);
-			}
-		});
+		Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
+
+		// 微信分享初始化
+		WXManager.getInstance().init(this);
+
+		PhoneContactManager.getInstance().init(this);
 	}
 
 
