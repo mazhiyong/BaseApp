@@ -3,11 +3,11 @@ package com.lr.biyou.rongyun.model;
 import androidx.room.ColumnInfo;
 
 public class GroupMember {
-
+//0普通用户，1管理员，2群主
     public enum Role {
-        GROUP_OWNER(0),
-        MEMBER(1),
-        MANAGEMENT(2);
+        GROUP_OWNER(2),
+        MEMBER(0),
+        MANAGEMENT(1);
 
         int value;
         Role(int value) {

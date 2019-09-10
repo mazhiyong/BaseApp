@@ -34,6 +34,7 @@ import com.lr.biyou.rongyun.utils.ScreenCaptureUtil;
 import com.lr.biyou.rongyun.utils.log.SLog;
 import com.lr.biyou.rongyun.viewmodel.ConversationViewModel;
 import com.lr.biyou.ui.moudle2.activity.ChatItemActivity;
+import com.lr.biyou.ui.moudle2.activity.GroupChatItemActivity;
 
 import java.util.Locale;
 import java.util.Map;
@@ -41,7 +42,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.callkit.util.SPUtils;
-import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.RongKitIntent;
 import io.rong.imlib.model.Conversation;
@@ -137,9 +137,27 @@ public class ConversationActivity extends BasicActivity {
                 finish();
                 break;
             case R.id.right_lay:
-                Intent intent = new Intent(ConversationActivity.this, ChatItemActivity.class);
-                intent.putExtra("DATA",targetId);
-                startActivity(intent);
+
+                if (conversationType == Conversation.ConversationType.PUBLIC_SERVICE
+                        || conversationType == Conversation.ConversationType.APP_PUBLIC_SERVICE) {
+
+                    RongIM.getInstance().startPublicServiceProfile(this, conversationType, targetId);
+                } else if (conversationType == Conversation.ConversationType.PRIVATE) {
+                    //私聊设置
+                    Intent intent = new Intent(ConversationActivity.this, ChatItemActivity.class);
+                    intent.putExtra(IntentExtra.STR_TARGET_ID, targetId);
+                    intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.PRIVATE);
+                    startActivity(intent);
+                } else if (conversationType == Conversation.ConversationType.GROUP) {
+                    //群聊设置
+                    Intent intent = new Intent(this, GroupChatItemActivity.class);
+                    intent.putExtra(IntentExtra.STR_TARGET_ID, targetId);
+                    intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.GROUP);
+                    startActivity(intent);
+                } else if (conversationType == Conversation.ConversationType.DISCUSSION) {
+                    //讨论组
+                }
+
                 break;
         }
     }
@@ -254,11 +272,12 @@ public class ConversationActivity extends BasicActivity {
             @Override
             public void onChanged(String s) {
                 // 跳转选择界面
-                Intent intent = new Intent(RongContext.getInstance(), MemberMentionedExActivity.class);
+                /*Intent intent = new Intent(RongContext.getInstance(), SelectContractListActivity.class);
                 intent.putExtra("conversationType", conversationType.getValue());
                 intent.putExtra("targetId", targetId);
+                intent.putExtra("TYPE","1");
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
 

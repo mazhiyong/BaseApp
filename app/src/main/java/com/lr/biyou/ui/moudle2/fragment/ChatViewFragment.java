@@ -661,26 +661,14 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         mListAdapter3.setmListener(new OnChildClickListener() {
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-                getGroupInfoAction(mParentMap.get("id")+"");
+
                 RongIM.getInstance().startGroupChat(getActivity(), mParentMap.get("id")+"", mParentMap.get("name")+"");
 
             }
         });
     }
 
-    private void getGroupInfoAction(String id) {
 
-        mRequestTag = MethodUrl.CHAT_GROUPS_INFO;
-        Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
-        }
-        map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("group_id",id);
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUPS_INFO, map);
-
-    }
 
 
     private View popView;
@@ -781,6 +769,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                         /*intent = new Intent(getActivity(), SelectCreateGroupActivity.class);
                         startActivityForResult(intent, REQUEST_START_GROUP);*/
                         intent = new Intent(getActivity(), SelectContractListActivity.class);
+                        intent.putExtra("TYPE","0");
                         startActivity(intent);
                         break;
                     case R.id.add_friend_lay:

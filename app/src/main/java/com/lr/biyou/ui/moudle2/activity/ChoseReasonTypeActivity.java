@@ -32,7 +32,6 @@ import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.mvp.presenter.RequestPresenterImp;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.view.PageView;
-import com.lr.biyou.ui.moudle5.activity.ChongBiActivity;
 import com.lr.biyou.ui.moudle5.adapter.ChoseBiTypeAdapter;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
@@ -229,9 +228,10 @@ public class ChoseReasonTypeActivity extends BasicActivity implements RequestVie
                         Map<String,Object>mSelectObject= (Map<String, Object>) m.get("object");
                         if (b) {
                             mSelectList.add(mSelectObject);
-                            Intent mIntent = new Intent(ChoseReasonTypeActivity.this,ChongBiActivity.class);
+                            Intent mIntent = new Intent(ChoseReasonTypeActivity.this,TousuActivity.class);
                             mIntent.putExtra("DATA",(Serializable) mSelectObject);
                             startActivity(mIntent);
+                            finish();
                         }
                     }
 

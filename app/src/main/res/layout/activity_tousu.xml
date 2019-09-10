@@ -9,10 +9,17 @@
         <include
         android:id="@+id/top_layout"
         layout="@layout/title_leftbut_bar"/>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:textSize="@dimen/sp_12"
+        android:padding="@dimen/dp_10"
+        android:background="@color/body_bg"
+        android:text="上传图片证据"
+        android:layout_height="wrap_content" />
     <LinearLayout
         android:layout_width="match_parent"
         android:focusable="true"
+        android:visibility="gone"
         android:layout_marginLeft="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginBottom="@dimen/dp_10"
@@ -41,6 +48,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:gravity="center_horizontal"
         android:layout_height="wrap_content">
         <TextView
@@ -61,11 +69,12 @@
 
     </LinearLayout>
     <ImageView
+        android:src="@drawable/addimg_1x"
         android:id="@+id/user_icon_iv"
-        android:layout_marginTop="@dimen/dp_20"
-        android:layout_width="@dimen/dp_60"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="@dimen/dp_90"
         android:layout_gravity="center_horizontal"
-        android:layout_height="@dimen/dp_60" />
+        android:layout_height="@dimen/dp_90" />
 
     <TextView
         android:id="@+id/user_name_tv"
@@ -73,6 +82,7 @@
         android:layout_marginTop="@dimen/dp_5"
         android:layout_gravity="center_horizontal"
         android:textSize="@dimen/sp_25"
+        android:visibility="gone"
         android:textColor="@color/black"
         android:layout_height="wrap_content" />
 
@@ -80,7 +90,7 @@
         android:id="@+id/add_tv"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/dp_20"
-        android:text="添加好友"
+        android:text="提交"
         android:padding="@dimen/dp_8"
         android:textStyle="bold"
         android:gravity="center_horizontal"

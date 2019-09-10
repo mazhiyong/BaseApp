@@ -1065,7 +1065,7 @@
             android:name=".ui.moudle2.activity.ChatNoticeListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
+            android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
 
         <!--  选择联系人  -->
@@ -1084,6 +1084,15 @@
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
 
+
+        <!--  群聊聊天详情  -->
+        <activity
+            android:name=".ui.moudle2.activity.GroupChatItemActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
         <!--  投诉原因选择  -->
         <activity
             android:name=".ui.moudle2.activity.ChoseReasonTypeActivity"
@@ -1096,6 +1105,23 @@
         <!--  投诉原因选择  -->
         <activity
             android:name=".ui.moudle2.activity.TousuActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
+
+        <!--  群二维码名片  -->
+        <activity
+            android:name=".ui.moudle2.activity.GroupQrCodeActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
+        <!--  群管理  -->
+        <activity
+            android:name=".ui.moudle2.activity.GroupChatManagerActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
@@ -1122,8 +1148,9 @@
         <activity
             android:name="com.lr.biyou.rongyun.ui.activity.ConversationActivity"
             android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:windowSoftInputMode="stateHidden|adjustPan">
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

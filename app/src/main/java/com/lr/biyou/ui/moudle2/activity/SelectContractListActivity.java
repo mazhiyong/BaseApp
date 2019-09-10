@@ -1,6 +1,7 @@
 package com.lr.biyou.ui.moudle2.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +28,7 @@ import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.view.PageView;
+import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle2.adapter.SelectContractListAdapter;
 import com.lr.biyou.utils.tool.AnimUtil;
@@ -42,11 +44,12 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 
 /**
  * 选择联系人 界面
  */
-public class SelectContractListActivity extends BasicActivity implements RequestView,ReLoadingData,SelectBackListener{
+public class SelectContractListActivity extends BasicActivity implements RequestView, ReLoadingData, SelectBackListener {
 
     @BindView(R.id.back_img)
     ImageView mBackImg;
@@ -71,9 +74,9 @@ public class SelectContractListActivity extends BasicActivity implements Request
     @BindView(R.id.page_view)
     PageView mPageView;
 
-    private String mRequestTag ="";
+    private String mRequestTag = "";
 
-    private String mStartTime="";
+    private String mStartTime = "";
     private String mEndTime = "";
     private String mBusiType = "";
 
@@ -90,6 +93,7 @@ public class SelectContractListActivity extends BasicActivity implements Request
     private int mPage = 1;
 
     private AnimUtil mAnimUtil;
+    private String type;
 
     @Override
     public int getContentView() {
@@ -105,23 +109,38 @@ public class SelectContractListActivity extends BasicActivity implements Request
         mAnimUtil = new AnimUtil();
 
         mTitleText.setText("选择联系人");
-        mTitleText.setCompoundDrawables(null,null,null,null);
+        mTitleText.setCompoundDrawables(null, null, null, null);
         mRightImg.setVisibility(View.VISIBLE);
         mRightTextTv.setVisibility(View.VISIBLE);
         mRightTextTv.setText("确定");
 
         String sTime = UtilTools.getFirstDayOfMonthByDate(new Date());
-        String eTime = UtilTools.getStringFromDate(new Date(),"yyyyMMdd");
+        String eTime = UtilTools.getStringFromDate(new Date(), "yyyyMMdd");
 
         mSelectStartTime = sTime;
         mSelectEndTime = eTime;
         mStartTime = mSelectStartTime;
         mEndTime = mSelectEndTime;
 
-
         initView();
-        showProgressDialog();
-        firendListAction();
+        Intent intent = getIntent();
+        if (intent != null) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                mDataList = (List<Map<String, Object>>) bundle.getSerializable("DATA");
+                if (UtilTools.empty(mDataList)) {
+                    showProgressDialog();
+                    firendListAction();
+                } else {
+                    responseData();
+                }
+                type = bundle.getString("TYPE");
+
+
+            }
+
+        }
+
     }
 
 
@@ -149,18 +168,76 @@ public class SelectContractListActivity extends BasicActivity implements Request
         });
     }
 
-    private void firendListAction(){
+    @OnClick({R.id.back_img, R.id.right_lay, R.id.left_back_lay})
+    public void onViewClicked(View view) {
+        Intent intent = null;
+        List<Map<String, Object>> list = mListAdapter.getBooleanList();
+        mSelectList.clear();
+        for (Map map : list) {
+            boolean b = (Boolean) map.get("selected");
+            Map<String, Object> mSelectMap = (Map<String, Object>) map.get("value");
+            if (b) {
+                mSelectList.add(mSelectMap);
+            }
+        }
+        if (mSelectList.size() == 0) {
+            showToastMsg("请选择联系人");
+            return;
+        }
+
+        switch (view.getId()) {
+            case R.id.back_img:
+                finish();
+                break;
+            case R.id.left_back_lay:
+                finish();
+                break;
+            case R.id.right_lay:
+                switch (type) {
+                    case "0"://创建群聊
+                        crateGroupAction();
+                        break;
+                    case "1"://群艾特
+
+                        break;
+                    case "2"://邀请加群或删除群员
+                    case "3": //增加或删除群管理员
+                        StringBuffer sb = new StringBuffer();
+                        for (int i = 0; i < mSelectList.size(); i++) {
+                            Map<String, Object> map = mSelectList.get(i);
+                            if (i + 1 == mSelectList.size()) {
+                                sb.append(map.get("id") + "");
+                            } else {
+                                sb.append(map.get("id") + ",");
+                            }
+                        }
+                        intent = new Intent();
+                        intent.putExtra(IntentExtra.LIST_STR_ID_LIST, sb.toString());
+                        setResult(RESULT_OK, intent);
+                        finish();
+                        break;
+                    case "4"://转让
+
+                        break;
+                }
+
+
+                break;
+        }
+    }
+
+
+    private void firendListAction() {
 
         mRequestTag = MethodUrl.CHAT_MY_FRIENDS;
         Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(SelectContractListActivity.this,MbsConstans.ACCESS_TOKEN,"").toString();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(SelectContractListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_MY_FRIENDS, map);
     }
-
 
 
     private void responseData() {
@@ -199,7 +276,6 @@ public class SelectContractListActivity extends BasicActivity implements Request
             mRefreshListView.setLoadMoreEnabled(true);
 
 
-
         } else {
             if (mPage == 1) {
                 mListAdapter.clear();
@@ -229,13 +305,11 @@ public class SelectContractListActivity extends BasicActivity implements Request
 
         mRefreshListView.refreshComplete(10);
         mListAdapter.notifyDataSetChanged();
-        if (mListAdapter.getDataList().size() <= 0){
+        if (mListAdapter.getDataList().size() <= 0) {
             mPageView.showEmpty();
-        }else {
+        } else {
             mPageView.showContent();
         }
-
-
 
 
         mListAdapter.setmListener(new OnChildClickListener() {
@@ -247,6 +321,14 @@ public class SelectContractListActivity extends BasicActivity implements Request
                     public void run() {
                         mListAdapter.notifyDataSetChanged();
                         mLRecyclerViewAdapter.notifyDataSetChanged();//必须调用此方法
+                        if (type.equals("4")){
+                            Intent intent = new Intent();
+                            intent.putExtra(IntentExtra.LIST_STR_ID_LIST, mParentMap.get("id")+"");
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+
+
                     }
                 });
             }
@@ -254,61 +336,27 @@ public class SelectContractListActivity extends BasicActivity implements Request
     }
 
 
-
-
-
-    @OnClick({R.id.back_img,R.id.right_lay,R.id.left_back_lay})
-    public void onViewClicked(View view) {
-        Intent intent = null;
-        switch (view.getId()) {
-            case R.id.back_img:
-                finish();
-                break;
-            case R.id.left_back_lay:
-                finish();
-                break;
-            case R.id.right_lay:
-                crateGroupAction();
-                break;
-        }
-    }
-
-
-    private void crateGroupAction(){
-        List<Map<String, Object>> list = mListAdapter.getBooleanList();
-        mSelectList.clear();
-        for (Map map : list) {
-            boolean b = (Boolean) map.get("selected");
-            Map<String, Object> mSelectMap = (Map<String, Object>) map.get("value");
-            if (b) {
-                mSelectList.add(mSelectMap);
-            }
-        }
-
-        if (mSelectList.size()==0){
-            showToastMsg("请选择联系人");
-            return;
-        }
+    private void crateGroupAction() {
 
         StringBuffer sb = new StringBuffer();
-        for (int i= 0;i<mSelectList.size();i++){
-            Map<String,Object> map = mSelectList.get(i);
-            if (i+1 == mSelectList.size()){
-                sb.append(map.get("rc_id")+"");
-            }else {
-                sb.append(map.get("rc_id")+",");
+        for (int i = 0; i < mSelectList.size(); i++) {
+            Map<String, Object> map = mSelectList.get(i);
+            if (i + 1 == mSelectList.size()) {
+                sb.append(map.get("id") + "");
+            } else {
+                sb.append(map.get("id") + ",");
             }
         }
 
         mRequestTag = MethodUrl.CHAT_CREAT_GROUPS;
         Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(SelectContractListActivity.this,MbsConstans.ACCESS_TOKEN,"").toString();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(SelectContractListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
-        map.put("ids",sb.toString()+"");
-        map.put("name","");
-        map.put("portrait","");
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("ids", sb.toString() + "");
+        map.put("name", "");
+        map.put("portrait", "");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_CREAT_GROUPS, map);
     }
@@ -325,10 +373,10 @@ public class SelectContractListActivity extends BasicActivity implements Request
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
-        Intent intent ;
-        switch (mType){
+        Intent intent;
+        switch (mType) {
             case MethodUrl.CHAT_MY_FRIENDS:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
                         if (UtilTools.empty(tData.get("data") + "")) {
                             mPageView.showEmpty();
@@ -360,17 +408,17 @@ public class SelectContractListActivity extends BasicActivity implements Request
                         break;
                     case "-1":
                         mPageView.showNetworkError();
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
                 break;
             case MethodUrl.CHAT_CREAT_GROUPS:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
                         //showToastMsg(tData.get("msg")+"");
-                         LogUtilDebug.i("show","创建成功");
-                        //RongIM.getInstance().startGroupChat(SelectContractListActivity.this, tData.get("data")+"", "测试群聊");
-
+                        LogUtilDebug.i("show", "创建成功");
+                        RongIM.getInstance().startGroupChat(SelectContractListActivity.this, tData.get("data") + "", "测试群聊");
+                        finish();
                         break;
                     case "1":
                         closeAllActivity();
@@ -379,7 +427,7 @@ public class SelectContractListActivity extends BasicActivity implements Request
                         break;
                     case "-1":
                         mPageView.showNetworkError();
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
                 break;
@@ -398,14 +446,14 @@ public class SelectContractListActivity extends BasicActivity implements Request
     }
 
     @Override
-    public void loadDataError(Map<String, Object> map,String mType) {
+    public void loadDataError(Map<String, Object> map, String mType) {
 
         switch (mType) {
             case MethodUrl.tradeList://
-                if (mListAdapter != null){
-                    if (mListAdapter.getDataList().size() <= 0){
+                if (mListAdapter != null) {
+                    if (mListAdapter.getDataList().size() <= 0) {
                         mPageView.showNetworkError();
-                    }else {
+                    } else {
                         mPageView.showContent();
                     }
                     mRefreshListView.refreshComplete(10);
@@ -415,13 +463,13 @@ public class SelectContractListActivity extends BasicActivity implements Request
                             firendListAction();
                         }
                     });
-                }else {
+                } else {
                     mPageView.showNetworkError();
                 }
                 break;
         }
 
-        dealFailInfo(map,mType);
+        dealFailInfo(map, mType);
     }
 
     @Override

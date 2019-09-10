@@ -3,7 +3,6 @@ package com.lr.biyou.ui.moudle2.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +17,9 @@ import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
+import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
+import com.lr.biyou.rongyun.common.IntentExtra;
+import com.lr.biyou.rongyun.ui.activity.SearchHistoryMessageActivity;
 import com.lr.biyou.rongyun.ui.widget.switchbutton.SwitchButton;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
@@ -31,6 +33,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imlib.model.Conversation;
 
 /**
  * 聊天详情  界面
@@ -68,11 +71,14 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
     private String mAuthCode = "";
     private String mSmsToken = "";
 
-
+    private Conversation.ConversationType conversationType;
     private Map<String, Object> mShareMap;
 
     private KindSelectDialog mDialog;
-    private String id;
+    private String targId;
+    private String Id;
+    private String name;
+    private String portraitUrl;
 
     @Override
     public int getContentView() {
@@ -96,35 +102,51 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
         if (intent != null){
             Bundle bundle =intent.getExtras();
             if (bundle != null){
-                id = bundle.getString("DATA");
+                targId = intent.getStringExtra(IntentExtra.STR_TARGET_ID);
+                conversationType = (Conversation.ConversationType) intent.getSerializableExtra(IntentExtra.SERIA_CONVERSATION_TYPE);
+
+            }else {
+                finish();
             }
         }
 
-        getFriendInfoAction();
+        //根据rc_id查询用户本地id
+        getidFromRcidAction();
 
-
-        topSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        topSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updateStatusAction("1",isChecked);
+            public void onClick(View v) {
+               /* if (topSwitch.isChecked()){
+                    topSwitch.setChecked(false);
+                }else {
+                   topSwitch.setChecked(true);
+                }*/
+                updateStatusAction("1");
             }
         });
 
-        quiteSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        quiteSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updateStatusAction("2",isChecked);
+            public void onClick(View v) {
+               /* if (quiteSwitch.isChecked()){
+                    quiteSwitch.setChecked(false);
+                }else {
+                    quiteSwitch.setChecked(true);
+                }*/
+                updateStatusAction("2");
             }
         });
+
+
     }
 
-    private void updateStatusAction(String type, boolean isChecked) {
+    private void updateStatusAction(String type) {
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(ChatItemActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("id",id);
+        map.put("id", Id);
         map.put("type",type);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_CHANAGE_STATUS, map);
@@ -138,8 +160,15 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
             case R.id.left_back_lay:
                 break;
             case R.id.chat_history_lay:
+                intent = new Intent(this, SearchHistoryMessageActivity.class);
+                intent.putExtra(IntentExtra.STR_TARGET_ID, targId);
+                intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, conversationType);
+                intent.putExtra(IntentExtra.STR_CHAT_NAME, name);
+                intent.putExtra(IntentExtra.STR_CHAT_PORTRAIT, portraitUrl);
+                startActivity(intent);
                 break;
             case R.id.clear_chat_lay:
+                showTipDislog();
                 break;
             case R.id.tousu_lay:
                 intent = new Intent(ChatItemActivity.this,ChoseReasonTypeActivity.class);
@@ -151,6 +180,46 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
         }
     }
 
+    private void showTipDislog() {
+
+        SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(ChatItemActivity.this,true);
+        sureOrNoDialog.initValue("提示","是否清除聊天记录？");
+        sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()){
+                    case R.id.cancel:
+                        sureOrNoDialog.dismiss();
+                        break;
+                    case R.id.confirm:
+                        sureOrNoDialog.dismiss();
+                        //清除聊天记录
+                        //pingCangAllAction();
+                        break;
+                }
+            }
+        });
+        sureOrNoDialog.show();
+        sureOrNoDialog.setCanceledOnTouchOutside(false);
+        sureOrNoDialog.setCancelable(true);
+    }
+
+    /**
+     * 查询id
+     */
+    public void getidFromRcidAction() {
+        mRequestTag = MethodUrl.CHAT_QUERY_ID;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(ChatItemActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("rc_id", targId);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_QUERY_ID, map);
+    }
+
+
     /**
      * 获取用户信息
      */
@@ -161,7 +230,7 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
             MbsConstans.ACCESS_TOKEN = SPUtils.get(ChatItemActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("id",id);
+        map.put("id", Id);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_FRIEDN_INFO, map);
     }
@@ -184,13 +253,36 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         switch (mType) {
+            case MethodUrl.CHAT_QUERY_ID:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            Id = tData.get("data")+"";
+                            getFriendInfoAction();
+                        }
+
+
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        Intent intent = new Intent(ChatItemActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
             case MethodUrl.CHAT_FRIEDN_INFO:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             Map<String,Object> map = (Map<String, Object>) tData.get("data");
-                            nameTv.setText(map.get("name")+"");
-                            GlideUtils.loadImage(ChatItemActivity.this,map.get("portrait")+"",headImage);
+                            name = map.get("name")+"";
+                            portraitUrl = map.get("portrait")+"";
+                            nameTv.setText(name);
+                            GlideUtils.loadImage(ChatItemActivity.this,portraitUrl,headImage);
                             if ((map.get("top")+"").equals("0")) {
                                 topSwitch.setChecked(false);
                             }else {
@@ -221,8 +313,8 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
             case MethodUrl.CHAT_CHANAGE_STATUS:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
-                        showToastMsg(tData.get("msg") + "");
-                        getFriendInfoAction();
+                        //showToastMsg(tData.get("msg") + "");
+                        //getFriendInfoAction();
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg") + "");

@@ -1289,7 +1289,7 @@
     <string name="seal_title_add_contacts">添加好友</string>
     <!-- 聊天详细相关 -->
     <!-- 私聊详细-->
-    <string name="profile_search_message">查找聊天记录</string>
+    <string name="profile_search_message">查看聊天记录</string>
     <string name="profile_message_notice">消息免打扰</string>
     <string name="profile_set_top">会话置顶</string>
     <string name="profile_clean_message">清除聊天记录</string>

@@ -1,6 +1,7 @@
 package com.lr.biyou.rongyun.ui.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
@@ -11,8 +12,8 @@ import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.rongyun.ui.fragment.SearchMessageFragment;
 import com.lr.biyou.rongyun.ui.interfaces.OnMessageRecordClickListener;
 import com.lr.biyou.rongyun.viewmodel.SearchMessageModel;
-import io.rong.imkit.RongIM;
 
+import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 
@@ -24,6 +25,8 @@ public class SearchHistoryMessageActivity extends SealSearchBaseActivity impleme
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         String targetId = getIntent().getStringExtra(IntentExtra.STR_TARGET_ID);
         String name = getIntent().getStringExtra(IntentExtra.STR_CHAT_NAME);
         String portrait = getIntent().getStringExtra(IntentExtra.STR_CHAT_PORTRAIT);
@@ -34,6 +37,14 @@ public class SearchHistoryMessageActivity extends SealSearchBaseActivity impleme
         messageFragment.init(this, targetId, conversationType, name, portrait);
         transaction.replace(R.id.fl_content_fragment, messageFragment);
         transaction.commit();
+        findViewById(R.id.left_back_lay).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
     }
 
 

@@ -256,9 +256,18 @@ public class MethodUrl {
     public static final String CHAT_FRIEDN_INFO = "chat_user/friendDetail";//朋友信息
     public static final String CHAT_CHANAGE_STATUS = "chat_user/editFriendStatus";//修改置顶聊天/消息免打扰状态
     public static final String CHAT_REASON_LIST = "chat/complaintList";//投诉原因列表
-
-
-
+    public static final String CHAT_REASON_DEAL = "chat/complaintActive";//投诉操作
+    public static final String CHAT_QUERY_ID = "Chat/selectId";//根据融云id查询平台id
+    public static final String CHAT_GROUP_CHANAGE_STATUS = "chat_group/editGroupStatus";//修改置顶聊天/消息免打扰状态
+    public static final String CHAT_GROUP_EDIT_NAME = "chat_group/editGroup";//修改群名
+    public static final String CHAT_GROUP_ADD = "chat_group/inviteGroup";//邀请入群
+    public static final String CHAT_GROUP_DELETE = "chat_group/expelGroup";//删除群员
+    public static final String CHAT_GROUP_ADMIN = "chat_group/administrators";//群管理员管理界面
+    public static final String CHAT_GROUP_MANAGE = "chat_group/editStatus";//更改全体禁言/群员保护/群认证状态
+    public static final String CHAT_GROUP_ADMIN_ADD = "chat_group/addAdmin";//添加管理员
+    public static final String CHAT_GROUP_ADMIN_DELETE = "chat_group/cancelAdmin";//删除管理员
+    public static final String CHAT_GROUP_TRANSFER = "chat_group/transfer";//转让群
+    public static final String CHAT_GROUP_EXIT = "chat_group/quitGroup";//退出群聊
 
 
 

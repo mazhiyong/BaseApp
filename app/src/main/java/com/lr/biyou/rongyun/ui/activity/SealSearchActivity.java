@@ -168,7 +168,7 @@ public class SealSearchActivity extends SealSearchBaseActivity implements TextWa
             finish();
         } else {
             super.onBackPressed();
-            getTitleBar().getEtSearch().setText(searchAllFragment.getInitSearch());
+            ///getTitleBar().getEtSearch().setText(searchAllFragment.getInitSearch());
         }
     }
 }
