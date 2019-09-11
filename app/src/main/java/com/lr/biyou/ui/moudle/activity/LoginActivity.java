@@ -424,12 +424,12 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
     }
     @Override
     public void showProgress() {
-        //showProgressDialog();
+        showProgressDialog();
     }
 
     @Override
     public void disimissProgress() {
-        //dismissProgressDialog();
+        dismissProgressDialog();
     }
 
     @Override

@@ -41,8 +41,8 @@ import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.rongyun.db.model.UserInfo;
 import com.lr.biyou.rongyun.model.Resource;
 import com.lr.biyou.rongyun.task.UserTask;
-import com.lr.biyou.rongyun.ui.activity.ScanActivity;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.ui.moudle.activity.TestScanActivity;
 import com.lr.biyou.ui.moudle2.activity.AddFriendActivity;
 import com.lr.biyou.ui.moudle2.activity.ChatNoticeListActivity;
 import com.lr.biyou.ui.moudle2.activity.SelectContractListActivity;
@@ -50,6 +50,7 @@ import com.lr.biyou.ui.moudle2.adapter.MyFriendListAdapter;
 import com.lr.biyou.ui.moudle2.adapter.MyRecentChatListAdapter;
 import com.lr.biyou.utils.tool.AnimUtil;
 import com.lr.biyou.utils.tool.JSONUtil;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
@@ -150,6 +151,30 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtilDebug.i("show","chatFragment 可见");
+        switch (mRequestTag) {
+            case MethodUrl.CHAT_RECENTLY_LIST:
+                showProgress();
+                getRecentChatAction();
+                break;
+            case MethodUrl.CHAT_MY_FRIENDS:
+                showProgress();
+                getMyFriendsAction();
+                break;
+            case MethodUrl.CHAT_MY_GROUPS:
+                showProgress();
+                getMyGroupsAction();
+                break;
+
+        }
+    }
+
+
+
+
 
     private void initView() {
 
@@ -240,7 +265,8 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         Title.setText("最近聊天");
         //近期聊天
         noticeLayout.setVisibility(View.GONE);
-        getRecentChatAction();
+        mRequestTag = MethodUrl.CHAT_RECENTLY_LIST;
+        //getRecentChatAction();
 
 
         userTask = new UserTask(getActivity());
@@ -779,7 +805,10 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                         break;
                     case R.id.scan_lay:
                         mConditionDialog.dismiss();
-                        intent = new Intent(getActivity(), ScanActivity.class);
+                      /*  intent = new Intent(getActivity(), ScanActivity.class);
+                        startActivity(intent);*/
+                        intent = new Intent(getActivity(), TestScanActivity.class);
+                        intent.putExtra("type", "0");
                         startActivity(intent);
                         break;
                 }

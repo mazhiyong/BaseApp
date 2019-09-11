@@ -18,10 +18,8 @@ import com.lr.biyou.rongyun.model.Status;
 import com.lr.biyou.rongyun.ui.adapter.ListGroupMemberAdapter;
 import com.lr.biyou.rongyun.ui.view.SealTitleBar;
 import com.lr.biyou.rongyun.utils.ToastUtils;
-import com.lr.biyou.rongyun.viewmodel.GroupMemberListViewModel;
 import com.lr.biyou.rongyun.utils.log.SLog;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
-import io.rong.imlib.model.Group;
+import com.lr.biyou.rongyun.viewmodel.GroupMemberListViewModel;
 
 /**
  * 群组成员一览界面
@@ -127,12 +125,12 @@ public class GroupMemberListActivity extends TitleBaseActivity {
      * @param groupMember
      */
     private void showGroupMemberInfo(GroupMember groupMember){
-        Intent intent = new Intent(this, UserDetailActivity.class);
+      /*  Intent intent = new Intent(this, UserDetailActivity.class);
         intent.putExtra(IntentExtra.STR_TARGET_ID, groupMember.getUserId());
         Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(groupId);
         if (groupInfo != null) {
             intent.putExtra(IntentExtra.STR_GROUP_NAME, groupInfo.getName());
         }
-        startActivity(intent);
+        startActivity(intent);*/
     }
 }

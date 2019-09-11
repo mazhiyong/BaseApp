@@ -1,15 +1,9 @@
-package com.lr.biyou.ui.temporary.activity;
+package com.lr.biyou.ui.moudle.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
-
-import androidx.annotation.StringRes;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.LinearLayoutCompat;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,16 +12,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.core.content.ContextCompat;
+
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.basic.BasicActivity;
+import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.db.FaPiaoData;
-import com.lr.biyou.ui.moudle.activity.RegistActivity;
+import com.lr.biyou.ui.moudle2.activity.AddFriendActivity;
+import com.lr.biyou.ui.temporary.activity.HtmlActivity;
+import com.lr.biyou.ui.temporary.activity.InvoiceListActivity;
 import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;
 import com.lr.biyou.utils.tool.LogUtilDebug;
-import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -166,6 +167,11 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
         mFlashLightTv.setText("打开闪光灯");
         Intent intent ;
         switch (mType){
+            case "0":
+                intent = new Intent(this, AddFriendActivity.class);
+                intent.putExtra("DATA", result);
+                startActivity(intent);
+                break;
             case "1":
                 intent = new Intent(this, HtmlActivity.class);
                 result = result +"&os=android";

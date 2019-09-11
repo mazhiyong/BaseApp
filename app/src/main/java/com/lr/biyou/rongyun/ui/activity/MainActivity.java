@@ -13,9 +13,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.lr.biyou.R;
 import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.rongyun.db.model.FriendShipInfo;
@@ -33,9 +30,13 @@ import com.lr.biyou.rongyun.ui.view.MainBottomTabItem;
 import com.lr.biyou.rongyun.ui.widget.DragPointView;
 import com.lr.biyou.rongyun.ui.widget.TabGroupView;
 import com.lr.biyou.rongyun.ui.widget.TabItem;
+import com.lr.biyou.rongyun.utils.log.SLog;
 import com.lr.biyou.rongyun.viewmodel.AppViewModel;
 import com.lr.biyou.rongyun.viewmodel.MainViewModel;
-import com.lr.biyou.rongyun.utils.log.SLog;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import io.rong.imkit.RongIM;
 
 public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWindowItemClickListener {
@@ -380,8 +381,8 @@ public class MainActivity extends BaseActivity implements MorePopWindow.OnPopWin
      */
     @Override
     public void onScanClick() {
-        Intent intent = new Intent(this, ScanActivity.class);
-        startActivity(intent);
+        /*Intent intent = new Intent(this, ScanActivity.class);
+        startActivity(intent);*/
     }
 
 }

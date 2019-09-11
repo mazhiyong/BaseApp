@@ -139,8 +139,10 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
 
             @Override
             public void onMemberClicked(GroupMember groupMember) {
-                //showMemberInfo(groupMember);
                 //查看群成员信息
+                showMemberInfo(groupMember);
+
+
             }
         });
 
@@ -200,6 +202,8 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
 
 
 
+
+
     private void getGroupInfoAction() {
 
         Map<String, Object> map = new HashMap<>();
@@ -226,6 +230,24 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
         mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_GROUP_MANAGE, map);
     }
 
+
+    /**
+     * 显示成员信息
+     *
+     * @param groupMember
+     */
+    private void showMemberInfo(GroupMember groupMember) {
+        //Intent intent = new Intent(this, UserDetailActivity.class);
+        Intent intent = new Intent(this, AddFriendActivity.class);
+        String qrCodeText = "1,"+groupMember.getUserId();
+        intent.putExtra("DATA", qrCodeText);
+       /* intent.putExtra(IntentExtra.FRIEND_ID, groupMember.getUserId());
+        Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(groupId);
+        if (groupInfo != null) {
+            intent.putExtra(IntentExtra.STR_GROUP_NAME, groupInfo.getName());
+        }*/
+        startActivity(intent);
+    }
     private void initViewModel() {
         groupManagementViewModel = ViewModelProviders.of(this, new GroupManagementViewModel.Factory(groupId, getApplication())).get(GroupManagementViewModel.class);
 

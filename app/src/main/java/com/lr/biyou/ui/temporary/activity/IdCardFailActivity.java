@@ -2,17 +2,18 @@ package com.lr.biyou.ui.temporary.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
-import com.jaeger.library.StatusBarUtil;
 
 import java.util.Map;
 
@@ -75,7 +76,6 @@ public class IdCardFailActivity extends BasicActivity {
                 finish();
                 break;
             case R.id.but_next:
-                backTo(IdCardCheckActivity.class,false);
                 break;
         }
     }

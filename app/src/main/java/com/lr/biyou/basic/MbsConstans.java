@@ -297,7 +297,7 @@ public class MbsConstans {
     public static final class MessageEventType{
 		public static int DOWN_LOAD = 0;
 		public static int UPDATE_USERINFO = 1;
-
+		public static int CLOSE_CONACTIVITY = 2;
 	}
 
 	public static String APP_ID = "jpc4fc50f01af247bf";

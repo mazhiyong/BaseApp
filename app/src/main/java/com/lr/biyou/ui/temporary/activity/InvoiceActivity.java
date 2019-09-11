@@ -11,6 +11,7 @@ import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
+import com.lr.biyou.ui.moudle.activity.TestScanActivity;
 import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;
 import com.lr.biyou.utils.tool.TextViewUtils;
@@ -96,7 +97,7 @@ public class InvoiceActivity extends BasicActivity implements RequestView {
                 PermissionsUtils.requsetRunPermission(InvoiceActivity.this, new RePermissionResultBack() {
                     @Override
                     public void requestSuccess() {
-                        Intent intent = new Intent(InvoiceActivity.this,TestScanActivity.class);
+                        Intent intent = new Intent(InvoiceActivity.this, TestScanActivity.class);
                         intent.putExtra("type","2");
                         startActivity(intent);
                     }

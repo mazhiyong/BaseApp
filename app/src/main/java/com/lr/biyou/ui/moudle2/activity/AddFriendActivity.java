@@ -83,7 +83,11 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
         if (intent != null) {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
-                mapData = (Map<String, Object>) bundle.getSerializable("DATA");
+                String result = bundle.getString("DATA");
+                if (!UtilTools.empty(result)){
+                    //根据二维码信息,获取用户信息
+                    getUserInfoAccordQrAction(result);
+                }
             }
         }
 
@@ -122,6 +126,19 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
                 addFriendAction();
                 break;
         }
+    }
+
+
+    private void getUserInfoAccordQrAction(String text) {
+        mRequestTag = MethodUrl.CHAT_SWEEP_CODE;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(AddFriendActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("text",text);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_SWEEP_CODE, map);
     }
 
 
@@ -218,6 +235,8 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
                             userNameTv.setText(map.get("name")+"");
                             GlideUtils.loadImage(AddFriendActivity.this,map.get("portrait")+"",userIconIv);
                             friendId = map.get("id")+"";
+                        }else {
+                            showToastMsg("未检索到相关用户信息");
                         }
                         break;
                     case "-1": //请求失败
@@ -252,6 +271,33 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
 
                 }
                 break;
+
+            case MethodUrl.CHAT_SWEEP_CODE:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data")+"")){
+                            Map<String,Object> map = (Map<String, Object>) tData.get("data");
+                            userNameTv.setText(map.get("name")+"");
+                            GlideUtils.loadImage(AddFriendActivity.this,map.get("portrait")+"",userIconIv);
+                            friendId = map.get("id")+"";
+                        }else {
+                            showToastMsg("未检索到相关用户信息");
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(AddFriendActivity.this, LoginActivity.class);
+                        startActivity(intent);
+
+                        break;
+
+                }
+                break;
+
         }
     }
 

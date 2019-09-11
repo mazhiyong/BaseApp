@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.widget.Toast;
+
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
-import android.widget.Toast;
 
 import io.rong.contactcard.activities.ContactDetailActivity;
 import io.rong.contactcard.activities.ContactListActivity;
@@ -54,10 +54,18 @@ public class ContactCardPlugin implements IPluginModule {
             iContactCardSelectListProvider.onContactPluginClick(REQUEST_CONTACT, currentFragment, extension, this);
             extension.collapseExtension();
         } else if (iContactInfoProvider != null) {
+            //选择联系人
+         /*   Intent intent = new Intent(context, ContactListActivity.class);
+            extension.startActivityForPluginResult(intent, REQUEST_CONTACT, this);
+            intent.putExtra(IS_FROM_CARD,true);
+            extension.collapseExtension();*/
+
+
             Intent intent = new Intent(context, ContactListActivity.class);
             extension.startActivityForPluginResult(intent, REQUEST_CONTACT, this);
             intent.putExtra(IS_FROM_CARD,true);
             extension.collapseExtension();
+
         } else {
             Toast.makeText(context, "尚未实现\"名片模块\"相关接口", Toast.LENGTH_LONG).show();
         }
@@ -67,7 +75,7 @@ public class ContactCardPlugin implements IPluginModule {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CONTACT && resultCode == Activity.RESULT_OK) {
             Intent intent = new Intent(context, ContactDetailActivity.class);
-            intent.putExtra("contact", data.getParcelableExtra("contact"));
+            intent.putExtra("DATA", data.getSerializableExtra("DATA"));
             intent.putExtra("conversationType", conversationType);
             intent.putExtra("targetId", targetId);
             context.startActivity(intent);

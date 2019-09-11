@@ -1,7 +1,6 @@
 package com.lr.biyou.ui.moudle5.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,14 +53,14 @@ public class ZiChanListAdapter extends ListBaseAdapter {
 //        map.put("money1","100000");
 //        map.put("money2","909010");
 //        map.put("money3","608109291");
-        viewHolder.typeTv.setText(item.get("type") + "");
-        viewHolder.moneyAvaivable.setText(UtilTools.formatDecimal(item.get("money1")+"",3));
-        if (UtilTools.empty(item.get("money2"))){
+        viewHolder.typeTv.setText(item.get("symbol") + "");
+        viewHolder.moneyAvaivable.setText(UtilTools.formatDecimal(item.get("balance")+"",2));
+        if (UtilTools.empty(item.get("frozen"))){
             viewHolder.dongjieLay.setVisibility(View.GONE);
         }else {
-            viewHolder.moneyLimit.setText(UtilTools.formatDecimal(item.get("money2")+"",3));
+            viewHolder.moneyLimit.setText(UtilTools.formatDecimal(item.get("frozen")+"",2));
         }
-        viewHolder.moneyZhehe.setText(UtilTools.formatDecimal(item.get("money3")+"",3));
+        viewHolder.moneyZhehe.setText(UtilTools.formatDecimal(item.get("cny")+"",2));
 
         viewHolder.itemLay.setOnClickListener(new View.OnClickListener() {
             @Override

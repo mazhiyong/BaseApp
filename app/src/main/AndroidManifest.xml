@@ -800,7 +800,7 @@
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 扫描注册二维码 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.TestScanActivity"
+            android:name="com.lr.biyou.ui.moudle.activity.TestScanActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 扫描发票 -->
@@ -1126,6 +1126,26 @@
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
+
+        <!--  红包  -->
+        <activity
+            android:name=".ui.moudle2.activity.RedMoneyActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
+
+        <!--  转账  -->
+        <activity
+            android:name=".ui.moudle2.activity.TransferMoneyActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
+
+
 
 
 

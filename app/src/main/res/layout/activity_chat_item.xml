@@ -316,7 +316,7 @@
         android:layout_marginTop="@dimen/dp_30"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/white"
-        android:background="@drawable/_bg_red_round"
+        android:background="@drawable/btn_next_red"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

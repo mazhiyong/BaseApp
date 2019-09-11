@@ -19,9 +19,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.lr.biyou.R;
 import com.lr.biyou.rongyun.common.Constant;
 import com.lr.biyou.rongyun.common.IntentExtra;
@@ -48,13 +45,15 @@ import com.lr.biyou.rongyun.ui.widget.WrapHeightGridView;
 import com.lr.biyou.rongyun.utils.CheckPermissionUtils;
 import com.lr.biyou.rongyun.utils.ImageLoaderUtils;
 import com.lr.biyou.rongyun.utils.ToastUtils;
-import com.lr.biyou.rongyun.viewmodel.GroupDetailViewModel;
 import com.lr.biyou.rongyun.utils.log.SLog;
+import com.lr.biyou.rongyun.viewmodel.GroupDetailViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import io.rong.imkit.emoticon.AndroidEmoji;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.utilities.PromptPopupDialog;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Group;
 
 /**
  * 群组详细界面
@@ -665,13 +664,13 @@ public class GroupDetailActivity extends TitleBaseActivity implements View.OnCli
      * @param groupMember
      */
     private void showMemberInfo(GroupMember groupMember) {
-        Intent intent = new Intent(this, UserDetailActivity.class);
+       /* Intent intent = new Intent(this, UserDetailActivity.class);
         intent.putExtra(IntentExtra.STR_TARGET_ID, groupMember.getUserId());
         Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(groupId);
         if (groupInfo != null) {
             intent.putExtra(IntentExtra.STR_GROUP_NAME, groupInfo.getName());
         }
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     /**

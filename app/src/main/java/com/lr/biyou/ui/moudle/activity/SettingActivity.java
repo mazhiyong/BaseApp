@@ -104,7 +104,7 @@ public class SettingActivity extends BasicActivity implements RequestView , Sele
         List<Map<String,Object>> mDataList2 = SelectDataUtil.getSetType();
         mDialog=new KindSelectDialog(SettingActivity.this,true,mDataList2,30);
         mDialog.setSelectBackListener(this);
-        //getShareData();
+        //getZiChanDataAction();
     }
 
 
@@ -295,7 +295,7 @@ public class SettingActivity extends BasicActivity implements RequestView , Sele
                 mIsRefreshToken = false;
                 switch (mRequestTag) {
                     case MethodUrl.shareUrl:
-                        //getShareData();
+                        //getZiChanDataAction();
                         break;
                 }
                 break;

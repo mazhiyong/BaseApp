@@ -97,7 +97,7 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
         List<Map<String, Object>> mDataList2 = SelectDataUtil.getSetType();
         mDialog = new KindSelectDialog(ChatItemActivity.this, true, mDataList2, 30);
         mDialog.setSelectBackListener(this);
-        //getShareData();
+        //getZiChanDataAction();
         Intent intent = getIntent();
         if (intent != null){
             Bundle bundle =intent.getExtras();
@@ -334,7 +334,7 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
                 mIsRefreshToken = false;
                 switch (mRequestTag) {
                     case MethodUrl.shareUrl:
-                        //getShareData();
+                        //getZiChanDataAction();
                         break;
                 }
                 break;

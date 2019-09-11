@@ -12,22 +12,30 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.rongyun.im.provider.ForwardClickActions;
+import com.lr.biyou.rongyun.ui.activity.ConversationActivity;
+import com.lr.biyou.rongyun.ui.activity.GroupReadReceiptDetailActivity;
 import com.lr.biyou.rongyun.ui.dialog.EvaluateBottomDialog;
+import com.lr.biyou.ui.moudle2.activity.RedMoneyActivity;
+import com.lr.biyou.ui.moudle2.activity.SelectContractListActivity;
+import com.lr.biyou.ui.moudle2.activity.TransferMoneyActivity;
+import com.lr.biyou.utils.tool.UtilTools;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.lr.biyou.rongyun.ui.activity.GroupReadReceiptDetailActivity;
 import io.rong.common.RLog;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.actions.IClickActions;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imkit.mention.RongMentionManager;
+import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.MentionedInfo;
 import io.rong.message.TextMessage;
+
+import static io.rong.contactcard.ContactCardPlugin.IS_FROM_CARD;
 
 /**
  * 会话 Fragment 继承自ConversationFragment
@@ -39,6 +47,7 @@ public class ConversationFragmentEx extends ConversationFragment {
     private OnShowAnnounceListener onShowAnnounceListener;
     private RongExtension rongExtension;
     private ListView listView;
+    private static final int REQUEST_CONTACT = 55;
 
 
     @Override
@@ -115,6 +124,7 @@ public class ConversationFragmentEx extends ConversationFragment {
         setMessageListLast();
     }
 
+
     /**
      * 输入区表情切换按钮的监听
      *
@@ -127,6 +137,41 @@ public class ConversationFragmentEx extends ConversationFragment {
         setMessageListLast();
     }
 
+    @Override
+    public void onPluginClicked(IPluginModule pluginModule, int position) {
+        Intent intent;
+        switch (position){
+            case 3: //名片
+                intent = new Intent(getActivity(), SelectContractListActivity.class);
+                intent.putExtra("TYPE","5");
+                intent.putExtra(IS_FROM_CARD,true);
+                startActivityForResult(intent, REQUEST_CONTACT);
+
+                break;
+            case 4: //红包
+                intent = new Intent(getActivity(), RedMoneyActivity.class);
+                ConversationActivity activity = (ConversationActivity) getActivity();
+                if (!UtilTools.empty(activity)){
+                    intent.putExtra("tarid",activity.targetId);
+                    startActivity(intent);
+                }
+                break;
+            case 5: //转账
+                intent = new Intent(getContext(), TransferMoneyActivity.class);
+                ConversationActivity activity1 = (ConversationActivity) getActivity();
+                if (!UtilTools.empty(activity1)){
+                    intent.putExtra("tarid",activity1.targetId);
+                    startActivity(intent);
+                }
+                break;
+            default:
+                super.onPluginClicked(pluginModule, position);
+                break;
+        }
+
+    }
+
+    //发送消息
     @Override
     public void onSendToggleClick(View v, String text) {
         if (TextUtils.isEmpty(text) || TextUtils.isEmpty(text.trim())) {
@@ -146,6 +191,10 @@ public class ConversationFragmentEx extends ConversationFragment {
         }
         io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(getTargetId(), getConversationType(), textMessage);
         RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
+
+        //发送消息
+
+
     }
 
     @Override

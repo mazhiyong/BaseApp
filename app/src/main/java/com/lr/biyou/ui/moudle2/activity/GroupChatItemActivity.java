@@ -28,6 +28,7 @@ import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.bean.MessageEvent;
 import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.rongyun.common.Constant;
 import com.lr.biyou.rongyun.common.IntentExtra;
@@ -39,7 +40,6 @@ import com.lr.biyou.rongyun.model.Status;
 import com.lr.biyou.rongyun.ui.activity.GroupMemberListActivity;
 import com.lr.biyou.rongyun.ui.activity.GroupNoticeActivity;
 import com.lr.biyou.rongyun.ui.activity.SearchHistoryMessageActivity;
-import com.lr.biyou.rongyun.ui.activity.UserDetailActivity;
 import com.lr.biyou.rongyun.ui.adapter.GridGroupMemberAdapter;
 import com.lr.biyou.rongyun.ui.dialog.CommonDialog;
 import com.lr.biyou.rongyun.ui.dialog.GroupNoticeDialog;
@@ -61,6 +61,8 @@ import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,9 +71,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import io.rong.imkit.emoticon.AndroidEmoji;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Group;
 
 /**
  * 群组详细界面
@@ -574,12 +574,15 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
      * @param groupMember
      */
     private void showMemberInfo(GroupMember groupMember) {
-        Intent intent = new Intent(this, UserDetailActivity.class);
-        intent.putExtra(IntentExtra.STR_TARGET_ID, groupMember.getUserId());
+        //Intent intent = new Intent(this, UserDetailActivity.class);
+        Intent intent = new Intent(this, AddFriendActivity.class);
+        String qrCodeText = "1,"+groupMember.getUserId();
+        intent.putExtra("DATA", qrCodeText);
+       /* intent.putExtra(IntentExtra.FRIEND_ID, groupMember.getUserId());
         Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(groupId);
         if (groupInfo != null) {
             intent.putExtra(IntentExtra.STR_GROUP_NAME, groupInfo.getName());
-        }
+        }*/
         startActivity(intent);
     }
 
@@ -738,7 +741,14 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
 
     private void exitGroupAction() {
 
-
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(GroupChatItemActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("group_id",groupId);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_EXIT, map);
     }
 
     /**
@@ -1027,6 +1037,30 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                     case "0":
                         showToastMsg(tData.get("msg") + "");
                         getGroupInfoAction();
+                        break;
+                    case "1":
+                        closeAllActivity();
+                        intent = new Intent(GroupChatItemActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                }
+                break;
+            case MethodUrl.CHAT_GROUP_EXIT:
+                switch (tData.get("code")+"") {
+                    case "0":
+                        showToastMsg(tData.get("msg") + "");
+                        finish();
+                        //Eventbus  发送事件
+                        MessageEvent event = new MessageEvent();
+                        event.setType(MbsConstans.MessageEventType.CLOSE_CONACTIVITY);
+                        Map<Object,Object> map = new HashMap<>();
+                        event.setMessage(map);
+                        EventBus.getDefault().post(event);
+
                         break;
                     case "1":
                         closeAllActivity();

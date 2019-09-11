@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.ViewAnimator;
 
 import java.util.List;
+import java.util.Map;
 
 import io.rong.contactcard.R;
 import io.rong.contactcard.message.ContactMessage;
@@ -98,8 +99,10 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity {
     private void initData() {
         mTargetId = getIntent().getStringExtra("targetId");
         mConversationType = (Conversation.ConversationType) getIntent().getSerializableExtra("conversationType");
-        mContactFriend = getIntent().getParcelableExtra("contact");
-
+        Map<String,Object> userMap = (Map<String, Object>) getIntent().getSerializableExtra("DATA");
+        mContactFriend = new UserInfo(userMap.get("")+"",
+                userMap.get("")+"",
+                userMap.get("")+"");
         switch (mConversationType) {
             case PRIVATE:
                 UserInfo mine = RongUserInfoManager.getInstance().getUserInfo(mTargetId);

@@ -36,6 +36,7 @@ import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -135,8 +136,6 @@ public class SelectContractListActivity extends BasicActivity implements Request
                     responseData();
                 }
                 type = bundle.getString("TYPE");
-
-
             }
 
         }
@@ -219,6 +218,10 @@ public class SelectContractListActivity extends BasicActivity implements Request
                     case "4"://转让
 
                         break;
+                    case "5:"://分享名片
+
+                        break;
+
                 }
 
 
@@ -328,6 +331,12 @@ public class SelectContractListActivity extends BasicActivity implements Request
                             finish();
                         }
 
+                        if (type.equals("5")){
+                            Intent intent = new Intent();
+                            intent.putExtra("DATA", (Serializable) mParentMap);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
 
                     }
                 });
@@ -417,7 +426,7 @@ public class SelectContractListActivity extends BasicActivity implements Request
                     case "0":
                         //showToastMsg(tData.get("msg")+"");
                         LogUtilDebug.i("show", "创建成功");
-                        RongIM.getInstance().startGroupChat(SelectContractListActivity.this, tData.get("data") + "", "测试群聊");
+                        RongIM.getInstance().startGroupChat(SelectContractListActivity.this, tData.get("data") + "", "新建群聊");
                         finish();
                         break;
                     case "1":

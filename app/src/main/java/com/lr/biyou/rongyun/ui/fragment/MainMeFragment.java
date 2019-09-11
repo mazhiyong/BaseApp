@@ -9,13 +9,16 @@ import android.view.View;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.jrmf360.rylib.JrmfClient;
+
+import com.lr.biyou.R;
 import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.rongyun.db.model.UserInfo;
 import com.lr.biyou.rongyun.model.Resource;
 import com.lr.biyou.rongyun.model.Status;
 import com.lr.biyou.rongyun.model.VersionInfo;
 import com.lr.biyou.rongyun.model.qrcode.QrCodeDisplayType;
+import com.lr.biyou.rongyun.ui.activity.AboutSealTalkActivity;
+import com.lr.biyou.rongyun.ui.activity.AccountSettingActivity;
 import com.lr.biyou.rongyun.ui.activity.ChangeLanguageActivity;
 import com.lr.biyou.rongyun.ui.activity.MyAccountActivity;
 import com.lr.biyou.rongyun.ui.activity.QrCodeDisplayActivity;
@@ -25,9 +28,6 @@ import com.lr.biyou.rongyun.utils.ImageLoaderUtils;
 import com.lr.biyou.rongyun.viewmodel.AppViewModel;
 import com.lr.biyou.rongyun.viewmodel.UserInfoViewModel;
 
-import com.lr.biyou.R;
-import com.lr.biyou.rongyun.ui.activity.AboutSealTalkActivity;
-import com.lr.biyou.rongyun.ui.activity.AccountSettingActivity;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.utilities.LangUtils;
 import io.rong.imlib.model.CSCustomServiceInfo;
@@ -116,8 +116,8 @@ public class MainMeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), ChangeLanguageActivity.class));
 
                 break;
-            case R.id.siv_my_wallet:
-                JrmfClient.intentWallet(getActivity());
+            case R.id.siv_my_wallet: //我的钱包
+                 //JrmfClient.intentWallet(getActivity());
                 break;
             case R.id.siv_feedback:
                 CSCustomServiceInfo.Builder builder = new CSCustomServiceInfo.Builder();

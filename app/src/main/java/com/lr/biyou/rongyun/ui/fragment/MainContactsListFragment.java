@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.rongyun.db.model.FriendShipInfo;
 import com.lr.biyou.rongyun.db.model.FriendStatus;
 import com.lr.biyou.rongyun.im.IMManager;
@@ -20,7 +19,6 @@ import com.lr.biyou.rongyun.ui.activity.GroupListActivity;
 import com.lr.biyou.rongyun.ui.activity.MainActivity;
 import com.lr.biyou.rongyun.ui.activity.NewFriendListActivity;
 import com.lr.biyou.rongyun.ui.activity.PublicServiceActivity;
-import com.lr.biyou.rongyun.ui.activity.UserDetailActivity;
 import com.lr.biyou.rongyun.ui.adapter.CommonListAdapter;
 import com.lr.biyou.rongyun.ui.adapter.models.FunctionInfo;
 import com.lr.biyou.rongyun.ui.adapter.models.ListItemModel;
@@ -149,9 +147,9 @@ public class MainContactsListFragment extends CommonListBaseFragment {
             String title = TextUtils.isEmpty(friendShipInfo.getDisplayName()) ? friendShipInfo.getUser().getNickname() : friendShipInfo.getDisplayName();
             RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.PRIVATE, friendShipInfo.getUser().getId(), title);
         } else {
-            Intent intent = new Intent(getContext(), UserDetailActivity.class);
+          /*  Intent intent = new Intent(getContext(), UserDetailActivity.class);
             intent.putExtra(IntentExtra.STR_TARGET_ID, friendShipInfo.getUser().getId());
-            startActivity(intent);
+            startActivity(intent);*/
         }
     }
 

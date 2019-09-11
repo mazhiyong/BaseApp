@@ -270,7 +270,7 @@ dependencies {
     api 'cn.rongcloud.sdk:im_lib:2.9.22'
 
     api 'cn.rongcloud.sdk:rcsticker:2.9.17'
-    api 'cn.rongcloud.sdk:redpacket:2.9.17'
+   // api 'cn.rongcloud.sdk:redpacket:2.9.17'
     api 'cn.rongcloud.sdk:sight:2.9.20'
 
     api 'cn.rongcloud.sdk:call_lib:2.9.22'

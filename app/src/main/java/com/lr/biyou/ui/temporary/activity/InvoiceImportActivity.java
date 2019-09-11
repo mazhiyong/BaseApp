@@ -22,6 +22,7 @@ import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.view.PageView;
+import com.lr.biyou.ui.moudle.activity.TestScanActivity;
 import com.lr.biyou.ui.temporary.adapter.InvoiceImportAdapter;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.UtilTools;

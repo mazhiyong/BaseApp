@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.lr.biyou.R;
 import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.rongyun.db.model.UserInfo;
 import com.lr.biyou.rongyun.model.GroupMember;
@@ -32,12 +33,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.lr.biyou.R;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.emoticon.AndroidEmoji;
-import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imkit.utils.RongDateUtils;
-import io.rong.imlib.model.Group;
 import io.rong.imlib.model.Message;
 import io.rong.message.TextMessage;
 
@@ -381,12 +379,12 @@ public class GroupReadReceiptDetailActivity extends TitleBaseActivity {
      * @param groupMember
      */
     private void showMemberInfo(GroupMember groupMember) {
-        Intent intent = new Intent(this, UserDetailActivity.class);
+       /* Intent intent = new Intent(this, UserDetailActivity.class);
         intent.putExtra(IntentExtra.STR_TARGET_ID, groupMember.getGroupId());
         Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(targetMessage.getTargetId());
         if (groupInfo != null) {
             intent.putExtra(IntentExtra.STR_GROUP_NAME, groupInfo.getName());
         }
-        startActivity(intent);
+        startActivity(intent);*/
     }
 }

@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.lr.biyou.R;
-import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.rongyun.im.IMManager;
 import com.lr.biyou.rongyun.model.AddFriendResult;
 import com.lr.biyou.rongyun.model.Resource;
@@ -27,6 +26,7 @@ import com.lr.biyou.rongyun.ui.fragment.SearchFriendResultFragment;
 import com.lr.biyou.rongyun.ui.interfaces.OnSearchFriendClickListener;
 import com.lr.biyou.rongyun.ui.interfaces.OnSearchFriendItemClickListener;
 import com.lr.biyou.rongyun.viewmodel.SearchFriendNetViewModel;
+
 import io.rong.imkit.RongIM;
 import io.rong.imkit.userInfoCache.RongUserInfoManager;
 import io.rong.imlib.model.UserInfo;
@@ -121,9 +121,9 @@ public class SearchFriendActivity extends TitleBaseActivity implements OnSearchF
     }
 
     private void toDetailActivity(String userId) {
-        Intent intent = new Intent(this, UserDetailActivity.class);
+       /* Intent intent = new Intent(this, UserDetailActivity.class);
         intent.putExtra(IntentExtra.STR_TARGET_ID, userId);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     private void showAddFriendDialog(String userId) {

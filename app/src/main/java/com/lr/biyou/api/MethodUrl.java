@@ -196,50 +196,6 @@ public class MethodUrl {
 
 
 
-    public static final String AVIABLE_MONEY = "Contract/userContractInfo";//保证金动态收益信息
-    public static final String CHICANG_LIST = "Contract/userDepot";//持仓列表
-    public static final String WEITUO_LIST = "Contract/queryContractEntrust";//委托列表
-    public static final String CHENGJIAO_LIST = "Contract/closeDepot";//成交列表
-    public static final String PING_CANG = "contract_trade/contractSell";//平仓操作
-    public static final String PING_CANG_ALL = "contract_trade/contractSellAll";//一键平仓操作
-    public static final String CHE_XIAO = "contract_trade/cancelEntrust";//撤销操作
-    public static final String PAIR_DEPTH = "Contract/queryPairDepth";//合约价格及合并深度信息
-    public static final String CONTRACT_LEVER = "Contract/getContractLever";//获取杠杆信息
-    public static final String AREA_ALL = "Contract/areaAll";//交易区
-    public static final String COIN_ACCOUNT = "Contract/queryCoinAccount";//用户合约币、USDT资产
-    public static final String CONTRACT_TRADE = "contract_trade/index";//交易买卖
-
-
-
-
-
-
-    public static final String ENTRUST_LIST = "Coin/queryEntrust";//委托单查询
-    public static final String COIN_AREAALL = "Coin/areaAll";//交易区列表
-    public static final String AREA_ITEM = "Coin/queryArea";//获取对应交易区币对列表
-    public static final String AREA_COIN_ACCOUNT = "Coin/queryCoinAccount";//账户当前交易区交易币可用
-    public static final String CANCEL_WEITUO = "coin_trade/revocationOrder";//撤销委托
-    public static final String CURRENT_PRICE = "Coin/coinCurrent";//币币查询当前币价格信息
-    public static final String GUADAN_TRADE = "coin_trade/index";//买卖挂单操作
-
-
-
-
-
-    public static final String OTC_TRADE = "Outside/getPair";//法币列表交易区
-    public static final String HISTORY_DINGDAN = "Outside/myMatch";//订单历史
-    public static final String FB_ENTRUSTLIST = "Outside/entrustList";//法币买卖挂单列表
-    public static final String USER_BUY_DEAL = "outside_trade/tradeEntrust";//用户买卖操作
-    public static final String DING_INFO = "outside_trade/tradeMatch";//订单详情
-    public static final String DING_CANCEL = "outside_trade/revocationMatch";//取消订单
-    public static final String BUYER_SURE = "outside_trade/confirmPay";//买家确认支付
-    public static final String SELLER_SURE = "outside_trade/confirmLoan";//卖家确认收到款
-    public static final String USER_ENTRUST_DEAL = "outside_trade/index";//买卖挂单操作
-    public static final String USER_ENTRUSTLIST = "Outside/myEntrust";//用户挂单记录
-    public static final String CANCEL_ENTRUSTLIST = "outside_trade/doRevocation";//撤销挂单
-
-
-
 
 
     public static final String CHAT_QRCODE = "chat_user/myQrcode";//我的二维码
@@ -249,7 +205,6 @@ public class MethodUrl {
     public static final String CHAT_AGREE_REFUSE = "chat_user/checkApply";//同意拒绝好友申请
     public static final String CHAT_MY_FRIENDS = "chat_user/myFriend";//获取好友列表
     public static final String CHAT_RECENTLY_LIST = "Chat/recentChat";//最近聊天列表
-    public static final String CHAT_SEND_NEWS = "chat_user/chatActive";//发送消息
     public static final String CHAT_MY_GROUPS = "chat_group/myGroup";//我的群组
     public static final String CHAT_CREAT_GROUPS = "chat_group/createGroup";//创建群组
     public static final String CHAT_GROUPS_INFO = "chat_group/groupInfo";//群组信息
@@ -268,6 +223,79 @@ public class MethodUrl {
     public static final String CHAT_GROUP_ADMIN_DELETE = "chat_group/cancelAdmin";//删除管理员
     public static final String CHAT_GROUP_TRANSFER = "chat_group/transfer";//转让群
     public static final String CHAT_GROUP_EXIT = "chat_group/quitGroup";//退出群聊
+    public static final String CHAT_SWEEP_CODE = "chat/sweepCode";//扫码显示用户/群信息
+    public static final String CHAT_SEND_NEWS = "chat_user/chatActive";//好友发送消息
+    public static final String CHAT_GROUP_SEND_NEWS = "chat_group/chatActive";//群聊发送消息
+
+
+
+
+
+
+
+    public static final String AVIABLE_MONEY = "Contract/userContractInfo";//保证金动态收益信息
+    public static final String CHICANG_LIST = "Contract/userDepot";//持仓列表
+    public static final String WEITUO_LIST = "Contract/queryContractEntrust";//委托列表
+    public static final String CHENGJIAO_LIST = "Contract/closeDepot";//成交列表
+    public static final String PING_CANG = "contract_trade/contractSell";//平仓操作
+    public static final String PING_CANG_ALL = "contract_trade/contractSellAll";//一键平仓操作
+    public static final String CHE_XIAO = "contract_trade/cancelEntrust";//撤销操作
+    public static final String PAIR_DEPTH = "Contract/queryPairDepth";//合约价格及合并深度信息
+    public static final String CONTRACT_LEVER = "Contract/getContractLever";//获取杠杆信息
+    public static final String AREA_ALL = "Contract/areaAll";//交易区
+    public static final String COIN_ACCOUNT = "Contract/queryCoinAccount";//用户合约币、USDT资产
+    public static final String CONTRACT_TRADE = "contract_trade/index";//交易买卖
+
+
+
+
+
+
+
+
+    public static final String ENTRUST_LIST = "Coin/queryEntrust";//委托单查询
+    public static final String COIN_AREAALL = "Coin/areaAll";//交易区列表
+    public static final String AREA_ITEM = "Coin/queryArea";//获取对应交易区币对列表
+    public static final String AREA_COIN_ACCOUNT = "Coin/queryCoinAccount";//账户当前交易区交易币可用
+    public static final String CANCEL_WEITUO = "coin_trade/revocationOrder";//撤销委托
+    public static final String CURRENT_PRICE = "Coin/coinCurrent";//币币查询当前币价格信息
+    public static final String GUADAN_TRADE = "coin_trade/index";//买卖挂单操作
+
+
+    public static final String OTC_TRADE = "Outside/getPair";//法币列表交易区
+    public static final String HISTORY_DINGDAN = "Outside/myMatch";//订单历史
+    public static final String FB_ENTRUSTLIST = "Outside/entrustList";//法币买卖挂单列表
+    public static final String USER_BUY_DEAL = "outside_trade/tradeEntrust";//用户买卖操作
+    public static final String DING_INFO = "outside_trade/tradeMatch";//订单详情
+    public static final String DING_CANCEL = "outside_trade/revocationMatch";//取消订单
+    public static final String BUYER_SURE = "outside_trade/confirmPay";//买家确认支付
+    public static final String SELLER_SURE = "outside_trade/confirmLoan";//卖家确认收到款
+    public static final String USER_ENTRUST_DEAL = "outside_trade/index";//买卖挂单操作
+    public static final String USER_ENTRUSTLIST = "Outside/myEntrust";//用户挂单记录
+    public static final String CANCEL_ENTRUSTLIST = "outside_trade/doRevocation";//撤销挂单
+
+
+
+
+
+
+
+
+    public static final String ZICHAN_ALL = "user_info/generalUsdtAssets";//总资产
+    public static final String ZICHAN_ACCOUNT = "user_info/accountUsdt";//各账户资产信息
+    public static final String CHONGTI_LIST = "user_info/pairLit";//充提币列表
+    public static final String CHONG_BI = "user_info/rechargePage";//充币页面
+    public static final String HUANZHUAN_BI_TYPE = "user_info/symbolList";//可划转币类型
+    public static final String ACCOUNT_AVAIABLE_MONEY = "user_info/assets";//用户某个账户 某个币可用余额
+    public static final String HUAZHUAN_DEAL = "user_info/dealTransfer";//划转币操作
+
+
+
+
+
+
+
+
 
 
 

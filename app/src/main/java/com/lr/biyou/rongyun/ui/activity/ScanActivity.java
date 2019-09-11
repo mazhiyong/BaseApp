@@ -10,13 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 
 import com.lr.biyou.R;
-import com.lr.biyou.rongyun.model.Resource;
-import com.lr.biyou.rongyun.model.Status;
-import com.lr.biyou.rongyun.qrcode.SealQrCodeUISelector;
 import com.lr.biyou.rongyun.ui.view.SealTitleBar;
 import com.lr.biyou.rongyun.utils.NetworkUtils;
 import com.lr.biyou.rongyun.utils.PhotoUtils;
@@ -26,6 +21,7 @@ import com.lr.biyou.rongyun.utils.qrcode.QRCodeUtils;
 import com.lr.biyou.rongyun.utils.qrcode.barcodescanner.BarcodeResult;
 import com.lr.biyou.rongyun.utils.qrcode.barcodescanner.CaptureManager;
 import com.lr.biyou.rongyun.utils.qrcode.barcodescanner.DecoratedBarcodeView;
+import com.lr.biyou.ui.moudle2.activity.AddFriendActivity;
 
 
 /**
@@ -160,7 +156,11 @@ public class ScanActivity extends TitleBaseActivity implements View.OnClickListe
         }
 
         // 处理二维码结果
-        SealQrCodeUISelector uiSelector = new SealQrCodeUISelector(this);
+        Intent intent = new Intent(this, AddFriendActivity.class);
+        intent.putExtra("DATA", qrCodeText);
+        startActivity(intent);
+
+       /* SealQrCodeUISelector uiSelector = new SealQrCodeUISelector(this);
         LiveData<Resource<String>> resourceLiveData = uiSelector.handleUri(qrCodeText);
         resourceLiveData.observeForever(new Observer<Resource<String>>() {
             @Override
@@ -178,7 +178,7 @@ public class ScanActivity extends TitleBaseActivity implements View.OnClickListe
                     tipsTv.setVisibility(View.INVISIBLE);
                 }
             }
-        });
+        });*/
     }
 
     @Override

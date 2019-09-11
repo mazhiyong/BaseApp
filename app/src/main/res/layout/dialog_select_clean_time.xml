@@ -58,7 +58,7 @@
         android:layout_height="@dimen/seal_dialog_select_picture_btn_height"
         android:background="@drawable/seal_dialog_select_picture_btn_selector"
         android:text="@string/seal_dialog_select_clean_not"
-        android:textColor="@color/red_dark"
+        android:textColor="@color/red"
         android:textSize="@dimen/seal_dialog_select_picture_btn_text_size"
         style="?android:attr/borderlessButtonStyle"
         />

@@ -1,11 +1,10 @@
 package com.lr.biyou.rongyun.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,10 +19,13 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
+import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.bean.MessageEvent;
 import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.rongyun.common.ThreadManager;
+import com.lr.biyou.rongyun.im.IMManager;
 import com.lr.biyou.rongyun.model.Resource;
 import com.lr.biyou.rongyun.model.ScreenCaptureResult;
 import com.lr.biyou.rongyun.model.Status;
@@ -33,9 +35,16 @@ import com.lr.biyou.rongyun.ui.view.AnnouceView;
 import com.lr.biyou.rongyun.utils.ScreenCaptureUtil;
 import com.lr.biyou.rongyun.utils.log.SLog;
 import com.lr.biyou.rongyun.viewmodel.ConversationViewModel;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle2.activity.ChatItemActivity;
 import com.lr.biyou.ui.moudle2.activity.GroupChatItemActivity;
+import com.lr.biyou.utils.tool.UtilTools;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -76,13 +85,16 @@ public class ConversationActivity extends BasicActivity {
     /**
      * 对方id
      */
-    private String targetId;
+    public String targetId;
+    private String Id;
+
     /**
      * 会话类型
      */
     private Conversation.ConversationType conversationType;
     private ScreenCaptureUtil screenCaptureUtil;
 
+    private String mRequestTag = "";
 
     @Override
     public int getContentView() {
@@ -97,6 +109,12 @@ public class ConversationActivity extends BasicActivity {
             finish();
             return;
         }
+
+        EventBus eventBus = EventBus.getDefault();
+        if (!eventBus.isRegistered(this)) {
+            eventBus.register(this);
+        }
+
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
 
         targetId = intent.getData().getQueryParameter("targetId");
@@ -112,6 +130,9 @@ public class ConversationActivity extends BasicActivity {
 
         initView();
         initViewModel();
+
+        //根据rc_id查询用户本地id
+        getidFromRcidAction();
     }
 
 
@@ -452,15 +473,36 @@ public class ConversationActivity extends BasicActivity {
         return false;
     }
 
-    private void hintKbTwo() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm.isActive() && getCurrentFocus() != null) {
-            if (getCurrentFocus().getWindowToken() != null) {
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            }
+
+    /**
+     * 查询id
+     */
+    public void getidFromRcidAction() {
+        mRequestTag = MethodUrl.CHAT_QUERY_ID;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(ConversationActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("rc_id", targetId);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_QUERY_ID, map);
     }
 
+    /**
+     * 获取用户信息
+     */
+    public void getFriendInfoAction() {
+        mRequestTag = MethodUrl.CHAT_FRIEDN_INFO;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(ConversationActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("id", Id);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_FRIEDN_INFO, map);
+    }
 
     @Override
     public void showProgress() {
@@ -474,12 +516,88 @@ public class ConversationActivity extends BasicActivity {
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
+        switch (mType) {
+            case MethodUrl.CHAT_QUERY_ID:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            Id = tData.get("data") + "";
+                            getFriendInfoAction();
+                        }
 
+
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        Intent intent = new Intent(ConversationActivity.this, com.lr.biyou.ui.moudle.activity.LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+            case MethodUrl.CHAT_FRIEDN_INFO:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            Map<String, Object> map = (Map<String, Object>) tData.get("data");
+                            if (!UtilTools.empty(map)){
+                                IMManager.getInstance().updateUserInfoCache(map.get("rc_id") +"",
+                                        map.get("name")+"",
+                                        Uri.parse(map.get("portrait")+""));
+                            }
+                        }
+
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        Intent intent = new Intent(ConversationActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+
+                break;
+        }
     }
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
-
+        dealFailInfo(map,mType);
     }
+
+    /**
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateUI(MessageEvent event) {
+        switch (event.getType()) {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                finish();
+                break;
+
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus eventBus = EventBus.getDefault();
+        if (eventBus.isRegistered(this)) {
+            eventBus.unregister(this);
+        }
+    }
+
 
 }

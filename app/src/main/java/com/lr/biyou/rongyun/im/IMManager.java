@@ -19,6 +19,8 @@ import com.lr.biyou.rongyun.common.LogTag;
 import com.lr.biyou.rongyun.common.ResultCallback;
 import com.lr.biyou.rongyun.db.DbManager;
 import com.lr.biyou.rongyun.im.message.GroupApplyMessage;
+import com.lr.biyou.rongyun.im.message.RongRedPacketMessage;
+import com.lr.biyou.rongyun.im.message.RongRedPacketMessageProvider;
 import com.lr.biyou.rongyun.im.message.SealContactNotificationMessage;
 import com.lr.biyou.rongyun.im.message.SealGroupConNtfMessage;
 import com.lr.biyou.rongyun.im.message.SealGroupNotificationMessage;
@@ -41,8 +43,8 @@ import com.lr.biyou.rongyun.ui.activity.ForwardActivity;
 import com.lr.biyou.rongyun.ui.activity.GroupNoticeListActivity;
 import com.lr.biyou.rongyun.ui.activity.NewFriendListActivity;
 import com.lr.biyou.rongyun.ui.activity.SealPicturePagerActivity;
-import com.lr.biyou.rongyun.ui.activity.UserDetailActivity;
 import com.lr.biyou.rongyun.utils.log.SLog;
+import com.lr.biyou.ui.moudle2.activity.AddFriendActivity;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 
 import java.util.ArrayList;
@@ -419,7 +421,7 @@ public class IMManager {
         RongIM.setConversationClickListener(new RongIM.ConversationClickListener() {
             @Override
             public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo, String s) {
-                Intent intent = new Intent(context, UserDetailActivity.class);
+               /* Intent intent = new Intent(context, UserDetailActivity.class);
                 intent.putExtra(IntentExtra.STR_TARGET_ID, userInfo.getUserId());
                 if (conversationType == Conversation.ConversationType.GROUP) {
                     Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(s);
@@ -427,7 +429,7 @@ public class IMManager {
                         intent.putExtra(IntentExtra.STR_GROUP_NAME, groupInfo.getName());
                     }
                 }
-                context.startActivity(intent);
+                context.startActivity(intent);*/
                 return true;
             }
 
@@ -693,6 +695,12 @@ public class IMManager {
         RongIM.registerMessageType(GroupApplyMessage.class);
         RongIM.getInstance().registerConversationTemplate(new GroupApplyMessageProvider());
         //RongIM.registerMessageTemplate(new GroupApplyMessageProvider());
+
+        //注册红包消息
+        RongIM.registerMessageType(RongRedPacketMessage.class);
+        //注册红包消息模板，可以控制红包消息显示样式
+        RongIM.registerMessageTemplate(new RongRedPacketMessageProvider());
+
     }
 
     /**
@@ -722,8 +730,13 @@ public class IMManager {
 
         RongExtensionManager.getInstance().registerExtensionModule(new SealExtensionModule(context));
 
+
         // 个人名片
         RongExtensionManager.getInstance().registerExtensionModule(createContactCardExtensionModule());
+        // 红包
+        RongExtensionManager.getInstance().registerExtensionModule(new RedExtenisonModule());
+        // 转账
+        RongExtensionManager.getInstance().registerExtensionModule(new TransferExtenisonModule());
         // 语音输入
         RongExtensionManager.getInstance().registerExtensionModule(new RecognizeExtensionModule());
         // 小视频
@@ -795,7 +808,7 @@ public class IMManager {
         }, (view, content) -> {
             Context activityContext = view.getContext();
             // 点击名片进入到个人详细界面
-            Intent intent = new Intent(activityContext, UserDetailActivity.class);
+            Intent intent = new Intent(activityContext, AddFriendActivity.class);
             intent.putExtra(IntentExtra.STR_TARGET_ID, content.getId());
             activityContext.startActivity(intent);
         });
