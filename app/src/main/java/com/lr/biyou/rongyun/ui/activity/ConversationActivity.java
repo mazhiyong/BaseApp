@@ -86,12 +86,12 @@ public class ConversationActivity extends BasicActivity {
      * 对方id
      */
     public String targetId;
-    private String Id;
+    public String Id;
 
     /**
      * 会话类型
      */
-    private Conversation.ConversationType conversationType;
+    public Conversation.ConversationType conversationType;
     private ScreenCaptureUtil screenCaptureUtil;
 
     private String mRequestTag = "";
@@ -504,6 +504,36 @@ public class ConversationActivity extends BasicActivity {
         mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_FRIEDN_INFO, map);
     }
 
+
+    public void sendMessageAction(String text){
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(ConversationActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("type", "1");
+        map.put("content",text);
+        map.put("receiver_id",Id);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_SEND_NEWS, map);
+    }
+
+
+    public void sendGroupMessageAction(String text){
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(ConversationActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("content",text);
+        map.put("group_id",targetId);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_SEND_NEWS, map);
+    }
+
+
+
+
     @Override
     public void showProgress() {
 
@@ -517,6 +547,39 @@ public class ConversationActivity extends BasicActivity {
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         switch (mType) {
+            case MethodUrl.CHAT_SEND_NEWS:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        Intent intent = new Intent(ConversationActivity.this, com.lr.biyou.ui.moudle.activity.LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+
+            case MethodUrl.CHAT_GROUP_SEND_NEWS:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        Intent intent = new Intent(ConversationActivity.this, com.lr.biyou.ui.moudle.activity.LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
             case MethodUrl.CHAT_QUERY_ID:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功

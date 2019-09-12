@@ -36,16 +36,16 @@ public class TradeListAdapter extends ListBaseAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final Map<String, Object> item = mDataList.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
-        String kind = item.get("kind")+"";
-        if (kind.equals("0")){
+        String kind = item.get("type")+"";
+        if (kind.equals("充币")){
             viewHolder.kindIv.setImageResource(R.drawable.icon6_chongbi);
         }else {
             viewHolder.kindIv.setImageResource(R.drawable.icon6_tibi);
         }
-        viewHolder.typeTv.setText(item.get("type")+"");
+        viewHolder.typeTv.setText(item.get("symbol")+"");
         viewHolder.timeTv.setText(item.get("time")+"");
         viewHolder.numberTv.setText(item.get("number")+"");
-        viewHolder.stateTv.setText(item.get("state")+"");
+        viewHolder.stateTv.setText(item.get("status")+"");
 
         //viewHolder.mStatusTv.setText(item.get("abstract")+"");
         /*if ((item.get("amt")+"").contains("-")){

@@ -2,12 +2,6 @@ package com.lr.biyou.ui.moudle5.activity;
 
 import android.animation.Animator;
 import android.content.Intent;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,6 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.flyco.dialog.utils.CornerUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
@@ -28,24 +28,24 @@ import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
-import com.lr.biyou.ui.temporary.adapter.TradeDialogAdapter;
-import com.lr.biyou.ui.moudle5.adapter.TradeListAdapter;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
-import com.lr.biyou.mywidget.dialog.DateSelectDialog;
+import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.OnMyItemClickListener;
 import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
+import com.lr.biyou.mywidget.dialog.DateSelectDialog;
 import com.lr.biyou.mywidget.view.PageView;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.ui.moudle5.adapter.TradeListAdapter;
+import com.lr.biyou.ui.temporary.adapter.TradeDialogAdapter;
 import com.lr.biyou.utils.tool.AnimUtil;
-import com.lr.biyou.utils.tool.JSONUtil;
-import com.lr.biyou.utils.tool.LogUtilDebug;
-import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -137,22 +137,7 @@ public class TradeListActivity extends BasicActivity implements RequestView,ReLo
 
         initView();
         showProgressDialog();
-        //traderListAction();
-
-        for (int i = 0; i <10 ; i++) {
-            Map<String,Object> map = new HashMap<>();
-            if (i%2 == 0){
-                map.put("kind","0"); //充币
-            }else {
-                map.put("kind","1"); //提币
-            }
-            map.put("type","USDT");
-            map.put("time","2019/05/01 12:12:10");
-            map.put("number","155.55");
-            map.put("state","已完成");
-            mDataList.add(map);
-        }
-        responseData();
+        traderListAction();
     }
 
 
@@ -180,17 +165,14 @@ public class TradeListActivity extends BasicActivity implements RequestView,ReLo
         });
     }
     private void traderListAction(){
-
-        mRequestTag = MethodUrl.tradeList;
-        Map<String, String> map = new HashMap<>();
-        map.put("current_page",mPage+"");
-        map.put("ptncode",""); //合作方编号  ，默认所有
-        map.put("start_time",mStartTime);
-        map.put("end_time",mEndTime);
-        map.put("busi_type",mBusiType);
-        LogUtilDebug.i("打印log日志","@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+map);
+        mRequestTag = MethodUrl.CHONGTI_RECORD_LIST;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(TradeListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestGetToRes(mHeaderMap, MethodUrl.tradeList, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHONGTI_RECORD_LIST, map);
     }
 
 
@@ -542,7 +524,7 @@ public class TradeListActivity extends BasicActivity implements RequestView,ReLo
 
     @Override
     public void showProgress() {
-        //showProgressDialog();
+        showProgressDialog();
     }
 
     @Override
@@ -552,24 +534,36 @@ public class TradeListActivity extends BasicActivity implements RequestView,ReLo
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
-
         Intent intent ;
         switch (mType){
-            case MethodUrl.tradeList://
-                String result = tData.get("result")+"";
-                if (UtilTools.empty(result)){
-                    responseData();
-                }else {
-                    List<Map<String,Object>> list =   JSONUtil.getInstance().jsonToList(result);
-                    if (list != null){
-                        mDataList.clear();
-                        mDataList.addAll(list);
-                        responseData();
-                    }else {
+            case MethodUrl.CHONGTI_RECORD_LIST:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (UtilTools.empty(tData.get("data") + "")) {
+                            mPageView.showEmpty();
+                        } else {
+                            mDataList = (List<Map<String, Object>>) tData.get("data");
+                            if (!UtilTools.empty(mDataList)) {
+                                mPageView.showContent();
+                                responseData();
+                                mRefreshListView.refreshComplete(10);
+                            } else {
+                                mPageView.showEmpty();
+                            }
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        mPageView.showNetworkError();
+                        break;
 
-                    }
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(TradeListActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
                 }
-                mRefreshListView.refreshComplete(10);
+
 
                 break;
             case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果

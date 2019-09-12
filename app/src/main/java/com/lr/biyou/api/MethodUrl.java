@@ -213,6 +213,7 @@ public class MethodUrl {
     public static final String CHAT_REASON_LIST = "chat/complaintList";//投诉原因列表
     public static final String CHAT_REASON_DEAL = "chat/complaintActive";//投诉操作
     public static final String CHAT_QUERY_ID = "Chat/selectId";//根据融云id查询平台id
+    public static final String CHAT_QUERY_RCID = "Chat/selectRcId";//根据平台id查询融云id
     public static final String CHAT_GROUP_CHANAGE_STATUS = "chat_group/editGroupStatus";//修改置顶聊天/消息免打扰状态
     public static final String CHAT_GROUP_EDIT_NAME = "chat_group/editGroup";//修改群名
     public static final String CHAT_GROUP_ADD = "chat_group/inviteGroup";//邀请入群
@@ -285,9 +286,18 @@ public class MethodUrl {
     public static final String ZICHAN_ACCOUNT = "user_info/accountUsdt";//各账户资产信息
     public static final String CHONGTI_LIST = "user_info/pairLit";//充提币列表
     public static final String CHONG_BI = "user_info/rechargePage";//充币页面
+    public static final String CHONG_BI_DEAL = "Finance/chargeCoin";//充币操作
+    public static final String CHONGTI_RECORD_LIST = "user_info/withdrawalRecord";//充提币记录
+    public static final String ADDRESS_LIST = "user_info/userAddress";//提币地址列表
+    public static final String ADDRESS_ADD = "user_info/addAddress";//添加提币地址
+    public static final String ADDRESS_DELETE = "user_info/delAddress";//删除地址列表
+    public static final String ADDRESS_EDIT = "user_info/editAddress";//修改地址列表
+    public static final String TI_BI = "Finance/withDrawalFee";//提现手续费/最小提币数量
+    public static final String TI_BI_DEAL = "Finance/withdrawal";//提币操作
     public static final String HUANZHUAN_BI_TYPE = "user_info/symbolList";//可划转币类型
     public static final String ACCOUNT_AVAIABLE_MONEY = "user_info/assets";//用户某个账户 某个币可用余额
     public static final String HUAZHUAN_DEAL = "user_info/dealTransfer";//划转币操作
+    public static final String HUAZHUAN_LIST = "user_info/transferRecordApp";//划转记录
 
 
 

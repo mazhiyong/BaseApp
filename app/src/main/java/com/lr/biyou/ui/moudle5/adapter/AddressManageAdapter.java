@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lr.biyou.R;
 import com.lr.biyou.listener.CallBackTotal;
+import com.lr.biyou.listener.OnChildClickListener;
 import com.lr.biyou.mywidget.view.SwipeMenuView;
 import com.lr.biyou.ui.moudle.adapter.ListBaseAdapter;
 
@@ -29,6 +30,11 @@ import butterknife.ButterKnife;
  */
 public class AddressManageAdapter extends ListBaseAdapter implements Filterable {
 
+    private OnChildClickListener mClickListener;
+
+    public void setmClickListener(OnChildClickListener mClickListener) {
+        this.mClickListener = mClickListener;
+    }
     private LayoutInflater mLayoutInflater;
 
     private List<Map<String, Object>> mSoorceList = new ArrayList<>();
@@ -88,16 +94,15 @@ public class AddressManageAdapter extends ListBaseAdapter implements Filterable 
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final ViewHonlder viewHolder = (ViewHonlder) holder;
         final Map<String, Object> data = mDataList.get(position);
-        viewHolder.typeTv.setText(data.get("name") + "");
-
-        viewHolder.linkTv.setText(data.get("link") + "");
+        viewHolder.typeTv.setText(data.get("text") + "");
+        viewHolder.linkTv.setText(data.get("address") + "");
         //查看详情
         viewHolder.llItemLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(mContext, KehuItemActivity.class);
-//                intent.putExtra("DATA", (Serializable) data);
-//                mContext.startActivity(intent);
+                if (mClickListener != null){
+                    mClickListener.onChildClickListener(viewHolder.llItemLay,position,data);
+                }
             }
         });
         //滑动删除

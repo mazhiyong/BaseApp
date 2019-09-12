@@ -36,7 +36,6 @@ import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle5.activity.ChoseBiTypeActivity;
 import com.lr.biyou.ui.moudle5.activity.HuaZhuanActivity;
-import com.lr.biyou.ui.moudle5.activity.TiBiActivity;
 import com.lr.biyou.ui.moudle5.adapter.ZiChanListAdapter;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
@@ -212,12 +211,20 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
             }
         });
         setBarTextColor();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         //获取总资产
         getZiChanDataAction();
 
         //获取各个账户资产信息
         getAccountDataAction();
+
     }
+
 
     public void setBarTextColor() {
         StatusBarUtil.setDarkMode(getActivity());
@@ -230,10 +237,12 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
         switch (view.getId()) {
             case R.id.chongbi_tv: //充币
                 intent = new Intent(getActivity(), ChoseBiTypeActivity.class);
+                intent.putExtra("TYPE","1");
                 startActivity(intent);
                 break;
             case R.id.tibi_tv:   //提币
-                intent = new Intent(getActivity(), TiBiActivity.class);
+                intent = new Intent(getActivity(), ChoseBiTypeActivity.class);
+                intent.putExtra("TYPE","2");
                 startActivity(intent);
                 break;
             case R.id.huazhuan_tv://划转
@@ -323,7 +332,6 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
                 }
                 break;
             case MethodUrl.ZICHAN_ACCOUNT:
-
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
                         if (UtilTools.empty(tData.get("data") + "")) {

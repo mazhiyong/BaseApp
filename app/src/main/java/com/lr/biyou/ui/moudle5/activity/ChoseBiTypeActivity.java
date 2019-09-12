@@ -1,6 +1,7 @@
 package com.lr.biyou.ui.moudle5.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
@@ -28,10 +30,13 @@ import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.CallBackTotal;
 import com.lr.biyou.listener.OnMyItemClickListener;
 import com.lr.biyou.listener.ReLoadingData;
+import com.lr.biyou.mvp.presenter.RequestPresenterImp;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.view.PageView;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle5.adapter.ChoseBiTypeAdapter;
-import com.jaeger.library.StatusBarUtil;
+import com.lr.biyou.utils.tool.SPUtils;
+import com.lr.biyou.utils.tool.UtilTools;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,7 +48,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- *  选择币种类型
+ * 选择币种类型
  */
 public class ChoseBiTypeActivity extends BasicActivity implements RequestView, ReLoadingData, CallBackTotal {
     @BindView(R.id.back_img)
@@ -74,10 +79,12 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
     //数据源
     private List<Map<String, Object>> mDataList = new ArrayList<>();
     //数据源的是否是被选中的状态集合
-    private List<Map<String,Object>> mBooleanList ;
+    private List<Map<String, Object>> mBooleanList;
     //选中后的结果集合
     private List<Map<String, Object>> mSelectList = new ArrayList<>();
-    private int RESULT_CODE=1;
+    private int RESULT_CODE = 1;
+    private String type = "";
+
     @Override
     public int getContentView() {
         return R.layout.activity_chose_bitype;
@@ -88,10 +95,18 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
         mTitleText.setText("充币");
-        mTitleText.setCompoundDrawables(null,null,null,null);
+        mTitleText.setCompoundDrawables(null, null, null, null);
+        if (getIntent() != null){
+            Bundle bundle = getIntent().getExtras();
+            if (bundle != null){
+                type = bundle.getString("TYPE");
+            }
+
+        }
+
         initView();
-        //请求业务经理列表数据
-        yewuManagerListAction();
+        //请求币种列表数据
+        typeListAction();
         showProgressDialog();
         mEtSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -101,10 +116,10 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
 
             @Override
             public void onTextChanged(CharSequence sequence, int i, int i1, int i2) {
-                if(sequence.toString().length()>0 && mAdapter !=null){
+                if (sequence.toString().length() > 0 && mAdapter != null) {
                     mAdapter.setBackTotal(ChoseBiTypeActivity.this);
                     mAdapter.getFilter().filter(sequence.toString());
-                }else {
+                } else {
                     if (mDataList != null && mDataList.size() > 0) {
                         responseData();
                     }
@@ -117,23 +132,8 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
             }
         });
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("name","USDT");
-        mDataList.add(map);
-        Map<String,Object> map1 = new HashMap<>();
-        map1.put("name","BTC");
-        mDataList.add(map1);
-        Map<String,Object> map2 = new HashMap<>();
-        map2.put("name","ETH");
-        mDataList.add(map2);
-        Map<String,Object> map3 = new HashMap<>();
-        map3.put("name","EOS");
-        mDataList.add(map3);
 
-        responseData();
     }
-
-
 
 
     private void initView() {
@@ -150,8 +150,7 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
             public void onRefresh() {
                 mEtSearch.setText("");
                 mPage = 1;
-                //请求业务经理列表数据
-                yewuManagerListAction();
+                typeListAction();
             }
         });
 
@@ -159,8 +158,7 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
             @Override
             public void onLoadMore() {
                 mPage++;
-                //请求业务经理列表数据
-                yewuManagerListAction();
+                typeListAction();
 
             }
         });
@@ -168,30 +166,26 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
 
     }
 
-    private void yewuManagerListAction() {
-//        mRequestTag = MethodUrl.choseyewuManager;
-//        mRequestPresenterImp = new RequestPresenterImp(this,this);
-//        Map<String,String> map=new HashMap<>();
-//        //map.put("mname","");
-//        Map<String, String> mHeaderMap = new HashMap<String, String>();
-//        mRequestPresenterImp.requestGetStringData(mHeaderMap,MethodUrl.choseyewuManager,map);
+    private void typeListAction() {
+        mRequestTag = MethodUrl.CHONGTI_LIST;
+        mRequestPresenterImp = new RequestPresenterImp(this, this);
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(ChoseBiTypeActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHONGTI_LIST, map);
     }
 
 
     private void responseData() {
-        /*for (int i = 0; i < 5; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("str1", "英雄联盟加工厂" + i);
-            map.put("str2", "中金支付" + i);
-            map.put("str3", "15838279930" + i);
-            mDataList.add(map);
-        }*/
         mBooleanList = new ArrayList<>();
 
-        for (Map m:mDataList){
-            Map<String,Object> map=new HashMap<>();
-            map.put("object",m);
-            map.put("select",false);
+        for (Map m : mDataList) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("object", m);
+            map.put("select", false);
             mBooleanList.add(map);
         }
 
@@ -225,14 +219,20 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
                 public void OnMyItemClickListener(View view, int position) {
                     List<Map<String, Object>> list = mAdapter.getBooleanList();
                     mSelectList.clear();
-                    for (Map m:list) {
-                        boolean b = (Boolean)m.get("select");
-                        Map<String,Object>mSelectObject= (Map<String, Object>) m.get("object");
+                    for (Map m : list) {
+                        boolean b = (Boolean) m.get("select");
+                        Map<String, Object> mSelectObject = (Map<String, Object>) m.get("object");
                         if (b) {
                             mSelectList.add(mSelectObject);
-                            Intent mIntent = new Intent(ChoseBiTypeActivity.this,ChongBiActivity.class);
-                            mIntent.putExtra("DATA",(Serializable) mSelectObject);
+                            Intent mIntent;
+                            if (type.equals("1")){
+                                mIntent = new Intent(ChoseBiTypeActivity.this, ChongBiActivity.class);
+                            }else {
+                                mIntent = new Intent(ChoseBiTypeActivity.this, TiBiActivity.class);
+                            }
+                            mIntent.putExtra("DATA", (Serializable) mSelectObject);
                             startActivity(mIntent);
+                            finish();
                         }
                     }
 
@@ -257,7 +257,6 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
         }
 
 
-
         mAdapter.setSourceList(mAdapter.getDataList());
 
 
@@ -277,7 +276,8 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
         }
 
     }
-    @OnClick({R.id.back_img, R.id.iv_search,R.id.left_back_lay})
+
+    @OnClick({R.id.back_img, R.id.iv_search, R.id.left_back_lay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_img:
@@ -304,36 +304,47 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
 
-        switch (mType){
-//            case  MethodUrl.choseyewuManager:
-//                String result = tData.get("result")+"";
-//                if(UtilTools.empty(result)){
-//                    responseData();
-//                }else {
-//                    List<Map<String, Object>> list = JSONUtil.getInstance(result);
-//                    mDataList.clear();
-//                    mDataList.addAll(list);
-//                    responseData();
-//                }
-//                break;
-            case  MethodUrl.REFRESH_TOKEN:
-//                MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
-//                mIsQuestRefreshToken= false;
-//
-//                showProgressDialog();
-//                switch (mRequestTag){
-//                    case MethodUrl.choseyewuManager:
-//                        yewuManagerListAction();
-//                        break;
-//                }
+        switch (mType) {
+            case MethodUrl.CHONGTI_LIST:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (UtilTools.empty(tData.get("data") + "")) {
+                            mPageView.showEmpty();
+                        } else {
+                            mDataList = (List<Map<String, Object>>) tData.get("data");
+                            if (!UtilTools.empty(mDataList)) {
+                                mPageView.showContent();
+                                responseData();
+                                mRefreshListView.refreshComplete(10);
+                            } else {
+                                mPageView.showEmpty();
+                            }
+                        }
+                break;
+            case "-1": //请求失败
+                showToastMsg(tData.get("msg") + "");
+                mPageView.showNetworkError();
+                break;
+
+            case "1": //token过期
+                closeAllActivity();
+                Intent intent = new Intent(ChoseBiTypeActivity.this, LoginActivity.class);
+                startActivity(intent);
                 break;
         }
+
+        break;
+        case MethodUrl.REFRESH_TOKEN:
+
+        break;
     }
+
+}
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
         switch (mType) {
-           // case MethodUrl.choseyewuManager://
+            // case MethodUrl.choseyewuManager://
 //
 //                if (mAdapter != null){
 //                    if (mAdapter.getDataList().size() <= 0){
@@ -345,34 +356,34 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
 //                    mRefreshListView.setOnNetWorkErrorListener(new OnNetWorkErrorListener() {
 //                        @Override
 //                        public void reload() {
-//                           yewuManagerListAction();
+//                           typeListAction();
 //                            showProgressDialog();
 //                        }
 //                    });
 //                }else {
 //                    mPageView.showNetworkError();
 //                }
-                //break;
+            //break;
         }
-        dealFailInfo(map,mType);
+        dealFailInfo(map, mType);
     }
 
     @Override
     public void reLoadingData() {
-          mEtSearch.setText("");
-          if(mDataList!=null&&mDataList.size()>0){
-              //responseData();
-          }else {
-              yewuManagerListAction();
-              showProgressDialog();
-          }
+        mEtSearch.setText("");
+        if (mDataList != null && mDataList.size() > 0) {
+            //responseData();
+        } else {
+            typeListAction();
+            showProgressDialog();
+        }
     }
 
     @Override
     public void setTotal(int size) {
-        if(size==0){
+        if (size == 0) {
             mPageView.showEmpty();
-        }else {
+        } else {
             mPageView.showContent();
         }
     }

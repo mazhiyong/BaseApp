@@ -18,6 +18,7 @@ import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
+import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.ShowDetailPictrue;
 import com.lr.biyou.utils.imageload.GlideUtils;
@@ -67,6 +68,7 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
     private Map<String, Object> mapData;
 
     private String friendId ="";
+    private String Id ="";
 
     private List<Map<String, Object>> mImageList = new ArrayList<>();
 
@@ -88,6 +90,13 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
                     //根据二维码信息,获取用户信息
                     getUserInfoAccordQrAction(result);
                 }
+                String targetId = bundle.getString(IntentExtra.STR_TARGET_ID);
+                if (!UtilTools.empty(targetId)){
+                    //根据rc_id 获取用户的id
+                    getidFromRcidAction(targetId);
+                }
+
+
             }
         }
 
@@ -128,6 +137,21 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
         }
     }
 
+
+    /**
+     * 查询id
+     */
+    public void getidFromRcidAction(String targetId) {
+        mRequestTag = MethodUrl.CHAT_QUERY_ID;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(AddFriendActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("rc_id", targetId);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_QUERY_ID, map);
+    }
 
     private void getUserInfoAccordQrAction(String text) {
         mRequestTag = MethodUrl.CHAT_SWEEP_CODE;
@@ -190,6 +214,20 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
     }
 
 
+    /**
+     * 获取用户信息
+     */
+    public void getFriendInfoAction() {
+        mRequestTag = MethodUrl.CHAT_FRIEDN_INFO;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(AddFriendActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("id", Id);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_FRIEDN_INFO, map);
+    }
 
 
 
@@ -207,6 +245,52 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         Intent intent;
         switch (mType) {
+            case MethodUrl.CHAT_QUERY_ID:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            Id = tData.get("data") + "";
+                            getFriendInfoAction();
+                        }
+
+
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(AddFriendActivity.this, com.lr.biyou.ui.moudle.activity.LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+            case MethodUrl.CHAT_FRIEDN_INFO:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            Map<String, Object> map = (Map<String, Object>) tData.get("data");
+                            if (!UtilTools.empty(map)){
+                                userNameTv.setText(map.get("name")+"");
+                                GlideUtils.loadImage(AddFriendActivity.this,map.get("portrait")+"",userIconIv);
+                                friendId = map.get("id")+"";
+                            }
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(AddFriendActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+
+                break;
+
             case MethodUrl.CHAT_QRCODE:
                 switch (tData.get("code")+""){
                     case "0": //请求成功

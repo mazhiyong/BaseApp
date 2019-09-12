@@ -95,7 +95,7 @@ public class ChoseBiTypeAdapter extends ListBaseAdapter implements Filterable {
 
         }
 
-        viewHolder.mNameTv.setText(item.get("name")+"");
+        viewHolder.mNameTv.setText(item.get("symbol")+"");
         viewHolder.mCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +137,7 @@ public class ChoseBiTypeAdapter extends ListBaseAdapter implements Filterable {
                 } else {
                     List<Map<String, Object>> filteredList = new ArrayList<>();
                     for (Map<String, Object> map : mSourceList) {
-                        String str1 = map.get("name") + "";
+                        String str1 = map.get("symbol") + "";
                         //这里根据需求，添加匹配规则
                         if (str1.contains(charString) ) {
                             filteredList.add(map);

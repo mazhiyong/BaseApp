@@ -10,17 +10,20 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
+import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
-import com.jaeger.library.StatusBarUtil;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.utils.tool.SPUtils;
+import com.lr.biyou.utils.tool.UtilTools;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -60,6 +63,7 @@ public class AddAddressActivity extends BasicActivity implements RequestView {
     @BindView(R.id.tibi_tv)
     TextView tibiTv;
 
+    private String id;
 
     @Override
     public int getContentView() {
@@ -74,13 +78,18 @@ public class AddAddressActivity extends BasicActivity implements RequestView {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mapData = (Map<String, Object>) bundle.getSerializable("DATA");
+            if (!UtilTools.empty(mapData)){
+                id = mapData.get("id")+"";
+                addressEt.setText(mapData.get("address")+"");
+                numberEt.setText(mapData.get("text")+"");
+                mTitleText.setText("修改地址");
+            }else {
+                mTitleText.setText("添加地址");
+            }
         }
-        mTitleText.setText("添加地址");
         mTitleText.setCompoundDrawables(null, null, null, null);
         rightImg.setVisibility(View.GONE);
         rightImg.setImageResource(R.drawable.icon6_dingdan);
-        mTextView.setText("温馨提示：\n" +
-                "最小提币数量 10 USDT");
     }
 
 
@@ -91,37 +100,92 @@ public class AddAddressActivity extends BasicActivity implements RequestView {
             case R.id.back_img:
                 finish();
                 break;
-            case R.id.right_lay: //充提记录
-                intent = new Intent(AddAddressActivity.this, TradeListActivity.class);
-                startActivity(intent);
+            case R.id.right_lay:
                 break;
-
-            case R.id.address_iv ://地址
-                intent = new Intent(AddAddressActivity.this, TibiAddressActivity.class);
-                startActivity(intent);
+            case R.id.address_iv :
                 break;
-
             case R.id.tibi_tv: //确定
-                finish();
+                addAddressSumbitAction();
                 break;
 
         }
     }
 
+    private void addAddressSumbitAction() {
+        String address = addressEt.getText().toString();
+        String text = numberEt.getText().toString();
+        if (UtilTools.empty(address)){
+            showToastMsg("请输入地址信息");
+            return;
+        }
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(AddAddressActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("address",address);
+        map.put("text",text);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        if (UtilTools.empty(id)){
+            mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ADDRESS_ADD, map);
+        }else {
+            map.put("id",id);
+            mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ADDRESS_EDIT, map);
+        }
+
+
+    }
+
 
     @Override
     public void showProgress() {
-
+        showProgressDialog();
     }
 
     @Override
     public void disimissProgress() {
-
+        dismissProgressDialog();
     }
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
+        Intent intent;
+        switch (mType){
+            case MethodUrl.ADDRESS_ADD:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        showToastMsg(tData.get("msg") + "");
+                        finish();
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
 
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(AddAddressActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+            case MethodUrl.ADDRESS_EDIT:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        showToastMsg(tData.get("msg") + "");
+                        finish();
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(AddAddressActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+        }
 
     }
 
@@ -154,10 +218,5 @@ public class AddAddressActivity extends BasicActivity implements RequestView {
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

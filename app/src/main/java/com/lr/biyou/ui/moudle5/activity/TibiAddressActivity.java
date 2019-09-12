@@ -1,8 +1,6 @@
 package com.lr.biyou.ui.moudle5.activity;
 
 import android.animation.Animator;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.Editable;
@@ -31,22 +29,27 @@ import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
+import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.CallBackTotal;
+import com.lr.biyou.listener.OnChildClickListener;
 import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.DateSelectDialog;
 import com.lr.biyou.mywidget.dialog.TipsDialog;
 import com.lr.biyou.mywidget.view.PageView;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle5.adapter.AddressManageAdapter;
 import com.lr.biyou.ui.moudle5.adapter.SwipeMenuAdapter;
 import com.lr.biyou.utils.tool.AnimUtil;
+import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -118,10 +121,6 @@ public class TibiAddressActivity extends BasicActivity implements RequestView, R
 
         mAnimUtil = new AnimUtil();
 
-        //广播通知更新UI
-//        IntentFilter intentFilter=new IntentFilter();
-//        intentFilter.addAction(MbsConstans.BroadcastReceiverAction.KEHU_UPDATE);
-//        registerReceiver(mBroadcastReceiver,intentFilter);
 
         mPageView.setContentView(mContent);
         mPageView.showEmpty();
@@ -134,7 +133,7 @@ public class TibiAddressActivity extends BasicActivity implements RequestView, R
             public void onRefresh() {
                 //请求客户列表数据
                 mEtSearch.setText("");
-                kehuListAction();
+                addressListAction();
             }
         });
         mEtSearch.addTextChangedListener(new TextWatcher() {
@@ -161,63 +160,44 @@ public class TibiAddressActivity extends BasicActivity implements RequestView, R
             }
         });
 
-        //kehuListAction();
+        addressListAction();
         showProgressDialog();
 
-        for (int i = 0; i < 5; i++) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("name", "KTN");
-            map.put("link", "1sdjKJHSD125ASFfsdkypodfmased11asd845fg");
-            mDataList.add(map);
-        }
-        responseData();
     }
 
-    BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-//            if(!UtilTools.empty(action)&&action.equals(MbsConstans.BroadcastReceiverAction.KEHU_UPDATE)){
-//                kehuListAction();
-//                showProgressDialog();
-//            }
-        }
-    };
 
-    private void kehuListAction() {
-//        mRequestTag = MethodUrl.kehuList;
-//        mRequestPresenterImp = new RequestPresenterImp(this,this);
-//        Map<String,String> map=new HashMap<>();
-//        if (!UtilTools.empty(mSearchStr)){
-//            map.put("keyword",mSearchStr);
-//        }
-//        if (!UtilTools.empty(mStartTime) && !UtilTools.empty(mEndTime)){
-//            map.put("startdate",mStartTime);
-//            map.put("enddate",mEndTime);
-//        }
-//
-//        Map<String, String> mHeaderMap = new HashMap<String, String>();
-//        mRequestPresenterImp.requestGetStringData(mHeaderMap,MethodUrl.kehuList,map);
+
+
+    private void addressListAction() {
+        mRequestTag = MethodUrl.ADDRESS_LIST;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(TibiAddressActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ADDRESS_LIST, map);
     }
 
     private void kehuDeleteAction() {
-//        mRequestTag = MethodUrl.kehudelete;
-//        mRequestPresenterImp = new RequestPresenterImp(this,this);
-//        Map<String,String> map=new HashMap<>();
-//        map.put("clno",mDeleteMap.get("clno")+"");
-//        Map<String, String> mHeaderMap = new HashMap<String, String>();
-//        mRequestPresenterImp.requestData(mHeaderMap,MethodUrl.kehudelete,map);
+        mRequestTag = MethodUrl.ADDRESS_DELETE;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(TibiAddressActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("id",mDeleteMap.get("id")+"");
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ADDRESS_DELETE, map);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mIsRefresh) {
-            kehuListAction();
-            showProgressDialog();
-        }
-        mIsRefresh = false;
+        addressListAction();
+        showProgressDialog();
     }
+
 
 
     private void responseData() {
@@ -303,6 +283,16 @@ public class TibiAddressActivity extends BasicActivity implements RequestView, R
         } else {
             mPageView.showContent();
         }
+
+        mAddressAdapter.setmClickListener(new OnChildClickListener() {
+            @Override
+            public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
+                Intent intent = new Intent();
+                intent.putExtra("DATA", (Serializable) mParentMap);
+                setResult(RESULT_OK,intent);
+                finish();
+            }
+        });
     }
 
     private TipsDialog mTipsDialog;
@@ -347,72 +337,63 @@ public class TibiAddressActivity extends BasicActivity implements RequestView, R
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
+        Intent intent;
         switch (mType) {
-//            case  MethodUrl.kehudelete:
-//                showToastMsg("删除成功");
-//                kehuListAction();
-//                showProgressDialog();
-//                break;
-//            case MethodUrl.kehuList:
-//                String result = tData.get("result")+"";
-//                if (UtilTools.empty(result)){
-//                    responseData();
-//                }else {
-//                    List<Map<String, Object>> list = JSONUtil.jsonToList(result);
-//                    if (list != null) {
-//                        mKehuMountTv.setText("共"+list.size()+"个客户");
-//                        mDataList.clear();
-//                        mDataList.addAll(list);
-//                        responseData();
-//                    }
-//                }
-//                mLRecyclerView.refreshComplete(10);
-//
-//                break;
-//            case MethodUrl.REFRESH_TOKEN:
-//                MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
-//                mIsQuestRefreshToken= false;
-//
-//                showProgressDialog();
-//                switch (mRequestTag){
-//                    case MethodUrl.kehuList:
-//                        kehuListAction();
-//                        break;
-//                    case MethodUrl.kehudelete:
-//                        kehuDeleteAction();
-//                        break;
-//                }
-//                break;
+            case MethodUrl.ADDRESS_DELETE:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        showToastMsg(tData.get("msg") + "");
+                        addressListAction();
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        mPageView.showNetworkError();
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(TibiAddressActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+            case MethodUrl.ADDRESS_LIST:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (UtilTools.empty(tData.get("data") + "")) {
+                            mPageView.showEmpty();
+                        } else {
+                            mDataList = (List<Map<String, Object>>) tData.get("data");
+                            if (!UtilTools.empty(mDataList)) {
+                                mPageView.showContent();
+                                responseData();
+                                mLRecyclerView.refreshComplete(10);
+
+                            } else {
+                                mPageView.showEmpty();
+                            }
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        mPageView.showNetworkError();
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(TibiAddressActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+
         }
+
     }
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
 
-        switch (mType) {
-//            case MethodUrl.kehuList:
-//                if (mAddressAdapter != null){
-//                    if (mAddressAdapter.getDataList().size() <= 0){
-//                        mPageView.showNetworkError();
-//                    }else {
-//                        mPageView.showContent();
-//                    }
-//                    mLRecyclerView.refreshComplete(10);
-//                    mLRecyclerView.setOnNetWorkErrorListener(new OnNetWorkErrorListener() {
-//                        @Override
-//                        public void reload() {
-//                            kehuListAction();
-//                            showProgressDialog();
-//                        }
-//                    });
-//                }else {
-//                    mPageView.showNetworkError();
-//                }
-//                break;
-//            case MethodUrl.kehudelete:
-//
-//                break;
-        }
         dealFailInfo(map, mType);
     }
 
@@ -543,130 +524,7 @@ public class TibiAddressActivity extends BasicActivity implements RequestView, R
         TibiAddressActivity.this.getWindow().setAttributes(lp);
     }
 
-    private void initConditionDialog(View view) {
 
-//        mLayout=view.findViewById(R.id.ll_define_time);
-//        mOneTv = view.findViewById(R.id.one_month_tv);
-//        mThreeTv = view.findViewById(R.id.three_month_tv);
-//        mSetTimeTv = view.findViewById(R.id.set_time_tv);
-//        mStartTimeTv = view.findViewById(R.id.start_time_value_tv);
-//        mEndTimeTv = view.findViewById(R.id.end_time_value_tv);
-//        mResetBut = view.findViewById(R.id.reset_but);
-//        mSureBut = view.findViewById(R.id.sure_but);
-//        mEditText = view.findViewById(R.id.et_search);
-//        mEditText.setHint("业务经理/客户名称/联系人/手机号");
-//        mTimeSelectLay = view.findViewById(R.id.time_select_lay);
-//        mLayout.setVisibility(View.VISIBLE);
-//
-//        final View.OnClickListener onClickListener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                switch (v.getId()){
-//                    case R.id.one_month_tv:
-//                        mOneTv.setSelected(true);
-//                        mThreeTv.setSelected(false);
-//                        mSetTimeTv.setSelected(false);
-//                        mStartTimeTv.setEnabled(false);
-//                        mEndTimeTv.setEnabled(false);
-//
-//                        String startOne = UtilTools.getMonthAgo(new Date(),-1);
-//                        String endOne = UtilTools.getStringFromDate(new Date(),"yyyyMMdd");
-//                        mSelectStartTime = startOne;
-//                        mSelectEndTime = endOne;
-//                        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM-dd"));
-//                        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM-dd"));
-//                        break;
-//                    case R.id.three_month_tv:
-//                        mOneTv.setSelected(false);
-//                        mThreeTv.setSelected(true);
-//                        mSetTimeTv.setSelected(false);
-//                        mStartTimeTv.setEnabled(false);
-//                        mEndTimeTv.setEnabled(false);
-//                        String startThree = UtilTools.getMonthAgo(new Date(),-3);
-//                        String endThree = UtilTools.getStringFromDate(new Date(),"yyyyMMdd");
-//                        mSelectStartTime = startThree;
-//                        mSelectEndTime = endThree;
-//                        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM-dd"));
-//                        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM-dd"));
-//                        break;
-//                    case R.id.set_time_tv:
-//                        mSelectStartTime =  UtilTools.getCurrentYearAndMonth()+"01";
-//                        mSelectEndTime = UtilTools.getCurrentYearMonthDay();
-//
-//                        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM"));
-//                        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM"));
-//                        mOneTv.setSelected(false);
-//                        mThreeTv.setSelected(false);
-//                        mSetTimeTv.setSelected(true);
-//                        mStartTimeTv.setEnabled(true);
-//                        mEndTimeTv.setEnabled(true);
-//                        break;
-//                    case R.id.start_time_value_tv:
-//                        showDateDialog();
-//                        break;
-//                    case R.id.end_time_value_tv:
-//                        showDateDialog2();
-//                        break;
-//                    case R.id.reset_but:
-//                        mConditionDialog.dismiss();
-//                        break;
-//                    case R.id.sure_but:
-//                        getSelectCondition();
-//                        break;
-//                }
-//            }
-//        };
-//
-//        mOneTv.setOnClickListener(onClickListener);
-//        mThreeTv.setOnClickListener(onClickListener);
-//        mSetTimeTv.setOnClickListener(onClickListener);
-//        mSureBut.setOnClickListener(onClickListener);
-//        mResetBut.setOnClickListener(onClickListener);
-//        mStartTimeTv.setOnClickListener(onClickListener);
-//        mEndTimeTv.setOnClickListener(onClickListener);
-//
-//        mOneTv.setSelected(true);
-//        mThreeTv.setSelected(false);
-//        mSetTimeTv.setSelected(false);
-//        mStartTimeTv.setEnabled(false);
-//        mEndTimeTv.setEnabled(false);
-//
-//        mTimeSelectLay.setVisibility(View.GONE);
-//        mStartTimeTv.setEnabled(true);
-//        mEndTimeTv.setEnabled(true);
-//
-//
-//        mSelectStartTime =  UtilTools.getCurrentYearAndMonth()+"01";
-//        mSelectEndTime = UtilTools.getCurrentYearMonthDay();
-//
-//        mStartTimeTv.setText(UtilTools.getStringFromSting2(mSelectStartTime,"yyyyMMdd","yyyy-MM"));
-//        mEndTimeTv.setText(UtilTools.getStringFromSting2(mSelectEndTime,"yyyyMMdd","yyyy-MM"));
-//    }
-//
-//    private void showDateDialog() {
-//        mySelectDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
-//    }
-//    private void showDateDialog2() {
-//        mySelectDialog2.showAtLocation(Gravity.BOTTOM, 0, 0);
-//    }
-//
-//    private void getSelectCondition(){
-//
-//        mStartTime = mSelectStartTime;
-//        mEndTime = mSelectEndTime;
-//
-//        if (UtilTools.isDateOneBigger(mStartTime,mEndTime,"yyyyMMdd")){
-//            showToastMsg("开始时间不能大于结束时间");
-//            return;
-//        }
-//        String showTime = UtilTools.getStringFromSting2(mStartTime,"yyyyMMdd","yyyy年MM月dd日") +
-//                " - "+UtilTools.getStringFromSting2(mEndTime,"yyyyMMdd","yyyy年MM月dd日");
-//        // mTvDate.setText(showTime);
-//        mSearchStr = mEditText.getText()+"";
-//        kehuListAction();
-//        showProgressDialog();
-//        mConditionDialog.dismiss();
-    }
 
     @Override
     public void onSelectBackListener(Map<String, Object> map, int type) {
@@ -693,7 +551,7 @@ public class TibiAddressActivity extends BasicActivity implements RequestView, R
             //responseData();
         } else {
             //网络条件查询搜索为空时，点击重新加载，从网络加载
-            kehuListAction();
+            addressListAction();
             showProgressDialog();
         }
     }

@@ -11,15 +11,19 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
+import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.mywidget.dialog.TradePassDialog;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
-import com.jaeger.library.StatusBarUtil;
+import com.lr.biyou.utils.tool.UtilTools;
 
 import java.util.HashMap;
 import java.util.List;
@@ -76,6 +80,7 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
 
     private String fromStr;
     private String toStr;
+    private String avaiableNumber;
 
     @Override
     public int getContentView() {
@@ -96,17 +101,16 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
         rightImg.setVisibility(View.VISIBLE);
         rightImg.setImageResource(R.drawable.icon6_dingdan);
 
+
+
         initDialog();
     }
+
 
     private void initDialog() {
         List<Map<String,Object>> mDataList = SelectDataUtil.getAccoutType();
         mDialog=new KindSelectDialog(this,true,mDataList,10);
         mDialog.setSelectBackListener(this);
-
-        List<Map<String,Object>> mDataList2 = SelectDataUtil.getBiType();
-        mDialog2=new KindSelectDialog(this,true,mDataList2,30);
-        mDialog2.setSelectBackListener(this);
 
     }
 
@@ -133,39 +137,123 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
                 toTv.setText(fromStr);
                 break;
             case R.id.type_lay:
-                mDialog2.showAtLocation(Gravity.BOTTOM,0,0);
+                String type = "";
+                if (fromTv.getText().toString().equals("请选择") || toTv.getText().toString().equals("请选择")){
+                    showToastMsg("请完善划转账户信息");
+                    return;
+                }
+                if ((fromTv.getText().toString().equals("币币账户") && (toTv.getText().toString().equals("法币账户")))){
+                    type = "1";
+                }
+                if ((fromTv.getText().toString().equals("币币账户") && (toTv.getText().toString().equals("合约账户")))){
+                    type = "2";
+                }
+                if ((fromTv.getText().toString().equals("法币账户") && (toTv.getText().toString().equals("币币账户")))){
+                    type = "3";
+                }
+                if ((fromTv.getText().toString().equals("法币账户") && (toTv.getText().toString().equals("合约账户")))){
+                    type = "4";
+                }
+                if ((fromTv.getText().toString().equals("合约账户") && (toTv.getText().toString().equals("币币账户")))){
+                    type = "5";
+                }
+                if ((fromTv.getText().toString().equals("合约账户") && (toTv.getText().toString().equals("法币账户")))){
+                    type = "6";
+                }
+                if ((!fromTv.getText().toString().equals("奖励金") && (toTv.getText().toString().equals("奖励金")))){
+                    type = "7";
+                }
+                if ((fromTv.getText().toString().equals("奖励金") && (!toTv.getText().toString().equals("奖励金")))){
+                    type = "7";
+                }
+
+                getTypeListAction(type);
                 break;
             case R.id.selectall_tv:
+                 numberEt.setText(avaiableNumber);
                 break;
             case R.id.huzhuan_tv:
+                huazhuanSumbitAction();
                 break;
         }
     }
 
-//    private TradePassDialog mTradePassDialog;
-//
-//    private void showPassDialog() {
-//
-//        if (mTradePassDialog == null) {
-//            mTradePassDialog = new TradePassDialog(this, true);
-//            mTradePassDialog.setPassFullListener(HuaZhuanActivity.this);
-//            mTradePassDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
-//            mTradePassDialog.mPasswordEditText.setText(null);
-//
-//            //忘记密码
-//            mTradePassDialog.mForgetPassTv.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    //getMsgCodeAction();
-//                }
-//            });
-//
-//        } else {
-//            mTradePassDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
-//            mTradePassDialog.mPasswordEditText.setText(null);
-//
-//        }
-//    }
+    private void huazhuanSumbitAction() {
+        if (UtilTools.empty(numberEt.getText()) || typeTv.getText().toString().equals("请选择")){
+            showToastMsg("请填写完善信息");
+            return;
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(HuaZhuanActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("number",numberEt.getText()+"");
+        map.put("symbol", typeTv.getText()+"");
+
+        if (fromTv.getText().toString().equals("请选择") || toTv.getText().toString().equals("请选择")){
+            showToastMsg("请完善划转账户信息");
+            return;
+        }
+        if (fromTv.getText().toString().equals(toTv.getText().toString())){
+            showToastMsg("不能向相同账户类型划转");
+            return;
+        }
+
+        if ((fromTv.getText().toString().equals("币币账户") && (toTv.getText().toString().equals("法币账户")))){
+            map.put("type", "1");
+        }
+        if ((fromTv.getText().toString().equals("币币账户") && (toTv.getText().toString().equals("合约账户")))){
+            map.put("type", "2");
+        }
+        if ((fromTv.getText().toString().equals("法币账户") && (toTv.getText().toString().equals("币币账户")))){
+            map.put("type", "3");
+        }
+        if ((fromTv.getText().toString().equals("法币账户") && (toTv.getText().toString().equals("合约账户")))){
+            map.put("type", "4");
+        }
+        if ((fromTv.getText().toString().equals("合约账户") && (toTv.getText().toString().equals("币币账户")))){
+            map.put("type", "5");
+        }
+        if ((fromTv.getText().toString().equals("合约账户") && (toTv.getText().toString().equals("法币账户")))){
+            map.put("type", "6");
+        }
+        if ((fromTv.getText().toString().equals("币币账户") && (toTv.getText().toString().equals("奖励金")))){
+            map.put("type", "7");
+        }
+        if ((fromTv.getText().toString().equals("法币账户") && (toTv.getText().toString().equals("奖励金")))){
+            map.put("type", "8");
+        }
+        if ((fromTv.getText().toString().equals("合约账户") && (toTv.getText().toString().equals("奖励金")))){
+            map.put("type", "9");
+        }
+        if ((!fromTv.getText().toString().equals("奖励金") && (toTv.getText().toString().equals("币币账户")))){
+            map.put("type", "10");
+        }
+        if ((fromTv.getText().toString().equals("奖励金") && (!toTv.getText().toString().equals("法币账户")))){
+            map.put("type", "11");
+        }
+        if ((fromTv.getText().toString().equals("奖励金") && (!toTv.getText().toString().equals("合约账户")))){
+            map.put("type", "12");
+        }
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.HUAZHUAN_DEAL, map);
+
+    }
+
+    private void getTypeListAction(String type) {
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(HuaZhuanActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("type", type);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.HUANZHUAN_BI_TYPE, map);
+    }
+
+
 
     @Override
     public void onPassFullListener(String pass) {
@@ -187,8 +275,71 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
+        Intent intent;
+        switch (mType){
+            case MethodUrl.HUANZHUAN_BI_TYPE:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            List<Map<String,Object>> mDataList2 = (List<Map<String, Object>>) tData.get("data");
+                            for (Map<String,Object> map:mDataList2){
+                                map.put("name",map.get("symbol")+"");
+                            }
+                            mDialog2=new KindSelectDialog(this,true,mDataList2,30);
+                            mDialog2.setSelectBackListener(this);
+                            mDialog2.showAtLocation(Gravity.BOTTOM,0,0);
+                        }
+                        //List<Map<String,Object>> mDataList2 = SelectDataUtil.getBiType();
 
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
 
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(HuaZhuanActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+            case MethodUrl.ACCOUNT_AVAIABLE_MONEY:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            avaiableNumber = tData.get("data")+"";
+                            aviableTv.setText("可用 "+UtilTools.getNormalNumber(avaiableNumber)+" "+typeTv.getText().toString());
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(HuaZhuanActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+            case MethodUrl.HUAZHUAN_DEAL:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        showToastMsg(tData.get("msg") + "");
+                        finish();
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(HuaZhuanActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+        }
     }
 
     @Override
@@ -208,8 +359,33 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
                 String str= (String) map.get("name"); //选择账户
                 typeTv.setText(str);
                 type2Tv.setText(str);
+                getAviableMoneyAction(str);
                 break;
         }
+    }
+
+    private void getAviableMoneyAction(String symbol) {
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(HuaZhuanActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("symbol",symbol);
+
+        if (fromTv.getText().toString().equals("币币账户")){
+            map.put("type", "1");
+        }
+        if (fromTv.getText().toString().equals("法币账户")){
+            map.put("type", "2");
+        }
+        if (fromTv.getText().toString().equals("合约账户")){
+            map.put("type", "3");
+        }
+        if (fromTv.getText().toString().equals("奖励金")){
+            map.put("type", "4");
+        }
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.ACCOUNT_AVAIABLE_MONEY, map);
     }
 
 

@@ -30,6 +30,10 @@ import com.lr.biyou.db.IndexData;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.UpdateDialog;
 import com.lr.biyou.rongyun.common.IntentExtra;
+import com.lr.biyou.rongyun.common.ResultCallback;
+import com.lr.biyou.rongyun.im.IMManager;
+import com.lr.biyou.rongyun.model.UserCacheInfo;
+import com.lr.biyou.rongyun.sp.UserCache;
 import com.lr.biyou.rongyun.ui.activity.CreateGroupActivity;
 import com.lr.biyou.service.DownloadService;
 import com.lr.biyou.ui.moudle1.fragment.HomeFragment;
@@ -88,7 +92,9 @@ public class MainActivity extends BasicActivity implements RequestView {
 
     private IndexData mIndexData;
 
-
+    //存储当前最新一次登录的用户信息
+    private UserCache userCache;
+    private IMManager imManager;
     public static final int REQUEST_START_GROUP = 1;
 
     @Override
@@ -143,50 +149,32 @@ public class MainActivity extends BasicActivity implements RequestView {
 
         //mAutoScrollTextView = findViewById(R.id.scroll_text_view);
         //mAutoScrollTextView.setSelected(true);
+        userCache = new UserCache(getApplicationContext());
+        imManager = IMManager.getInstance();
 
-
-       /* //连接融云
-        //17319449662
-        String token1 = "kcX1ye0YGBlG7iWZ5jHpq3Q66evRHTAQkKthDvKlCzd8eLCcwj5jgjOIbvNeHYutzyYe1ed3QZTcsIDyo3AmMdK3Z331/2kt";
-        //15561400223
-        String token2 = "AUrI48u7jSC9yV8XmieXLxOUx7H8bap2AjZHooKpeeWhNSrnoHFlS2nmFye32TQGajQ85yilCTlPrNGB16o4rBnyf9oopTJ+";
-
+        //连接融云
         if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {
             String s = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
             MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
         }
+       imManager.connectIM(MbsConstans.RONGYUN_MAP.get("token")+"", true, new ResultCallback<String>() {
+                            @Override
+                            public void onSuccess(String s) {
+                                // 存储当前登录成功的用户信息
+                                String mAccount = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.LOGIN_ACCOUNT,"")+"";
+                                String mPassWord = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.LOGIN_PASSWORD,"")+"";
+                                UserCacheInfo info = new UserCacheInfo( MbsConstans.RONGYUN_MAP.get("id")+"",
+                                        MbsConstans.RONGYUN_MAP.get("token")+"",
+                                        mAccount+"", mPassWord+"", "86", null);
+                                userCache.saveUserCache(info);
+                                LogUtilDebug.i("show","链接rong融云成功");
+                        }
 
-        RongIM.connect(MbsConstans.RONGYUN_MAP.get("token")+"", new RongIMClient.ConnectCallback() {
-
-            *//**
-             * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-             *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-             *//*
-            @Override
-            public void onTokenIncorrect() {
-                LogUtilDebug.i("show", "rongyun  getToken");
-            }
-
-            *//**
-             * 连接融云成功
-             * @param userid 当前 token 对应的用户 id
-             *//*
-            @Override
-            public void onSuccess(String userid) {
-                LogUtilDebug.i("show", "rongyun--onSuccess" + userid);
-            }
-
-            *//**
-             * 连接融云失败
-             * @param errorCode 错误码，可到官网 查看错误码对应的注释
-             *//*
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                LogUtilDebug.i("show", "rongyun--onError" + errorCode);
-            }
-        });
-
-*/
+                            @Override
+                            public void onFail(int errorCode) {
+                                LogUtilDebug.i("show","链接rong融云失败");
+                            }
+                        });
     }
 
 

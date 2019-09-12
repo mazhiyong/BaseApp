@@ -9,14 +9,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
+import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.TradePassDialog;
-import com.jaeger.library.StatusBarUtil;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.ui.moudle.activity.TestScanActivity;
+import com.lr.biyou.utils.tool.SPUtils;
+import com.lr.biyou.utils.tool.UtilTools;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +45,7 @@ public class TiBiActivity extends BasicActivity implements RequestView ,TradePas
     @BindView(R.id.tv)
     TextView mTextView;
 
-    Map<String, Object> mapData = new HashMap<>();
+    Map<String, Object> mapData;
     @BindView(R.id.right_img)
     ImageView rightImg;
     @BindView(R.id.right_lay)
@@ -61,7 +67,8 @@ public class TiBiActivity extends BasicActivity implements RequestView ,TradePas
     @BindView(R.id.tibi_tv)
     TextView tibiTv;
 
-
+    private String symbol = "";
+    private String number = "";
     @Override
     public int getContentView() {
         return R.layout.activity_ti_bi;
@@ -76,16 +83,27 @@ public class TiBiActivity extends BasicActivity implements RequestView ,TradePas
         if (bundle != null) {
             mapData = (Map<String, Object>) bundle.getSerializable("DATA");
         }
+        symbol = mapData.get("symbol") + "";
         mTitleText.setText("提币");
         mTitleText.setCompoundDrawables(null, null, null, null);
         rightImg.setVisibility(View.VISIBLE);
         rightImg.setImageResource(R.drawable.icon6_dingdan);
-        mTextView.setText("温馨提示：\n" +
-                "最小提币数量 10 USDT");
+        getBiMesssageAction();
+    }
+
+    private void getBiMesssageAction() {
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(TiBiActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("symbol",symbol);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.TI_BI, map);
     }
 
 
-    @OnClick({R.id.back_img, R.id.right_lay,R.id.address_iv,R.id.tibi_tv})
+    @OnClick({R.id.back_img, R.id.right_lay,R.id.address_iv,R.id.tibi_tv,R.id.scan_iv,R.id.selectall_tv})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -99,9 +117,16 @@ public class TiBiActivity extends BasicActivity implements RequestView ,TradePas
 
             case R.id.address_iv ://地址
                 intent = new Intent(TiBiActivity.this, TibiAddressActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,100);
                 break;
-
+            case R.id.scan_iv: //扫码二维码地址
+                intent = new Intent(TiBiActivity.this, TestScanActivity.class);
+                intent.putExtra("type", "4");
+                startActivityForResult(intent,200);
+                break;
+            case R.id.selectall_tv:
+                numberEt.setText(number);
+                break;
             case R.id.tibi_tv: //提币操作
                 showPassDialog();
                 break;
@@ -128,16 +153,46 @@ public class TiBiActivity extends BasicActivity implements RequestView ,TradePas
         }else {
             mTradePassDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
             mTradePassDialog.mPasswordEditText.setText(null);
-
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK){
+            Bundle bundle = data.getExtras();
+            if (bundle != null){
+                Map<String,Object> map = (Map<String, Object>) bundle.getSerializable("DATA");
+                addressEt.setText(map.get("address")+"");
+            }
+        }
+
+        if (requestCode == 200 && resultCode == RESULT_OK){
+            Bundle bundle = data.getExtras();
+            if (bundle != null){
+                String result = bundle.getString("result");
+                addressEt.setText(result);
+            }
+        }
+
     }
 
     @Override
     public void onPassFullListener(String pass) {
         mTradePassDialog.mPasswordEditText.setText(null);
-        //mTradePass = pass;
-        //mNextButton.setEnabled(false);
-        //submitData();
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(TiBiActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("symbol",symbol);
+        map.put("number",numberEt.getText()+"");
+        map.put("payment_password",pass);
+        map.put("address",addressEt.getText()+"");
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.TI_BI_DEAL, map);
+
+        mTradePassDialog.dismiss();
     }
 
     @Override
@@ -147,12 +202,54 @@ public class TiBiActivity extends BasicActivity implements RequestView ,TradePas
 
     @Override
     public void disimissProgress() {
-
+        dismissProgressDialog();
     }
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
+        Intent intent;
+        switch (mType){
+            case MethodUrl.TI_BI:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            Map<String,Object> map = (Map<String, Object>) tData.get("data");
+                            aviableMoneyTv.setText("可用 "+UtilTools.getNormalNumber(map.get("balance")+"")+" "+symbol);
+                            middleMoneyTv.setText("手续费: "+UtilTools.getNormalNumber(map.get("fee")+" ")+" "+symbol);
+                            number = map.get("balance")+"";
+                            mTextView.setText("温馨提示：\n" +
+                                    "最小提币数量 "+UtilTools.getNormalNumber(number)+" "+symbol);
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
 
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(TiBiActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+            case MethodUrl.TI_BI_DEAL:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        showToastMsg(tData.get("msg") + "");
+                        finish();
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(TiBiActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+        }
 
     }
 

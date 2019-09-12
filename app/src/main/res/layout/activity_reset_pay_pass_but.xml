@@ -161,8 +161,8 @@
             android:layout_marginTop="@dimen/dp_15"
             android:layout_marginBottom="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_10"
-            android:inputType="textPassword"
-            android:maxLength="12"
+            android:inputType="textPassword|number"
+            android:maxLength="6"
             android:textSize="@dimen/sp_15"
             android:layout_height="wrap_content"/>
         <View
@@ -185,7 +185,7 @@
         <EditText
             android:id="@+id/et_password"
             android:layout_width="wrap_content"
-            android:hint="输入新的支付密码"
+            android:hint="输入新的支付密码(六位数字密码)"
             android:background="@null"
             android:layout_weight="1"
             android:textColor="@color/black"
@@ -193,8 +193,8 @@
             android:layout_marginTop="@dimen/dp_15"
             android:layout_marginBottom="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_10"
-            android:inputType="textPassword"
-            android:maxLength="12"
+            android:inputType="textPassword|number"
+            android:maxLength="6"
             android:textSize="@dimen/sp_15"
             android:layout_height="wrap_content"/>
 
@@ -219,7 +219,7 @@
 
         <EditText
             android:layout_width="wrap_content"
-            android:hint="再次输入支付密码"
+            android:hint="再次输入支付密码(六位数字密码)"
             android:background="@null"
             android:id="@+id/et_password_again"
             android:layout_weight="1"
@@ -228,9 +228,9 @@
             android:layout_marginTop="@dimen/dp_15"
             android:layout_marginBottom="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_10"
-            android:inputType="textPassword"
+            android:inputType="textPassword|number"
             android:textSize="@dimen/sp_15"
-            android:maxLength="12"
+            android:maxLength="6"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>

@@ -131,6 +131,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
     private LoadingWindow mLoadingWindow;
     private UserTask userTask;
+    private String friendName;
 
     public ChatViewFragment() {
         // Required empty public constructor
@@ -282,7 +283,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                 if (resource.data != null) {
                     UserInfo info = resource.data;
                 }
-
             }
         });
 
@@ -351,12 +351,12 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
     @Override
     public void showProgress() {
-        mLoadingWindow.show();
+        //mLoadingWindow.show();
     }
 
     @Override
     public void disimissProgress() {
-        mLoadingWindow.cancleView();
+        //mLoadingWindow.cancleView();
     }
 
     @Override
@@ -364,6 +364,27 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         mLoadingWindow.cancleView();
         Intent intent;
         switch (mType) {
+            case MethodUrl.CHAT_QUERY_RCID:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        //启动聊天
+                        if (RongIM.getInstance() != null){
+                            RongIM.getInstance().startPrivateChat(getActivity(),tData.get("data")+"",friendName);
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        if (getActivity() != null) {
+                            getActivity().finish();
+                        }
+                        intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
             case MethodUrl.CHAT_MY_FRIENDS:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
@@ -619,9 +640,24 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         mListAdapter2.setmListener(new OnChildClickListener() {
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-
+                //根据用户id获取rcid
+                friendName = mParentMap.get("name")+"";
+                getRcIdAccordingIdAction(mParentMap.get("id")+"");
             }
         });
+    }
+
+    private void getRcIdAccordingIdAction(String id) {
+        mRequestTag = MethodUrl.CHAT_QUERY_RCID;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("id",id);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_QUERY_RCID, map);
+
     }
 
 

@@ -195,9 +195,7 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
 
                 break;
             case "3": //注册
-
                 //Uri uri = Uri.parse(result);
-
                 if (result.contains("i=")){
                     String i = result.substring(result.indexOf("i=")+2);
                     intent = new Intent(TestScanActivity.this, RegistActivity.class);
@@ -209,9 +207,12 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
                     intent.putExtra("id", result);
                     startActivity(intent);
                 }
-
-
                 break;
+            case "4": //提币地址
+                intent = new Intent();
+                intent.putExtra("result",result);
+                setResult(RESULT_OK,intent);
+                 break;
             default:
                 intent = new Intent(this, HtmlActivity.class);
                 result = result +"&os=android";

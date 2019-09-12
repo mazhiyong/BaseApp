@@ -1,5 +1,6 @@
 package com.lr.biyou.rongyun.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.rong.common.RLog;
+import io.rong.contactcard.activities.ContactDetailActivity;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.actions.IClickActions;
@@ -191,11 +193,38 @@ public class ConversationFragmentEx extends ConversationFragment {
         }
         io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(getTargetId(), getConversationType(), textMessage);
         RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
+        ConversationActivity activity = (ConversationActivity) getActivity();
+        if (!UtilTools.empty(activity)){
+            //发送消息(文本)
+            if (getConversationType() == Conversation.ConversationType.PRIVATE) {
+                //私聊发送消息
+                activity.sendMessageAction(text);
 
-        //发送消息
+            } else if (getConversationType()== Conversation.ConversationType.GROUP) {
+                //群聊设置发送消息(文本)
+                activity.sendGroupMessageAction(text);
 
+            }
+
+        }
 
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CONTACT && resultCode == Activity.RESULT_OK) {
+            Intent intent = new Intent(getActivity(), ContactDetailActivity.class);
+            intent.putExtra("DATA", data.getSerializableExtra("DATA"));
+            ConversationActivity activity1 = (ConversationActivity) getActivity();
+            if (!UtilTools.empty(activity1)){
+                intent.putExtra("conversationType", activity1.conversationType);
+                intent.putExtra("targetId", activity1.targetId);
+            }
+            startActivity(intent);
+        }
+    }
+
 
     @Override
     public boolean showMoreClickItem() {
@@ -272,4 +301,7 @@ public class ConversationFragmentEx extends ConversationFragment {
          */
         void onShowAnnounceView(String announceMsg, String annouceUrl);
     }
+
+
+
 }

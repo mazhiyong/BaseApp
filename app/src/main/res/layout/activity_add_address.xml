@@ -88,7 +88,7 @@
             android:layout_width="@dimen/dp_0"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="请输入备注信息"
+            android:hint="请输入备注信息 例:BTC"
             android:textSize="@dimen/sp_13"
             android:paddingBottom="@dimen/dp_5"
             android:layout_height="wrap_content" />

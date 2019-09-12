@@ -41,10 +41,10 @@ public class HuaZhuanListAdapter extends ListBaseAdapter {
 //        map.put("number", "100.00USDT");
 //        map.put("time", "05/01 12:12:10");
 
-        viewHolder.typeTv.setText(item.get("type") + "");
+        viewHolder.typeTv.setText(item.get("symbol") + "");
         viewHolder.timeTv.setText(item.get("time") + "");
         viewHolder.numberTv.setText(item.get("number") + "");
-        viewHolder.fromtoTv.setText(item.get("formto") + "");
+        viewHolder.fromtoTv.setText(item.get("typeText") + "");
 
         //viewHolder.mStatusTv.setText(item.get("abstract")+"");
         /*if ((item.get("amt")+"").contains("-")){

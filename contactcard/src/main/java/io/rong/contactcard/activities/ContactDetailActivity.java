@@ -59,10 +59,11 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity {
 
     private Conversation.ConversationType mConversationType;
     private String mTargetId;
-    private UserInfo mContactFriend;
+    //private UserInfo mContactFriend;
     private Group group;
     private List<UserInfo> mGroupMember;
     private boolean mGroupMemberShown = false;
+    private   Map<String,Object> userMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +100,7 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity {
     private void initData() {
         mTargetId = getIntent().getStringExtra("targetId");
         mConversationType = (Conversation.ConversationType) getIntent().getSerializableExtra("conversationType");
-        Map<String,Object> userMap = (Map<String, Object>) getIntent().getSerializableExtra("DATA");
-        mContactFriend = new UserInfo(userMap.get("")+"",
-                userMap.get("")+"",
-                userMap.get("")+"");
+        userMap = (Map<String, Object>) getIntent().getSerializableExtra("DATA");
         switch (mConversationType) {
             case PRIVATE:
                 UserInfo mine = RongUserInfoManager.getInstance().getUserInfo(mTargetId);
@@ -169,8 +167,8 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity {
                 break;
         }
 
-        if (mContactFriend != null)
-            mContactName.setText(getString(R.string.rc_plugins_contact) + ": " + mContactFriend.getName());
+        if (userMap != null)
+            mContactName.setText(getString(R.string.rc_plugins_contact) + ": " +userMap.get("name"));
 
         mMessage.addTextChangedListener(new TextWatcher() {
             @Override
@@ -202,9 +200,9 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity {
                 UserInfo sendUserInfo = RongUserInfoManager.getInstance().
                         getUserInfo(RongIMClient.getInstance().getCurrentUserId());
                 String sendUserName = sendUserInfo == null ? "" : sendUserInfo.getName();
-                String friendPortrait = mContactFriend.getPortraitUri() == null ? "" : mContactFriend.getPortraitUri().toString();
-                ContactMessage contactMessage = ContactMessage.obtain(mContactFriend.getUserId(),
-                        mContactFriend.getName(), friendPortrait, RongIMClient.getInstance().getCurrentUserId(), sendUserName, "");
+                String friendPortrait = userMap.get("portrait")+"";
+                ContactMessage contactMessage = ContactMessage.obtain(userMap.get("rc_id")+"",
+                        userMap.get("name")+"", friendPortrait, RongIMClient.getInstance().getCurrentUserId(), sendUserName, "");
                 String pushContent = String.format(RongContext.getInstance().getResources().getString(R.string.rc_recommend_clause_to_me), sendUserName, contactMessage.getName());
                 RongIM.getInstance().sendMessage(Message.obtain(mTargetId, mConversationType, contactMessage),
                         pushContent, null, new IRongCallback.ISendMessageCallback() {
