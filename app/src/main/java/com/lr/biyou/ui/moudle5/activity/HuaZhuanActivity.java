@@ -228,13 +228,13 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
         if ((fromTv.getText().toString().equals("合约账户") && (toTv.getText().toString().equals("奖励金")))){
             map.put("type", "9");
         }
-        if ((!fromTv.getText().toString().equals("奖励金") && (toTv.getText().toString().equals("币币账户")))){
+        if ((fromTv.getText().toString().equals("奖励金") && (toTv.getText().toString().equals("币币账户")))){
             map.put("type", "10");
         }
-        if ((fromTv.getText().toString().equals("奖励金") && (!toTv.getText().toString().equals("法币账户")))){
+        if ((fromTv.getText().toString().equals("奖励金") && (toTv.getText().toString().equals("法币账户")))){
             map.put("type", "11");
         }
-        if ((fromTv.getText().toString().equals("奖励金") && (!toTv.getText().toString().equals("合约账户")))){
+        if ((fromTv.getText().toString().equals("奖励金") && (toTv.getText().toString().equals("合约账户")))){
             map.put("type", "12");
         }
         Map<String, String> mHeaderMap = new HashMap<String, String>();

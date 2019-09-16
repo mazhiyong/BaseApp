@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -48,11 +49,14 @@ import com.lr.biyou.ui.moudle2.activity.ChatNoticeListActivity;
 import com.lr.biyou.ui.moudle2.activity.SelectContractListActivity;
 import com.lr.biyou.ui.moudle2.adapter.MyFriendListAdapter;
 import com.lr.biyou.ui.moudle2.adapter.MyRecentChatListAdapter;
+import com.lr.biyou.utils.permission.PermissionsUtils;
+import com.lr.biyou.utils.permission.RePermissionResultBack;
 import com.lr.biyou.utils.tool.AnimUtil;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
+import com.yanzhenjie.permission.Permission;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,6 +67,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 
 @SuppressLint("ValidFragment")
 public class ChatViewFragment extends BasicFragment implements RequestView, ReLoadingData {
@@ -443,6 +449,58 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                             if (UtilTools.empty(mRecentlyList)) {
                                 mPageView.showEmpty();
                             } else {
+
+                                for (Map<String,Object> map : mRecentlyList){
+                                    map.put("account","0");
+                                    if ((map.get("type")+"").equals("1")){
+                                       RongIM.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, map.get("rc_id") + "", new RongIMClient.ResultCallback<Integer>() {
+                                           @Override
+                                           public void onSuccess(Integer integer) {
+                                               if (integer > 99 ){
+                                                   map.put("account","99+");
+                                               }else {
+                                                   map.put("account",integer+"");
+                                               }
+
+                                               getActivity().runOnUiThread(new Runnable() {
+                                                   @Override
+                                                   public void run() {
+                                                       mListAdapter2.notifyDataSetChanged();
+                                                   }
+                                               });
+                                           }
+
+                                           @Override
+                                           public void onError(RongIMClient.ErrorCode errorCode) {
+
+                                           }
+                                       });
+                                    }else {
+                                        //异步回调
+                                        RongIM.getInstance().getUnreadCount(Conversation.ConversationType.GROUP, map.get("id") + "", new RongIMClient.ResultCallback<Integer>() {
+                                            @Override
+                                            public void onSuccess(Integer integer) {
+                                                if (integer > 99 ){
+                                                    map.put("account","99+");
+                                                }else {
+                                                    map.put("account",integer+"");
+                                                }
+
+                                                getActivity().runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        mListAdapter2.notifyDataSetChanged();
+                                                    }
+                                                });
+                                            }
+
+                                            @Override
+                                            public void onError(RongIMClient.ErrorCode errorCode) {
+
+                                            }
+                                        });
+                                    }
+                                }
                                 mPageView.showContent();
                                 responseData2();
                                 mRefreshListView.refreshComplete(10);
@@ -475,6 +533,9 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                             if (UtilTools.empty(mGroupList)) {
                                 mPageView.showEmpty();
                             } else {
+                                for (Map<String,Object> map : mGroupList){
+                                    map.put("account","0");
+                                }
                                 mPageView.showContent();
                                 responseData3();
                                 mRefreshListView.refreshComplete(10);
@@ -567,12 +628,11 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         mListAdapter.setmListener(new OnChildClickListener() {
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-
                 //启动聊天
+
                 if (RongIM.getInstance() != null){
                     RongIM.getInstance().startPrivateChat(getActivity(),mParentMap.get("rc_id")+"",mParentMap.get("name")+"");
                 }
-
             }
         });
     }
@@ -640,9 +700,15 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         mListAdapter2.setmListener(new OnChildClickListener() {
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-                //根据用户id获取rcid
-                friendName = mParentMap.get("name")+"";
-                getRcIdAccordingIdAction(mParentMap.get("id")+"");
+                if ((mParentMap.get("type")+"").equals("1")){
+                    //根据用户id获取rcid
+                    friendName = mParentMap.get("name")+"";
+                    //getRcIdAccordingIdAction(mParentMap.get("id")+"");
+                    //启动聊天
+                    RongIM.getInstance().startPrivateChat(getActivity(),mParentMap.get("rc_id")+"",friendName);
+                }else {
+                    RongIM.getInstance().startGroupChat(getActivity(), mParentMap.get("id")+"", mParentMap.get("name")+"");
+                }
             }
         });
     }
@@ -841,11 +907,21 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                         break;
                     case R.id.scan_lay:
                         mConditionDialog.dismiss();
-                      /*  intent = new Intent(getActivity(), ScanActivity.class);
+                        PermissionsUtils.requsetRunPermission(getActivity(), new RePermissionResultBack() {
+                            @Override
+                            public void requestSuccess() {
+                                Intent intent = new Intent(getActivity(), TestScanActivity.class);
+                                intent.putExtra("type", "0");
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void requestFailer() {
+                                Toast.makeText(getActivity(),"相机权限授权失败",Toast.LENGTH_LONG).show();
+                            }
+                        }, Permission.Group.STORAGE,Permission.Group.CAMERA);
+                        /*intent = new Intent(getActivity(), ScanActivity.class);
                         startActivity(intent);*/
-                        intent = new Intent(getActivity(), TestScanActivity.class);
-                        intent.putExtra("type", "0");
-                        startActivity(intent);
                         break;
                 }
             }

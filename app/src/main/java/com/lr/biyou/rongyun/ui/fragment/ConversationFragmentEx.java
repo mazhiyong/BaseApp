@@ -155,6 +155,12 @@ public class ConversationFragmentEx extends ConversationFragment {
                 ConversationActivity activity = (ConversationActivity) getActivity();
                 if (!UtilTools.empty(activity)){
                     intent.putExtra("tarid",activity.targetId);
+                    if (activity.conversationType == Conversation.ConversationType.PRIVATE){
+                        intent.putExtra("type","1");
+                        intent.putExtra("id",activity.Id);
+                    }else {
+                        intent.putExtra("type","2");
+                    }
                     startActivity(intent);
                 }
                 break;

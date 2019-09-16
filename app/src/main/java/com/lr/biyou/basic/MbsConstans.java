@@ -14,17 +14,11 @@ public class MbsConstans {
 
 	public static final String SERVER_IP_PORT = "172.16.1.65:12170";
 	public static final String WEBSOCKET_URL = "ws://"+SERVER_IP_PORT+"/appsvr/";
-
-//	public static final String SERVER_URL = "http://172.16.1.107:8088/api/";
-//	public static final String SERVER_URL = "http://172.16.1.173:8082/appserv/";
-//	public static final String SERVER_URL = "http://nsh.51zhir.cn/app_api/";
-//	public static final String SERVER_URL = "http://172.16.1.226:8080/app_api/";
-	public static final String SERVER_URL = "http://by.qilinpz.com/index/";
-//	public static final String SERVER_URL = "http://172.16.1.102:8086/appserv/";
-
 	public static final String XIEYI_URL = "http://ys.zhir.cn/";
-//	public static final String XIEYI_URL = "https://phb.cpcn.com.cn/";
 
+
+	public static final String SERVER_URL = "http://by.qilinpz.com/index/";
+	public static final String QRCODE_SERVER_URL = "http://qr.topscan.com/api.php?";
 
 	//WEBSOCKET BASE_URL
 	public static final String WEBSOCKET_BASE_URL = "ws://47.244.40.226";

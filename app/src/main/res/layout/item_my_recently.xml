@@ -21,13 +21,30 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/head_iv"
-                android:layout_width="@dimen/dp_35"
+            <RelativeLayout
                 android:layout_gravity="center_vertical"
+                android:layout_width="@dimen/dp_38"
                 android:layout_margin="@dimen/dp_10"
-                android:src="@drawable/default_headimg"
-                android:layout_height="@dimen/dp_35" />
+                android:layout_height="@dimen/dp_38">
+                <ImageView
+                    android:id="@+id/head_iv"
+                    android:layout_margin="@dimen/dp_2"
+                    android:layout_width="match_parent"
+                    android:src="@drawable/default_headimg"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/not_red_tv"
+                    android:text="99+"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@drawable/circle_background_red"
+                    android:textSize="@dimen/sp_8"
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="@dimen/dp_15" />
+            </RelativeLayout>
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_gravity="center_vertical"

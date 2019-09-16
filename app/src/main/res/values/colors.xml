@@ -88,6 +88,7 @@
 
 
     <color name="red">#ff0000</color>
+    <color name="red_package">#EC5151</color>
     <color name="red_light">#C25768</color>
 
     <color name="money_red">#FF441F</color>

@@ -2,6 +2,8 @@ package com.lr.biyou.ui.moudle2.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -13,23 +15,27 @@ import androidx.core.content.ContextCompat;
 
 import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
+import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.SelectBackListener;
+import com.lr.biyou.mvp.presenter.RequestPresenterImp;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.mywidget.dialog.TradePassDialog;
 import com.lr.biyou.rongyun.im.message.RongRedPacketMessage;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle5.activity.HuaZhuanListActivity;
 import com.lr.biyou.utils.tool.LogUtilDebug;
-import com.lr.biyou.utils.tool.SelectDataUtil;
+import com.lr.biyou.utils.tool.SPUtils;
+import com.lr.biyou.utils.tool.UtilTools;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -72,11 +78,10 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     EditText beizhuEt;
 
 
-    private KindSelectDialog mDialog;
     private KindSelectDialog mDialog2;
 
-    private String fromStr;
-    private String toStr;
+    private String rate;
+    private String total;
 
     @Override
     public int getContentView() {
@@ -84,7 +89,8 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     }
 
     private String tarid ="";
-
+    private String type = "";
+    private String id = "";
     @Override
     public void init() {
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -92,6 +98,8 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             tarid = bundle.getString("tarid");
+            type = bundle.getString("type");
+            id = bundle.getString("id");
         }
         mTitleText.setText("发红包");
         mTitleText.setCompoundDrawables(null,null,null,null);
@@ -99,22 +107,51 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
         rightImg.setVisibility(View.VISIBLE);
         rightImg.setImageResource(R.drawable.icon6_dingdan);
 
-        initDialog();
+
+        etnumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (UtilTools.empty(rate)){
+                    showToastMsg("请选择币种");
+                }else {
+                    if (s.toString().length()>0){
+                        total = Float.parseFloat(rate)*Integer.parseInt(s.toString())+"";
+                        cnyTv.setText("≈ "+total+"CNY");
+                    }else {
+                        cnyTv.setText("≈ 0.00CNY");
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        //请求币种列表数据
+        typeListAction();
     }
 
-    private void initDialog() {
-        List<Map<String, Object>> mDataList = SelectDataUtil.getAccoutType();
-        mDialog = new KindSelectDialog(this, true, mDataList, 10);
-        mDialog.setSelectBackListener(this);
-
-        List<Map<String, Object>> mDataList2 = SelectDataUtil.getBiType();
-        mDialog2 = new KindSelectDialog(this, true, mDataList2, 30);
-        mDialog2.setSelectBackListener(this);
-
+    private void typeListAction() {
+        mRequestPresenterImp = new RequestPresenterImp(this, this);
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(RedMoneyActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_ZHUANZHANG_TYPE, map);
     }
 
 
-    @OnClick({R.id.back_img, R.id.right_lay, R.id.from_lay, R.id.change_iv, R.id.type_lay, R.id.selectall_tv, R.id.huzhuan_tv})
+    @OnClick({R.id.back_img, R.id.right_lay,  R.id.change_iv, R.id.type_lay, R.id.selectall_tv, R.id.huzhuan_tv})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -124,9 +161,7 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
             case R.id.right_lay: //充提记录
                 intent = new Intent(RedMoneyActivity.this, HuaZhuanListActivity.class);
                 startActivity(intent);
-                break;
-            case R.id.from_lay:
-                mDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
+
                 break;
             case R.id.type_lay:
                 mDialog2.showAtLocation(Gravity.BOTTOM, 0, 0);
@@ -134,57 +169,66 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
             case R.id.selectall_tv:
                 break;
             case R.id.huzhuan_tv:
-                if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
-                    RongRedPacketMessage rongRedPacketMessage = RongRedPacketMessage.obtain(tarid, "恭喜发财,大吉大利","待领取");
-
-                    RongIM.getInstance().getRongIMClient().sendMessage(Conversation.ConversationType.PRIVATE, tarid, rongRedPacketMessage, null, null, new RongIMClient.SendMessageCallback() {
-                        @Override
-                        public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
-                            LogUtilDebug.i("show", "-----onError--" + errorCode);
-                        }
-
-                        @Override
-                        public void onSuccess(Integer integer) {
-                            LogUtilDebug.i("show", "-----onScuess--" );
-                        }
-                    });
+                if (UtilTools.empty(rate)){
+                    showToastMsg("请选择币种");
+                    return;
                 }
 
+                if (UtilTools.empty(etnumber.getText())){
+                    showToastMsg("请输入红包个数");
+                    return;
+                }
+
+                showPassDialog();
                 break;
         }
     }
 
-//    private TradePassDialog mTradePassDialog;
-//
-//    private void showPassDialog() {
-//
-//        if (mTradePassDialog == null) {
-//            mTradePassDialog = new TradePassDialog(this, true);
-//            mTradePassDialog.setPassFullListener(HuaZhuanActivity.this);
-//            mTradePassDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
-//            mTradePassDialog.mPasswordEditText.setText(null);
-//
-//            //忘记密码
-//            mTradePassDialog.mForgetPassTv.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    //getMsgCodeAction();
-//                }
-//            });
-//
-//        } else {
-//            mTradePassDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
-//            mTradePassDialog.mPasswordEditText.setText(null);
-//
-//        }
-//    }
+    private TradePassDialog mTradePassDialog;
+    private void showPassDialog(){
+
+        if (mTradePassDialog == null){
+            mTradePassDialog = new TradePassDialog(this, true);
+            mTradePassDialog.setPassFullListener(RedMoneyActivity.this);
+            mTradePassDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
+            mTradePassDialog.mPasswordEditText.setText(null);
+
+            //忘记密码
+            mTradePassDialog.mForgetPassTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //getMsgCodeAction();
+                }
+            });
+
+        }else {
+            mTradePassDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
+            mTradePassDialog.mPasswordEditText.setText(null);
+        }
+    }
 
     @Override
     public void onPassFullListener(String pass) {
-        //mTradePassDialog.mPasswordEditText.setText(null);
-        //mTradePass = pass;
-        //mNextButton.setEnabled(false);
-        //submitData();
+        mTradePassDialog.mPasswordEditText.setText(null);
+        mRequestPresenterImp = new RequestPresenterImp(this, this);
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(RedMoneyActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("symbol",typeTv.getText()+"");
+        map.put("number",etnumber.getText()+"");
+        map.put("total",total);
+        map.put("remake",beizhuEt.getText()+"");
+        if (type.equals("1")){
+            map.put("id",id);
+        }else {
+            map.put("id",tarid);
+        }
+        map.put("type",type);
+        map.put("payment_password",pass);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_SEND_RED, map);
     }
 
     @Override
@@ -199,8 +243,104 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
+        Intent intent;
+        switch (mType){
+            case MethodUrl.CHAT_SEND_RED:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        mTradePassDialog.dismiss();
+                        String red_id = tData.get("data")+"";
+                        finish();
+                        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+                            RongRedPacketMessage rongRedPacketMessage = RongRedPacketMessage.obtain(red_id,tarid, beizhuEt.getText()+"","待领取");
+                            if (type.equals("1")){
+                                RongIM.getInstance().getRongIMClient().sendMessage(Conversation.ConversationType.PRIVATE, tarid, rongRedPacketMessage, null, null, new RongIMClient.SendMessageCallback() {
+                                    @Override
+                                    public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+                                        LogUtilDebug.i("show", "-----onError--" + errorCode);
+                                    }
 
+                                    @Override
+                                    public void onSuccess(Integer integer) {
+                                        LogUtilDebug.i("show", "-----onScuess--" );
+                                    }
+                                });
+                            }else {
+                                RongIM.getInstance().getRongIMClient().sendMessage(Conversation.ConversationType.GROUP, tarid, rongRedPacketMessage, null, null, new RongIMClient.SendMessageCallback() {
+                                    @Override
+                                    public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+                                        LogUtilDebug.i("show", "-----onError--" + errorCode);
+                                    }
 
+                                    @Override
+                                    public void onSuccess(Integer integer) {
+                                        LogUtilDebug.i("show", "-----onScuess--" );
+                                    }
+                                });
+                            }
+
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(RedMoneyActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+            case MethodUrl.CHAT_ZHUANZHANG_TYPE:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        List<Map<String, Object>> mDataList2;
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            mDataList2 = (List<Map<String, Object>>) tData.get("data");
+                            for (Map<String,Object> map :mDataList2){
+                                map.put("name",map.get("symbol")+"");
+                            }
+                        } else {
+                            mDataList2 = new ArrayList<>();
+                        }
+                        mDialog2 = new KindSelectDialog(this, true, mDataList2, 30);
+                        mDialog2.setSelectBackListener(this);
+
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(RedMoneyActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+            case MethodUrl.CHAT_RED_PAGE:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data")+"")){
+                            Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
+                            yueTv.setText("余额:"+mapData.get("balance"));
+                            yueCnyTv.setText(" ≈"+mapData.get("cny")+"CNY");
+                            rate = mapData.get("rate")+"";
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(RedMoneyActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+        }
     }
 
     @Override
@@ -213,15 +353,27 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     public void onSelectBackListener(Map<String, Object> map, int type) {
         switch (type) {
             case 10:
-                String s = (String) map.get("name"); //选择账户
-
                 break;
             case 30: //选择币种
                 String str = (String) map.get("name"); //选择币种
                 typeTv.setText(str);
+                getMoneyAction(str);
                 break;
         }
     }
+
+    private void getMoneyAction(String symbol) {
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(RedMoneyActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("symbol", symbol);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_RED_PAGE, map);
+    }
+
+
 
 
     /**---------------------------------------------------------------------以下代码申请权限---------------------------------------------
@@ -247,10 +399,5 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

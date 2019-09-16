@@ -30,6 +30,7 @@ public class SearchHistoryMessageActivity extends SealSearchBaseActivity impleme
         String targetId = getIntent().getStringExtra(IntentExtra.STR_TARGET_ID);
         String name = getIntent().getStringExtra(IntentExtra.STR_CHAT_NAME);
         String portrait = getIntent().getStringExtra(IntentExtra.STR_CHAT_PORTRAIT);
+
         Conversation.ConversationType conversationType = (Conversation.ConversationType) getIntent().getSerializableExtra(IntentExtra.SERIA_CONVERSATION_TYPE);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

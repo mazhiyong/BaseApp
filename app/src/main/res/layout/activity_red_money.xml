@@ -246,6 +246,7 @@
             android:layout_height="wrap_content" />
         <EditText
             android:id="@+id/etnumber"
+            android:inputType="number"
             android:hint="0"
             android:gravity="right"
             android:background="@null"

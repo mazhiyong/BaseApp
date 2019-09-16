@@ -13,6 +13,7 @@ import io.rong.message.ImageMessage;
 
 /**
  * 批量发送消息工具类，将消息排序延迟 300ms 发送
+ * 图片消息发送
  */
 public class BatchForwardHelper {
     private static final String TAG = "BatchForwardHelper";

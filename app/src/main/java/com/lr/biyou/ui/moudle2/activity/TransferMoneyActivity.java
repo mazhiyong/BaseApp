@@ -147,8 +147,12 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
             case R.id.selectall_tv:
                 break;
             case R.id.huzhuan_tv:
+
+
+
+
                 if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
-                    RongRedPacketMessage rongRedPacketMessage = RongRedPacketMessage.obtain(tarid, "转账100.21USDT","待收款");
+                    RongRedPacketMessage rongRedPacketMessage = RongRedPacketMessage.obtain("",tarid, "转账100.21USDT","待收款");
 
                     RongIM.getInstance().getRongIMClient().sendMessage(Conversation.ConversationType.PRIVATE, tarid, rongRedPacketMessage, null, null, new RongIMClient.SendMessageCallback() {
                         @Override

@@ -58,6 +58,7 @@ import com.lr.biyou.rongyun.utils.ToastUtils;
 import com.lr.biyou.rongyun.utils.log.SLog;
 import com.lr.biyou.rongyun.viewmodel.GroupDetailViewModel;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
@@ -512,10 +513,6 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
 
         groupCreatorId = groupInfo.getCreatorId();
 
-        //TODO 目前借口群组中返回的群公告信息为空
-        // 最后群组通知消息
-        //lastGroupNoticeContent = groupInfo.getBulletin();
-        //lastGroupNoticeTime = groupInfo.getBulletinTime();
     }
 
     @Override
@@ -630,9 +627,15 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
         Intent intent = new Intent(this, SearchHistoryMessageActivity.class);
         intent.putExtra(IntentExtra.STR_TARGET_ID, groupId);
         intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.GROUP);
+        //群名
+        LogUtilDebug.i("show","groupName:"+groupName);
         intent.putExtra(IntentExtra.STR_CHAT_NAME, groupName);
+        //群组的头像
+        LogUtilDebug.i("show","grouportraitUrl:"+grouportraitUrl);
         intent.putExtra(IntentExtra.STR_CHAT_PORTRAIT, grouportraitUrl);
         startActivity(intent);
+
+
     }
 
 
@@ -924,7 +927,9 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                         if (!UtilTools.empty(tData.get("data")+"")){
                             Map<String,Object> map = (Map<String, Object>) tData.get("data");
                             if (!UtilTools.empty(map)){
-                                groupNameSiv.setValue(map.get("name")+"");
+                                groupName = map.get("name")+"";
+                                groupNameSiv.setValue(groupName);
+                                grouportraitUrl = map.get("portrait")+"";
                                 qrcodeImgUrl = map.get("qrcode")+"";
                                 if ((map.get("disturb")+"").equals("0")){
                                     disSwitch.setChecked(false);

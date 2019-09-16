@@ -11,13 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-
-import androidx.annotation.StringRes;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
-
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -25,27 +18,31 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
+import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
+import com.lr.biyou.mywidget.dialog.ShowImageDialog;
+import com.lr.biyou.rongyun.utils.qrcode.QRCodeUtils;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle.activity.MainActivity;
 import com.lr.biyou.ui.moudle.activity.UpdateNichengActivity;
-import com.lr.biyou.ui.temporary.activity.MoreInfoManagerActivity;
-import com.lr.biyou.ui.temporary.activity.QiyeInfoShowActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;
 import com.lr.biyou.utils.tool.AppUtil;
-import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.SPUtils;
-import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.yanzhenjie.permission.Permission;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -91,6 +88,8 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
     CardView mLogoutLay;
     @BindView(R.id.more_info_line)
     View mInfoLine;
+    @BindView(R.id.ercode_lay)
+    CardView mErcodeLay;
 
     private String mRequestTag = "";
 
@@ -108,8 +107,6 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
         mTitleText.setCompoundDrawables(null,null,null,null);
 
         // GlideUtils.loadImage(UserInfoActivity.this,"http://tupian.qqjay.com/u/2017/1201/2_161641_2.jpg",mHeadImageView);
-
-
     }
 
     @Override
@@ -155,7 +152,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
     }
 
 
-    @OnClick({R.id.head_img_lay, R.id.back_img, R.id.busines_name_lay,R.id.logout_lay,R.id.left_back_lay})
+    @OnClick({R.id.head_img_lay, R.id.back_img, R.id.busines_name_lay,R.id.ercode_lay,R.id.left_back_lay,R.id.logout_lay})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -171,17 +168,28 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                 finish();
                 break;
             case R.id.busines_name_lay:
-               /* String kind = MbsConstans.USER_MAP.get("firm_kind") + "";//客户类型（0：个人，1：企业）
-                if (kind.equals("1")) {
-                    intent = new Intent(UserInfoActivity.this, QiyeInfoShowActivity.class);
-                    intent.putExtra("backtype","2");
-                    startActivity(intent);
-                }else {
-                    intent = new Intent(UserInfoActivity.this, MoreInfoManagerActivity.class);
-                    startActivity(intent);
-                }*/
                 intent = new Intent(UserInfoActivity.this, UpdateNichengActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.ercode_lay:
+                //生成二维码信息
+                int screenWidth = (int) (UtilTools.getScreenWidth(UserInfoActivity.this)*0.7);
+                if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {
+                    String s = SPUtils.get(UserInfoActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
+                    MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
+                }
+                String qrCodeContent =MbsConstans.QRCODE_SERVER_URL+"key=sealtalk://user/info?u="+ MbsConstans.RONGYUN_MAP.get("id");
+                Bitmap bitmap = QRCodeUtils.generateImage(qrCodeContent,screenWidth, screenWidth, null);
+                new ShowImageDialog(UserInfoActivity.this,bitmap,"扫一扫,加我为好友").show();
+
+
+
+             /*   List<Map<String, Object>> mImageList = new ArrayList<>();
+                intent = new Intent(UserInfoActivity.this, ShowDetailPictrue.class);
+                intent.putExtra("position",0);
+                intent.putExtra("DATA",(Serializable) mImageList);
+                startActivity(intent);
+                overridePendingTransition(R.anim.zoomin, R.anim.zoomout);*/
                 break;
             case R.id.logout_lay:
                 new AlertDialog.Builder(this)
@@ -217,7 +225,6 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                 dialog.dismiss();
                 switch (position) {
                     case 0:
-
                         PermissionsUtils.requsetRunPermission(UserInfoActivity.this, new RePermissionResultBack() {
                             @Override
                             public void requestSuccess() {
@@ -229,7 +236,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                             public void requestFailer() {
                                 toast(R.string.failure);
                             }
-                        },Permission.Group.STORAGE,Permission.Group.CAMERA);
+                        }, com.yanzhenjie.permission.runtime.Permission.Group.STORAGE, com.yanzhenjie.permission.runtime.Permission.Group.CAMERA);
 
 
                         break;
@@ -245,7 +252,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                             public void requestFailer() {
                                 toast(R.string.failure);
                             }
-                        },Permission.Group.STORAGE);
+                        },com.yanzhenjie.permission.runtime.Permission.Group.STORAGE);
 
                         break;
                 }

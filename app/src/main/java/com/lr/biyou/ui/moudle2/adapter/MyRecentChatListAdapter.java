@@ -14,6 +14,7 @@ import com.lr.biyou.R;
 import com.lr.biyou.listener.OnChildClickListener;
 import com.lr.biyou.ui.moudle.adapter.ListBaseAdapter;
 import com.lr.biyou.utils.imageload.GlideUtils;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 
 import java.util.Map;
 
@@ -45,6 +46,14 @@ public class MyRecentChatListAdapter extends ListBaseAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final Map<String, Object> item = mDataList.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
+        LogUtilDebug.i("show","integer:"+item.get("account")+"");
+        if ((item.get("account")+"").equals("0")){
+            viewHolder.notRedTv.setVisibility(View.GONE);
+        }else {
+            viewHolder.notRedTv.setVisibility(View.VISIBLE);
+            viewHolder.notRedTv.setText(item.get("account")+"");
+        }
+
         viewHolder.nameTv.setText(item.get("name") + "");
         viewHolder.contentTv.setText(item.get("content")+"");
         GlideUtils.loadImage(mContext,item.get("portrait")+"",viewHolder.headIv);
@@ -75,6 +84,8 @@ public class MyRecentChatListAdapter extends ListBaseAdapter {
         TextView refuseTv;
         @BindView(R.id.added_tv)
         TextView addedTv;
+        @BindView(R.id.not_red_tv)
+        TextView notRedTv;
         @BindView(R.id.trade_lay)
         CardView tradeLay;
 

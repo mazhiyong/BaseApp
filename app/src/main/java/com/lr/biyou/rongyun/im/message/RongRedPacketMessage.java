@@ -31,9 +31,11 @@ import io.rong.imlib.model.UserInfo;
 @MessageTag(value = "app:red", flag = MessageTag.ISPERSISTED)
 public class RongRedPacketMessage extends MessageContent {
 
-    //融云id
+    //红包id 类似于messageId
+    private String id;
+    //融云id(用户id或是群组id)
     private String userid;
-    //提示信息 :红包(恭喜发财)  转账(转账 1000)
+    //备注提示信息 :红包(恭喜发财)  转账(转账 1000)
     private String message;
     //状态红包(待领取   已领取)  转账(待确认   已收账)
     private String status;
@@ -42,8 +44,9 @@ public class RongRedPacketMessage extends MessageContent {
 
     }
 
-    public static RongRedPacketMessage obtain(String userid, String message,String status) {
+    public static RongRedPacketMessage obtain(String id,String userid, String message,String status) {
         RongRedPacketMessage rongRedPacketMessage = new RongRedPacketMessage();
+        rongRedPacketMessage.id = id;
         rongRedPacketMessage.userid = userid;
         rongRedPacketMessage.message = message;
         rongRedPacketMessage.status = status;
@@ -56,6 +59,7 @@ public class RongRedPacketMessage extends MessageContent {
         try {
             String jsonStr = new String(data, "UTF-8");
             JSONObject jsonObj = new JSONObject(jsonStr);
+            setId(jsonObj.getString("id"));
             setUserid(jsonObj.getString("userid"));
             setMessage(jsonObj.getString("message"));
             setStatus(jsonObj.getString("status"));
@@ -75,6 +79,7 @@ public class RongRedPacketMessage extends MessageContent {
      * @param in 初始化传入的 Parcel。
      */
     public RongRedPacketMessage(Parcel in) {
+        setId(ParcelUtils.readFromParcel(in));
         setStatus(ParcelUtils.readFromParcel(in));
         setUserid(ParcelUtils.readFromParcel(in));
         setMessage(ParcelUtils.readFromParcel(in));
@@ -117,6 +122,7 @@ public class RongRedPacketMessage extends MessageContent {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         // 这里可继续增加你消息的属性
+        ParcelUtils.writeToParcel(dest, id);
         ParcelUtils.writeToParcel(dest, message);
         ParcelUtils.writeToParcel(dest, userid);
         ParcelUtils.writeToParcel(dest, status);
@@ -131,7 +137,7 @@ public class RongRedPacketMessage extends MessageContent {
     public byte[] encode() {
         JSONObject jsonObj = new JSONObject();
         try {
-
+            jsonObj.put("id", id);
             jsonObj.put("userid", userid);
             jsonObj.put("message", message);
             jsonObj.put("status",status);
@@ -174,5 +180,13 @@ public class RongRedPacketMessage extends MessageContent {
 
     public String getStatus() {
         return status;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 }

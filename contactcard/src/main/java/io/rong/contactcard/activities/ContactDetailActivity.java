@@ -194,6 +194,7 @@ public class ContactDetailActivity extends RongBaseNoActionbarActivity {
             }
         });
 
+        //名片
         mSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

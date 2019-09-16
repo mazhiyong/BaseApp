@@ -140,7 +140,7 @@
             android:value="k51hidwqk4j8b" />-->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.lr.biyou.FileProvider"
+            android:authorities="com.lr.biyou.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">
@@ -171,10 +171,7 @@
                 -->
             </intent-filter>
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
@@ -205,7 +202,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.PerfectInfoActivity"
@@ -1130,6 +1130,15 @@
         <!--  红包  -->
         <activity
             android:name=".ui.moudle2.activity.RedMoneyActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
+
+        <!--  红包领取界面  -->
+        <activity
+            android:name=".ui.moudle2.activity.RedListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">

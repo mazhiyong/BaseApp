@@ -26,13 +26,14 @@
 				<ImageView
 					android:id="@+id/user_icon"
 					android:layout_width="@dimen/dp_55"
-					android:layout_height="wrap_content"
+					android:layout_height="@dimen/dp_55"
 					android:layout_gravity="center_horizontal"
 					android:padding="@dimen/dp_3"
 					android:src="@drawable/logo" />
 				<TextView
 					android:textSize="@dimen/sp_13"
 					android:textColor="@color/gray"
+					android:layout_marginTop="@dimen/dp_5"
 					android:layout_gravity="center_horizontal"
 					android:layout_width="wrap_content"
 					android:text="@string/login_account_tip"

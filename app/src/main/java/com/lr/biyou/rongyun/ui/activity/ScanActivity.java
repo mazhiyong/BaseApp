@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -154,6 +155,7 @@ public class ScanActivity extends TitleBaseActivity implements View.OnClickListe
             ToastUtils.showToast(R.string.zxing_qr_can_not_recognized);
             return;
         }
+        Log.i("show","qrcode:"+qrCodeText);
 
         // 处理二维码结果
         Intent intent = new Intent(this, AddFriendActivity.class);

@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -21,8 +22,11 @@ import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.TradePassDialog;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.TestScanActivity;
+import com.lr.biyou.utils.permission.PermissionsUtils;
+import com.lr.biyou.utils.permission.RePermissionResultBack;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
+import com.yanzhenjie.permission.Permission;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -120,9 +124,21 @@ public class TiBiActivity extends BasicActivity implements RequestView ,TradePas
                 startActivityForResult(intent,100);
                 break;
             case R.id.scan_iv: //扫码二维码地址
-                intent = new Intent(TiBiActivity.this, TestScanActivity.class);
-                intent.putExtra("type", "4");
-                startActivityForResult(intent,200);
+                PermissionsUtils.requsetRunPermission(TiBiActivity.this, new RePermissionResultBack() {
+                    @Override
+                    public void requestSuccess() {
+                        Intent intent = new Intent(TiBiActivity.this, TestScanActivity.class);
+                        intent.putExtra("type", "4");
+                        startActivityForResult(intent,200);
+                    }
+
+                    @Override
+                    public void requestFailer() {
+                        Toast.makeText(TiBiActivity.this,"相机权限授权失败",Toast.LENGTH_LONG).show();
+                    }
+                }, Permission.Group.STORAGE,Permission.Group.CAMERA);
+
+
                 break;
             case R.id.selectall_tv:
                 numberEt.setText(number);

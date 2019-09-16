@@ -22,6 +22,7 @@ import com.lr.biyou.R;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.db.FaPiaoData;
+import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.ui.moudle2.activity.AddFriendActivity;
 import com.lr.biyou.ui.temporary.activity.HtmlActivity;
 import com.lr.biyou.ui.temporary.activity.InvoiceListActivity;
@@ -110,6 +111,12 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
         mZXingView.setDelegate(this);
         mTitleText.setText("二维码");
         mTitleText.setTextColor(ContextCompat.getColor(this, R.color.white));
+
+
+
+
+
+
     }
 
 
@@ -168,9 +175,12 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
         Intent intent ;
         switch (mType){
             case "0":
-                intent = new Intent(this, AddFriendActivity.class);
-                intent.putExtra("DATA", result);
-                startActivity(intent);
+                Log.i("show","result:"+result);
+                if (result.contains("u=")){
+                    intent = new Intent(this, AddFriendActivity.class);
+                    intent.putExtra(IntentExtra.STR_TARGET_ID, result.substring(result.indexOf("u=")+2));
+                    startActivity(intent);
+                }
                 break;
             case "1":
                 intent = new Intent(this, HtmlActivity.class);
