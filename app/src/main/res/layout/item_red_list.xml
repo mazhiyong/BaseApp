@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divide_hight"
+        android:visibility="gone"
+        android:background="@color/divide_line"/>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/trade_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="0dp"
+        android:background="@color/transparent"
+        app:cardElevation="0dp"
+        android:foreground="?android:attr/selectableItemBackground">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_gravity="center_vertical"
+                android:layout_width="@dimen/dp_38"
+                android:layout_margin="@dimen/dp_10"
+                android:layout_height="@dimen/dp_38">
+                <ImageView
+                    android:id="@+id/head_iv"
+                    android:layout_margin="@dimen/dp_2"
+                    android:layout_width="match_parent"
+                    android:src="@drawable/default_headimg"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/not_red_tv"
+                    android:text="99+"
+                    android:visibility="gone"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@drawable/circle_background_red"
+                    android:textSize="@dimen/sp_8"
+                    android:layout_width="@dimen/dp_15"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="@dimen/dp_15" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/name_tv"
+                    android:layout_width="wrap_content"
+                    android:text="Aa"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_16"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/content_tv"
+                    android:layout_width="wrap_content"
+                    android:text="Aa"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/sp_12"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/money_tv"
+                    android:layout_width="wrap_content"
+                    android:text="0.00USDT"
+                    android:textStyle="bold"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:paddingLeft="@dimen/dp_8"
+                    android:paddingRight="@dimen/dp_8"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/shouqi_tv"
+                    android:layout_width="wrap_content"
+                    android:text="手气最佳"
+                    android:paddingTop="@dimen/dp_2"
+                    android:paddingBottom="@dimen/dp_2"
+                    android:paddingLeft="@dimen/dp_8"
+                    android:paddingRight="@dimen/dp_8"
+                    android:textSize="@dimen/sp_10"
+                    android:textColor="#FFD685"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+        
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divide_hight"
+        android:background="@color/divide_line"/>
+</LinearLayout>

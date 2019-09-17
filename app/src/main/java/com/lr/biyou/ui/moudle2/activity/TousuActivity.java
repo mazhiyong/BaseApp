@@ -173,9 +173,10 @@ public class TousuActivity extends BasicActivity implements RequestView, SelectB
             MbsConstans.ACCESS_TOKEN = SPUtils.get(TousuActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("type", "");
+        map.put("id", mapData.get("userid")+"");
+        map.put("type", mapData.get("title")+"");
         map.put("img",imgUrl);
-        map.put("complaint_id","");
+        map.put("complaint_id",mapData.get("id")+"");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_REASON_DEAL, map);
     }

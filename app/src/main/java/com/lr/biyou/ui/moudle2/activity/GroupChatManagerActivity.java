@@ -139,20 +139,15 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
 
             @Override
             public void onMemberClicked(GroupMember groupMember) {
-                //查看群成员信息
-                showMemberInfo(groupMember);
-
+                if (!protectSwitch.isChecked()){
+                    //查看群成员信息
+                    showMemberInfo(groupMember);
+                }
 
             }
         });
 
 
-        protectAllCertifiSiv = findViewById(R.id.protect_all);
-        setGroupManagerSiv = findViewById(R.id.siv_set_group_manager);
-        setGroupManagerSiv.setOnClickListener(this);
-        SettingItemView transferSiv = findViewById(R.id.siv_transfer);
-        transferSiv.setOnClickListener(this);
-        muteAllSiv = findViewById(R.id.siv_mute_all);
         //群成员保护
         protectSwitch.setOnClickListener(new View.OnClickListener() {
             @Override

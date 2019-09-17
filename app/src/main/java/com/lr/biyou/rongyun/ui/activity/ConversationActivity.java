@@ -53,7 +53,11 @@ import butterknife.OnClick;
 import io.rong.callkit.util.SPUtils;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.RongKitIntent;
+import io.rong.imkit.mention.RongMentionManager;
+import io.rong.imlib.IRongCallback;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.MentionedInfo;
+import io.rong.message.TextMessage;
 
 /**
  * 会话页面
@@ -512,14 +516,20 @@ public class ConversationActivity extends BasicActivity {
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("type", "1");
-        map.put("content",text);
+        map.put("content",text+"");
         map.put("receiver_id",Id);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_SEND_NEWS, map);
     }
 
 
-    public void sendGroupMessageAction(String text){
+    String conText ;
+    String conId;
+    Conversation.ConversationType conType;
+    public void sendGroupMessageAction(String text, String ConId, Conversation.ConversationType ConType){
+        conText = text;
+        conId = ConId;
+        conType = ConType;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(ConversationActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
@@ -567,7 +577,18 @@ public class ConversationActivity extends BasicActivity {
             case MethodUrl.CHAT_GROUP_SEND_NEWS:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
-
+                        TextMessage textMessage = TextMessage.obtain(conText);
+                        MentionedInfo mentionedInfo = RongMentionManager.getInstance().onSendButtonClick();
+                        if (mentionedInfo != null) {
+                            if (mentionedInfo.getMentionedUserIdList().contains("-1")) {
+                                mentionedInfo.setType(MentionedInfo.MentionedType.ALL);
+                            } else {
+                                mentionedInfo.setType(MentionedInfo.MentionedType.PART);
+                            }
+                            textMessage.setMentionedInfo(mentionedInfo);
+                        }
+                        io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(conId, conType, textMessage);
+                        RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg") + "");

@@ -231,6 +231,20 @@ public class MethodUrl {
     public static final String CHAT_RED_PAGE = "chat_red/assets";//发红包页面信息
     public static final String CHAT_ZHUANZHANG_TYPE = "chat_red/coinType";//红包可以转账的类型
     public static final String CHAT_RED_INFO = "chat_red/redInfo";//点击查看红包信息
+    public static final String CHAT_RED_RECORD = "chat_red/redRecord";//查看红包信息记录
+    public static final String CHAT_ZHUANZHANG_PAGE = "chat_red/transferPage";//转账界面
+    public static final String CHAT_SEND_ZHUANZHANG = "chat_red/transferActive";//转账操作
+    public static final String CHAT_ZHUANZHANG_INFO= "chat_red/tranInfo";//查看转账信息
+    public static final String CHAT_ZHUANZHANG_RECORD = "chat_red/tranRecord";//转账记录记录
+
+
+
+
+
+
+
+
+
 
 
 

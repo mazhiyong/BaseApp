@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -169,7 +170,14 @@ public class ConversationFragmentEx extends ConversationFragment {
                 ConversationActivity activity1 = (ConversationActivity) getActivity();
                 if (!UtilTools.empty(activity1)){
                     intent.putExtra("tarid",activity1.targetId);
-                    startActivity(intent);
+                    if (activity1.conversationType == Conversation.ConversationType.PRIVATE){
+                        intent.putExtra("type","1");
+                        intent.putExtra("id",activity1.Id);
+                        startActivity(intent);
+                    }else {
+                        intent.putExtra("type","2");
+                        Toast.makeText(getActivity(),"群聊不支持转账功能",Toast.LENGTH_LONG).show();
+                    }
                 }
                 break;
             default:
@@ -187,18 +195,7 @@ public class ConversationFragmentEx extends ConversationFragment {
             return;
         }
 
-        TextMessage textMessage = TextMessage.obtain(text);
-        MentionedInfo mentionedInfo = RongMentionManager.getInstance().onSendButtonClick();
-        if (mentionedInfo != null) {
-            if (mentionedInfo.getMentionedUserIdList().contains("-1")) {
-                mentionedInfo.setType(MentionedInfo.MentionedType.ALL);
-            } else {
-                mentionedInfo.setType(MentionedInfo.MentionedType.PART);
-            }
-            textMessage.setMentionedInfo(mentionedInfo);
-        }
-        io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(getTargetId(), getConversationType(), textMessage);
-        RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
+
         ConversationActivity activity = (ConversationActivity) getActivity();
         if (!UtilTools.empty(activity)){
             //发送消息(文本)
@@ -206,9 +203,22 @@ public class ConversationFragmentEx extends ConversationFragment {
                 //私聊发送消息
                 activity.sendMessageAction(text);
 
+                TextMessage textMessage = TextMessage.obtain(text);
+                MentionedInfo mentionedInfo = RongMentionManager.getInstance().onSendButtonClick();
+                if (mentionedInfo != null) {
+                    if (mentionedInfo.getMentionedUserIdList().contains("-1")) {
+                        mentionedInfo.setType(MentionedInfo.MentionedType.ALL);
+                    } else {
+                        mentionedInfo.setType(MentionedInfo.MentionedType.PART);
+                    }
+                    textMessage.setMentionedInfo(mentionedInfo);
+                }
+                io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(getTargetId(), getConversationType(), textMessage);
+                RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
+
             } else if (getConversationType()== Conversation.ConversationType.GROUP) {
                 //群聊设置发送消息(文本)
-                activity.sendGroupMessageAction(text);
+                activity.sendGroupMessageAction(text,getTargetId(),getConversationType());
 
             }
 

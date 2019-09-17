@@ -25,8 +25,8 @@ import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle2.adapter.RedListAdapter;
-import com.lr.biyou.utils.imageload.GlideUtils;
+import com.lr.biyou.ui.moudle2.adapter.RedRecordListAdapter;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
@@ -39,67 +39,63 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 红包领取
+ * 红包记录
  */
-public class RedListActivity extends BasicActivity implements RequestView, ReLoadingData,SelectBackListener {
-    @BindView(R.id.back_iv)
-    ImageView backIv;
-    @BindView(R.id.record_iv)
-    ImageView recordIv;
-    @BindView(R.id.head_iv)
-    ImageView headIv;
-    @BindView(R.id.name_tv)
-    TextView nameTv;
-    @BindView(R.id.money_tv)
-    TextView moneyTv;
-    @BindView(R.id.tip_tv)
-    TextView tipTv;
+public class RedRecordListActivity extends BasicActivity implements RequestView, ReLoadingData,SelectBackListener {
+
+    @BindView(R.id.back_img)
+    ImageView mBackImg;
+    @BindView(R.id.title_text)
+    TextView mTitleText;
+    @BindView(R.id.back_text)
+    TextView mBackText;
+    @BindView(R.id.left_back_lay)
+    LinearLayout mLeftBackLay;
+    @BindView(R.id.right_img)
+    ImageView rightImg;
+    @BindView(R.id.right_lay)
+    LinearLayout rightLay;
     @BindView(R.id.refresh_list_view)
     LRecyclerView refreshListView;
     @BindView(R.id.content)
     LinearLayout content;
     @BindView(R.id.page_view)
     PageView pageView;
-    @BindView(R.id.total_tv)
-    TextView totalTv;
     @BindView(R.id.divide_line)
     View divideLine;
 
     private LRecyclerViewAdapter mLRecyclerViewAdapter1 = null;
-    private RedListAdapter mListAdapter;
+    private RedRecordListAdapter mListAdapter;
     private List<Map<String,Object>> mDataList = new ArrayList<>();
-
-    private String type ="";
 
     @Override
     public int getContentView() {
-        return R.layout.activity_red_list;
-    }
-
-    @Override
-    public void setBarTextColor() {
-        StatusBarUtil.setDarkMode(this);
+        return R.layout.activity_red_record_list;
     }
 
     @Override
     public void init() {
-        StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, R.color.red_package), MbsConstans.ALPHA);
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null){
-           String id =  bundle.getString("id");
-           type = bundle.getString("type");
-           if (!UtilTools.empty(type)){
-               if (type.equals("1")){
-                   getRedStatusAction(id);
-               }else {
-                   getTransferStatusAction(id);
-               }
-           }
-
-
+        StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
+        mTitleText.setCompoundDrawables(null,null,null,null);
+        divideLine.setVisibility(View.GONE);
+        rightImg.setVisibility(View.GONE);
+        Bundle bundle =getIntent().getExtras();
+        if (!UtilTools.empty(bundle)){
+            String type = bundle.getString("type");
+            LogUtilDebug.i("show","TYPE----------"+type);
+            if (!UtilTools.empty(type)){
+                if (type.equals("1")){
+                    mTitleText.setText("红包历史");
+                    getRedRecordAction();
+                }else {
+                    mTitleText.setText("转账历史");
+                    getTransferRecordAction();
+                }
+            }
         }
-        initView();
 
+
+        initView();
 
     }
 
@@ -107,48 +103,41 @@ public class RedListActivity extends BasicActivity implements RequestView, ReLoa
         pageView.setContentView(content);
         pageView.setReLoadingData(this);
         pageView.showLoading();
-        LinearLayoutManager manager = new LinearLayoutManager(RedListActivity.this);
+        LinearLayoutManager manager = new LinearLayoutManager(RedRecordListActivity.this);
         manager.setOrientation(RecyclerView.VERTICAL);
         refreshListView.setLayoutManager(manager);
 
     }
 
-    private void getRedStatusAction(String id) {
+    private void getRedRecordAction() {
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(RedListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(RedRecordListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("id", id+"");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_RED_INFO, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_RED_RECORD, map);
     }
 
-    private void getTransferStatusAction(String id) {
+    private void getTransferRecordAction() {
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(RedListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(RedRecordListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("id", id+"");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_ZHUANZHANG_INFO, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_ZHUANZHANG_RECORD, map);
     }
 
 
 
-    @OnClick({R.id.back_iv, R.id.record_iv})
+    @OnClick({R.id.left_back_lay})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.back_iv:
+            case R.id.left_back_lay:
                 finish();
                 break;
-            case R.id.record_iv:
-                Intent intent = new Intent(RedListActivity.this,RedRecordListActivity.class);
-                intent.putExtra("type",type);
-                startActivity(intent);
 
-                break;
         }
     }
 
@@ -167,28 +156,17 @@ public class RedListActivity extends BasicActivity implements RequestView, ReLoa
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         Intent intent;
         switch (mType){
-            case MethodUrl.CHAT_ZHUANZHANG_INFO:
-            case MethodUrl.CHAT_RED_INFO:
+            case MethodUrl.CHAT_ZHUANZHANG_RECORD:
+            case MethodUrl.CHAT_RED_RECORD:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
-                        Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
-                        Map<String,Object> mapInfo = (Map<String, Object>) mapData.get("info");
-                        GlideUtils.loadImage(RedListActivity.this,mapInfo.get("portrait")+"",headIv);
-                        nameTv.setText(mapInfo.get("name")+"");
-                        moneyTv.setText(mapInfo.get("money")+" "+mapInfo.get("symbol"));
-                        tipTv.setText(mapInfo.get("text")+"");
-
-                        if (UtilTools.empty(mapData.get("list")+"")){
-                            totalTv.setVisibility(View.GONE);
-                            pageView.setVisibility(View.GONE);
+                        if (UtilTools.empty(tData.get("data")+"")){
+                            pageView.showEmpty();
                         }else {
-                            totalTv.setVisibility(View.VISIBLE);
-                            pageView.setVisibility(View.VISIBLE);
-                            mDataList = (List<Map<String, Object>>) mapData.get("list");
+                            mDataList = (List<Map<String, Object>>) tData.get("data");
                             if (UtilTools.empty(mDataList)) {
                                 pageView.showEmpty();
                             } else {
-                                totalTv.setText(mDataList.size()+"个红包");
                                 pageView.showContent();
                                 responseData();
                                 refreshListView.refreshComplete(10);
@@ -203,7 +181,7 @@ public class RedListActivity extends BasicActivity implements RequestView, ReLoa
 
                     case "1": //token过期
                         closeAllActivity();
-                        intent = new Intent(RedListActivity.this, LoginActivity.class);
+                        intent = new Intent(RedRecordListActivity.this, LoginActivity.class);
                         startActivity(intent);
                         break;
                 }
@@ -237,7 +215,7 @@ public class RedListActivity extends BasicActivity implements RequestView, ReLoa
 
     private void responseData() {
         if (mListAdapter == null) {
-            mListAdapter = new RedListAdapter(RedListActivity.this);
+            mListAdapter = new RedRecordListAdapter(RedRecordListActivity.this);
             mListAdapter.addAll(mDataList);
 
             /*AnimationAdapter adapter = new ScaleInAnimationAdapter(mDataAdapter);
@@ -291,8 +269,6 @@ public class RedListActivity extends BasicActivity implements RequestView, ReLoa
         } else {
             pageView.showContent();
         }
-
-
     }
 
     @Override

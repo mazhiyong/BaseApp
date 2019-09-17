@@ -39,13 +39,18 @@ public class RongRedPacketMessage extends MessageContent {
     private String message;
     //状态红包(待领取   已领取)  转账(待确认   已收账)
     private String status;
+    //类型 1 红包  2转账
+    private String type;
+
+
 
     public RongRedPacketMessage() {
 
     }
 
-    public static RongRedPacketMessage obtain(String id,String userid, String message,String status) {
+    public static RongRedPacketMessage obtain(String type,String id,String userid, String message,String status) {
         RongRedPacketMessage rongRedPacketMessage = new RongRedPacketMessage();
+        rongRedPacketMessage.type = type;
         rongRedPacketMessage.id = id;
         rongRedPacketMessage.userid = userid;
         rongRedPacketMessage.message = message;
@@ -59,6 +64,7 @@ public class RongRedPacketMessage extends MessageContent {
         try {
             String jsonStr = new String(data, "UTF-8");
             JSONObject jsonObj = new JSONObject(jsonStr);
+            setType(jsonObj.getString("type"));
             setId(jsonObj.getString("id"));
             setUserid(jsonObj.getString("userid"));
             setMessage(jsonObj.getString("message"));
@@ -79,6 +85,7 @@ public class RongRedPacketMessage extends MessageContent {
      * @param in 初始化传入的 Parcel。
      */
     public RongRedPacketMessage(Parcel in) {
+        setType(ParcelUtils.readFromParcel(in));
         setId(ParcelUtils.readFromParcel(in));
         setStatus(ParcelUtils.readFromParcel(in));
         setUserid(ParcelUtils.readFromParcel(in));
@@ -122,6 +129,7 @@ public class RongRedPacketMessage extends MessageContent {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         // 这里可继续增加你消息的属性
+        ParcelUtils.writeToParcel(dest, type);
         ParcelUtils.writeToParcel(dest, id);
         ParcelUtils.writeToParcel(dest, message);
         ParcelUtils.writeToParcel(dest, userid);
@@ -137,6 +145,7 @@ public class RongRedPacketMessage extends MessageContent {
     public byte[] encode() {
         JSONObject jsonObj = new JSONObject();
         try {
+            jsonObj.put("type",type);
             jsonObj.put("id", id);
             jsonObj.put("userid", userid);
             jsonObj.put("message", message);
@@ -188,5 +197,12 @@ public class RongRedPacketMessage extends MessageContent {
 
     public String getId() {
         return id;
+    }
+
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
     }
 }

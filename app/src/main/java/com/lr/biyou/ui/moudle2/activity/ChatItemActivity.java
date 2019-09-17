@@ -23,6 +23,7 @@ import com.lr.biyou.rongyun.ui.activity.SearchHistoryMessageActivity;
 import com.lr.biyou.rongyun.ui.widget.switchbutton.SwitchButton;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
@@ -33,6 +34,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -172,6 +175,7 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
                 break;
             case R.id.tousu_lay:
                 intent = new Intent(ChatItemActivity.this,ChoseReasonTypeActivity.class);
+                intent.putExtra("id",Id);
                 startActivity(intent);
                 break;
             case R.id.delete_tv:
@@ -194,7 +198,22 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
                     case R.id.confirm:
                         sureOrNoDialog.dismiss();
                         //清除聊天记录
-                        //pingCangAllAction();
+                        RongIM.getInstance().clearMessages(conversationType, targId, new RongIMClient.ResultCallback<Boolean>() {
+                            @Override
+                            public void onSuccess(Boolean aBoolean) {
+                                LogUtilDebug.i("show","清除成功");
+                            }
+
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+                                LogUtilDebug.i("show","清除失败"+errorCode);
+                            }
+                        });
+                        // 清除远端消息
+                        RongIMClient.getInstance().cleanRemoteHistoryMessages(
+                                conversationType,
+                                targId, System.currentTimeMillis(),
+                                null);
                         break;
                 }
             }

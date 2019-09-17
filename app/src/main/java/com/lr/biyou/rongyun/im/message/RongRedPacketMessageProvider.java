@@ -10,10 +10,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lr.biyou.R;
+import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.redpackage.CustomDialog;
 import com.lr.biyou.mywidget.redpackage.OnRedPacketDialogClickListener;
 import com.lr.biyou.mywidget.redpackage.RedPacketViewHolder;
 import com.lr.biyou.ui.moudle2.activity.RedListActivity;
+import com.lr.biyou.utils.tool.JSONUtil;
+import com.lr.biyou.utils.tool.LogUtilDebug;
+import com.lr.biyou.utils.tool.SPUtils;
+import com.lr.biyou.utils.tool.UtilTools;
+
+import java.util.Map;
 
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
@@ -28,12 +36,13 @@ import io.rong.imlib.model.Message;
  */
 @ProviderTag(messageContent = RongRedPacketMessage.class, showPortrait = true, showProgress = true, centerInHorizontal = false)
 // 会话界面自定义UI注解
-public class RongRedPacketMessageProvider extends IContainerItemProvider.MessageProvider<RongRedPacketMessage> {
+public class RongRedPacketMessageProvider extends IContainerItemProvider.MessageProvider<RongRedPacketMessage>  implements RequestView {
 
     /**
      * 初始化View
      */
     private Context context;
+    private RongRedPacketMessage redPacketMessage;
 
     @Override
     public View newView(Context context, ViewGroup group) {
@@ -79,21 +88,67 @@ public class RongRedPacketMessageProvider extends IContainerItemProvider.Message
     //点击领取
     @Override
     public void onItemClick(View view, int position, RongRedPacketMessage content, UIMessage message) {
-        /*if (content.getStatus().equals("待领取")) {
-            showRedPacketDialog(content);
-        } else {
-            Toast.makeText(context, "已领取", Toast.LENGTH_LONG).show();
-        }*/
-
         Intent intent = new Intent(context, RedListActivity.class);
         intent.putExtra("id",content.getId());
+        intent.putExtra("type",content.getType());
         context.startActivity(intent);
+
+       /* redPacketMessage = content;
+        RequestPresenterImp mRequestPresenterImp = new RequestPresenterImp(this, context);
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(context, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("id", content.getId());
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_RED_INFO, map);*/
+
 
     }
 
 
     @Override
     public void onItemLongClick(View view, int position, RongRedPacketMessage content, UIMessage message) {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void disimissProgress() {
+
+    }
+
+    @Override
+    public void loadDataSuccess(Map<String, Object> tData, String mType) {
+        if (!UtilTools.empty(tData.get("data"))){
+            Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
+            if (!UtilTools.empty(mapData)){
+                Map<String,Object> mapInfo = (Map<String, Object>) mapData.get("info");
+                if (!UtilTools.empty(mapInfo)){
+                    if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {
+                        String s = SPUtils.get(context, MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
+                        MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
+                    }
+                    if ((mapInfo.get("text")+"").equals("等待领取") && !MbsConstans.RONGYUN_MAP.get("id").equals(mapInfo.get("rc_id")+"")){
+                        showRedPacketDialog(redPacketMessage);
+                    }else {
+                        Intent intent = new Intent(context, RedListActivity.class);
+                        LogUtilDebug.i("show","redPacketMessage000:"+redPacketMessage.getId());
+                        intent.putExtra("id",redPacketMessage.getId());
+                        context.startActivity(intent);
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void loadDataError(Map<String, Object> map, String mType) {
 
     }
 

@@ -1,6 +1,7 @@
 package com.lr.biyou.ui.moudle2.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.mvp.presenter.RequestPresenterImp;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.view.PageView;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle5.adapter.ChoseBiTypeAdapter;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
@@ -81,6 +83,7 @@ public class ChoseReasonTypeActivity extends BasicActivity implements RequestVie
     //选中后的结果集合
     private List<Map<String, Object>> mSelectList = new ArrayList<>();
     private int RESULT_CODE=1;
+    private String id;
     @Override
     public int getContentView() {
         return R.layout.activity_chose_reason_type;
@@ -92,6 +95,12 @@ public class ChoseReasonTypeActivity extends BasicActivity implements RequestVie
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
         mTitleText.setText("投诉");
         mTitleText.setCompoundDrawables(null,null,null,null);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null){
+            id = bundle.getString("id");
+        }
+
+
         initView();
         //请求原因数据
         reasonListAction();
@@ -120,20 +129,6 @@ public class ChoseReasonTypeActivity extends BasicActivity implements RequestVie
             }
         });
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("name","USDT");
-        mDataList.add(map);
-        Map<String,Object> map1 = new HashMap<>();
-        map1.put("name","BTC");
-        mDataList.add(map1);
-        Map<String,Object> map2 = new HashMap<>();
-        map2.put("name","ETH");
-        mDataList.add(map2);
-        Map<String,Object> map3 = new HashMap<>();
-        map3.put("name","EOS");
-        mDataList.add(map3);
-
-        responseData();
     }
 
 
@@ -178,7 +173,7 @@ public class ChoseReasonTypeActivity extends BasicActivity implements RequestVie
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_RECENTLY_LIST,map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_REASON_LIST,map);
     }
 
 
@@ -226,12 +221,15 @@ public class ChoseReasonTypeActivity extends BasicActivity implements RequestVie
                     for (Map m:list) {
                         boolean b = (Boolean)m.get("select");
                         Map<String,Object>mSelectObject= (Map<String, Object>) m.get("object");
-                        if (b) {
-                            mSelectList.add(mSelectObject);
-                            Intent mIntent = new Intent(ChoseReasonTypeActivity.this,TousuActivity.class);
-                            mIntent.putExtra("DATA",(Serializable) mSelectObject);
-                            startActivity(mIntent);
-                            finish();
+                        if (mSelectObject != null){
+                            mSelectObject.put("userid",id);
+                            if (b) {
+                                mSelectList.add(mSelectObject);
+                                Intent mIntent = new Intent(ChoseReasonTypeActivity.this,TousuActivity.class);
+                                mIntent.putExtra("DATA",(Serializable) mSelectObject);
+                                startActivity(mIntent);
+                                finish();
+                            }
                         }
                     }
 
@@ -302,10 +300,36 @@ public class ChoseReasonTypeActivity extends BasicActivity implements RequestVie
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
-
+        Intent intent;
         switch (mType){
             case  MethodUrl.CHAT_REASON_LIST:
+                switch (tData.get("code")+"") {
+                    case "0":
+                        if (UtilTools.empty(tData.get("data")+"")){
+                            mPageView.showEmpty();
+                        }else {
+                            mDataList = (List<Map<String, Object>>) tData.get("data");
+                            if (mDataList != null && mDataList.size()>0){
+                                for (Map<String,Object> map:mDataList){
+                                    map.put("symbol",map.get("title")+"");
+                                }
+                            }
+                            mPageView.showContent();
+                            responseData();
+                            mRefreshListView.refreshComplete(10);
 
+                        }
+                        break;
+                    case "1":
+                        closeAllActivity();
+                        intent = new Intent(ChoseReasonTypeActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                }
                 break;
             case  MethodUrl.REFRESH_TOKEN:
 

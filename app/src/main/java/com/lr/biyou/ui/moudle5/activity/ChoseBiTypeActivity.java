@@ -30,7 +30,6 @@ import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.CallBackTotal;
 import com.lr.biyou.listener.OnMyItemClickListener;
 import com.lr.biyou.listener.ReLoadingData;
-import com.lr.biyou.mvp.presenter.RequestPresenterImp;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
@@ -168,7 +167,6 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
 
     private void typeListAction() {
         mRequestTag = MethodUrl.CHONGTI_LIST;
-        mRequestPresenterImp = new RequestPresenterImp(this, this);
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(ChoseBiTypeActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();

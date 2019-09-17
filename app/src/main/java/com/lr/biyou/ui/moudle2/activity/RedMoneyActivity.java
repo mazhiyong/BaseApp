@@ -19,13 +19,11 @@ import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.SelectBackListener;
-import com.lr.biyou.mvp.presenter.RequestPresenterImp;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.mywidget.dialog.TradePassDialog;
 import com.lr.biyou.rongyun.im.message.RongRedPacketMessage;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle5.activity.HuaZhuanListActivity;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
@@ -53,7 +51,6 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     TextView mBackText;
     @BindView(R.id.left_back_lay)
     LinearLayout mLeftBackLay;
-    Map<String, Object> mapData = new HashMap<>();
     @BindView(R.id.right_img)
     ImageView rightImg;
     @BindView(R.id.right_lay)
@@ -77,6 +74,7 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     @BindView(R.id.beizhu_et)
     EditText beizhuEt;
 
+    Map<String, Object> mapData = new HashMap<>();
 
     private KindSelectDialog mDialog2;
 
@@ -101,6 +99,7 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
             type = bundle.getString("type");
             id = bundle.getString("id");
         }
+
         mTitleText.setText("发红包");
         mTitleText.setCompoundDrawables(null,null,null,null);
         divideLine.setVisibility(View.GONE);
@@ -140,7 +139,6 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     }
 
     private void typeListAction() {
-        mRequestPresenterImp = new RequestPresenterImp(this, this);
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(RedMoneyActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
@@ -158,8 +156,9 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
             case R.id.back_img:
                 finish();
                 break;
-            case R.id.right_lay: //充提记录
-                intent = new Intent(RedMoneyActivity.this, HuaZhuanListActivity.class);
+            case R.id.right_lay: //红包记录
+                intent = new Intent(RedMoneyActivity.this, RedRecordListActivity.class);
+                intent.putExtra("type","1");
                 startActivity(intent);
 
                 break;
@@ -210,7 +209,6 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     @Override
     public void onPassFullListener(String pass) {
         mTradePassDialog.mPasswordEditText.setText(null);
-        mRequestPresenterImp = new RequestPresenterImp(this, this);
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(RedMoneyActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
@@ -252,7 +250,8 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                         String red_id = tData.get("data")+"";
                         finish();
                         if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
-                            RongRedPacketMessage rongRedPacketMessage = RongRedPacketMessage.obtain(red_id,tarid, beizhuEt.getText()+"","待领取");
+                            LogUtilDebug.i("show","备注信息:"+beizhuEt.getText()+"");
+                            RongRedPacketMessage rongRedPacketMessage = RongRedPacketMessage.obtain("1",red_id,tarid, beizhuEt.getText()+"","待领取");
                             if (type.equals("1")){
                                 RongIM.getInstance().getRongIMClient().sendMessage(Conversation.ConversationType.PRIVATE, tarid, rongRedPacketMessage, null, null, new RongIMClient.SendMessageCallback() {
                                     @Override
@@ -263,6 +262,7 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                                     @Override
                                     public void onSuccess(Integer integer) {
                                         LogUtilDebug.i("show", "-----onScuess--" );
+                                        sendMessageAction();
                                     }
                                 });
                             }else {
@@ -360,6 +360,19 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                 getMoneyAction(str);
                 break;
         }
+    }
+
+    public void sendMessageAction(){
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(RedMoneyActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("type", "3");
+        map.put("content","红包");
+        map.put("receiver_id",id);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_SEND_NEWS, map);
     }
 
     private void getMoneyAction(String symbol) {

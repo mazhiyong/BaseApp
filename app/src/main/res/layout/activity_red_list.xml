@@ -55,7 +55,7 @@
                     android:layout_height="@dimen/dp_45" />
                 <TextView
                     android:id="@+id/name_tv"
-                    android:text="XXXX"
+                    android:text=""
                     android:layout_marginLeft="@dimen/dp_10"
                     android:layout_gravity="center_vertical"
                     android:textColor="#FFD685"
@@ -95,12 +95,6 @@
         android:padding="@dimen/dp_10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <View
-        android:id="@+id/divide_line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/divide_hight"
-        android:layout_alignParentBottom="true"
-        android:background="@color/divide_line" />
     <com.lr.biyou.mywidget.view.PageView
         android:id="@+id/page_view"
         android:layout_width="match_parent"
@@ -110,6 +104,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
+            <View
+                android:id="@+id/divide_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:layout_alignParentBottom="true"
+                android:background="@color/divide_line" />
             <com.github.jdsjlzx.recyclerview.LRecyclerView
                 android:id="@+id/refresh_list_view"
                 android:layout_width="match_parent"

@@ -71,7 +71,9 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import io.rong.imkit.RongIM;
 import io.rong.imkit.emoticon.AndroidEmoji;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -148,6 +150,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
     private String name = "";
     private List<Map<String,Object>> memberList;
 
+    private String protect;
 
     @Override
     public int getContentView() {
@@ -215,7 +218,9 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
 
             @Override
             public void onMemberClicked(GroupMember groupMember) {
-                showMemberInfo(groupMember);
+                if (protect.equals("0")){
+                    showMemberInfo(groupMember);
+                }
             }
         });
 
@@ -557,7 +562,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                 break;
             case R.id.profile_siv_group_save_to_contact://投诉
                 intent = new Intent(this, ChoseReasonTypeActivity.class);
-                intent.putExtra(IntentExtra.GROUP_ID, groupId);
+                intent.putExtra("id", groupId);
                 startActivity(intent);
                 break;
             default:
@@ -775,8 +780,25 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                         break;
                     case R.id.confirm:
                         sureOrNoDialog.dismiss();
-                        //清除聊天记录
-                        //pingCangAllAction();
+                        //清除本地聊天记录
+                        RongIM.getInstance().clearMessages(conversationType, groupId, new RongIMClient.ResultCallback<Boolean>() {
+                            @Override
+                            public void onSuccess(Boolean aBoolean) {
+                                LogUtilDebug.i("show","清除成功");
+                            }
+
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+                                LogUtilDebug.i("show","清除失败"+errorCode);
+                            }
+                        });
+
+                        // 清除远端消息
+                        RongIMClient.getInstance().cleanRemoteHistoryMessages(
+                                conversationType,
+                                groupId, System.currentTimeMillis(),
+                                null);
+
                         break;
                 }
             }
@@ -936,11 +958,13 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                                 }else {
                                     disSwitch.setChecked(true);
                                 }
-                                if ((map.get("protect")+"").equals("0")){
+                                if ((map.get("top")+"").equals("0")){
                                     topSwitch.setChecked(false);
                                 }else {
                                     topSwitch.setChecked(true);
                                 }
+                                protect = map.get("protect")+"";
+
 
                                 if (!UtilTools.empty(map.get("member")+"")){
                                     memberList = (List<Map<String, Object>>) map.get("member");

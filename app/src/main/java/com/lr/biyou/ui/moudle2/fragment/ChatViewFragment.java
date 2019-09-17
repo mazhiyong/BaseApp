@@ -4,6 +4,9 @@ import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +37,7 @@ import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicFragment;
 import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.listener.CallBackTotal;
 import com.lr.biyou.listener.OnChildClickListener;
 import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.mvp.view.RequestView;
@@ -71,7 +75,7 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 
 @SuppressLint("ValidFragment")
-public class ChatViewFragment extends BasicFragment implements RequestView, ReLoadingData {
+public class ChatViewFragment extends BasicFragment implements RequestView, ReLoadingData{
 
 
     @BindView(R.id.title_text)
@@ -293,6 +297,96 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         });
 
 
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence sequence, int start, int before, int count) {
+                if (sequence.toString().length() > 0){
+                    switch (mRequestTag) {
+                        case MethodUrl.CHAT_RECENTLY_LIST:
+                            if (mListAdapter2 != null){
+                                mListAdapter2.getFilter().filter(sequence.toString());
+                                mListAdapter2.setBackTotal(new CallBackTotal() {
+                                    @Override
+                                    public void setTotal(int size) {
+                                        Log.i("show","size:"+size);
+                                        if (size == 0) {
+                                            mPageView.showEmpty();
+                                        } else {
+                                            mPageView.showContent();
+                                        }
+                                    }
+                                });
+                            }
+                            break;
+                        case MethodUrl.CHAT_MY_FRIENDS:
+                            if (mListAdapter != null){
+                                mListAdapter.getFilter().filter(sequence.toString());
+                                mListAdapter.setBackTotal(new CallBackTotal() {
+                                    @Override
+                                    public void setTotal(int size) {
+                                        if (size == 0) {
+                                            mPageView.showEmpty();
+                                        } else {
+                                            mPageView.showContent();
+                                        }
+                                    }
+                                });
+                            }
+                            break;
+                        case MethodUrl.CHAT_MY_GROUPS:
+                            if (mListAdapter3 != null){
+                                mListAdapter3.getFilter().filter(sequence.toString());
+                                mListAdapter3.setBackTotal(new CallBackTotal() {
+                                    @Override
+                                    public void setTotal(int size) {
+                                        if (size == 0) {
+                                            mPageView.showEmpty();
+                                        } else {
+                                            mPageView.showContent();
+                                        }
+                                    }
+                                });
+
+                            }
+                            break;
+
+                    }
+                }else {
+                    switch (mRequestTag) {
+                        case MethodUrl.CHAT_RECENTLY_LIST:
+                            if (mRecentlyList != null && mRecentlyList.size() > 0){
+                                responseData2();
+                            }
+                            break;
+                        case MethodUrl.CHAT_MY_FRIENDS:
+                            if (mFriendList != null && mFriendList.size() > 0){
+                                responseData();
+                            }
+                            break;
+                        case MethodUrl.CHAT_MY_GROUPS:
+                            if (mGroupList != null && mGroupList.size() > 0){
+                                responseData3();
+                            }
+                            break;
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
     }
 
     public void setBarTextColor() {
@@ -449,9 +543,15 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                             if (UtilTools.empty(mRecentlyList)) {
                                 mPageView.showEmpty();
                             } else {
-
+                                List<Map<String,Object>> topList = new ArrayList<>();
+                                List<Map<String,Object>> normalList = new ArrayList<>();
                                 for (Map<String,Object> map : mRecentlyList){
                                     map.put("account","0");
+                                    if ((map.get("top")+"").equals("1")){
+                                        topList.add(map);
+                                    }else {
+                                        normalList.add(map);
+                                    }
                                     if ((map.get("type")+"").equals("1")){
                                        RongIM.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, map.get("rc_id") + "", new RongIMClient.ResultCallback<Integer>() {
                                            @Override
@@ -501,6 +601,10 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                                         });
                                     }
                                 }
+                                mRecentlyList.clear();
+                                mRecentlyList.addAll(topList);
+                                mRecentlyList.addAll(normalList);
+
                                 mPageView.showContent();
                                 responseData2();
                                 mRefreshListView.refreshComplete(10);
@@ -566,6 +670,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     }
 
 
+    //朋友列表
     private void responseData() {
         if (mListAdapter == null) {
             mListAdapter = new MyFriendListAdapter(getActivity());
@@ -638,6 +743,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     }
 
 
+    //最近聊天
     private void responseData2() {
         if (mListAdapter2 == null) {
             mListAdapter2 = new MyRecentChatListAdapter(getActivity());
@@ -951,6 +1057,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
         }
     }
+
 
 
 }

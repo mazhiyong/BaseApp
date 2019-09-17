@@ -29,7 +29,7 @@ public class ChoseBiTypeAdapter extends ListBaseAdapter implements Filterable {
 
     private List<Map<String,Object>> mBooleanList;
     private LayoutInflater mLayoutInflater;
-    protected List<Map<String,Object>> mSourceList = new ArrayList<>();
+    private List<Map<String,Object>> mSourceList = new ArrayList<>();
 
     public List<Map<String, Object>> getSourceList() {
         return mSourceList;

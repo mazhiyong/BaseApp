@@ -11,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.lr.biyou.R;
 import com.lr.biyou.rongyun.im.message.RongRedPacketMessage;
 import com.lr.biyou.ui.moudle2.activity.RedListActivity;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +20,6 @@ import butterknife.OnClick;
 /**
  * @author ChayChan
  * @description: 红包弹框
- * @date 2017/11/27  15:12
  */
 
 public class RedPacketViewHolder {
@@ -41,6 +41,8 @@ public class RedPacketViewHolder {
 
     private Context mContext;
     private OnRedPacketDialogClickListener mListener;
+
+    private RongRedPacketMessage redPacketMessage;
 
     private int[] mImgResIds = new int[]{
             R.drawable.icon_open_red_packet1,
@@ -90,6 +92,7 @@ public class RedPacketViewHolder {
     }
 
     public void setData(RongRedPacketMessage entity) {
+        redPacketMessage = entity;
         RequestOptions options = new RequestOptions();
         options.centerCrop()
                 .circleCrop();
@@ -123,7 +126,9 @@ public class RedPacketViewHolder {
                     mListener.onCloseClick();
                 }
                 Intent intent = new Intent(mContext, RedListActivity.class);
+                intent.putExtra("id",redPacketMessage.getId());
                 mContext.startActivity(intent);
+
             }
 
             @Override

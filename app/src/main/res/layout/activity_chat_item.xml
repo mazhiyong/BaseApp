@@ -308,6 +308,7 @@
         android:id="@+id/delete_tv"
         android:layout_width="wrap_content"
         android:text="删除"
+        android:visibility="gone"
         android:paddingTop="@dimen/dp_8"
         android:paddingLeft="@dimen/dp_40"
         android:paddingRight="@dimen/dp_40"
@@ -316,7 +317,7 @@
         android:layout_marginTop="@dimen/dp_30"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/white"
-        android:background="@drawable/btn_next_red"
+        android:background="@drawable/seal_btn_red_selector"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

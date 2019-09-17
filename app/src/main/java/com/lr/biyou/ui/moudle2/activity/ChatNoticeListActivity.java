@@ -323,7 +323,6 @@ public class ChatNoticeListActivity extends BasicActivity implements RequestView
                         startActivity(intent);
                         break;
                     case "-1":
-                        mPageView.showNetworkError();
                         showToastMsg(tData.get("msg")+"");
                         break;
                 }
