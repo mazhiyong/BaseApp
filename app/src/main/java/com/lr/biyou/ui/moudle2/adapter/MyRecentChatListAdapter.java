@@ -105,11 +105,13 @@ public class MyRecentChatListAdapter extends ListBaseAdapter implements Filterab
 
     @Override
     public Filter getFilter() {
+
         return new Filter() {
             //执行过滤操作
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String charString = charSequence.toString();
+                Log.i("show","charString:"+charString);
                 if (charString.isEmpty()) {
                     //没有过滤的内容，则使用源数据
                     mDataList = mSourceList;
@@ -117,6 +119,7 @@ public class MyRecentChatListAdapter extends ListBaseAdapter implements Filterab
                     List<Map<String, Object>> filteredList = new ArrayList<>();
                     for (Map<String, Object> map : mSourceList) {
                         String str1 = map.get("name") + "";
+                        Log.i("show","str1:"+str1);
                         //这里根据需求，添加匹配规则
                         if (str1.contains(charString) ) {
                             filteredList.add(map);

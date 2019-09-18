@@ -539,7 +539,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
             case R.id.profile_siv_group_qrcode://群二维码
                 //showGroupQrCode();
                 intent = new Intent(this, GroupQrCodeActivity.class);
-                intent.putExtra("DATA", qrcodeImgUrl);
+                intent.putExtra("DATA", groupId);
                 startActivity(intent);
                 break;
             case R.id.profile_siv_group_notice:

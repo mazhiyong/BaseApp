@@ -28,17 +28,17 @@ import io.rong.imlib.model.UserInfo;
  * 请不要以 "RC:" 开头， "RC:" 为官方保留前缀。
  */
 
-@MessageTag(value = "app:red", flag = MessageTag.ISPERSISTED)
+@MessageTag(value = "LR:redPackMsg", flag = MessageTag.ISPERSISTED)
 public class RongRedPacketMessage extends MessageContent {
 
     //红包id 类似于messageId
     private String id;
     //融云id(用户id或是群组id)
-    private String userid;
+    //private String userid;
     //备注提示信息 :红包(恭喜发财)  转账(转账 1000)
     private String message;
     //状态红包(待领取   已领取)  转账(待确认   已收账)
-    private String status;
+    //private String status;
     //类型 1 红包  2转账
     private String type;
 
@@ -48,13 +48,13 @@ public class RongRedPacketMessage extends MessageContent {
 
     }
 
-    public static RongRedPacketMessage obtain(String type,String id,String userid, String message,String status) {
+    public static RongRedPacketMessage obtain(String type,String id, String message) {
         RongRedPacketMessage rongRedPacketMessage = new RongRedPacketMessage();
         rongRedPacketMessage.type = type;
         rongRedPacketMessage.id = id;
-        rongRedPacketMessage.userid = userid;
+       // rongRedPacketMessage.userid = userid;
         rongRedPacketMessage.message = message;
-        rongRedPacketMessage.status = status;
+        //rongRedPacketMessage.status = status;
         return rongRedPacketMessage;
     }
 
@@ -66,9 +66,9 @@ public class RongRedPacketMessage extends MessageContent {
             JSONObject jsonObj = new JSONObject(jsonStr);
             setType(jsonObj.getString("type"));
             setId(jsonObj.getString("id"));
-            setUserid(jsonObj.getString("userid"));
+            //setUserid(jsonObj.getString("userid"));
             setMessage(jsonObj.getString("message"));
-            setStatus(jsonObj.getString("status"));
+            //setStatus(jsonObj.getString("status"));
             /*if (jsonObj.has("user")) {
                 setUserInfo(parseJsonToUserInfo(jsonObj.getJSONObject("user")));
             }*/
@@ -87,8 +87,8 @@ public class RongRedPacketMessage extends MessageContent {
     public RongRedPacketMessage(Parcel in) {
         setType(ParcelUtils.readFromParcel(in));
         setId(ParcelUtils.readFromParcel(in));
-        setStatus(ParcelUtils.readFromParcel(in));
-        setUserid(ParcelUtils.readFromParcel(in));
+        //setStatus(ParcelUtils.readFromParcel(in));
+        //setUserid(ParcelUtils.readFromParcel(in));
         setMessage(ParcelUtils.readFromParcel(in));
         setUserInfo(ParcelUtils.readFromParcel(in, UserInfo.class));
     }
@@ -132,8 +132,8 @@ public class RongRedPacketMessage extends MessageContent {
         ParcelUtils.writeToParcel(dest, type);
         ParcelUtils.writeToParcel(dest, id);
         ParcelUtils.writeToParcel(dest, message);
-        ParcelUtils.writeToParcel(dest, userid);
-        ParcelUtils.writeToParcel(dest, status);
+        //ParcelUtils.writeToParcel(dest, userid);
+        //ParcelUtils.writeToParcel(dest, status);
         ParcelUtils.writeToParcel(dest, getUserInfo());
 
     }
@@ -147,9 +147,9 @@ public class RongRedPacketMessage extends MessageContent {
         try {
             jsonObj.put("type",type);
             jsonObj.put("id", id);
-            jsonObj.put("userid", userid);
+            //jsonObj.put("userid", userid);
             jsonObj.put("message", message);
-            jsonObj.put("status",status);
+            //jsonObj.put("status",status);
 
            /* if (getJSONUserInfo() != null)
                 jsonObj.putOpt("user", getJSONUserInfo());*/
@@ -167,13 +167,13 @@ public class RongRedPacketMessage extends MessageContent {
         return null;
     }
 
-    public String getUserid() {
+   /* public String getUserid() {
         return userid;
     }
 
     public void setUserid(String userid) {
         this.userid = userid;
-    }
+    }*/
 
     public String getMessage() {
         return message;
@@ -183,13 +183,13 @@ public class RongRedPacketMessage extends MessageContent {
         this.message = message;
     }
 
-    public void setStatus(String status) {
+ /*   public void setStatus(String status) {
         this.status = status;
     }
 
     public String getStatus() {
         return status;
-    }
+    }*/
 
     public void setId(String id) {
         this.id = id;

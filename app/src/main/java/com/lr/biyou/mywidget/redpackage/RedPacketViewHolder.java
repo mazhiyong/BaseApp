@@ -11,7 +11,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.lr.biyou.R;
 import com.lr.biyou.rongyun.im.message.RongRedPacketMessage;
 import com.lr.biyou.ui.moudle2.activity.RedListActivity;
-import com.lr.biyou.utils.tool.LogUtilDebug;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,7 +101,7 @@ public class RedPacketViewHolder {
                 .apply(options)
                 .into(mIvAvatar);*/
 
-        mTvName.setText(entity.getUserid());
+        //mTvName.setText(entity.getUserid());
         mTvMsg.setText(entity.getMessage());
     }
 

@@ -65,6 +65,18 @@ public class MainActivity extends BasicActivity implements RequestView {
     ImageView btnCart;
     @BindView(R.id.btn_cart2)
     ImageView btnCart2;
+    @BindView(R.id.btn_container_index)
+    RelativeLayout rlay1;
+    @BindView(R.id.btn_container_get)
+    RelativeLayout rlay2;
+    @BindView(R.id.btn_container_return)
+    RelativeLayout rlay3;
+    @BindView(R.id.btn_container_person)
+    RelativeLayout rlay4;
+    @BindView(R.id.btn_container_zichan)
+    RelativeLayout rlay5;
+
+
     private TextView unreadLabel;
     // textview for unread event message
     private TextView unreadAddressLable;
@@ -293,8 +305,6 @@ public class MainActivity extends BasicActivity implements RequestView {
                 break;
 
         }
-
-
         if (currentTabIndex != index) {
             FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
             trx.hide(fragments[currentTabIndex]);
@@ -329,6 +339,8 @@ public class MainActivity extends BasicActivity implements RequestView {
         mTextViews[currentTabIndex].setSelected(false);
         mTextViews[index].setSelected(true);
         currentTabIndex = index;
+
+
     }
 
 
@@ -632,6 +644,20 @@ public class MainActivity extends BasicActivity implements RequestView {
         }
     }
 
+
+    public void toHeYueFragment(){
+        rlay3.performClick();
+    }
+
+    public void toBBFragment(){
+        rlay4.performClick();
+        mRepaymentFragment.TYPE = 0;
+    }
+
+    public void toFBFragment(){
+        rlay4.performClick();
+        mRepaymentFragment.TYPE = 1;
+    }
 
 
 

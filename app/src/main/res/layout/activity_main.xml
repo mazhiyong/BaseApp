@@ -187,11 +187,9 @@
 
         <RelativeLayout
             android:id="@+id/btn_container_zichan"
-
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:onClick="onTabClicked"
-
             android:layout_weight="1" >
 
             <LinearLayout

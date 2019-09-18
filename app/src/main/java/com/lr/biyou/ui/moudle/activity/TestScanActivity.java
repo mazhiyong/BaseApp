@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 
 import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
+import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.db.FaPiaoData;
@@ -80,6 +81,9 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
 
     private String mType = "";
 
+    private String groupId= "";
+    private String Id= "";
+
     @Override
     public int getContentView() {
         return R.layout.activity_test_scan;
@@ -102,8 +106,6 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
             mType = bundle.getString("type");
         }
 
-
-
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) this.getResources().getDimension(R.dimen.title_item_height) + UtilTools.getStatusHeight2(this));
         mTopLayout.setLayoutParams(layoutParams);
         mTopLayout.setPadding(0, UtilTools.getStatusHeight2(this), 0, 0);
@@ -111,9 +113,6 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
         mZXingView.setDelegate(this);
         mTitleText.setText("二维码");
         mTitleText.setTextColor(ContextCompat.getColor(this, R.color.white));
-
-
-
 
 
 
@@ -174,13 +173,23 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
         mFlashLightTv.setText("打开闪光灯");
         Intent intent ;
         switch (mType){
-            case "0":
+            case "0": //首页的扫一扫
                 Log.i("show","result:"+result);
-                if (result.contains("u=")){
+                if (result.contains("u=") && !result.contains("g=")){ //扫一扫加好友
                     intent = new Intent(this, AddFriendActivity.class);
                     intent.putExtra(IntentExtra.STR_TARGET_ID, result.substring(result.indexOf("u=")+2));
                     startActivity(intent);
                 }
+
+                if(result.contains("g=")){ //扫码入群
+                    groupId = result.substring(result.indexOf("g=")+2,result.indexOf("&u="));
+                    //String rc_id = result.substring(result.indexOf("&u=")+3); //生成二维码的用户的id
+                    intent = new Intent(this, AddFriendActivity.class);
+                    intent.putExtra(IntentExtra.STR_GROUP_ID, groupId);
+                    startActivity(intent);
+
+                }
+
                 break;
             case "1":
                 intent = new Intent(this, HtmlActivity.class);
@@ -218,7 +227,7 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
                     startActivity(intent);
                 }
                 break;
-            case "4": //提币地址
+            case "4": //提币地址 扫一扫
                 intent = new Intent();
                 intent.putExtra("result",result);
                 setResult(RESULT_OK,intent);
@@ -232,6 +241,9 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
         }
         finish();
     }
+
+
+
 
     @Override
     public void onCameraAmbientBrightnessChanged(boolean isDark) {
@@ -495,6 +507,7 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
     }
 
 
+
     protected void toast(@StringRes int message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
@@ -528,7 +541,42 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
      */
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
+        Intent intent;
+        switch (mType){
+            case MethodUrl.CHAT_QUERY_ID:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            Id = tData.get("data") + "";
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
 
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(TestScanActivity.this, com.lr.biyou.ui.moudle.activity.LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+            case MethodUrl.CHAT_GROUP_ADD:
+                switch (tData.get("code")+"") {
+                    case "0":
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+                    case "1":
+                        closeAllActivity();
+                        intent = new Intent(TestScanActivity.this, com.lr.biyou.ui.moudle.activity.LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                }
+        }
     }
 
     /**
@@ -539,6 +587,6 @@ public class TestScanActivity extends BasicActivity implements QRCodeView.Delega
      */
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
-
+        dealFailInfo(map,mType);
     }
 }

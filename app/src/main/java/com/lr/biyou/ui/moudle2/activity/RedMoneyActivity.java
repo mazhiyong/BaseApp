@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -75,6 +76,10 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     EditText beizhuEt;
 
     Map<String, Object> mapData = new HashMap<>();
+    @BindView(R.id.etmoney)
+    EditText etmoney;
+    @BindView(R.id.number_lay)
+    LinearLayout numberLay;
 
     private KindSelectDialog mDialog2;
 
@@ -86,9 +91,10 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
         return R.layout.activity_red_money;
     }
 
-    private String tarid ="";
+    private String tarid = "";
     private String type = "";
     private String id = "";
+
     @Override
     public void init() {
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -101,13 +107,13 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
         }
 
         mTitleText.setText("发红包");
-        mTitleText.setCompoundDrawables(null,null,null,null);
+        mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
         rightImg.setVisibility(View.VISIBLE);
         rightImg.setImageResource(R.drawable.icon6_dingdan);
 
 
-        etnumber.addTextChangedListener(new TextWatcher() {
+        etmoney.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -115,13 +121,13 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (UtilTools.empty(rate)){
+                if (UtilTools.empty(rate)) {
                     showToastMsg("请选择币种");
-                }else {
-                    if (s.toString().length()>0){
-                        total = Float.parseFloat(rate)*Integer.parseInt(s.toString())+"";
-                        cnyTv.setText("≈ "+total+"CNY");
-                    }else {
+                } else {
+                    if (s.toString().length() > 0) {
+                        total = Float.parseFloat(rate) * Integer.parseInt(s.toString()) + "";
+                        cnyTv.setText("≈ " + total + "CNY");
+                    } else {
                         cnyTv.setText("≈ 0.00CNY");
                     }
                 }
@@ -149,7 +155,7 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     }
 
 
-    @OnClick({R.id.back_img, R.id.right_lay,  R.id.change_iv, R.id.type_lay, R.id.selectall_tv, R.id.huzhuan_tv})
+    @OnClick({R.id.back_img, R.id.right_lay, R.id.change_iv, R.id.type_lay, R.id.selectall_tv, R.id.huzhuan_tv})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -158,7 +164,7 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                 break;
             case R.id.right_lay: //红包记录
                 intent = new Intent(RedMoneyActivity.this, RedRecordListActivity.class);
-                intent.putExtra("type","1");
+                intent.putExtra("type", "1");
                 startActivity(intent);
 
                 break;
@@ -168,12 +174,17 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
             case R.id.selectall_tv:
                 break;
             case R.id.huzhuan_tv:
-                if (UtilTools.empty(rate)){
+                if (UtilTools.empty(rate)) {
                     showToastMsg("请选择币种");
                     return;
                 }
 
-                if (UtilTools.empty(etnumber.getText())){
+                if (UtilTools.empty(etmoney.getText())) {
+                    showToastMsg("请输入红包金额");
+                    return;
+                }
+
+                if (UtilTools.empty(etnumber.getText())) {
                     showToastMsg("请输入红包个数");
                     return;
                 }
@@ -184,9 +195,10 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     }
 
     private TradePassDialog mTradePassDialog;
-    private void showPassDialog(){
 
-        if (mTradePassDialog == null){
+    private void showPassDialog() {
+
+        if (mTradePassDialog == null) {
             mTradePassDialog = new TradePassDialog(this, true);
             mTradePassDialog.setPassFullListener(RedMoneyActivity.this);
             mTradePassDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
@@ -200,7 +212,7 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                 }
             });
 
-        }else {
+        } else {
             mTradePassDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
             mTradePassDialog.mPasswordEditText.setText(null);
         }
@@ -214,17 +226,17 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
             MbsConstans.ACCESS_TOKEN = SPUtils.get(RedMoneyActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("symbol",typeTv.getText()+"");
-        map.put("number",etnumber.getText()+"");
-        map.put("total",total);
-        map.put("remake",beizhuEt.getText()+"");
-        if (type.equals("1")){
-            map.put("id",id);
-        }else {
-            map.put("id",tarid);
+        map.put("symbol", typeTv.getText() + "");
+        map.put("number", etnumber.getText() + "");
+        map.put("total", etmoney.getText()+"");
+        map.put("remake", beizhuEt.getText() + "");
+        if (type.equals("1")) {
+            map.put("id", id);
+        } else {
+            map.put("id", tarid);
         }
-        map.put("type",type);
-        map.put("payment_password",pass);
+        map.put("type", type);
+        map.put("payment_password", pass);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_SEND_RED, map);
     }
@@ -242,17 +254,17 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         Intent intent;
-        switch (mType){
+        switch (mType) {
             case MethodUrl.CHAT_SEND_RED:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
                         mTradePassDialog.dismiss();
-                        String red_id = tData.get("data")+"";
+                        String red_id = tData.get("data") + "";
                         finish();
                         if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
-                            LogUtilDebug.i("show","备注信息:"+beizhuEt.getText()+"");
-                            RongRedPacketMessage rongRedPacketMessage = RongRedPacketMessage.obtain("1",red_id,tarid, beizhuEt.getText()+"","待领取");
-                            if (type.equals("1")){
+                            LogUtilDebug.i("show", "备注信息:" + beizhuEt.getText() + "");
+                            RongRedPacketMessage rongRedPacketMessage = RongRedPacketMessage.obtain("1", red_id, beizhuEt.getText() + "");
+                            if (type.equals("1")) {
                                 RongIM.getInstance().getRongIMClient().sendMessage(Conversation.ConversationType.PRIVATE, tarid, rongRedPacketMessage, null, null, new RongIMClient.SendMessageCallback() {
                                     @Override
                                     public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
@@ -261,11 +273,11 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
 
                                     @Override
                                     public void onSuccess(Integer integer) {
-                                        LogUtilDebug.i("show", "-----onScuess--" );
+                                        LogUtilDebug.i("show", "-----onScuess--");
                                         sendMessageAction();
                                     }
                                 });
-                            }else {
+                            } else {
                                 RongIM.getInstance().getRongIMClient().sendMessage(Conversation.ConversationType.GROUP, tarid, rongRedPacketMessage, null, null, new RongIMClient.SendMessageCallback() {
                                     @Override
                                     public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
@@ -274,7 +286,7 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
 
                                     @Override
                                     public void onSuccess(Integer integer) {
-                                        LogUtilDebug.i("show", "-----onScuess--" );
+                                        LogUtilDebug.i("show", "-----onScuess--");
                                     }
                                 });
                             }
@@ -298,8 +310,8 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                         List<Map<String, Object>> mDataList2;
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             mDataList2 = (List<Map<String, Object>>) tData.get("data");
-                            for (Map<String,Object> map :mDataList2){
-                                map.put("name",map.get("symbol")+"");
+                            for (Map<String, Object> map : mDataList2) {
+                                map.put("name", map.get("symbol") + "");
                             }
                         } else {
                             mDataList2 = new ArrayList<>();
@@ -322,11 +334,15 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
             case MethodUrl.CHAT_RED_PAGE:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
-                        if (!UtilTools.empty(tData.get("data")+"")){
-                            Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
-                            yueTv.setText("余额:"+mapData.get("balance"));
-                            yueCnyTv.setText(" ≈"+mapData.get("cny")+"CNY");
-                            rate = mapData.get("rate")+"";
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
+                            yueTv.setText("余额:" + mapData.get("balance"));
+                            yueCnyTv.setText(" ≈" + mapData.get("cny") + "CNY");
+                            rate = mapData.get("rate") + "";
+                            if (etmoney.getText().toString().length()>0){
+                                total = Float.parseFloat(rate)*Integer.parseInt(etmoney.getText().toString())+"";
+                                cnyTv.setText("≈ "+total+"CNY");
+                            }
                         }
                         break;
                     case "-1": //请求失败
@@ -362,15 +378,15 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
         }
     }
 
-    public void sendMessageAction(){
+    public void sendMessageAction() {
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(RedMoneyActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(RedMoneyActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("type", "3");
-        map.put("content","红包");
-        map.put("receiver_id",id);
+        map.put("content", "红包");
+        map.put("receiver_id", id);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_SEND_NEWS, map);
     }
@@ -385,8 +401,6 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_RED_PAGE, map);
     }
-
-
 
 
     /**---------------------------------------------------------------------以下代码申请权限---------------------------------------------
@@ -412,5 +426,10 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     }
 
 
-
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

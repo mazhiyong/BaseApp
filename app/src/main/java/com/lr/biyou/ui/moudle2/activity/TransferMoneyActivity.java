@@ -198,7 +198,7 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                 }
 
                 if (UtilTools.empty(etMoney.getText())){
-                    showToastMsg("请输入红包个数");
+                    showToastMsg("请输入转账金额");
                     return;
                 }
 
@@ -240,7 +240,7 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("symbol",typeTv.getText()+"");
-        map.put("total",total);
+        map.put("total",etMoney.getText()+"");
         map.put("id",id);
         map.put("payment_password",pass);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -268,7 +268,7 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                         String red_id = tData.get("data")+"";
                         finish();
                         if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
-                            RongRedPacketMessage rongRedPacketMessage = RongRedPacketMessage.obtain("2",red_id,tarid, "转账"+total+",请查收","待收款");
+                            RongRedPacketMessage rongRedPacketMessage = RongRedPacketMessage.obtain("2",red_id, "转账"+etMoney.getText()+"USDT,请查收");
                             RongIM.getInstance().getRongIMClient().sendMessage(Conversation.ConversationType.PRIVATE, tarid, rongRedPacketMessage, null, null, new RongIMClient.SendMessageCallback() {
                                 @Override
                                 public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
@@ -330,6 +330,10 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                             Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
                             GlideUtils.loadImage(TransferMoneyActivity.this,mapData.get("portrait")+"",headIv);
                             rate = mapData.get("rate")+"";
+                            if (etMoney.getText().toString().length()>0){
+                                total = Float.parseFloat(rate)*Integer.parseInt(etMoney.getText().toString())+"";
+                                cnyTv.setText("≈ "+total+"CNY");
+                            }
                         }
 
                         break;

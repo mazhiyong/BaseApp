@@ -5,17 +5,22 @@
               android:orientation="vertical"
               android:background="@color/white">
 
-    <com.androidkun.xtablayout.XTabLayout
+    <RelativeLayout
         android:layout_marginTop="@dimen/dp_25"
         android:layout_width="match_parent"
-        android:id="@+id/tab_layout"
-        app:xTabIndicatorColor="@color/blue1"
-        app:xTabDividerWidth="@dimen/dp_0"
-        app:xTabDividerColor="@color/white"
-        app:xTabDividerWidthWidthText="true"
-        app:xTabSelectedTextColor="@color/blue1"
-        android:layout_height="@dimen/dp_45">
-    </com.androidkun.xtablayout.XTabLayout>
+        android:layout_height="wrap_content">
+        <com.androidkun.xtablayout.XTabLayout
+            android:layout_width="match_parent"
+            android:id="@+id/tab_layout"
+            app:xTabIndicatorColor="@color/blue1"
+            app:xTabDividerWidth="@dimen/dp_0"
+            app:xTabDividerColor="@color/white"
+            app:xTabDividerWidthWidthText="true"
+            app:xTabSelectedTextColor="@color/blue1"
+            android:layout_height="@dimen/dp_45">
+        </com.androidkun.xtablayout.XTabLayout>
+    </RelativeLayout>
+
     <View
         android:id="@+id/divide_line"
         android:layout_width="match_parent"

@@ -4,6 +4,7 @@ public class IntentExtra {
     public final static String FRIEND_ID = "id";
 
     public final static String STR_TARGET_ID = "target_id";
+    public final static String STR_GROUP_ID = "group_id";
 
     public final static String START_FROM_ID = "from_id";
 

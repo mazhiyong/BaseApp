@@ -238,6 +238,44 @@
         android:layout_height="wrap_content">
         <TextView
             android:layout_width="0dp"
+            android:text="红包金额"
+            android:padding="@dimen/dp_15"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_15"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/etmoney"
+            android:inputType="number"
+            android:hint="0"
+            android:gravity="right"
+            android:background="@null"
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text=""
+            android:paddingRight="@dimen/dp_15"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_15"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/number_lay"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_5"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="0dp"
             android:text="红包数量"
             android:padding="@dimen/dp_15"
             android:layout_weight="1"

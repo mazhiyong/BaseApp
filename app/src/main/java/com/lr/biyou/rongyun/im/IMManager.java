@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -849,24 +850,26 @@ public class IMManager {
      * 初始化消息监听
      */
     private void initOnReceiveMessage(Context context) {
+        LogUtilDebug.i("show","初始化消息接收监听:");
         RongIM.setOnReceiveMessageListener(new RongIMClient.OnReceiveMessageListener() {
             @Override
             public boolean onReceived(Message message, int i) {
                 messageRouter.postValue(message);
                 MessageContent messageContent = message.getContent();
+                LogUtilDebug.i("show","messageContent:"+message.getContent());
                 if (messageContent instanceof ContactNotificationMessage) { // 添加好友状态信息
+                    Toast.makeText(context,"收到好友申请验证消息",Toast.LENGTH_LONG).show();
                     ContactNotificationMessage contactNotificationMessage = (ContactNotificationMessage) messageContent;
                     if (contactNotificationMessage.getOperation().equals("Request")) {
-
+                        LogUtilDebug.i("show","messageContent:好友申请");
                     } else if (contactNotificationMessage.getOperation().equals("AcceptResponse")) {
                         // 根据好友 id 进行获取好友信息并刷新
                         String sourceUserId = contactNotificationMessage.getSourceUserId();
                         imInfoProvider.updateFriendInfo(sourceUserId);
+                        LogUtilDebug.i("show","messageContent:好友通过");
                     }
                 } else if (messageContent instanceof GroupNotificationMessage) {    // 群组通知消息
                     GroupNotificationMessage groupNotificationMessage = (GroupNotificationMessage) messageContent;
-                    SLog.d(LogTag.IM, "onReceived GroupNotificationMessage:" + groupNotificationMessage.getMessage());
-
                     String groupID = message.getTargetId();
                     GroupNotificationMessageData data = null;
                     try {

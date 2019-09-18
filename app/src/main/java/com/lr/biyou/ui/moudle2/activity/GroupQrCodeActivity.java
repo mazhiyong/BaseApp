@@ -3,6 +3,7 @@ package com.lr.biyou.ui.moudle2.activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,12 +18,13 @@ import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
+import com.lr.biyou.rongyun.utils.qrcode.QRCodeUtils;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
+import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -69,7 +71,7 @@ public class GroupQrCodeActivity extends BasicActivity implements RequestView {
     private String link = "";
     private ClipboardManager mClipboardManager;
     private ClipData clipData;
-    private String imgUrl = "";
+    private String groupId = "";
 
     @Override
     public int getContentView() {
@@ -91,14 +93,21 @@ public class GroupQrCodeActivity extends BasicActivity implements RequestView {
        if (intent != null){
            Bundle bundle = intent.getExtras();
            if (bundle != null){
-               imgUrl = bundle.getString("DATA");
-               GlideUtils.loadImage(this,imgUrl,erweicodeIv);
+               groupId = bundle.getString("DATA");
            }
        }
 
+        int screenWidth = (int) (UtilTools.getScreenWidth(GroupQrCodeActivity.this)*0.6);
+        if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {
+            String s = SPUtils.get(GroupQrCodeActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
+            MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
+        }
 
+        String qrCodeContent =MbsConstans.QRCODE_SERVER_URL+"key=sealtalk://group/join?g="+groupId+"&u="+MbsConstans.RONGYUN_MAP.get("id");
+        Bitmap bitmap = QRCodeUtils.generateImage(qrCodeContent,screenWidth, screenWidth, null);
+        erweicodeIv.setImageBitmap(bitmap);
         //长按保存
-        erweicodeIv.setOnLongClickListener(new View.OnLongClickListener() {
+       /* erweicodeIv.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 if (!UtilTools.empty(imgUrl)){
@@ -107,20 +116,9 @@ public class GroupQrCodeActivity extends BasicActivity implements RequestView {
 
                 return true;
             }
-        });
+        });*/
     }
 
-    private void getInvitAction() {
-        mRequestTag = MethodUrl.INVIAT_ATION;
-        Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(GroupQrCodeActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
-        }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
-
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.INVIAT_ATION, map);
-    }
 
 
     @OnClick({R.id.yqcode_copy_tv, R.id.yqlink_copy_tv})
@@ -163,8 +161,6 @@ public class GroupQrCodeActivity extends BasicActivity implements RequestView {
                             yqcodeTv.setText("邀请码 "+yqCode);
                             link = map.get("invitation_url")+"";
                             yqlinkTv.setText(link);
-                            imgUrl = map.get("invitation_img")+"";
-                            GlideUtils.loadImage(GroupQrCodeActivity.this,imgUrl,erweicodeIv);
                             GlideUtils.loadImage(GroupQrCodeActivity.this,map.get("invitation_show")+"",topIv);
                         }else {
                             showToastMsg("暂无相关数据");

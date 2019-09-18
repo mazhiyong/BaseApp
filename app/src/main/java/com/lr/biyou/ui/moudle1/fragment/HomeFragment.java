@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicFragment;
@@ -30,19 +31,20 @@ import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.ContactKefuActivity;
+import com.lr.biyou.ui.moudle.activity.IdCardEditActivity;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle1.activity.NoticeListActivity;
-import com.lr.biyou.ui.moudle1.activity.PayListActivity;
+import com.lr.biyou.ui.moudle.activity.MainActivity;
 import com.lr.biyou.ui.moudle.activity.SecurityActivity;
 import com.lr.biyou.ui.moudle.activity.SettingActivity;
-import com.lr.biyou.ui.moudle.activity.IdCardEditActivity;
+import com.lr.biyou.ui.moudle1.activity.NoticeListActivity;
+import com.lr.biyou.ui.moudle1.activity.PayListActivity;
+import com.lr.biyou.ui.moudle1.activity.UserInfoActivity;
 import com.lr.biyou.ui.moudle1.activity.YaoQingActivity;
 import com.lr.biyou.ui.moudle1.adapter.MainCoinAdapter;
 import com.lr.biyou.ui.moudle1.adapter.MoreTypeAdapter;
+import com.lr.biyou.ui.moudle2.activity.RedRecordListActivity;
 import com.lr.biyou.ui.moudle5.activity.ChoseBiTypeActivity;
 import com.lr.biyou.ui.moudle5.activity.HuaZhuanActivity;
-import com.lr.biyou.ui.moudle5.activity.TiBiActivity;
-import com.lr.biyou.ui.moudle1.activity.UserInfoActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.tool.AnimUtil;
 import com.lr.biyou.utils.tool.JSONUtil;
@@ -50,7 +52,6 @@ import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 import com.stx.xhb.xbanner.XBanner;
 import com.sunfusheng.marqueeview.MarqueeView;
 
@@ -142,6 +143,13 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
     ImageView ivError;
     @BindView(R.id.tvError)
     TextView tvError;
+    @BindView(R.id.fast_buy_lay)
+    LinearLayout fastLay;
+    @BindView(R.id.to_bb_lay)
+    LinearLayout bbLay;
+    @BindView(R.id.to_hy_lay)
+    LinearLayout hyLay;
+
 
     private String mRequestTag = "";
 
@@ -508,9 +516,10 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         dealFailInfo(map,mType);
     }
 
-    @OnClick({R.id.left_back_lay, R.id.tvMore, R.id.marqueeView})
+    @OnClick({R.id.left_back_lay, R.id.tvMore, R.id.marqueeView,R.id.to_hy_lay,R.id.to_bb_lay,R.id.fast_buy_lay})
     public void onViewClicked(View view) {
         Intent intent;
+        MainActivity activity = (MainActivity) getActivity();
         switch (view.getId()) {
             case R.id.left_back_lay: //个人中心
                 initPopupWindow();
@@ -522,6 +531,21 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
             case R.id.marqueeView: //更多
                 intent = new Intent(getActivity(), NoticeListActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.to_hy_lay: //合约交易
+                if (activity != null){
+                    activity.toHeYueFragment();
+                }
+                break;
+            case R.id.to_bb_lay: //币币交易
+                if (activity != null){
+                    activity.toBBFragment();
+                }
+                break;
+            case R.id.fast_buy_lay: //快捷购买
+                if (activity != null){
+                    activity.toFBFragment();
+                }
                 break;
         }
     }
@@ -656,10 +680,12 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                         break;
                     case R.id.lay_chongbi:
                         intent = new Intent(getActivity(), ChoseBiTypeActivity.class);
+                        intent.putExtra("TYPE","1");
                         startActivity(intent);
                         break;
                     case R.id.lay_tibi:
-                        intent = new Intent(getActivity(), TiBiActivity.class);
+                        intent = new Intent(getActivity(), ChoseBiTypeActivity.class);
+                        intent.putExtra("TYPE","2");
                         startActivity(intent);
                         break;
                     case R.id.lay_huazhuan:
@@ -667,7 +693,9 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                         startActivity(intent);
                         break;
                     case R.id.lay_hongbao:
-
+                        intent = new Intent(getActivity(), RedRecordListActivity.class);
+                        intent.putExtra("type","1");
+                        startActivity(intent);
                         break;
                     case R.id.lay_shiming:
                         //是否实名认证

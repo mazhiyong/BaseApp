@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
@@ -67,6 +68,7 @@ public class RedRecordListActivity extends BasicActivity implements RequestView,
     private LRecyclerViewAdapter mLRecyclerViewAdapter1 = null;
     private RedRecordListAdapter mListAdapter;
     private List<Map<String,Object>> mDataList = new ArrayList<>();
+    private String mRequestTag = "";
 
     @Override
     public int getContentView() {
@@ -107,9 +109,25 @@ public class RedRecordListActivity extends BasicActivity implements RequestView,
         manager.setOrientation(RecyclerView.VERTICAL);
         refreshListView.setLayoutManager(manager);
 
+        refreshListView.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                switch (mRequestTag){
+                    case MethodUrl.CHAT_RED_RECORD:
+                        getRedRecordAction();
+                        break;
+
+                    case MethodUrl.CHAT_ZHUANZHANG_RECORD:
+                        getTransferRecordAction();
+                        break;
+                }
+            }
+        });
+
     }
 
     private void getRedRecordAction() {
+        mRequestTag = MethodUrl.CHAT_RED_RECORD;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(RedRecordListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
@@ -120,6 +138,7 @@ public class RedRecordListActivity extends BasicActivity implements RequestView,
     }
 
     private void getTransferRecordAction() {
+        mRequestTag = MethodUrl.CHAT_ZHUANZHANG_RECORD;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(RedRecordListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
@@ -273,6 +292,14 @@ public class RedRecordListActivity extends BasicActivity implements RequestView,
 
     @Override
     public void reLoadingData() {
+        switch (mRequestTag){
+            case MethodUrl.CHAT_RED_RECORD:
+                getRedRecordAction();
+                break;
 
+            case MethodUrl.CHAT_ZHUANZHANG_RECORD:
+                getTransferRecordAction();
+                break;
+        }
     }
 }

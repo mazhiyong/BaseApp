@@ -6,6 +6,7 @@ import android.text.Spannable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -54,6 +55,7 @@ public class RongRedPacketMessageProvider extends IContainerItemProvider.Message
         holder.view = (View) view.findViewById(R.id.rc_img);
         holder.left_lay = view.findViewById(R.id.left_lay);
         holder.right_lay = view.findViewById(R.id.right_lay);
+        holder.iv = view.findViewById(R.id.imageView1);
         view.setTag(holder);
         this.context = context;
         return view;
@@ -77,7 +79,15 @@ public class RongRedPacketMessageProvider extends IContainerItemProvider.Message
             holder.left_lay.setVisibility(View.VISIBLE);
         }
         holder.message.setText(rongRedPacketMessage.getMessage()); // 设置消息内容
-        holder.status.setText(rongRedPacketMessage.getStatus()); // 设置红包状态
+
+        if (rongRedPacketMessage.getType().equals("1")){
+            holder.iv.setVisibility(View.VISIBLE);
+        }else {
+            holder.iv.setVisibility(View.GONE);
+        }
+
+
+        //holder.status.setText(rongRedPacketMessage.getStatus()); // 设置红包状态
     }
 
     @Override
@@ -157,6 +167,7 @@ public class RongRedPacketMessageProvider extends IContainerItemProvider.Message
         LinearLayout right_lay;
         TextView status;
         TextView message;
+        ImageView iv;
         View view;
     }
 

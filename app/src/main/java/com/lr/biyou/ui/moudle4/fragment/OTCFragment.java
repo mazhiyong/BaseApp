@@ -1,23 +1,19 @@
 package com.lr.biyou.ui.moudle4.fragment;
 
-import android.util.Log;
-
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.androidkun.xtablayout.XTabLayout;
-import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.basic.BasicFragment;
-import com.lr.biyou.mywidget.dialog.DateSelectDialog;
-import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.ui.moudle4.adapter.MyViewPagerAdapter;
-import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 
@@ -30,7 +26,6 @@ public class OTCFragment extends BasicFragment {
     ViewPager mViewPager;
     @BindView(R.id.tab_layout)
     XTabLayout mTabLayout;
-
     List<Fragment> mFragments=new ArrayList<>();
 
 
@@ -39,6 +34,7 @@ public class OTCFragment extends BasicFragment {
     private FBTradeFragment fbTradeFragment;
 
     private int Position = 0;
+    public int TYPE = 0;
 
     public OTCFragment() {
         // Required empty public constructor
@@ -76,8 +72,14 @@ public class OTCFragment extends BasicFragment {
                 if (tab.getPosition() == 0){
                    LogUtilDebug.i("show","BB可见");
                     bbTradeFragment.restartWs();
+                    if (fbTradeFragment.mLoadingWindow != null){
+                        fbTradeFragment.mLoadingWindow.cancleView();
+                    }
                 }else {
                     bbTradeFragment.stopWs();
+                    if (bbTradeFragment.mLoadingWindow != null){
+                        bbTradeFragment.mLoadingWindow.cancleView();
+                    }
                    LogUtilDebug.i("show","FB可见");
                 }
                 Position = tab.getPosition();
@@ -94,11 +96,16 @@ public class OTCFragment extends BasicFragment {
             }
         });
 
-
-
-
-
+        if (TYPE == 1){
+            Objects.requireNonNull(mTabLayout.getTabAt(1)).select();
+        }else {
+            Objects.requireNonNull(mTabLayout.getTabAt(0)).select();
+        }
     }
+
+
+
+
 
     public void setBarTextColor(){
         StatusBarUtil.setLightMode(getActivity());
@@ -155,6 +162,14 @@ public class OTCFragment extends BasicFragment {
             }
         }else {
            LogUtilDebug.i("show","onHiddenChanged()*******OTC可见"+Position);
+            LogUtilDebug.i("show","TYPE:"+TYPE);
+
+            if (TYPE == 1){
+                Objects.requireNonNull(mTabLayout.getTabAt(1)).select();
+            }else {
+                Objects.requireNonNull(mTabLayout.getTabAt(0)).select();
+            }
+
             switch (Position){
                 case 0:
                     bbTradeFragment.restartWs();

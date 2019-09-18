@@ -19,9 +19,11 @@ import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.rongyun.common.IntentExtra;
+import com.lr.biyou.rongyun.im.message.ContactNotificationMessage;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.ShowDetailPictrue;
 import com.lr.biyou.utils.imageload.GlideUtils;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
@@ -33,6 +35,10 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.MessageContent;
 
 /**
  * 添加朋友 界面
@@ -69,6 +75,8 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
 
     private String friendId ="";
     private String Id ="";
+    private String groupId ="";
+    private String groupName ="";
 
     private List<Map<String, Object>> mImageList = new ArrayList<>();
 
@@ -87,15 +95,24 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
             if (bundle != null) {
                 String result = bundle.getString("DATA");
                 if (!UtilTools.empty(result)){
-                    //根据二维码信息,获取用户信息
+                    //根据二维码信息,获取用户信息 点击查看群成员加好友
                     getUserInfoAccordQrAction(result);
+
                 }
                 String targetId = bundle.getString(IntentExtra.STR_TARGET_ID);
+                LogUtilDebug.i("show","targid:"+targetId);
                 if (!UtilTools.empty(targetId)){
-                    //根据rc_id 获取用户的id
-                    getidFromRcidAction(targetId);
+                    //根据rc_id 获取用户的信息
+                    getUserInfoAction(targetId);
+                    //根据rc_id 获取用户的id   扫码/分享名片加好友
+                    //getidFromRcidAction(targetId);
                 }
 
+                groupId = bundle.getString(IntentExtra.STR_GROUP_ID);
+                if (!UtilTools.empty(groupId)){
+                    getUserInfoAccordQrAction("2,"+groupId);
+                    addTv.setText("申请入群");
+                }
 
             }
         }
@@ -107,7 +124,7 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
 
 
         //获取我的二维码信息
-        getQrCodeAction();
+        //getQrCodeAction();
     }
 
 
@@ -132,9 +149,30 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
                 overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
                 break;
             case R.id.add_tv:
-                addFriendAction();
+                if (addTv.getText().toString().equals("申请入群")){
+                    addMemberAction();
+                }else {
+                    addFriendAction();
+                }
+
                 break;
         }
+    }
+
+
+    /**
+     * 查询用户信息
+     */
+    public void getUserInfoAction(String targetId) {
+        mRequestTag = MethodUrl.CHAT_QUERY_USERINFO;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(AddFriendActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("rc_id", targetId);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_QUERY_USERINFO, map);
     }
 
 
@@ -196,6 +234,20 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_SEARCH_FRIEND, map);
     }
 
+
+
+    private void  addMemberAction() {
+        mRequestTag = MethodUrl.CHAT_GROUP_ADD_MEMBER;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(AddFriendActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("group_id", groupId);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_ADD_MEMBER, map);
+    }
+
     private void  addFriendAction() {
       /*  if (UtilTools.empty(etSearch.getText().toString())){
             showToastMsg("请输入检索信息");
@@ -246,13 +298,30 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
         Intent intent;
         switch (mType) {
             case MethodUrl.CHAT_QUERY_ID:
-                switch (tData.get("code") + "") {
+                /*switch (tData.get("code") + "") {
                     case "0": //请求成功
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             Id = tData.get("data") + "";
-                            getFriendInfoAction();
+                            //getFriendInfoAction();
+                            friendId = Id;
+                            addFriendAction();
                         }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
 
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(AddFriendActivity.this, com.lr.biyou.ui.moudle.activity.LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;*/
+            case MethodUrl.CHAT_GROUP_ADD_MEMBER:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功 //进入群聊
+                        RongIM.getInstance().startGroupChat(AddFriendActivity.this, groupId, groupName);
 
                         break;
                     case "-1": //请求失败
@@ -310,7 +379,31 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
                         break;
                 }
                 break;
+            case  MethodUrl.CHAT_QUERY_USERINFO:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data")+"")){
+                            Map<String,Object> map = (Map<String, Object>) tData.get("data");
+                            userNameTv.setText(map.get("name")+"");
+                            GlideUtils.loadImage(AddFriendActivity.this,map.get("portrait")+"",userIconIv);
+                            friendId = map.get("id")+"";
+                        }else {
+                            showToastMsg("未检索到相关用户信息");
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
 
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(AddFriendActivity.this, LoginActivity.class);
+                        startActivity(intent);
+
+                        break;
+
+                }
+                break;
             case  MethodUrl.CHAT_SEARCH_FRIEND:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
@@ -335,16 +428,38 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
                         break;
 
                 }
-
                 break;
-
             case MethodUrl.CHAT_ADD_FRIEND:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
-                        showToastMsg(tData.get("msg") + "");
+                        showToastMsg("添加好友申请,发送成功");
+                        userIconIv.setImageResource(R.drawable.wait2);
+                        userNameTv.setText("等待好友通过申请验证");
+
+                        //发送融云message
+                        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+                            MessageContent message = ContactNotificationMessage.obtain("添加好友", Id, friendId, "你们已经是好友啦!");
+                            RongIM.getInstance().getRongIMClient().sendMessage(Conversation.ConversationType.PRIVATE, friendId, message, null, null, new RongIMClient.SendMessageCallback() {
+                                @Override
+                                public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
+                                    LogUtilDebug.i("show", "-----onError--" + errorCode);
+                                }
+
+                                @Override
+                                public void onSuccess(Integer integer) {
+                                    LogUtilDebug.i("show", "-----onScuess--");
+
+                                }
+                            });
+
+                        }
+
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg") + "");
+                        /*if((tData.get("msg") + "").equals("他已经是你的好友了")){
+                            getFriendInfoAction();
+                        }*/
                         break;
                     case "1": //token过期
                         closeAllActivity();
@@ -364,6 +479,7 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
                             userNameTv.setText(map.get("name")+"");
                             GlideUtils.loadImage(AddFriendActivity.this,map.get("portrait")+"",userIconIv);
                             friendId = map.get("id")+"";
+                            groupName = map.get("name")+"";
                         }else {
                             showToastMsg("未检索到相关用户信息");
                         }

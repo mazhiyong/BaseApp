@@ -33,6 +33,7 @@ import com.github.jdsjlzx.ItemDecoration.GridItemDecoration;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicApplication;
@@ -43,18 +44,17 @@ import com.lr.biyou.listener.OnMyItemClickListener;
 import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
-import com.lr.biyou.mywidget.dialog.DateSelectDialog;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle3.activity.CoinInfoDetailActivity;
-import com.lr.biyou.ui.moudle4.activity.WeiTuoListActivity;
 import com.lr.biyou.ui.moudle3.adapter.BuyAdapter;
-import com.lr.biyou.ui.moudle4.adapter.EntrustListAdapter;
-import com.lr.biyou.ui.moudle4.adapter.WeiTuoListAdapter;
 import com.lr.biyou.ui.moudle3.adapter.SellAdapter;
 import com.lr.biyou.ui.moudle3.adapter.TypeSelectAdapter;
+import com.lr.biyou.ui.moudle4.activity.WeiTuoListActivity;
+import com.lr.biyou.ui.moudle4.adapter.EntrustListAdapter;
+import com.lr.biyou.ui.moudle4.adapter.WeiTuoListAdapter;
 import com.lr.biyou.utils.tool.AnimUtil;
 import com.lr.biyou.utils.tool.BigDecimalUtils;
 import com.lr.biyou.utils.tool.JSONUtil;
@@ -62,7 +62,6 @@ import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 import com.wanou.framelibrary.okgoutil.websocket.WsManager;
 import com.wanou.framelibrary.okgoutil.websocket.WsStatus;
 import com.wanou.framelibrary.okgoutil.websocket.listener.WsStatusListener;
@@ -194,7 +193,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     PageView mPageView;
 
 
-    private LoadingWindow mLoadingWindow;
+    public LoadingWindow mLoadingWindow;
 
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
     private WeiTuoListAdapter mWeiTuoListAdapter;
@@ -350,7 +349,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mAnimUtil = new AnimUtil();
 
         mLoadingWindow = new LoadingWindow(getActivity(), R.style.Dialog);
-        mLoadingWindow.showView();
+        //mLoadingWindow.showView();
 
         List<Map<String, Object>> mDataList2 = SelectDataUtil.getBBPriceType();
         mDialog = new KindSelectDialog(getActivity(), true, mDataList2, 10);
@@ -1228,11 +1227,12 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
     public void stopWs() {
         handler.removeCallbacks(runnable);
-        if (wsManager.getWebSocket() != null) {
-            wsManager.getWebSocket().cancel();
+        if (wsManager != null){
+            if (wsManager.getWebSocket() != null) {
+                wsManager.getWebSocket().cancel();
+            }
+            wsManager.stopConnect();
         }
-        wsManager.stopConnect();
-
 
     }
 

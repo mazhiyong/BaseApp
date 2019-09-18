@@ -214,9 +214,11 @@ public class MethodUrl {
     public static final String CHAT_REASON_DEAL = "chat/complaintActive";//投诉操作
     public static final String CHAT_QUERY_ID = "Chat/selectId";//根据融云id查询平台id
     public static final String CHAT_QUERY_RCID = "Chat/selectRcId";//根据平台id查询融云id
+    public static final String CHAT_QUERY_USERINFO = "chat/userInfo";//通过融云ID查询用户信息
     public static final String CHAT_GROUP_CHANAGE_STATUS = "chat_group/editGroupStatus";//修改置顶聊天/消息免打扰状态
     public static final String CHAT_GROUP_EDIT_NAME = "chat_group/editGroup";//修改群名
     public static final String CHAT_GROUP_ADD = "chat_group/inviteGroup";//邀请入群
+    public static final String CHAT_GROUP_ADD_MEMBER = "chat_group/addGroupActive";//申请入群
     public static final String CHAT_GROUP_DELETE = "chat_group/expelGroup";//删除群员
     public static final String CHAT_GROUP_ADMIN = "chat_group/administrators";//群管理员管理界面
     public static final String CHAT_GROUP_MANAGE = "chat_group/editStatus";//更改全体禁言/群员保护/群认证状态

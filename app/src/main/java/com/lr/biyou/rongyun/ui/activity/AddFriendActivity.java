@@ -102,7 +102,7 @@ public class AddFriendActivity extends TitleBaseActivity implements View.OnClick
      * 扫一扫
      */
     private void toScanQRCode() {
-       /* Intent intent = new Intent(this, ScanActivity.class);
+     /*   Intent intent = new Intent(this, ScanActivity.class);
         startActivity(intent);*/
     }
 

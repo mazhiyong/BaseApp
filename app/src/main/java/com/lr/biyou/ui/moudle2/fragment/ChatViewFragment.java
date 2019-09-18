@@ -730,6 +730,8 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         }
 
 
+        mListAdapter.setSourceList(mListAdapter.getDataList());
+
         mListAdapter.setmListener(new OnChildClickListener() {
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
@@ -802,6 +804,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             mPageView.showContent();
         }
 
+        mListAdapter2.setSourceList(mListAdapter2.getDataList());
 
         mListAdapter2.setmListener(new OnChildClickListener() {
             @Override
@@ -891,6 +894,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             mPageView.showContent();
         }
 
+        mListAdapter3.setSourceList(mListAdapter3.getDataList());
 
         mListAdapter3.setmListener(new OnChildClickListener() {
             @Override

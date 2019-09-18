@@ -227,7 +227,7 @@
     </ImageView>
     <TextView
         android:layout_width="wrap_content"
-        android:text="长按保存二维码至相册"
+        android:text="扫码入群"
         android:layout_gravity="center_horizontal"
         android:textColor="@color/blue1"
         android:textSize="@dimen/sp_12"

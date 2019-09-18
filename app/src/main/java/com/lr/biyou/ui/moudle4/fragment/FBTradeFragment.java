@@ -32,6 +32,7 @@ import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicFragment;
@@ -45,21 +46,14 @@ import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle.activity.MainActivity;
-import com.lr.biyou.ui.moudle.activity.ResetPayPassButActivity;
 import com.lr.biyou.ui.moudle4.activity.DingDanListActivity;
-import com.lr.biyou.ui.temporary.activity.BankCardActivity;
-import com.lr.biyou.ui.temporary.activity.MyShouMoneyActivity;
 import com.lr.biyou.ui.moudle4.activity.PayMoneyActivity;
 import com.lr.biyou.ui.moudle4.adapter.DingDanListAdapter;
 import com.lr.biyou.ui.moudle4.adapter.FBTradeListAdapter;
 import com.lr.biyou.utils.tool.AnimUtil;
-import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
-import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -106,7 +100,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
     LinearLayout lay;
 
     private int TYPE = 0;
-    private LoadingWindow mLoadingWindow;
+    public LoadingWindow mLoadingWindow;
 
     private LRecyclerViewAdapter mLRecyclerViewAdapter1 = null;
     private LRecyclerViewAdapter mLRecyclerViewAdapter2 = null;
@@ -200,7 +194,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 //                handler.post(runnable);
 //            }
             //请求数据 只在进入时加载数据，不进行预加载数据
-            mLoadingWindow.showView();
+            //mLoadingWindow.showView();
             //获取交易区
             get0tcTradeAction();
 
