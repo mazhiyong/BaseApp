@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lr.biyou.R;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.wanou.framelibrary.utils.UiTools;
 
 import java.util.List;
 import java.util.Map;
@@ -80,7 +79,7 @@ public class MoreTypeAdapter extends RecyclerView.Adapter {
                 riseRankViewHolder.tvRiseFallRatio.setText(listUpBean.get("increase")+ "");
             } else {
                 riseRankViewHolder.tvRiseFallRatio.setBackgroundResource(R.drawable.shape_fall_bg);
-                riseRankViewHolder.tvRiseFallRatio.setText("+" + listUpBean.get("increase"));
+                riseRankViewHolder.tvRiseFallRatio.setText(listUpBean.get("increase")+"");
             }
         }
     }

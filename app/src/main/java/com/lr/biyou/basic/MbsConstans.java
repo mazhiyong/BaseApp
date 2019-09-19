@@ -97,10 +97,11 @@ public class MbsConstans {
 
 	public static final long SECOND_TIME_500 = 500;
 
+	public static final long SECOND_TIME_5000 = 5000;
+
 	public static boolean isNet = false;
 
 	public static String RMB = "¥";
-
 
 	public static int ALPHA = 0;
 	public static int TOP_BAR_COLOR = R.color.top_bar_bg;

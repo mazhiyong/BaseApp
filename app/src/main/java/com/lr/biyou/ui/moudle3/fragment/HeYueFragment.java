@@ -5,6 +5,8 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -20,7 +22,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -50,7 +51,6 @@ import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
-import com.lr.biyou.ui.moudle.activity.IdCardEditActivity;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle3.activity.CoinInfoDetailActivity;
 import com.lr.biyou.ui.moudle3.adapter.BuyAdapter;
@@ -62,9 +62,7 @@ import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
-import com.lr.biyou.utils.tool.TextViewUtils;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.wanou.framelibrary.utils.UiTools;
 import com.xw.repo.BubbleSeekBar;
 
 import java.math.BigDecimal;
@@ -76,6 +74,8 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.app.Activity.RESULT_OK;
 
 public class HeYueFragment extends BasicFragment implements RequestView, ReLoadingData, SelectBackListener {
     @BindView(R.id.top_layout)
@@ -246,7 +246,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     private TypeSelectAdapter mAdapter;
 
     private String mRequestTag = "";
-    LinearLayoutManager manager;
+    private LinearLayoutManager manager;
 
 
     private List<Map<String, Object>> mDataList = new ArrayList<>();
@@ -277,6 +277,20 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     private KindSelectDialog mDialog;
     private KindSelectDialog mDialog2;
     private String cnyRatio = "1";
+
+    private final int QUEST_CODE = 120;
+
+    private Handler handler = new Handler();
+
+    //HTTP请求  轮询
+    private Runnable cnyRunnable = new Runnable() {
+        @Override
+        public void run() {
+            //获取合约价格以及深度信息
+            getPairDepthAction();
+            handler.postDelayed(this, MbsConstans.SECOND_TIME_5000);
+        }
+    };
 
     public HeYueFragment() {
         // Required empty public constructor
@@ -370,10 +384,12 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         case 0: //开多买入
                             if (mSelectType.equals("0")){ //限价
                                 float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString());
+                                LogUtilDebug.i("show","限价maxNumber:"+maxNumber);
                                 int number = (int) (maxNumber*progress/100);
                                 etHand.setText(number+"");
                             }else {
                                 float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etJihuaPrice.getText().toString());
+                                LogUtilDebug.i("show","计划委托maxNumber:"+maxNumber);
                                 int number = (int) (maxNumber*progress/100);
                                 etHand.setText(number+"");
                             }
@@ -407,7 +423,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         getChicangListAction();
 
         //获取合约价格以及深度信息
-        getPairDepthAction();
+        //getPairDepthAction();
+        //handler.post(cnyRunnable);
 
         //获取杠杆信息
         getContractLeverAction();
@@ -422,7 +439,9 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         List<Map<String, Object>> maps = SelectDataUtil.getTabValues2();
         for (Map<String, Object> map : maps) {
             tlTradeList.addTab(tlTradeList.newTab().setText(map.get("name") + ""));
+            tlTradeList2.addTab(tlTradeList2.newTab().setText(map.get("name") + ""));
         }
+
         tlTradeList.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -453,6 +472,38 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             }
         });
 
+        tlTradeList2.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        kind = "0";
+                        getChicangListAction();
+                        break;
+                    case 1:
+                        kind = "1";
+                        getWeituoListAction();
+                        break;
+                    case 2:
+                        kind = "2";
+                        getChengjiaoListAction();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
+
 
         nestScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
@@ -461,11 +512,21 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                     //dealAllIv.setVisibility(View.VISIBLE);
                     mTabLayout.setVisibility(View.VISIBLE);
                     tlTradeList.setVisibility(View.GONE);
+                    Objects.requireNonNull(tlTradeList2.getTabAt(tlTradeList.getSelectedTabPosition())).select();
                 } else {
                     //dealAllIv.setVisibility(View.GONE);
                     mTabLayout.setVisibility(View.GONE);
                     tlTradeList.setVisibility(View.VISIBLE);
+                    if (oldScrollY > scrollY){
+                        LogUtilDebug.i("show","下滑");
+                        Objects.requireNonNull(tlTradeList.getTabAt(tlTradeList2.getSelectedTabPosition())).select();
+                    }else {
+                        LogUtilDebug.i("show","上滑");
+                    }
                 }
+
+
+
             }
         });
 
@@ -516,6 +577,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         });
 
 
+
+
     }
 
     private void updateLever(int i) {
@@ -559,8 +622,11 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 showDialog();
                 break;
             case R.id.iv_toCoinInfo:
-                intent = new Intent(getActivity(), CoinInfoDetailActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(getActivity(), CoinInfoDetailActivity.class);
+                intent1.putExtra("symbol", symbol);
+                intent1.putExtra("area", "USDT");
+                intent1.putExtra("from","2");
+                startActivityForResult(intent1,QUEST_CODE);
                 break;
             case R.id.rb_number1:
                 break;
@@ -576,7 +642,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 buyAndSellAction();
                 break;
             case R.id.deal_all_iv:
-                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(getParentFragment().getActivity(),true);
+                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(getActivity(),true);
                 sureOrNoDialog.initValue("提示","是否一键平仓？");
                 sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -892,12 +958,12 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
     @Override
     public void showProgress() {
-        mLoadingWindow.show();
+        //mLoadingWindow.show();
     }
 
     @Override
     public void disimissProgress() {
-        mLoadingWindow.cancleView();
+        //mLoadingWindow.cancleView();
     }
 
     @Override
@@ -985,6 +1051,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 switch ((tData.get("code") + "")) {
                     case "0":
                         showToastMsg("平仓成功");
+                        getChicangListAction();
                         break;
                     case "1":
                         if (getActivity() != null){
@@ -1003,6 +1070,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 switch ((tData.get("code") + "")) {
                     case "0":
                         showToastMsg("撤销成功");
+                        getWeituoListAction();
                         break;
                     case "1":
                         if (getActivity() != null){
@@ -1073,7 +1141,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         if (mLeverData != null && mLeverData.size() > 0) {
                             mLeverDataChild.clear();
                             for (Map<String, Object> map : mLeverData) {
-                                if ((map.get("type") + "").equals("0")) {
+                                if ((map.get("type") + "").equals("0")) { //0 开多 1//卖出
                                     mLeverDataChild.add(map);
                                 }
                             }
@@ -1120,6 +1188,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         if (!UtilTools.empty(mapData)){
                             BTC_Account = mapData.get("symbol")+"";
                             USDT_Account = mapData.get("area")+"";
+                            LogUtilDebug.i("show","USDT_Account:"+USDT_Account);
                         }
                         break;
                     case "1":
@@ -1136,9 +1205,20 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 break;
 
             case MethodUrl.CONTRACT_TRADE:
+                showToastMsg(tData.get("msg")+"");
                 switch ((tData.get("code") + "")) {
                     case "0":
-                        showToastMsg(tData.get("msg")+"");
+                        switch (kind){
+                            case "0":
+                                getChicangListAction();
+                            break;
+                            case "1":
+                                getWeituoListAction();
+                                break;
+                            case "2":
+                                getChengjiaoListAction();
+                                break;
+                        }
                         break;
                     case "1":
                         if (getActivity() != null){
@@ -1223,12 +1303,51 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 // mRefreshListView.smoothScrollToPosition(0);
                 // mRefreshListView.scrollTo(0,0);
                 // nestScrollView.scrollTo(0, tlTradeList.getTop());
+                SureOrNoDialog sureOrNoDialog;
                 switch (mParentMap.get("kind") + "") {
                     case "0": //平仓
-                        pingCangAction(mParentMap);
+                        sureOrNoDialog = new SureOrNoDialog(getActivity(),true);
+                        sureOrNoDialog.initValue("提示","是否确定平仓？");
+                        sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()){
+                                    case R.id.cancel:
+                                        sureOrNoDialog.dismiss();
+                                        break;
+                                    case R.id.confirm:
+                                        sureOrNoDialog.dismiss();
+                                        pingCangAction(mParentMap);
+                                        break;
+                                }
+                            }
+                        });
+                        sureOrNoDialog.show();
+                        sureOrNoDialog.setCanceledOnTouchOutside(false);
+                        sureOrNoDialog.setCancelable(true);
+
                         break;
                     case "1": //撤销
-                        cheXiaoAction(mParentMap);
+                        sureOrNoDialog = new SureOrNoDialog(getActivity(),true);
+                        sureOrNoDialog.initValue("提示","是否确定撤销？");
+                        sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()){
+                                    case R.id.cancel:
+                                        sureOrNoDialog.dismiss();
+                                        break;
+                                    case R.id.confirm:
+                                        sureOrNoDialog.dismiss();
+                                        cheXiaoAction(mParentMap);
+                                        break;
+                                }
+                            }
+                        });
+                        sureOrNoDialog.show();
+                        sureOrNoDialog.setCanceledOnTouchOutside(false);
+                        sureOrNoDialog.setCancelable(true);
+
                         break;
                     case "2":
 
@@ -1419,4 +1538,61 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == QUEST_CODE) {
+                Bundle bundle = data.getExtras();
+                if (bundle != null){
+                    String buySell = bundle.getString("buySell");
+                    if (buySell.equals("1")){ //买入
+                        rbOpen.setChecked(true);
+                    }else {  //卖出
+                        rbClose.setChecked(true);
+                    }
+                }
+
+            }
+        }
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (handler != null && cnyRunnable != null){
+            handler.removeCallbacks(cnyRunnable);
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint()) {
+            if (handler != null && cnyRunnable != null) {
+                handler.post(cnyRunnable);
+                LogUtilDebug.i("show", "&&&&&&&&HeyueFragment visible");
+            }
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden){
+            if (handler != null && cnyRunnable != null){
+                handler.removeCallbacks(cnyRunnable);
+            }
+            setUserVisibleHint(false);
+            LogUtilDebug.i("show","onHiddenChanged()*******HeYueFragment不可见");
+        }else {
+            if (handler != null && cnyRunnable != null){
+                handler.post(cnyRunnable);
+            }
+            setUserVisibleHint(true);
+            LogUtilDebug.i("show", "onHiddenChanged()*******HeYueFragment可见");
+        }
+    }
 }

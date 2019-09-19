@@ -273,14 +273,16 @@ public class MethodUrl {
 
 
 
-
     public static final String ENTRUST_LIST = "Coin/queryEntrust";//委托单查询
     public static final String COIN_AREAALL = "Coin/areaAll";//交易区列表
     public static final String AREA_ITEM = "Coin/queryArea";//获取对应交易区币对列表
     public static final String AREA_COIN_ACCOUNT = "Coin/queryCoinAccount";//账户当前交易区交易币可用
     public static final String CANCEL_WEITUO = "coin_trade/revocationOrder";//撤销委托
     public static final String CURRENT_PRICE = "Coin/coinCurrent";//币币查询当前币价格信息
+    public static final String K_LINE = "Coin/k_chart";//K线图
     public static final String GUADAN_TRADE = "coin_trade/index";//买卖挂单操作
+    public static final String COIN_DEPTH = "Coin/queryDepth";//市场深度数据(右侧买卖数据)
+
 
 
     public static final String OTC_TRADE = "Outside/getPair";//法币列表交易区

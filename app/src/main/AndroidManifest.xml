@@ -170,7 +170,10 @@
                       android:host="gizmos" />
                 -->
             </intent-filter>
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
 
         </activity>
         <activity
@@ -194,6 +197,7 @@
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme">
         </activity>
         <activity
@@ -202,10 +206,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
         </activity>
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.PerfectInfoActivity"

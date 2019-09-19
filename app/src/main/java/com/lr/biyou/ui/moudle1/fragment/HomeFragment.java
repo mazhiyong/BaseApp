@@ -3,6 +3,7 @@ package com.lr.biyou.ui.moudle1.fragment;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.MainActivity;
 import com.lr.biyou.ui.moudle.activity.SecurityActivity;
 import com.lr.biyou.ui.moudle.activity.SettingActivity;
+import com.lr.biyou.ui.moudle1.activity.NoticeDetialActivity;
 import com.lr.biyou.ui.moudle1.activity.NoticeListActivity;
 import com.lr.biyou.ui.moudle1.activity.PayListActivity;
 import com.lr.biyou.ui.moudle1.activity.UserInfoActivity;
@@ -43,6 +45,7 @@ import com.lr.biyou.ui.moudle1.activity.YaoQingActivity;
 import com.lr.biyou.ui.moudle1.adapter.MainCoinAdapter;
 import com.lr.biyou.ui.moudle1.adapter.MoreTypeAdapter;
 import com.lr.biyou.ui.moudle2.activity.RedRecordListActivity;
+import com.lr.biyou.ui.moudle3.activity.CoinInfoDetailActivity;
 import com.lr.biyou.ui.moudle5.activity.ChoseBiTypeActivity;
 import com.lr.biyou.ui.moudle5.activity.HuaZhuanActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
@@ -55,6 +58,7 @@ import com.lr.biyou.utils.tool.UtilTools;
 import com.stx.xhb.xbanner.XBanner;
 import com.sunfusheng.marqueeview.MarqueeView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -158,11 +162,23 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
 
     private List<CustomViewsInfo> localImageInfos = new ArrayList<>();
     private List<Map<String, Object>> listUp = new ArrayList<>();
+    private List<Map<String, Object>> noticeList;
 
     private AnimUtil mAnimUtil;
     private String biType = "自选";
 
     private int mPage = 1;
+    private Handler handler = new Handler();
+
+    //HTTP请求  轮询
+    private Runnable cnyRunnable = new Runnable() {
+        @Override
+        public void run() {
+            //获取实时虚拟货币数据
+            getBiInfoAction();
+            handler.postDelayed(this, MbsConstans.SECOND_TIME_5000);
+        }
+    };
 
     @Override
     public int getLayoutId() {
@@ -257,12 +273,21 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         });
 
 
+
+        marqueeView.setOnItemClickListener(new MarqueeView.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, TextView textView) {
+                Intent intent = new Intent(getActivity(), NoticeDetialActivity.class);
+                intent.putExtra("DATA", (Serializable) noticeList.get(position));
+                startActivity(intent);
+            }
+        });
+
         //获取轮播页数据
         getBannerInfoAction();
         //获取实时虚拟货币数据
-        getBiInfoAction();
-
-
+        //getBiInfoAction();
+        //handler.post(cnyRunnable);
     }
 
     private void getBannerInfoAction() {
@@ -338,7 +363,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                             }
                         }
 
-                        List<Map<String, Object>> noticeList = (List<Map<String, Object>>) mapData.get("notice");
+                        noticeList = (List<Map<String, Object>>) mapData.get("notice");
                         if (!UtilTools.empty(noticeList)) {
                             List<String> list1 = new ArrayList<>();
                             for (Map<String, Object> map : noticeList) {
@@ -371,53 +396,30 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                             Map<String, Object> mapMarket = null;
                             switch (biType) {
                                 case "自选":
-                                    rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
-
+                                    if (!UtilTools.empty(mapData.get("market_tickers")+"")){
+                                        rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
+                                    }
                                     break;
                                 case "USDT":
-                                    mapMarket = (Map<String, Object>) mapData.get("market_tickers");
-                                    if (!UtilTools.empty(mapMarket)) {
-                                        Map<String, Object> map0 = (Map<String, Object>) mapMarket.get("0");
-                                        if (!UtilTools.empty(map0)) {
-                                            LogUtilDebug.i("show", "map:" + map0.toString());
-                                            rankList.add(map0);
-                                        }
-
-                                        Map<String, Object> map1 = (Map<String, Object>) mapMarket.get("0");
-                                        if (!UtilTools.empty(map1)) {
-                                            LogUtilDebug.i("show", "map1:" + map1.toString());
-                                            rankList.add(map1);
-                                        }
-
-                                        Map<String, Object> map2 = (Map<String, Object>) mapMarket.get("0");
-                                        if (!UtilTools.empty(map2)) {
-                                            LogUtilDebug.i("show", "map2:" + map2.toString());
-                                            rankList.add(map2);
-                                        }
-
-                                        Map<String, Object> map3 = (Map<String, Object>) mapMarket.get("0");
-                                        if (!UtilTools.empty(map3)) {
-                                            LogUtilDebug.i("show", "map3:" + map3.toString());
-                                            rankList.add(map3);
-                                        }
-
-                                        Map<String, Object> map4 = (Map<String, Object>) mapMarket.get("0");
-                                        if (!UtilTools.empty(map4)) {
-                                            LogUtilDebug.i("show", "map4:" + map4.toString());
-                                            rankList.add(map4);
-                                        }
+                                    if (!UtilTools.empty(mapData.get("market_tickers")+"")){
+                                        rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
+                                    }
+                                    break;
+                                case "BTC":
+                                    if (!UtilTools.empty(mapData.get("market_tickers")+"")){
+                                        rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
                                     }
 
                                     break;
-                                case "BTC":
-                                    rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
-
-                                    break;
                                 case "ETH":
-                                    rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
+                                    if (!UtilTools.empty(mapData.get("market_tickers")+"")){
+                                        rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
+                                    }
                                     break;
                                 case "涨幅榜":
-                                    rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
+                                    if (!UtilTools.empty(mapData.get("market_tickers")+"")){
+                                        rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
+                                    }
                                     break;
                             }
 
@@ -425,14 +427,15 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                             if (!UtilTools.empty(rankList) && rankList.size() > 0) {
                                 mPageView.showContent();
                                 moreTypeAdapter.setRankList(rankList);
+                                List<Map<String, Object>> finalRankList = rankList;
                                 moreTypeAdapter.setOnItemClickListener(new MoreTypeAdapter.OnItemClickListener() {
                                     @Override
                                     public void onItemClickListener(View view, int position) {
-//                ListUpBean listUpBean = (ListUpBean) rankList.get(position);
-//                bundle.clear();
-//                bundle.putString("symbol", listUpBean.getName());
-//                bundle.putString("area", listUpBean.getArea());
-//                startActivityForResult(HomeFragment.this, bundle, AppConstant.OPERATE, CoinInfoDetailActivity.class);
+                                        Intent intent1 = new Intent(getActivity(), CoinInfoDetailActivity.class);
+                                        intent1.putExtra("symbol", finalRankList.get(position).get("name")+"");
+                                        intent1.putExtra("area", finalRankList.get(position).get("area")+"");
+                                        intent1.putExtra("from","1");
+                                        startActivity(intent1);
                                     }
                                 });
 
@@ -444,17 +447,19 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                         }
 
 
-                        if (!UtilTools.empty(mapData)) {
+                        if (!UtilTools.empty(mapData) && !UtilTools.empty(mapData.get("trade_block")+"")) {
                             listUp = (List<Map<String, Object>>) mapData.get("trade_block");
                             if (!UtilTools.empty(listUp)) {
                                 mainCoinAdapter.setData(listUp, vpQuotesInfo.getCurrentItem());
                                 mainCoinAdapter.setItemClickListener(new MainCoinAdapter.ItemClickListener() {
                                     @Override
                                     public void onItemClickListener(Map<String, Object> listUpBean) {
-//                    bundle.clear();
-//                    bundle.putString("symbol", listUpBean.getName());
-//                    bundle.putString("area", "USDT");
-//                    startActivityForResult(HomeFragment.this, bundle, AppConstant.OPERATE, CoinInfoDetailActivity.class);
+
+                                        Intent intent1 = new Intent(getActivity(), CoinInfoDetailActivity.class);
+                                        intent1.putExtra("symbol", listUpBean.get("name")+"");
+                                        intent1.putExtra("area", listUpBean.get("area")+"");
+                                        intent1.putExtra("from","1");
+                                        startActivity(intent1);
                                     }
                                 });
                             }
@@ -516,7 +521,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         dealFailInfo(map,mType);
     }
 
-    @OnClick({R.id.left_back_lay, R.id.tvMore, R.id.marqueeView,R.id.to_hy_lay,R.id.to_bb_lay,R.id.fast_buy_lay})
+    @OnClick({R.id.left_back_lay, R.id.tvMore, R.id.to_hy_lay,R.id.to_bb_lay,R.id.fast_buy_lay})
     public void onViewClicked(View view) {
         Intent intent;
         MainActivity activity = (MainActivity) getActivity();
@@ -525,10 +530,6 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                 initPopupWindow();
                 break;
             case R.id.tvMore: //更多
-                intent = new Intent(getActivity(), NoticeListActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.marqueeView: //更多
                 intent = new Intent(getActivity(), NoticeListActivity.class);
                 startActivity(intent);
                 break;
@@ -755,12 +756,50 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
 
     }
 
-
+    @Override
+    public void reLoadingData() {
+        getBiInfoAction();
+    }
 
 
     @Override
-    public void reLoadingData() {
-        showProgress();
-        getBiInfoAction();
+    public void onPause() {
+        super.onPause();
+        if (handler != null && cnyRunnable != null){
+            handler.removeCallbacks(cnyRunnable);
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getUserVisibleHint()) {
+            if (handler != null && cnyRunnable != null) {
+                handler.post(cnyRunnable);
+                LogUtilDebug.i("show", "&&&&&&&&HomeFragment visible");
+            }else {
+                LogUtilDebug.i("show", "&&&&&&&&HomeFragment gone");
+            }
+        }
+    }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden){
+            if (handler != null && cnyRunnable != null){
+                handler.removeCallbacks(cnyRunnable);
+            }
+            setUserVisibleHint(false);
+            LogUtilDebug.i("show","onHiddenChanged()*******HomeFragment不可见");
+        }else {
+            if (handler != null && cnyRunnable != null){
+                handler.post(cnyRunnable);
+            }
+            setUserVisibleHint(true);
+            LogUtilDebug.i("show", "onHiddenChanged()*******HomeFragment可见");
+        }
     }
 }

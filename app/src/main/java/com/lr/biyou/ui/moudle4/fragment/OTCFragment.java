@@ -137,20 +137,25 @@ public class OTCFragment extends BasicFragment {
     @Override
     public void onResume() {
         super.onResume();
-       LogUtilDebug.i("show","onResume()*******");
+        LogUtilDebug.i("show","onResume()*******");
 
+        if (getUserVisibleHint() && Position ==0) {
+            bbTradeFragment.restartWs();
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-       LogUtilDebug.i("show","onPause()*******");
+        LogUtilDebug.i("show","onPause()*******");
+        bbTradeFragment.stopWs();
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (hidden){
+            setUserVisibleHint(false);
            LogUtilDebug.i("show","onHiddenChanged()*******OTC不可见" + Position);
             switch (Position){
                 case 0:
@@ -161,15 +166,12 @@ public class OTCFragment extends BasicFragment {
                     break;
             }
         }else {
-           LogUtilDebug.i("show","onHiddenChanged()*******OTC可见"+Position);
-            LogUtilDebug.i("show","TYPE:"+TYPE);
-
+            setUserVisibleHint(true);
             if (TYPE == 1){
                 Objects.requireNonNull(mTabLayout.getTabAt(1)).select();
             }else {
                 Objects.requireNonNull(mTabLayout.getTabAt(0)).select();
             }
-
             switch (Position){
                 case 0:
                     bbTradeFragment.restartWs();

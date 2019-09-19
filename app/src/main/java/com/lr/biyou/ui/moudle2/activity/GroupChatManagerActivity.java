@@ -59,6 +59,8 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
     SwitchButton protectSwitch;
     @BindView(R.id.join_switch)
     SwitchButton joinSwitch;
+    @BindView(R.id.transfer_lay)
+    LinearLayout transferLay;
 
 
 
@@ -190,6 +192,19 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
                 updateStatusAction("3");
             }
         });
+
+
+        //转让群
+        transferLay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentTransfer = new Intent(GroupChatManagerActivity.this, SelectContractListActivity.class);
+                intentTransfer.putExtra("TYPE", "4");
+                intentTransfer.putExtra(IntentExtra.GROUP_ID, groupId);
+                startActivityForResult(intentTransfer,REQUEST_SET_NEW_OWNER);
+            }
+        });
+
 
         //获取管理员信息
         getGroupInfoAction();
@@ -408,7 +423,7 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
 
     @Override
     public void showProgress() {
-
+        showProgressDialog();
     }
 
     @Override
@@ -517,6 +532,24 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
                     case "0":
                         showToastMsg(tData.get("msg") + "");
                         finish();
+                        break;
+                    case "1":
+                        closeAllActivity();
+                        intent = new Intent(GroupChatManagerActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                }
+                break;
+
+            case MethodUrl.CHAT_GROUP_ADMIN_DELETE:
+                switch (tData.get("code")+"") {
+                    case "0":
+                        showToastMsg(tData.get("msg") + "");
+                        getGroupInfoAction();
                         break;
                     case "1":
                         closeAllActivity();

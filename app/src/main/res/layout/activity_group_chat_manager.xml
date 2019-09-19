@@ -30,6 +30,7 @@
     </com.lr.biyou.rongyun.ui.view.SettingItemView>
 
     <LinearLayout
+        android:id="@+id/transfer_lay"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:background="@color/white"

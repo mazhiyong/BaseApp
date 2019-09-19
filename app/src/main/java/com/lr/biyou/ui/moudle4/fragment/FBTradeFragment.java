@@ -98,6 +98,8 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
     TextView tvDell;
     @BindView(R.id.lay)
     LinearLayout lay;
+    @BindView(R.id.ck_price_tv)
+    TextView ckPriceTv;
 
     private int TYPE = 0;
     public LoadingWindow mLoadingWindow;
@@ -148,7 +150,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
     private KindSelectDialog mDialog;
 
-    private String symbol ="";
+    private String symbol = "";
     private String direction = "1"; //0 买  1卖
 
     private String direction2 = "1"; //0 买  1卖
@@ -239,13 +241,13 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 switch (TAB_POSITION) {
                     case 0://我要买
                         tabChild.removeAllTabs();
-                        if (!UtilTools.empty(mTabsData) && mTabsData.size()> 0){
-                            for (Map<String,Object> map : mTabsData){
-                                tabChild.addTab(tabChild.newTab().setText(map.get("symbol")+""));
+                        if (!UtilTools.empty(mTabsData) && mTabsData.size() > 0) {
+                            for (Map<String, Object> map : mTabsData) {
+                                tabChild.addTab(tabChild.newTab().setText(map.get("symbol") + ""));
                             }
 
 
-                            symbol = mTabsData.get(tab_POSITION).get("symbol")+"";
+                            symbol = mTabsData.get(tab_POSITION).get("symbol") + "";
                             direction = "1";
 
                             mPageView.setVisibility(View.VISIBLE);
@@ -260,12 +262,12 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         break;
                     case 1: //我要卖
                         tabChild.removeAllTabs();
-                        if (!UtilTools.empty(mTabsData) && mTabsData.size()> 0){
-                            for (Map<String,Object> map : mTabsData){
-                                tabChild.addTab(tabChild.newTab().setText(map.get("symbol")+""));
+                        if (!UtilTools.empty(mTabsData) && mTabsData.size() > 0) {
+                            for (Map<String, Object> map : mTabsData) {
+                                tabChild.addTab(tabChild.newTab().setText(map.get("symbol") + ""));
                             }
 
-                            symbol = mTabsData.get(tab_POSITION).get("symbol")+"";
+                            symbol = mTabsData.get(tab_POSITION).get("symbol") + "";
                             direction = "0";
 
                             mPageView.setVisibility(View.VISIBLE);
@@ -340,7 +342,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 tab_POSITION = tab.getPosition();
                 switch (TAB_POSITION) {
                     case 0://我要买
-                        symbol = mTabsData.get(tab_POSITION).get("symbol")+"";
+                        symbol = mTabsData.get(tab_POSITION).get("symbol") + "";
                         direction = "1";
 
                         mPageView.setVisibility(View.VISIBLE);
@@ -368,7 +370,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         }*/
                         break;
                     case 1: //我要卖
-                        symbol = mTabsData.get(tab_POSITION).get("symbol")+"";
+                        symbol = mTabsData.get(tab_POSITION).get("symbol") + "";
                         direction = "0";
 
                         mPageView.setVisibility(View.VISIBLE);
@@ -442,7 +444,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
             @Override
             public void onRefresh() {
                 mPage = 1;
-                switch (mRequestTag){
+                switch (mRequestTag) {
                     case MethodUrl.FB_ENTRUSTLIST:
                         getEntrustListAction();
                         break;
@@ -461,7 +463,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
             @Override
             public void onLoadMore() {
                 mPage = mPage + 1;
-                switch (mRequestTag){
+                switch (mRequestTag) {
                     case MethodUrl.FB_ENTRUSTLIST:
                         getEntrustListAction();
                         break;
@@ -484,6 +486,53 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mSelectStartTime = sTime;
         mSelectEndTime = eTime;
 
+        mEtNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (UtilTools.empty(etPrice.getText())){
+                    showToastMsg("请输入价格信息");
+                }else {
+                    if (s.toString().length()>0){
+                        float amount = Float.parseFloat(etPrice.getText().toString())*Float.parseFloat(s.toString());
+                        amountTv.setText("≈"+amount+"CNY");
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        etPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!UtilTools.empty(mEtNumber.getText())){
+                    if (s.toString().length()>0){
+                        float amount = Float.parseFloat(mEtNumber.getText().toString())*Float.parseFloat(s.toString());
+                        amountTv.setText("≈"+amount+"CNY");
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
     }
 
@@ -491,21 +540,21 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private void get0tcTradeAction() {
         mRequestTag = MethodUrl.OTC_TRADE;
         Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(),MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.OTC_TRADE, map);
     }
 
-    private void  getEntrustListAction() {
+    private void getEntrustListAction() {
         mRequestTag = MethodUrl.FB_ENTRUSTLIST;
         Map<String, Object> map = new HashMap<>();
-        map.put("direction",direction);
-        map.put("symbol",symbol);
-        map.put("page",mPage+"");
-        map.put("size","10");
+        map.put("direction", direction);
+        map.put("symbol", symbol);
+        map.put("page", mPage + "");
+        map.put("size", "10");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.FB_ENTRUSTLIST, map);
     }
@@ -515,57 +564,55 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mRequestTag = MethodUrl.USER_ENTRUSTLIST;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
-        map.put("page",mPage+"");
-        map.put("size","10");
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("page", mPage + "");
+        map.put("size", "10");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_ENTRUSTLIST, map);
     }
 
 
-
-
-
-    @OnClick({R.id.iv_search ,R.id.tv_dell,R.id.bitype_lay})
+    @OnClick({R.id.iv_search, R.id.tv_dell, R.id.bitype_lay})
     public void onViewClicked(View view) {
         Intent intent;
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_search:
                 intent = new Intent(getParentFragment().getActivity(), DingDanListActivity.class);
                 startActivity(intent);
                 break;
 
             case R.id.bitype_lay:
-                List<Map<String,Object>> mDataList2 = new ArrayList<>();
-                for (Map<String,Object> map:mTabsData) {
-                    Map<String,Object> map1 = new HashMap<>();
-                    map1.put("name",map.get("symbol")+"");
+                List<Map<String, Object>> mDataList2 = new ArrayList<>();
+                for (Map<String, Object> map : mTabsData) {
+                    Map<String, Object> map1 = new HashMap<>();
+                    map1.put("name", map.get("symbol") + "");
+                    map1.put("price",map.get("price")+"");
                     mDataList2.add(map1);
                 }
-                mDialog=new KindSelectDialog(getActivity(),true,mDataList2,30);
+                mDialog = new KindSelectDialog(getActivity(), true, mDataList2, 30);
                 mDialog.setSelectBackListener(this);
-                mDialog.showAtLocation(Gravity.BOTTOM,0,0);
+                mDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
                 break;
 
             case R.id.tv_dell: //挂单买卖操作
-                if (BiTypeTv.getText().toString().equals("请选择币种类型")){
+                if (BiTypeTv.getText().toString().equals("请选择币种类型")) {
                     showToastMsg("请选择币种类型");
                     return;
                 }
 
-                if (UtilTools.empty(etPrice.getText()+"")){
+                if (UtilTools.empty(etPrice.getText() + "")) {
                     showToastMsg("请输入价格");
                     return;
                 }
 
-                 if (UtilTools.empty(mEtNumber.getText()+"")){
-                     showToastMsg("请输入数量");
-                     return;
-                 }
+                if (UtilTools.empty(mEtNumber.getText() + "")) {
+                    showToastMsg("请输入数量");
+                    return;
+                }
 
-                 doDealAction();
+                doDealAction();
 
                 break;
 
@@ -578,13 +625,13 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mRequestTag = MethodUrl.USER_ENTRUST_DEAL;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
-        map.put("price",etPrice.getText()+"");
-        map.put("number", mEtNumber.getText()+"");
-        map.put("symbol", BiTypeTv.getText()+"");
-        map.put("direction",direction2);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("price", etPrice.getText() + "");
+        map.put("number", mEtNumber.getText() + "");
+        map.put("symbol", BiTypeTv.getText() + "");
+        map.put("direction", direction2);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_ENTRUST_DEAL, map);
     }
@@ -606,53 +653,53 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         Intent intent;
         switch (mType) {
             case MethodUrl.OTC_TRADE:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
-                        Map<String,Object> mapData= (Map<String, Object>) tData.get("data");
-                        if (!UtilTools.empty(mapData)){
-                           mTabsData = (List<Map<String, Object>>) mapData.get("pair");
-                           if (!UtilTools.empty(mTabsData) && mTabsData.size()> 0){
-                               for (Map<String,Object> map : mTabsData){
-                                   tabChild.addTab(tabChild.newTab().setText(map.get("symbol")+""));
-                               }
-                               symbol = mTabsData.get(0).get("symbol")+"";
-                           }
+                        Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
+                        if (!UtilTools.empty(mapData)) {
+                            mTabsData = (List<Map<String, Object>>) mapData.get("pair");
+                            if (!UtilTools.empty(mTabsData) && mTabsData.size() > 0) {
+                                for (Map<String, Object> map : mTabsData) {
+                                    tabChild.addTab(tabChild.newTab().setText(map.get("symbol") + ""));
+                                }
+                                symbol = mTabsData.get(0).get("symbol") + "";
+                            }
                         }
                         break;
                     case "1":
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
 
                 }
                 break;
             case MethodUrl.FB_ENTRUSTLIST:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
-                        Map<String,Object> mapData= (Map<String, Object>) tData.get("data");
-                        if (!UtilTools.empty(mapData)){
+                        Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
+                        if (!UtilTools.empty(mapData)) {
                             mDataList = (List<Map<String, Object>>) mapData.get("list");
-                            if (mDataList != null && mDataList.size()>0){
-                                for (Map<String,Object> map : mDataList){
-                                    map.put("direction",direction);
-                                    map.put("symbol",symbol);
+                            if (mDataList != null && mDataList.size() > 0) {
+                                for (Map<String, Object> map : mDataList) {
+                                    map.put("direction", direction);
+                                    map.put("symbol", symbol);
                                 }
                                 mPageView.showContent();
                                 responseData1();
                                 mRefreshListView.refreshComplete(10);
-                            }else {
+                            } else {
                                 mPageView.showEmpty();
                             }
                         }
                         break;
                     case "1":
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
@@ -660,7 +707,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         mPageView.showNetworkError();
                         break;
 
@@ -668,18 +715,18 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 break;
 
             case MethodUrl.USER_BUY_DEAL:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         switch (TAB_POSITION) {
                             case 0:
                                 intent = new Intent(getParentFragment().getActivity(), PayMoneyActivity.class);
-                                intent.putExtra("id",tData.get("data")+"");//订单ID
+                                intent.putExtra("id", tData.get("data") + "");//订单ID
                                 startActivity(intent);
                                 break;
                             case 1:
                                 intent = new Intent(getParentFragment().getActivity(), PayMoneyActivity.class);
-                                intent.putExtra("id",tData.get("data")+"");//订单ID
+                                intent.putExtra("id", tData.get("data") + "");//订单ID
                                 startActivity(intent);
                                 break;
                             case 2:
@@ -688,7 +735,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         }
                         break;
                     case "1":
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
@@ -696,29 +743,29 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
 
                 }
                 break;
 
             case MethodUrl.USER_ENTRUSTLIST:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
-                        Map<String,Object> mapData= (Map<String, Object>) tData.get("data");
-                        if (!UtilTools.empty(mapData)){
+                        Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
+                        if (!UtilTools.empty(mapData)) {
                             mDataList = (List<Map<String, Object>>) mapData.get("list");
-                            if (mDataList != null && mDataList.size()>0){
+                            if (mDataList != null && mDataList.size() > 0) {
                                 mPageView.showContent();
                                 responseData7();
                                 mRefreshListView.refreshComplete(10);
-                            }else {
+                            } else {
                                 mPageView.showEmpty();
                             }
                         }
                         break;
                     case "1":
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
@@ -726,7 +773,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         mPageView.showNetworkError();
                         break;
 
@@ -734,12 +781,12 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 break;
 
             case MethodUrl.USER_ENTRUST_DEAL:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                     case "1":
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
@@ -747,20 +794,20 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
 
                 }
                 break;
 
-            case  MethodUrl.CANCEL_ENTRUSTLIST:
-                switch (tData.get("code")+""){
+            case MethodUrl.CANCEL_ENTRUSTLIST:
+                switch (tData.get("code") + "") {
                     case "0":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         getUserTradeList();
                         break;
                     case "1":
-                        if (getParentFragment().getActivity() != null){
+                        if (getParentFragment().getActivity() != null) {
                             getParentFragment().getActivity().finish();
                         }
                         intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
@@ -768,7 +815,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
 
                 }
@@ -816,7 +863,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
     @Override
     public void reLoadingData() {
-        switch (mRequestTag){
+        switch (mRequestTag) {
             case MethodUrl.FB_ENTRUSTLIST:
                 getEntrustListAction();
                 break;
@@ -826,7 +873,6 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 break;
         }
         mLoadingWindow.showView();
-
 
 
     }
@@ -916,14 +962,14 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mBuyAdapter1.setmCallBack(new OnChildClickListener() {
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-                id = mParentMap.get("id")+"";
-                if (direction.equals("1")){
-                    showDialog("购买 "+mParentMap.get("symbol"),
-                            mParentMap.get("price")+"", "交易数量 0 USDT",
+                id = mParentMap.get("id") + "";
+                if (direction.equals("1")) {
+                    showDialog("购买 " + mParentMap.get("symbol"),
+                            mParentMap.get("price") + "", "交易数量 0 USDT",
                             "按价格购买", "按数量购买");
-                }else {
-                    showDialog("出售 "+mParentMap.get("symbol"),
-                            mParentMap.get("price")+"", "交易数量 0 USDT",
+                } else {
+                    showDialog("出售 " + mParentMap.get("symbol"),
+                            mParentMap.get("price") + "", "交易数量 0 USDT",
                             "按价格出售", "按数量出售");
                 }
 
@@ -1446,12 +1492,12 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mdingdanAdapter.setmCallBack(new OnChildClickListener() {
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(getParentFragment().getActivity(),true);
-                sureOrNoDialog.initValue("提示","确定要撤销当前挂单吗？");
+                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(getParentFragment().getActivity(), true);
+                sureOrNoDialog.initValue("提示", "确定要撤销当前挂单吗？");
                 sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        switch (v.getId()){
+                        switch (v.getId()) {
                             case R.id.cancel:
                                 sureOrNoDialog.dismiss();
                                 break;
@@ -1471,19 +1517,17 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
     }
 
 
-    private void cheXiaoGuadanAction(Map<String,Object> mParentMap) {
+    private void cheXiaoGuadanAction(Map<String, Object> mParentMap) {
         mRequestTag = MethodUrl.CANCEL_ENTRUSTLIST;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
-        map.put("id", mParentMap.get("id")+"");
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("id", mParentMap.get("id") + "");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CANCEL_ENTRUSTLIST, map);
     }
-
-
 
 
     private View popView;
@@ -1644,26 +1688,26 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().length() > 0){
-                    switch (tradeType){
+                if (s.toString().length() > 0) {
+                    switch (tradeType) {
                         case 0: //按价格够买
                             tradePrice = s.toString();
 
-                            tradeNumber = Float.parseFloat(tradePrice)/Float.parseFloat(tvPrice.getText().toString().replaceAll(",","").trim())+"";
-                            tvNumber.setText("交易数量 "+UtilTools.getNormalMoney(tradeNumber)+" USDT");
+                            tradeNumber = Float.parseFloat(tradePrice) / Float.parseFloat(tvPrice.getText().toString().replaceAll(",", "").trim()) + "";
+                            tvNumber.setText("交易数量 " + UtilTools.getNormalMoney(tradeNumber) + " USDT");
                             tvMoney.setText(UtilTools.getRMBMoney(tradePrice));
 
                             break;
                         case 1:  //按数量够买
                             tradeNumber = s.toString();
-                            tradePrice = Float.parseFloat(tradeNumber)*Float.parseFloat(tvPrice.getText().toString().replaceAll(",","").trim())+"";
-                            tvNumber.setText("交易数量 "+UtilTools.getNormalMoney(tradeNumber)+" USDT");
+                            tradePrice = Float.parseFloat(tradeNumber) * Float.parseFloat(tvPrice.getText().toString().replaceAll(",", "").trim()) + "";
+                            tvNumber.setText("交易数量 " + UtilTools.getNormalMoney(tradeNumber) + " USDT");
                             tvMoney.setText(UtilTools.getRMBMoney(tradePrice));
 
                             break;
 
                     }
-                }else {
+                } else {
                     etNumber.setHint("请输入");
                     tvNumber.setText("交易数量 0 USDT");
                     tvMoney.setText("¥ 0.00");
@@ -1684,21 +1728,21 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mRequestTag = MethodUrl.USER_BUY_DEAL;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
         //map.put("token","a147ff5721babca2e7c7b976023af933");
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("id", id);
         map.put("number", tradeNumber);
         //传参交易密码
         String paycode = "";
-        if (!UtilTools.empty(MbsConstans.PAY_CODE)){
+        if (!UtilTools.empty(MbsConstans.PAY_CODE)) {
             paycode = MbsConstans.PAY_CODE;
-        }else {
+        } else {
             paycode = SPUtils.get(getParentFragment().getActivity(), MbsConstans.SharedInfoConstans.PAY_CODE, "").toString();
         }
 
-        map.put("payment_password",paycode);
+        map.put("payment_password", paycode);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_BUY_DEAL, map);
     }
@@ -1739,8 +1783,9 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 break;
 
             case 30:
-                String strSysbol= (String) map.get("name");
+                String strSysbol = map.get("name")+"";
                 BiTypeTv.setText(strSysbol);
+                ckPriceTv.setText("参考价:"+map.get("price"));
                 break;
 
         }

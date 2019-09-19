@@ -8,17 +8,18 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.github.fujianlian.klinechart.DataHelper;
 import com.github.fujianlian.klinechart.KLineChartAdapter;
 import com.github.fujianlian.klinechart.KLineChartView;
@@ -26,34 +27,26 @@ import com.github.fujianlian.klinechart.KLineEntity;
 import com.github.fujianlian.klinechart.draw.Status;
 import com.github.fujianlian.klinechart.formatter.DateMiddleTimeFormatter;
 import com.google.android.material.tabs.TabLayout;
-import com.google.gson.reflect.TypeToken;
 import com.gyf.immersionbar.ImmersionBar;
 import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
+import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.BasicApplication;
 import com.lr.biyou.basic.MbsConstans;
-import com.lr.biyou.db.CnyNumberBean;
-import com.lr.biyou.db.CurrentPriceBean;
 import com.lr.biyou.db.IsCollectBean;
-import com.lr.biyou.db.ListUpBean;
-import com.lr.biyou.db.ReqKlineDataBean;
-import com.lr.biyou.db.SubSuccessBean;
-import com.lr.biyou.di.module.ObjectModule;
 import com.lr.biyou.mywidget.dialog.IndexChooseDialog;
-import com.lr.biyou.utils.tool.GzipUtils;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.UtilTools;
 import com.lr.biyou.utils.websocketparams.CoinCoinKlineParams;
 import com.lr.biyou.utils.websocketparams.CurrenctPriceWsParams;
-import com.lr.biyou.utils.websocketparams.PingParams;
 import com.lr.biyou.utils.websocketparams.PongParams;
 import com.lr.biyou.utils.websocketparams.QuotesDataParams;
 import com.lr.biyou.utils.websocketparams.ReqKlineDataParams;
 import com.lr.biyou.utils.websocketparams.SubKlineDataParams;
 import com.lr.biyou.utils.websocketparams.UnsubKlineDataParams;
-import com.wanou.framelibrary.bean.GeneralResult;
 import com.wanou.framelibrary.bean.SimpleResponse;
 import com.wanou.framelibrary.okgoutil.OkGoUtils;
 import com.wanou.framelibrary.okgoutil.websocket.WsManager;
@@ -61,13 +54,15 @@ import com.wanou.framelibrary.okgoutil.websocket.WsStatus;
 import com.wanou.framelibrary.okgoutil.websocket.listener.WsStatusListener;
 import com.wanou.framelibrary.utils.GsonUtils;
 import com.wanou.framelibrary.utils.UiTools;
+
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import okhttp3.Response;
-import okio.ByteString;
 
 import static androidx.drawerlayout.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 
@@ -84,7 +79,7 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
     private CurrenctPriceWsParams currenctPriceWsParams = new CurrenctPriceWsParams();
     private TabLayout tlTimeChoose;
     private KLineChartView kLineChartView;
-    private String symbol, area;
+    private String symbol, area,period="60";
     private String[] timeChoose, klineTimeParams, timeChooseParams;
     private KLineChartAdapter kLineChartAdapter;
     private Handler handler = new Handler();
@@ -108,10 +103,14 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
     private SubKlineDataParams subKlineDataParams1 = new SubKlineDataParams();
     private ReqKlineDataParams reqKlineDataParams = new ReqKlineDataParams();
     private boolean isLogin = false;
-
+    private String mRequestTag = "";
     protected Bundle mBundle;
 
-    private Runnable currentPriceRunnable = new Runnable() {
+
+
+
+
+   /* private Runnable currentPriceRunnable = new Runnable() {
         @Override
         public void run() {
             // 获取币当前价
@@ -122,18 +121,8 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
             wsManage1.sendMessage(JSONUtil.getInstance().objectToJson(map));
             handler1.postDelayed(this, MbsConstans.SECOND_TIME_500);
         }
-    };
-
-    private Runnable cnyRunnable = new Runnable() {
-        @Override
-        public void run() {
-            // 获取币当前价  HTTP请求  轮询
-            //mPresenter.getCnyPrice(area + "/1");
-            //handler2.postDelayed(this, AppConstant.SECOND_TIME_5000);
-        }
-    };
-
-    private Runnable runnable = new Runnable() {
+    };*/
+    /*private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             // 获取平台币K线
@@ -146,17 +135,16 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
             wsManage2.sendMessage(JSONUtil.getInstance().objectToJson(map));
             handler.postDelayed(this, MbsConstans.SECOND_TIME_500);
         }
-    };
+    };*/
 
 
+    //当前界面  不支持滑动返回
+    @Override
+    public boolean isSupportSwipeBack() {
+        return false;
+    }
     @Override
     public void setBarTextColor(){
-        /*if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            StatusBarUtil.setDarkMode(this);
-        } else {
-            StatusBarUtil.setLightMode(this);
-        }*/
-
         StatusBarUtil.setDarkMode(this);
     }
 
@@ -175,6 +163,47 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
         initData();
 
     }
+
+
+    //HTTP请求  轮询
+    private Runnable cnyRunnable = new Runnable() {
+        @Override
+        public void run() {
+            // 获取币当前价
+            getCurrentPriceAction();
+
+            //获取K线数据
+            getKLineAction();
+            handler2.postDelayed(this, MbsConstans.SECOND_TIME_5000);
+        }
+    };
+
+    private void getCurrentPriceAction() {
+        mRequestTag = MethodUrl.CURRENT_PRICE;
+        Map<String, Object> map = new HashMap<>();
+       /* if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(CoinInfoDetailActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);*/
+        map.put("area",area);
+        map.put("symbol",symbol);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CURRENT_PRICE, map);
+    }
+
+    private void getKLineAction() {
+        mRequestTag = MethodUrl.K_LINE;
+        Map<String, String> map = new HashMap<>();
+       /* if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(CoinInfoDetailActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);*/
+        map.put("symbol",symbol.toLowerCase()+"_"+area.toLowerCase());
+        map.put("period",period);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestGetToMap(mHeaderMap, MethodUrl.K_LINE, map);
+    }
+
 
 
     protected void initView() {
@@ -217,17 +246,17 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
             case R.id.ivBack:
                 finish();
                 break;
-            case R.id.tvBuyIn:
-                intent.putExtra("buySell", 1);
-                intent.putExtra("area", area);
-                intent.putExtra("symbol", symbol);
+            case R.id.tvBuyIn: //买入
+                intent.putExtra("buySell", "1");
+                //intent.putExtra("area", area);
+                //intent.putExtra("symbol", symbol);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
-            case R.id.tvSellOut:
-                intent.putExtra("buySell", 2);
-                intent.putExtra("area", area);
-                intent.putExtra("symbol", symbol);
+            case R.id.tvSellOut://卖出
+                intent.putExtra("buySell", "2");
+                //intent.putExtra("area", area);
+                //intent.putExtra("symbol", symbol);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
@@ -331,24 +360,25 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
             tlLeftCoinTitle.addTab(tlLeftCoinTitle.newTab().setText(tabContent));
         }
         initLeftView();
+        mBundle = getIntent().getExtras();
         if (mBundle != null) {
             symbol = mBundle.getString("symbol", "");
             area = mBundle.getString("area", "");
             cnyRatio = mBundle.getString("cnyRatio", "");
             coinCoinKlineParams.area = area;
             coinCoinKlineParams.symbol = symbol;
-            currenctPriceWsParams.setArea(mBundle.getString("area", ""));
-            currenctPriceWsParams.setSymbol(mBundle.getString("symbol", ""));
+            currenctPriceWsParams.setArea(area);
+            currenctPriceWsParams.setSymbol(symbol);
             String from = mBundle.getString("from", "");
+
             if (from.equals("1")) {
                 viewGone(llOperate);
             }
             tvCoinName.setText(symbol + "/" + area);
             // 分时图选择器
-            //initTimeChoose();
+            initTimeChoose();
         }
         // 初始化chartview
-        initTimeChoose();
         initChartView();
     }
 
@@ -394,11 +424,9 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                 if (!UtilTools.empty(map)){
                     if ((map.get("status")+"").equals("1")){
                         Map<String,Object> mapData= (Map<String, Object>) map.get("data");
-                        LogUtilDebug.i("show","mapData&&&&&&&&"+mapData.toString());
                         if (!UtilTools.empty(mapData)){
                             // 当前价
                             tvCoinPrice.setText(mapData.get("price")+"");
-                            LogUtilDebug.i("show","price&&&&&&&&"+mapData.get("price")+"");
                             // 对应cny价格
                             tvCnyPrice.setText(getResources().getString(R.string.defaultCny).replace("%S", UtilTools.formatNumber(mapData.get("cny_number")+"", "#.##")));
                             // 高
@@ -432,7 +460,6 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
         public void onMessage(String text) {
             if (wsManage2.getCurrentStatus() == WsStatus.CONNECTED) {
                 LogUtilDebug.i("show","Kline data:"+text);
-
                 Map<String,Object> map = JSONUtil.getInstance().jsonMap(text);
                 if (!UtilTools.empty(map)){
                     if ((map.get("status")+"").equals("1")){
@@ -733,9 +760,7 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
 
     private void initTimeChoose() {
         timeChoose = getResources().getStringArray(R.array.timeChoose);
-        LogUtilDebug.i("show","timeChoose:"+timeChoose.toString());
         timeChooseParams = getResources().getStringArray(R.array.timeChooseParams);
-        LogUtilDebug.i("show","timeChooseParms:"+timeChooseParams);
         klineTimeParams = getResources().getStringArray(R.array.klineTimeParams);
         for (String tabContent : timeChoose) {
             tlTimeChoose.addTab(tlTimeChoose.newTab().setText(tabContent));
@@ -743,6 +768,32 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
         tlTimeChoose.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                switch (tlTimeChoose.getSelectedTabPosition()){
+                    case 0:
+                        period = "60";
+                        break;
+                    case 1:
+                        period = "300";
+                        break;
+                    case 2:
+                        period = "900";
+                        break;
+                    case 3:
+                        period = "1800";
+                        break;
+                    case 4:
+                        period = "3600";
+                        break;
+                    case 5:
+                        period = "86400";
+                        break;
+                    case 6:
+                        period = "604800";
+                        break;
+                }
+
+                getKLineAction();
+
                 isFirstLoad = true;
                 // 取消订阅
                 unSubKlineData();
@@ -881,8 +932,8 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
     @Override
     protected void onPause() {
         super.onPause();
-        handler1.removeCallbacks(currentPriceRunnable);
-        handler.removeCallbacks(runnable);
+        //handler1.removeCallbacks(currentPriceRunnable);
+        //handler.removeCallbacks(runnable);
         handler2.removeCallbacks(cnyRunnable);
         wsManage2.stopConnect();
         unSubKlineData();
@@ -902,15 +953,15 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
-        setWebsocketListener();
+       /* setWebsocketListener();
         if (getCoinObject() != null) {
             // 开启K线订阅
             subKlineData();
 //            sub24HKlineData();
         } else {
             handler.post(runnable);
-        }
-        handler1.post(currentPriceRunnable);
+        }*/
+        //handler1.post(currentPriceRunnable);
         //http 请求
         //mPresenter.getIsSelf(symbol + "/" + area);
         handler2.post(cnyRunnable);
@@ -966,12 +1017,107 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
+        Intent intent;
+        switch (mType){
+            case MethodUrl.CURRENT_PRICE:
+                switch (tData.get("code")+""){
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data")+"")){
+                            Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
+                            if (!UtilTools.empty(mapData)){
+                                tvCoinPrice.setText(mapData.get("price")+"");
+                                //tvCnyPrice.setText("≈"+mapData.get("cny_number")+"CNY");
+                                tvCnyPrice.setText(getResources().getString(R.string.defaultCny).replace("%S", UtilTools.formatNumber(mapData.get("cny_number")+"", "#.##")));
+                                if ((mapData.get("ratio")+"").contains("-")) {
+                                    tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
+                                    tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
+                                    tvUpRatio.setText(UtilTools.formatNumber(mapData.get("ratio")+"", "#.##") + "%");
+                                } else {
+                                    tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
+                                    tvUpRatio.setText("+" + UtilTools.formatNumber(mapData.get("ratio")+"", "#.##") + "%");
+                                    tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
+                                }
+                                // 高
+                                tvHighPrice.setText(UtilTools.formatNumber(mapData.get("high")+"", "#.########"));
+                                // 低
+                                tvLowPrice.setText(UtilTools.formatNumber(mapData.get("low")+"", "#.########"));
+                                // 成交量
+                                tv24H.setText(UtilTools.formatNumber(mapData.get("volume")+"", "0"));
+                            }
+                        }
+
+
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(CoinInfoDetailActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+
+            case MethodUrl.K_LINE:
+                switch (tData.get("code")+""){
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data")+"")){
+                            List<List<String>> klineData = JSONUtil.getInstance().jsonToListStr2(tData.get("data")+"");
+                            kLineDataList.clear();
+                            for (List<String> klineDataContent : klineData) {
+                                KLineEntity kLineEntity = new KLineEntity();
+                                // 时间
+                                kLineEntity.id = Long.parseLong(klineDataContent.get(0));
+                                // 开盘价
+                                kLineEntity.open = Float.parseFloat(klineDataContent.get(1));
+                                // 最高
+                                kLineEntity.high = Float.parseFloat(klineDataContent.get(2));
+                                // 最低
+                                kLineEntity.low = Float.parseFloat(klineDataContent.get(3));
+                                // 收盘
+                                kLineEntity.close = Float.parseFloat(klineDataContent.get(4));
+                                // 交易量
+                                kLineEntity.amount = Float.parseFloat(klineDataContent.get(5));
+                                kLineDataList.add(kLineEntity);
+                            }
+                            DataHelper.calculate(kLineDataList);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (isFirstLoad) {
+                                        kLineChartView.startAnimation();
+                                        isFirstLoad = false;
+                                        kLineChartAdapter.clearData();
+                                    }
+                                    kLineChartAdapter.addFooterData(kLineDataList);
+                                    kLineChartAdapter.notifyDataSetChanged();
+                                    kLineChartView.refreshComplete();
+                                    kLineChartView.refreshEnd();
+                                }
+                            });
+                        }
+
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(CoinInfoDetailActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+        }
 
     }
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
-
+        dealFailInfo(map,mType);
     }
 
     protected void viewGone(View... views) {
@@ -981,4 +1127,7 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
             }
         }
     }
+
+
+
 }

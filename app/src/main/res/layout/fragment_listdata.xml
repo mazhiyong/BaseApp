@@ -167,12 +167,13 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <TextView
+            android:id="@+id/ck_price_tv"
             android:layout_width="match_parent"
             android:gravity="right"
             android:layout_marginRight="@dimen/dp_25"
             android:layout_gravity="center_vertical"
             android:textColor="@color/gray"
-            android:text="参考价: 6.98"
+            android:text="参考价: 0.00"
             android:padding="@dimen/dp_15"
             android:textSize="@dimen/sp_14"
             android:layout_height="wrap_content" />
@@ -233,7 +234,7 @@
             android:layout_marginRight="@dimen/dp_25"
             android:layout_gravity="center_vertical"
             android:textColor="@color/gray"
-            android:text="≈ 6888 CNY"
+            android:text="≈ 0 CNY"
             android:padding="@dimen/dp_15"
             android:textSize="@dimen/sp_14"
             android:layout_height="wrap_content" />

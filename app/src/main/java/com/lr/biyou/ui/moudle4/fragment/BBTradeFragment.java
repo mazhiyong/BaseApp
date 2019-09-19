@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +35,6 @@ import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
-import com.lr.biyou.basic.BasicApplication;
 import com.lr.biyou.basic.BasicFragment;
 import com.lr.biyou.basic.BasicRecycleViewAdapter;
 import com.lr.biyou.basic.MbsConstans;
@@ -62,10 +60,7 @@ import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.wanou.framelibrary.okgoutil.websocket.WsManager;
-import com.wanou.framelibrary.okgoutil.websocket.WsStatus;
 import com.wanou.framelibrary.okgoutil.websocket.listener.WsStatusListener;
-import com.wanou.framelibrary.utils.GsonUtils;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -78,6 +73,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import jp.wasabeef.recyclerview.adapters.AnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * OTC  币币交易
@@ -229,15 +226,59 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private int mPage = 1;
     private AnimUtil mAnimUtil;
 
-    private WsManager wsManager;
-    private Handler handler = new Handler();
+    //private WsManager wsManager;
+    //private Handler handler = new Handler();
     private String mSelectType = "0"; // 0 限价  1 市价
     private String mKindType = "0"; // 0 买入  1 卖出
 
     private String BTC_Account = "0";
     private String USDT_Account = "0";
 
+    private final int QUEST_CODE = 100;
 
+
+    private Handler handler = new Handler();
+
+    //HTTP请求  轮询
+    private Runnable cnyRunnable = new Runnable() {
+        @Override
+        public void run() {
+            // 获取币当前价
+            getCurrentPriceAction();
+
+            //获取合约价格以及深度信息
+            getPairDepthAction();
+
+            handler.postDelayed(this, MbsConstans.SECOND_TIME_5000);
+        }
+    };
+
+    private void getPairDepthAction() {
+        mRequestTag = MethodUrl.COIN_DEPTH;
+        Map<String, Object> map = new HashMap<>();
+        /*if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);*/
+        map.put("symbol", symbol);
+        map.put("area", area);
+        map.put("depth", "1");
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.COIN_DEPTH, map);
+    }
+
+    private void getCurrentPriceAction() {
+        mRequestTag = MethodUrl.CURRENT_PRICE;
+        Map<String, Object> map = new HashMap<>();
+       /* if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(CoinInfoDetailActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);*/
+        map.put("area",area);
+        map.put("symbol",symbol);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CURRENT_PRICE, map);
+    }
 
     public BBTradeFragment() {
         // Required empty public constructor
@@ -291,8 +332,10 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             //账户当前交易区交易币可用
             getCurAreaAccountAction();
 
-            setWebsocketListener();
-            handler.post(runnable);
+            //setWebsocketListener();
+            //handler.post(runnable);
+
+            handler.post(cnyRunnable);
             LogUtilDebug.i("show", "BB懒加载数据");
             isDataInitiated = true;
             return true;
@@ -305,7 +348,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
      */
 
 
-    //开辟线程 轮询
+   /* //开辟线程 轮询
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -335,7 +378,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             //每隔 0.5s 发送一次
             handler.postDelayed(this, MbsConstans.SECOND_TIME_500);
         }
-    };
+    };*/
 
     @Override
     public void init() {
@@ -344,7 +387,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 //        mTitleBarView.setPadding(0, UtilTools.getStatusHeight2(getActivity()), 0, 0);
 //        mTitleText.setText(getResources().getString(R.string.bottom_heyue));
 //        mLeftBackLay.setVisibility(View.GONE);
-        wsManager = BasicApplication.getWsManager();
+        //wsManager = BasicApplication.getWsManager();
 
         mAnimUtil = new AnimUtil();
 
@@ -357,27 +400,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
         initView();
         setBarTextColor();
-
-
-        for (int i = 0; i < 15; i++) {
-            Map<String, Object> map = new HashMap<>();
-
-            map.put("id", i);
-            map.put("uid", i);
-            map.put("symbol", "BTC");
-            map.put("area", "郑州");
-            map.put("price", "1000");
-            map.put("average", "888");
-            map.put("number", "26");
-            map.put("surplus", "10");
-            map.put("finish", "10");
-            map.put("cancel", "6");
-            map.put("total", "80999001");
-            map.put("createTime", "2019/08/22 14:00");
-            map.put("statusText", "交易中");
-            map.put("directionText", "纵向");
-            mDataList3.add(map);
-        }
 
         rgBuySell.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -497,10 +519,10 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 //    }
 
     private void setWebsocketListener() {
-        if (!wsManager.isWsConnected()) {
+      /*  if (!wsManager.isWsConnected()) {
             wsManager.startConnect();
         }
-        wsManager.setWsStatusListener(wsStatusListener);
+        wsManager.setWsStatusListener(wsStatusListener);*/
     }
 
 
@@ -592,8 +614,11 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 initPopupWindow();
                 break;
             case R.id.iv_toCoinInfo:
-                intent = new Intent(getParentFragment().getActivity(), CoinInfoDetailActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(getActivity(), CoinInfoDetailActivity.class);
+                intent1.putExtra("symbol", symbol);
+                intent1.putExtra("area", area);
+                intent1.putExtra("from","2");
+                startActivityForResult(intent1,QUEST_CODE);
                 break;
             case R.id.tv_all:
                 intent = new Intent(getParentFragment().getActivity(), WeiTuoListActivity.class);
@@ -906,12 +931,12 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
     @Override
     public void showProgress() {
-        mLoadingWindow.show();
+        //mLoadingWindow.show();
     }
 
     @Override
     public void disimissProgress() {
-        mLoadingWindow.cancleView();
+        //mLoadingWindow.cancleView();
     }
 
     @Override
@@ -920,6 +945,31 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mLoadingWindow.cancleView();
         Intent intent;
         switch (mType) {
+            case MethodUrl.CURRENT_PRICE:
+                switch (tData.get("code")+""){
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data")+"")){
+                            Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
+                            if (!UtilTools.empty(mapData)){
+                                tvCurrentPrice.setText(mapData.get("price")+"");
+                                //tvCnyPrice.setText("≈"+mapData.get("cny_number")+"CNY");
+                                tvCurrentCny.setText(getResources().getString(R.string.defaultCny).replace("%S", UtilTools.formatNumber(mapData.get("cny_number")+"", "#.##")));
+                            }
+                        }
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+
+                    case "1": //token过期
+                        if (getParentFragment().getActivity() != null){
+                            getParentFragment().getActivity().finish();
+                        }
+                        intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
             case MethodUrl.ENTRUST_LIST:
                 switch (tData.get("code")+""){
                     case "0":
@@ -1032,6 +1082,108 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 }
 
                 break;
+
+            case MethodUrl.COIN_DEPTH:
+                switch ((tData.get("code") + "")) {
+                    case "0":
+                        if (!UtilTools.empty(tData.get("data")+"")) {
+                            Map<String, Object> map1 = JSONUtil.getInstance().jsonMap(tData.get("data") + "");
+                            if (!UtilTools.empty(map1)){
+                                List<List<String>> mListBuy = JSONUtil.getInstance().jsonToListStr2(map1.get("buy") + "");
+                                List<List<String>> mListSell = JSONUtil.getInstance().jsonToListStr2(map1.get("sell") + "");
+
+                                // 设置深度信息
+                                if (!UtilTools.empty(mListBuy) && mListBuy.size() > 0) {
+                                    mDataListBuy.clear();
+                                    for (List<String> strings : mListBuy) {
+                                        String price = strings.get(0);
+                                        String volume = strings.get(1);
+                                        decimalFormat.setRoundingMode(RoundingMode.CEILING);
+                                        decimalFormat.setGroupingUsed(false);
+                                        String format;
+                                        if (precision >= 0) {
+                                            decimalFormat.setMaximumFractionDigits(precision);
+                                            format = decimalFormat.format(Double.parseDouble(price));
+                                        } else {
+                                            decimalFormat.setMaximumFractionDigits(0);
+                                            format = BigDecimalUtils.mul(decimalFormat.format(Double.parseDouble(BigDecimalUtils.divide(price, RoundingMode.CEILING, 0 - precision).toString())), 0 - precision).toString();
+                                        }
+
+                                        if (mDataListBuy.size() > 0) {
+                                            List<String> strings2 = mDataListBuy.get(mDataListBuy.size() - 1);
+                                            String s = strings2.get(0);
+                                            if (format.equals(s)) {
+                                                strings2.add(1, BigDecimalUtils.add(strings2.get(1), volume).toString());
+                                            } else {
+                                                List<String> strings1 = new ArrayList<>();
+                                                strings1.add(format);
+                                                strings1.add(volume);
+                                                mDataListBuy.add(strings1);
+                                            }
+                                        } else {
+                                            List<String> strings1 = new ArrayList<>();
+                                            strings1.add(format);
+                                            strings1.add(volume);
+                                            mDataListBuy.add(strings1);
+                                        }
+                                    }
+                                    buyAdapter.setBuyTradeInfo(mDataListBuy, precision);
+                                }
+
+                                if (!UtilTools.empty(mListSell) && mListSell.size() > 0) {
+                                    mDataListSell.clear();
+                                    for (List<String> strings : mListSell) {
+                                        String price = strings.get(0);
+                                        String volume = strings.get(1);
+                                        decimalFormat.setRoundingMode(RoundingMode.CEILING);
+                                        decimalFormat.setGroupingUsed(false);
+                                        String format;
+                                        if (precision >= 0) {
+                                            decimalFormat.setMaximumFractionDigits(precision);
+                                            format = decimalFormat.format(Double.parseDouble(price));
+                                        } else {
+                                            decimalFormat.setMaximumFractionDigits(0);
+                                            format = BigDecimalUtils.mul(decimalFormat.format(Double.parseDouble(BigDecimalUtils.divide(price, RoundingMode.CEILING, 0 - precision).toString())), 0 - precision).toString();
+                                        }
+
+                                        if (mDataListSell.size() > 0) {
+                                            List<String> strings2 = mDataListSell.get(mDataListSell.size() - 1);
+                                            String s = strings2.get(0);
+                                            if (format.equals(s)) {
+                                                strings2.add(1, BigDecimalUtils.add(strings2.get(1), volume).toString());
+                                            } else {
+                                                List<String> strings1 = new ArrayList<>();
+                                                strings1.add(format);
+                                                strings1.add(volume);
+                                                mDataListSell.add(strings1);
+                                            }
+                                        } else {
+                                            List<String> strings1 = new ArrayList<>();
+                                            strings1.add(format);
+                                            strings1.add(volume);
+                                            mDataListSell.add(strings1);
+                                        }
+                                    }
+                                    sellAdapter.setSellTradeInfos(mDataListSell, precision);
+                                }
+
+                            }
+                        }
+
+                        break;
+                    case "1":
+                        if (getParentFragment().getActivity() != null){
+                            getParentFragment().getActivity().finish();
+                        }
+                        intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+                }
+
+                break;
             case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
                 MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
                 mIsRefreshToken = false;
@@ -1048,27 +1200,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
         mLoadingWindow.cancleView();
-        switch (mType) {
-            case MethodUrl.repaymentList:
-//                if (mWeiTuoListAdapter != null) {
-//                    if (mWeiTuoListAdapter.getDataList().size() <= 0) {
-//                        mPageView.showNetworkError();
-//                    } else {
-//                        mPageView.showContent();
-//                    }
-//                    mRefreshListView.refreshComplete(10);
-//                    mRefreshListView.setOnNetWorkErrorListener(new OnNetWorkErrorListener() {
-//                        @Override
-//                        public void reload() {
-//                            repaymentListAction();
-//                        }
-//                    });
-//                }else {
-//                    mPageView.showNetworkError();
-//                }
-
-                break;
-        }
         dealFailInfo(map, mType);
     }
 
@@ -1120,6 +1251,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private WsStatusListener wsStatusListener = new WsStatusListener() {
         @Override
         public void onMessage(String text) {
+/*
             if (wsManager.getCurrentStatus() == WsStatus.CONNECTED) {
                 Log.i("TAG", "深度 ws Message :" + text);
                 try {
@@ -1213,25 +1345,34 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                 }
             }
+*/
         }
     };
 
 
     public void restartWs() {
-        handler.removeCallbacks(runnable);
-
+       /* handler.removeCallbacks(runnable);
         setWebsocketListener();
-        handler.post(runnable);
+        handler.post(runnable);*/
+       if (handler != null && cnyRunnable!= null){
+           handler.post(cnyRunnable);
+       }
+
     }
 
 
     public void stopWs() {
-        handler.removeCallbacks(runnable);
+       /* handler.removeCallbacks(runnable);
         if (wsManager != null){
             if (wsManager.getWebSocket() != null) {
                 wsManager.getWebSocket().cancel();
             }
             wsManager.stopConnect();
+        }
+        */
+
+        if (handler != null && cnyRunnable!= null){
+            handler.removeCallbacks(cnyRunnable);
         }
 
     }
@@ -1240,13 +1381,30 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     public void onPause() {
         LogUtilDebug.i("show", "Pause()");
         super.onPause();
-        wsManager.stopConnect();
+        //wsManager.stopConnect();
+
     }
+
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        handler.removeCallbacks(runnable);
+        ((OTCFragment)getParentFragment()).setUserVisibleHint(false);
+        if (hidden){
+            LogUtilDebug.i("show","BBfragment 可见");
+            if (handler != null && cnyRunnable!= null){
+                handler.removeCallbacks(cnyRunnable);
+            }
+        }else {
+            LogUtilDebug.i("show","BBfragment 不可见");
+            ((OTCFragment)getParentFragment()).setUserVisibleHint(true);
+            if (handler != null && cnyRunnable!= null){
+                handler.post(cnyRunnable);
+            }
+        }
+
+
+    /*    handler.removeCallbacks(runnable);
         if (getUserVisibleHint()) {
             setWebsocketListener();
             handler.post(runnable);
@@ -1255,10 +1413,29 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 wsManager.getWebSocket().cancel();
             }
             wsManager.stopConnect();
-        }
+        }*/
 
 
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == QUEST_CODE) {
+                Bundle bundle = data.getExtras();
+                if (bundle != null){
+                    String buySell = bundle.getString("buySell");
+                    if (buySell.equals("1")){ //买入
+                        rbBuy.setChecked(true);
+                    }else {  //卖出
+                        rbSell.setChecked(true);
+                    }
+                }
+
+            }
+        }
+    }
 
 }

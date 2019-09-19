@@ -229,14 +229,14 @@ public class RequestPresenterImp extends BasePresenterImp<RequestView,Map<String
             return;
         }
 
-        LogUtilDebug.i("requestGetToMap.ACCESS_TOKEN",MbsConstans.ACCESS_TOKEN);
+       /* LogUtilDebug.i("requestGetToMap.ACCESS_TOKEN",MbsConstans.ACCESS_TOKEN);
         LogUtilDebug.i("requestGetToMap.REFRESH_TOKEN",MbsConstans.REFRESH_TOKEN);
         if(!UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
             mHeaderMap.put("access_token",MbsConstans.ACCESS_TOKEN);
         }
         if(!UtilTools.empty(MbsConstans.REFRESH_TOKEN)){
             mHeaderMap.put("refresh_token",MbsConstans.REFRESH_TOKEN);
-        }
+        }*/
 
         mRequestModelImp.requestGetToMap(mHeaderMap,mUrl, mParaMap,this);
     }

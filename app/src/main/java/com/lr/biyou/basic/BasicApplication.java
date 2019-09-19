@@ -99,7 +99,8 @@ public class BasicApplication extends MultiDexApplication {
 		registerActivityListener();
 		//setTypeface();
 		AppContextUtil.init(this);
-/*		Context context = getApplicationContext();
+
+		/*Context context = getApplicationContext();
 		// 获取当前包名
 		String packageName = context.getPackageName();
 		// 获取当前进程名
@@ -108,7 +109,7 @@ public class BasicApplication extends MultiDexApplication {
 		CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
 		strategy.setUploadProcess(processName == null || processName.equals(packageName));
 
-		CrashReport.initCrashReport(context, "186ece60d5", true, strategy);*/
+		CrashReport.initCrashReport(context, "5f54eab52c", true, strategy);*/
 
 		/**
 		 * 必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回
@@ -117,7 +118,7 @@ public class BasicApplication extends MultiDexApplication {
 		 */
 		BGASwipeBackHelper.init(this,  null);
 
-		Bugly.init(this, "5156cc29ea", false);
+		Bugly.init(this, "5f54eab52c", true);
 
 		//RongIM.init(this);
 		new Handler().post(new Runnable() {

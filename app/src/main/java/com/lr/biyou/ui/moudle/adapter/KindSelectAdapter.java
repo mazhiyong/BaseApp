@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.lr.biyou.R;
 import com.lr.biyou.listener.OnMyItemClickListener;
@@ -15,8 +17,6 @@ import com.lr.biyou.utils.tool.UtilTools;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -68,12 +68,14 @@ public class KindSelectAdapter extends RecyclerView.Adapter<KindSelectAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        if (!UtilTools.empty(mDatas.get(position).get("name")+"")){
-            holder.mTextView.setText(mDatas.get(position).get("name")+"");
-        }
+
 
         if (!UtilTools.empty(mDatas.get(position).get("type")+"")){
             holder.mTextView.setText(mDatas.get(position).get("type")+"");
+        }
+
+        if (!UtilTools.empty(mDatas.get(position).get("name")+"")){
+            holder.mTextView.setText(mDatas.get(position).get("name")+"");
         }
 
         holder.mLayout.setOnClickListener(new View.OnClickListener() {

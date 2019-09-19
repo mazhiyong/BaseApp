@@ -1,25 +1,11 @@
 package com.wanou.framelibrary.glidetools;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import androidx.annotation.NonNull;
-import android.widget.ImageView;
-
-import com.bumptech.glide.GenericTransitionOptions;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
-import com.wanou.framelibrary.GlobalApplication;
-
-import java.io.File;
-
 /**
  * Author by wodx521
  * Date on 2018/11/8.
  */
 public class GlideUtils {
-    @NonNull
+    /*@NonNull
     private static GlideRequest<Drawable> getRequest(Object object) {
         GlideRequest<Drawable> glideRequest;
         if (object instanceof String) {
@@ -47,7 +33,7 @@ public class GlideUtils {
         return glideRequest;
     }
 
-    /**
+    *//**
      * 设置图片给ImageView带圆角
      *
      * @param object      图片地址
@@ -55,7 +41,7 @@ public class GlideUtils {
      * @param errorImage  加载错误图片 不设置传0
      * @param roundCorner 图片圆角大小 不设置传0
      * @param imageView   显示图片view
-     */
+     *//*
     public static void intoImage(Object object, int placeImage, int errorImage, int roundCorner, ImageView imageView) {
         GlideRequest<Drawable> glideRequest = getRequest(object);
         if (placeImage > 0 && errorImage > 0 && roundCorner > 0) {
@@ -79,7 +65,7 @@ public class GlideUtils {
     }
 
 
-    /**
+    *//**
      * 设置图片给ImageView带圆角
      *
      * @param object        图片地址
@@ -87,7 +73,7 @@ public class GlideUtils {
      * @param errorDrawable 加载错误图片 不设置传0
      * @param roundCorner   图片圆角大小 不设置传0
      * @param imageView     显示图片view
-     */
+     *//*
     public static void intoImage(Object object, Drawable placeDrawable, Drawable errorDrawable, int roundCorner, ImageView imageView) {
         GlideRequest<Drawable> glideRequest = getRequest(object);
         if (placeDrawable != null && errorDrawable != null && roundCorner > 0) {
@@ -108,5 +94,5 @@ public class GlideUtils {
         glideRequest.transition(DrawableTransitionOptions.withCrossFade(new DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true)))
                 .transition(GenericTransitionOptions.withNoTransition())
                 .into(imageView);
-    }
+    }*/
 }
