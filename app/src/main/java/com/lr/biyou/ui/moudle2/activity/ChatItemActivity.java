@@ -161,6 +161,7 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
         Intent intent ;
         switch (view.getId()) {
             case R.id.left_back_lay:
+                finish();
                 break;
             case R.id.chat_history_lay:
                 intent = new Intent(this, SearchHistoryMessageActivity.class);

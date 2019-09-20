@@ -48,6 +48,8 @@
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:name="android.hardware.camera.autofocus"/>
 
+    <uses-permission android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
@@ -134,7 +136,7 @@
 
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
-      <!--  <meta-data
+       <!-- <meta-data
             tools:replace="android:value"
             android:name="RONG_CLOUD_APP_KEY"
             android:value="k51hidwqk4j8b" />-->
@@ -194,7 +196,7 @@
 
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.MainActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"
@@ -202,7 +204,7 @@
         </activity>
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.LoginActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
@@ -210,25 +212,25 @@
         </activity>
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.PerfectInfoActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ChoosePhoneActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.NormalNameListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.FoodManagerActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity>
         <activity android:name="com.lr.biyou.ui.temporary.activity.TellUsActivity">
@@ -236,23 +238,23 @@
 
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.RegistActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
 
         </activity> <!-- 注册 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.MoreSetActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 登录手机号 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.LoginPhoneInfoActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 更改手机号 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ChangePhoneActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 短信验证码 -->
         <activity
@@ -263,79 +265,79 @@
         </activity> <!-- 修改登录密码 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ModifyLoginPassActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 重置登录密码 -->
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.ResetLoginPassActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 重置登录密码 -->
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.ResetLoginPassButActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 用户信息页面 -->
         <activity
             android:name="com.lr.biyou.ui.moudle1.activity.UserInfoActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 用户信息页面 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.MoreInfoManagerActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 用户信息页面 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.HangYeActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 我的额度 授信列表   授信详情  预授信详情 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ShouxinPreDetailActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 还款计划界面 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.PayPlanActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 身份证实名认证 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.IdCardCheckActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 身份证实名认证图片界面 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.IdCardPicActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 人脸认证 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.FaceCheckActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity>
         <!-- 人工认证审核 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.IdCardMyActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 审核等待界面 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.CheckWatiActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 审核成功 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.IdCardSuccessActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 银行卡绑定 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.BankCardActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 银行卡绑定 -->
         <activity
@@ -345,241 +347,241 @@
         </activity> <!-- 开户 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.BankOpenActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
         </activity> <!-- 开户协议 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.BankOpenXieyiActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity> <!-- 开户成功 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.BankOpenSuccessActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity> <!-- 网银签约 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.BankQianyueActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 网银签约 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.BankBindSuccessActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 银行名称列表 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.BankNameListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity> <!-- 选择银行 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.SelectBankListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity> <!-- 交易明细 -->
         <activity
             android:name="com.lr.biyou.ui.moudle5.activity.TradeListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 交易明细 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.TradeDetailActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 借款详情 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.BorrowDetailActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 借款信息 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.MyBorrowMoneyActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 我的借款 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.BorrowInfoActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 附件信息 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.FujianShowActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 合同信息 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.HeTongShowActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 上传贷款凭证 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.UploadDkYongTActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 受托支付信息 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.PayTheInfoActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 还款记录 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.PayHistoryActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 还款记录 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.RepaymentInfoActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 工作信息 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.WorkInfoActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity> <!-- 待办信息 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ApplyAmountActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 申请额度 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ModifyFileActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/YourTheme"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 添加附件 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.AddFileActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 添加附件 -->
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.ShowDetailPictrue"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/YourTheme"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 申请成功界面 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.SubmitResultActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 借款  还款  成功界面 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ResultMoneyActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 我的-  我的额度 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.MyAmountActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 授信详情页面 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ShouxinDetailActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 授信详情页面 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ShouxinJkListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 授信合同页面 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.HeTongListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 添加共同借款人 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.AddSamePeopleActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 共同借款人列表 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.SamePeopleListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 我要借款 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.BorrowMoneyActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 添加收款人 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.BorrowMoneySelectActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 我要借款  选择借款类型 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.AddSKPeopleActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity> <!-- 添加收款人 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.PeopleCheckActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
@@ -587,7 +589,7 @@
         <!-- 银行网点选择 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ChoseBankAddActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
@@ -595,7 +597,7 @@
         <!-- 银行网点选择 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.BankWdActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
@@ -603,28 +605,28 @@
         <!-- 收款人列表 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.SkPeopleListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- 还款 -->
         <activity
             android:name="com.lr.biyou.ui.moudle4.activity.PayMoneyActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- html界面 还款协议 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.HtmlActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity> <!-- pdf界面 还款协议 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.PDFLookActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
@@ -641,29 +643,29 @@
         <!-- 总资产 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.AllZiChanActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.IdCardMyPicActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 修改交易密码 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ModifyOrderPassActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 修改交易密码  填写新的密码以及确认密码 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.NewOrderPassActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 手动输入身份证号界面 -->
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.IdCardEditActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 发帖 -->
         <activity
@@ -672,209 +674,209 @@
         </activity> <!-- 待办事项列表 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.WaitDoWorkActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 指纹登录 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.FingermentActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 指纹登录 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.FingerCheckActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 手势登录 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.PatternActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 手势的解锁或者绘制 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.DrawPatternActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 指纹识别 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.FingerRecognieActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 关于我们 -->
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.SettingActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 币友在线介绍 -->
         <activity
             android:name="com.lr.biyou.ui.moudle5.activity.ChongBiActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 合同签署 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.SignLoanActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 提现 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.TiXianActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 充值校验 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ChongzhiTestActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity>
         <!-- 添加新的充值卡 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ChongZhiCardAddActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:theme="@style/AppTheme.Transparent">
         </activity>
         <!-- 提现校验 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.TiXianTestActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 状态反馈 -->
         <!-- 提现校验 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.FuKuanFinishActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity>
         <!-- 状态反馈 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.StateFeedbackActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 开启服务提醒 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ServicesRemindActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity>
         <activity android:name="com.lr.biyou.ui.temporary.activity.ServicesRemindInfoActivity">
         </activity> <!-- 企业信息录入 认证 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.QiyeInfoActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 企业信息展示 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.QiyeInfoShowActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 企业账号信息录入 认证 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.QiyeCardInfoActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 企业打款认证 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.QiyeDakuanCheckActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 企业申请证书 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.QiyeApplyCaActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 企业申请证书 支付界面 -->
 
         <!-- 企业申请证书 修改后的 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.QiyeCaPayActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 企业申请证书 支付界面 转账界面 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.QiyeCaZhuanZhangActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 企业申请证书 提交结果界面 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.QiyeCaActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 扫描注册二维码 -->
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.TestScanActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 扫描发票 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.InvoiceActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 完善合同信息 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.InvoiceListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 发票导入结果 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.InvoiceAddActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 手动录入发票 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.InvoiceImportActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 发票导入结果 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.HeTongSelectActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 完善合同信息 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.HeTongAddActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 新增合同 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.SelectFukuanFangActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 选择付款方 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ShouldShouMoneyActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 选择应收账款 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.SelectPingZhengActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 选择关联凭证 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.IntoChiActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 申请入池 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.IntoChiFinishActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 申请入池完成 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.MyShouMoneyActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity> <!-- 我的应收账款 -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.ShouMoneyItemActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent">
         </activity>
 
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.BankTiXianModifyActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -882,28 +884,28 @@
         <!--   预付款列表   -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.AdvancePayListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <!--   预付款合同添加   -->
         <activity
             android:name="com.lr.biyou.ui.temporary.activity.AdvanceHtAddActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <!--   邀请好友   -->
         <activity
             android:name="com.lr.biyou.ui.moudle1.activity.YaoQingActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <!--   折线走势图   -->
         <activity
             android:name="com.lr.biyou.ui.moudle3.activity.CoinInfoDetailActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -911,7 +913,7 @@
         <!--   充币选择币种类型   -->
         <activity
             android:name="com.lr.biyou.ui.moudle5.activity.ChoseBiTypeActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -919,7 +921,7 @@
         <!--   提币   -->
         <activity
             android:name="com.lr.biyou.ui.moudle5.activity.TiBiActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -927,7 +929,7 @@
         <!--   提币  地址管理  -->
         <activity
             android:name="com.lr.biyou.ui.moudle5.activity.TibiAddressActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -935,7 +937,7 @@
         <!--   提币  添加地址 -->
         <activity
             android:name="com.lr.biyou.ui.moudle5.activity.AddAddressActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -944,7 +946,7 @@
         <!--  划转 -->
         <activity
             android:name="com.lr.biyou.ui.moudle5.activity.HuaZhuanActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -952,7 +954,7 @@
         <!--  划转记录 -->
         <activity
             android:name="com.lr.biyou.ui.moudle5.activity.HuaZhuanListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -960,14 +962,14 @@
         <!--  订单历史 -->
         <activity
             android:name="com.lr.biyou.ui.moudle4.activity.DingDanListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <!--  关于我们 -->
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.AboutActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -975,7 +977,7 @@
         <!--  联系客服 -->
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.ContactKefuActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -983,7 +985,7 @@
         <!--  安全中心 -->
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.SecurityActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -991,7 +993,7 @@
         <!--  安全中心  二维码校验-->
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.SecurityCheckActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -999,7 +1001,7 @@
         <!--  重置支付密码  -->
         <activity
             android:name="com.lr.biyou.ui.moudle.activity.ResetPayPassButActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1007,7 +1009,7 @@
         <!--  收款方式  -->
         <activity
             android:name="com.lr.biyou.ui.moudle1.activity.PayListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1015,7 +1017,7 @@
         <!--  添加支付方式  -->
         <activity
             android:name="com.lr.biyou.ui.moudle1.activity.AddPayWayActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1023,7 +1025,7 @@
         <!--  公告列表  -->
         <activity
             android:name="com.lr.biyou.ui.moudle1.activity.NoticeListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1032,7 +1034,7 @@
         <!--  公告详情  -->
         <activity
             android:name="com.lr.biyou.ui.moudle1.activity.NoticeDetialActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1040,7 +1042,7 @@
         <!--  委托列表  -->
         <activity
             android:name="com.lr.biyou.ui.moudle4.activity.WeiTuoListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1049,14 +1051,14 @@
         <!--  修改昵称  -->
         <activity
             android:name=".ui.moudle.activity.UpdateNichengActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <!--  添加好友  -->
         <activity
             android:name=".ui.moudle2.activity.AddFriendActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1064,7 +1066,7 @@
         <!--  聊天消息通知列表  -->
         <activity
             android:name=".ui.moudle2.activity.ChatNoticeListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
@@ -1072,7 +1074,7 @@
         <!--  选择联系人  -->
         <activity
             android:name=".ui.moudle2.activity.SelectContractListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1080,7 +1082,7 @@
         <!--  聊天详情  -->
         <activity
             android:name=".ui.moudle2.activity.ChatItemActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1089,7 +1091,7 @@
         <!--  群聊聊天详情  -->
         <activity
             android:name=".ui.moudle2.activity.GroupChatItemActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1097,7 +1099,7 @@
         <!--  投诉原因选择  -->
         <activity
             android:name=".ui.moudle2.activity.ChoseReasonTypeActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1106,7 +1108,7 @@
         <!--  投诉原因选择  -->
         <activity
             android:name=".ui.moudle2.activity.TousuActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1115,7 +1117,7 @@
         <!--  群二维码名片  -->
         <activity
             android:name=".ui.moudle2.activity.GroupQrCodeActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1123,7 +1125,7 @@
         <!--  群管理  -->
         <activity
             android:name=".ui.moudle2.activity.GroupChatManagerActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1131,7 +1133,7 @@
         <!--  红包  -->
         <activity
             android:name=".ui.moudle2.activity.RedMoneyActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1140,7 +1142,7 @@
         <!--  红包领取界面  -->
         <activity
             android:name=".ui.moudle2.activity.RedListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1148,7 +1150,7 @@
         <!--  红包记录界面  -->
         <activity
             android:name=".ui.moudle2.activity.RedRecordListActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
@@ -1156,7 +1158,7 @@
         <!--  转账  -->
         <activity
             android:name=".ui.moudle2.activity.TransferMoneyActivity"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>

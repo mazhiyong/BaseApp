@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/startBtn"
-            android:src="@drawable/guide2"/>
+            android:src="@drawable/splash"/>
     </LinearLayout>
 
 

@@ -39,6 +39,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 
 import com.lr.biyou.basic.BasicApplication;
 import com.lr.biyou.basic.MbsConstans;
@@ -60,20 +61,12 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import androidx.annotation.NonNull;
-
 import static android.view.View.NO_ID;
 
 /**
  *
 
  * @Description: 辅助类用于一些常规方法
-
- * @author:刘英超
-
- * @time:2015-12-23 下午3:17:52
-
- * @email:646869341@qq.com
  */
 public class UtilTools {
 

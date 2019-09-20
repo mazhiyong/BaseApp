@@ -25,7 +25,6 @@ import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.SPCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.tencent.bugly.Bugly;
-import com.tencent.bugly.beta.Beta;
 import com.wanou.framelibrary.okgoutil.websocket.WsManager;
 
 import java.io.BufferedReader;
@@ -42,7 +41,6 @@ import static com.wanou.framelibrary.okgoutil.OkGoUtils.TIMEOUT_SECOND;
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 public class BasicApplication extends MultiDexApplication {
-
 	int appCount=0;
 
 	private static Context mContext;
@@ -90,12 +88,37 @@ public class BasicApplication extends MultiDexApplication {
 		super.attachBaseContext(base);
 		MultiDex.install(this) ;
 		// 安装tinker
-		Beta.installTinker();
+		//Beta.installTinker();
 
 	}
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		ErrorCode.init(this);
+
+		/*
+		 * 以上部分在所有进程中会执行
+		 */
+		if (!getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+			return;
+		}
+		/*
+		 * 以下部分仅在主进程中进行执行
+		 */
+		// 初始化融云IM SDK，初始化 SDK 仅需要在主进程中初始化一次
+		IMManager.getInstance().init(this);
+
+		Stetho.initializeWithDefaults(this);
+
+		SearchUtils.init(this);
+
+		Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
+
+		// 微信分享初始化
+		WXManager.getInstance().init(this);
+
+		PhoneContactManager.getInstance().init(this);
+
 		registerActivityListener();
 		//setTypeface();
 		AppContextUtil.init(this);
@@ -118,7 +141,7 @@ public class BasicApplication extends MultiDexApplication {
 		 */
 		BGASwipeBackHelper.init(this,  null);
 
-		Bugly.init(this, "5f54eab52c", true);
+		Bugly.init(this, "07f9d2bf36", false);
 
 		//RongIM.init(this);
 		new Handler().post(new Runnable() {
@@ -129,38 +152,12 @@ public class BasicApplication extends MultiDexApplication {
 				mContext = getApplicationContext();
 			}
 		});
+
 		initWS();
 		initWS1();
 		initWS2();
 		initWS3();
 
-
-		// 初始化 bugly BUG 统计
-		//CrashReport.initCrashReport(getApplicationContext());
-
-		ErrorCode.init(this);
-
-		/*
-		 * 以上部分在所有进程中会执行
-		 */
-		if (!getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
-			return;
-		}
-		/*
-		 * 以下部分仅在主进程中进行执行
-		 */
-		// 初始化融云IM SDK，初始化 SDK 仅需要在主进程中初始化一次
-		IMManager.getInstance().init(this);
-		Stetho.initializeWithDefaults(this);
-
-		SearchUtils.init(this);
-
-		Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
-
-		// 微信分享初始化
-		WXManager.getInstance().init(this);
-
-		PhoneContactManager.getInstance().init(this);
 	}
 
 

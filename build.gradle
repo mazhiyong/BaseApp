@@ -14,11 +14,11 @@ buildscript {
         //classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8' // 添加这行
 
         //Bugly(Tinker)
-        classpath "com.tencent.bugly:tinker-support:latest.release"
+        //classpath "com.tencent.bugly:tinker-support:1.1.5"
 
         //classpath 'com.tencent.bugly:symtabfileuploader:latest.release'*/
 
-        classpath 'com.google.gms:google-services:4.2.0'
+        //classpath 'com.google.gms:google-services:4.2.0'
 
     }
 }

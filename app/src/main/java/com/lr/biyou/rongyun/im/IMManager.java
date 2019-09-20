@@ -7,7 +7,6 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -162,7 +161,7 @@ public class IMManager {
         initChatRoomActionListener();
 
         // 长按消息转发等功能
-        initMessageItemLongClickAction(context);
+        //initMessageItemLongClickAction(context);
 
         // 缓存连接
         //cacheConnectIM();
@@ -439,6 +438,7 @@ public class IMManager {
                 return false;
             }
 
+            //查看聊天过程中的图片的详情
             @Override
             public boolean onMessageClick(Context context, View view, Message message) {
                 if (message.getContent() instanceof ImageMessage) {
@@ -763,7 +763,8 @@ public class IMManager {
         /* 若直接调用init方法请在 IMLib 模块中的 AndroidManifest.xml 中, 找到 <meta-data> 中 android:name 为 RONG_CLOUD_APP_KEY的标签，
          * 将 android:value 替换为融云 IM 申请的APP KEY
          */
-        //RongIM.init(this);
+
+        //RongIM.init(context);
 
         // 可在初始 SDK 时直接带入融云 IM 申请的APP KEY
         RongIM.init(context,"k51hidwqk4j8b" , true);
@@ -856,17 +857,17 @@ public class IMManager {
             public boolean onReceived(Message message, int i) {
                 messageRouter.postValue(message);
                 MessageContent messageContent = message.getContent();
-                LogUtilDebug.i("show","messageContent:"+message.getContent());
+               // LogUtilDebug.i("show","messageContent:"+message.getContent());
                 if (messageContent instanceof ContactNotificationMessage) { // 添加好友状态信息
-                    Toast.makeText(context,"收到好友申请验证消息",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context,"收到好友申请验证消息",Toast.LENGTH_LONG).show();
                     ContactNotificationMessage contactNotificationMessage = (ContactNotificationMessage) messageContent;
                     if (contactNotificationMessage.getOperation().equals("Request")) {
-                        LogUtilDebug.i("show","messageContent:好友申请");
+                        //LogUtilDebug.i("show","messageContent:好友申请");
                     } else if (contactNotificationMessage.getOperation().equals("AcceptResponse")) {
                         // 根据好友 id 进行获取好友信息并刷新
                         String sourceUserId = contactNotificationMessage.getSourceUserId();
                         imInfoProvider.updateFriendInfo(sourceUserId);
-                        LogUtilDebug.i("show","messageContent:好友通过");
+                        //LogUtilDebug.i("show","messageContent:好友通过");
                     }
                 } else if (messageContent instanceof GroupNotificationMessage) {    // 群组通知消息
                     GroupNotificationMessage groupNotificationMessage = (GroupNotificationMessage) messageContent;

@@ -120,9 +120,7 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
 
         }
 
-
         initView();
-
 
     }
 
