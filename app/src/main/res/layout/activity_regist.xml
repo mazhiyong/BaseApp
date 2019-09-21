@@ -194,7 +194,8 @@
         android:id="@+id/bt_next"
         android:textSize="@dimen/sp_16"
         android:textColor="@color/white"
-        android:background="@color/gray_light"
+        android:enabled="false"
+        android:background="@drawable/btn_next"
         />
 
     <LinearLayout

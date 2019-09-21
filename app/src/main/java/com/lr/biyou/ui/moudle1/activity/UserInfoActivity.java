@@ -43,6 +43,7 @@ import com.lr.biyou.utils.tool.AppUtil;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
+import com.yanzhenjie.permission.Permission;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -54,6 +55,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -61,7 +63,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * 用户基本信息
  */
-public class UserInfoActivity extends BasicActivity implements RequestView{
+public class UserInfoActivity extends BasicActivity implements RequestView {
     @BindView(R.id.head_img_lay)
     CardView mHeadImgLay;
     @BindView(R.id.back_img)
@@ -90,10 +92,12 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
     View mInfoLine;
     @BindView(R.id.ercode_lay)
     CardView mErcodeLay;
+    @BindView(R.id.exit_tv)
+    TextView exitTv;
 
     private String mRequestTag = "";
 
-    private Map<String,Object> mHeadPath;
+    private Map<String, Object> mHeadPath;
 
     @Override
     public int getContentView() {
@@ -104,7 +108,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
     public void init() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
         mTitleText.setText(getResources().getString(R.string.base_msg));
-        mTitleText.setCompoundDrawables(null,null,null,null);
+        mTitleText.setCompoundDrawables(null, null, null, null);
 
         // GlideUtils.loadImage(UserInfoActivity.this,"http://tupian.qqjay.com/u/2017/1201/2_161641_2.jpg",mHeadImageView);
     }
@@ -113,11 +117,11 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
     protected void onResume() {
         super.onResume();
 
-        if (MbsConstans.USER_MAP != null && !MbsConstans.USER_MAP.isEmpty()){
-            mPhoneTv.setText(MbsConstans.USER_MAP.get("name")+"");
-            GlideUtils.loadImage2(UserInfoActivity.this,MbsConstans.USER_MAP.get("portrait")+"",mHeadImageView,R.drawable.head);
+        if (MbsConstans.USER_MAP != null && !MbsConstans.USER_MAP.isEmpty()) {
+            mPhoneTv.setText(MbsConstans.USER_MAP.get("name") + "");
+            GlideUtils.loadImage2(UserInfoActivity.this, MbsConstans.USER_MAP.get("portrait") + "", mHeadImageView, R.drawable.head);
             //initHeadPic();
-        }else {
+        } else {
             getUserInfoAction();
         }
     }
@@ -129,12 +133,13 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
         mRequestTag = MethodUrl.USER_INFO;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(UserInfoActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(UserInfoActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_INFO, map);
     }
+
     private void logoutAction() {
         mRequestTag = MethodUrl.LOGIN_ACTION;
         Map<String, String> map = new HashMap<>();
@@ -142,20 +147,21 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
         mRequestPresenterImp.requestDeleteToMap(mHeaderMap, MethodUrl.LOGIN_ACTION, map);
     }
 
-    private void initHeadPic(){
-        String headUrl = MbsConstans.USER_MAP.get("head_pic")+"";
-        if (headUrl.contains("http")){
-        }else {
-            headUrl = MbsConstans.PIC_URL+headUrl;
+    private void initHeadPic() {
+        String headUrl = MbsConstans.USER_MAP.get("head_pic") + "";
+        if (headUrl.contains("http")) {
+        } else {
+            headUrl = MbsConstans.PIC_URL + headUrl;
         }
-        GlideUtils.loadImage2(UserInfoActivity.this,headUrl,mHeadImageView,R.drawable.head);
+        GlideUtils.loadImage2(UserInfoActivity.this, headUrl, mHeadImageView, R.drawable.head);
     }
 
 
-    @OnClick({R.id.head_img_lay, R.id.back_img, R.id.busines_name_lay,R.id.ercode_lay,R.id.left_back_lay,R.id.logout_lay})
+    @OnClick({R.id.exit_tv,R.id.head_img_lay, R.id.back_img, R.id.busines_name_lay, R.id.ercode_lay, R.id.left_back_lay})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
+
             case R.id.head_img_lay:
 //                intent = new Intent(UserInfoActivity.this,ModifyFileActivity.class);
 //                startActivity(intent);
@@ -173,14 +179,14 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                 break;
             case R.id.ercode_lay:
                 //生成二维码信息
-                int screenWidth = (int) (UtilTools.getScreenWidth(UserInfoActivity.this)*0.7);
+                int screenWidth = (int) (UtilTools.getScreenWidth(UserInfoActivity.this) * 0.7);
                 if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {
-                    String s = SPUtils.get(UserInfoActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
+                    String s = SPUtils.get(UserInfoActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA, "").toString();
                     MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
                 }
-                String qrCodeContent =MbsConstans.QRCODE_SERVER_URL+"key=sealtalk://user/info?u="+ MbsConstans.RONGYUN_MAP.get("id");
-                Bitmap bitmap = QRCodeUtils.generateImage(qrCodeContent,screenWidth, screenWidth, null);
-                new ShowImageDialog(UserInfoActivity.this,bitmap,"扫一扫,加我为好友").show();
+                String qrCodeContent = MbsConstans.QRCODE_SERVER_URL + "key=sealtalk://user/info?u=" + MbsConstans.RONGYUN_MAP.get("id");
+                Bitmap bitmap = QRCodeUtils.generateImage(qrCodeContent, screenWidth, screenWidth, null);
+                new ShowImageDialog(UserInfoActivity.this, bitmap, "扫一扫,加我为好友").show();
 
 
 
@@ -191,7 +197,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                 startActivity(intent);
                 overridePendingTransition(R.anim.zoomin, R.anim.zoomout);*/
                 break;
-            case R.id.logout_lay:
+            case R.id.exit_tv:
                 new AlertDialog.Builder(this)
                         .setCancelable(false)
                         .setTitle(R.string.title_dialog)
@@ -199,7 +205,16 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                         .setPositiveButton(R.string.but_sure, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                logoutAction();
+                                //logoutAction();
+                                closeAllActivity();
+                                MbsConstans.USER_MAP = null;
+                                MbsConstans.RONGYUN_MAP = null;
+                                MbsConstans.ACCESS_TOKEN = "";
+                                SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.LOGIN_OUT, true);
+                                SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "");
+                                Intent intent = new Intent(UserInfoActivity.this, LoginActivity.class);
+                                startActivity(intent);
+
                             }
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -215,7 +230,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
     }
 
     private void ActionSheetDialogNoTitle() {
-        final String[] stringItems = { "拍照","从手机相册选择"};
+        final String[] stringItems = {"拍照", "从手机相册选择"};
         final ActionSheetDialog dialog = new ActionSheetDialog(UserInfoActivity.this, stringItems, null);
         dialog.isTitleShow(false).show();
 
@@ -236,7 +251,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                             public void requestFailer() {
                                 toast(R.string.failure);
                             }
-                        }, com.yanzhenjie.permission.runtime.Permission.Group.STORAGE, com.yanzhenjie.permission.runtime.Permission.Group.CAMERA);
+                        }, Permission.Group.STORAGE, Permission.Group.CAMERA);
 
 
                         break;
@@ -252,7 +267,8 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                             public void requestFailer() {
                                 toast(R.string.failure);
                             }
-                        },com.yanzhenjie.permission.runtime.Permission.Group.STORAGE);
+                        }, Permission.Group.STORAGE);
+
 
                         break;
                 }
@@ -272,10 +288,11 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //下面这句指定调用相机拍照后的照片存储的路径
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(UserInfoActivity.this, AppUtil.getAppProcessName(this)+".fileProvider", new File(Environment.getExternalStorageDirectory(), "xiaoma.jpg"));
+            uri = FileProvider.getUriForFile(UserInfoActivity.this, AppUtil.getAppProcessName(this) + ".FileProvider", new File(Environment.getExternalStorageDirectory(), "xiaoma.jpg"));
         } else {
             uri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "xiaoma.jpg"));
         }
+
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(intent, 2);
     }
@@ -320,7 +337,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                 File temp = new File(Environment.getExternalStorageDirectory() + "/xiaoma.jpg");
                 if (temp.exists()) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        uri = FileProvider.getUriForFile(UserInfoActivity.this, AppUtil.getAppProcessName(UserInfoActivity.this)+".fileProvider", temp);
+                        uri = FileProvider.getUriForFile(UserInfoActivity.this, AppUtil.getAppProcessName(UserInfoActivity.this) + ".FileProvider", temp);
                     } else {
                         uri = Uri.fromFile(temp);
                     }
@@ -359,7 +376,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
                 try {
                     bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
                     // TODO，将裁剪的bitmap显示在imageview控件上
-                    Drawable dr = new BitmapDrawable(getResources(),bitmap);
+                    Drawable dr = new BitmapDrawable(getResources(), bitmap);
                     saveCroppedImage(bitmap);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -386,7 +403,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
         Bundle extras = picdata.getExtras();
         if (extras != null) {
             Bitmap photo = extras.getParcelable("data");
-            Drawable drawable = new BitmapDrawable(getResources(),photo);
+            Drawable drawable = new BitmapDrawable(getResources(), photo);
             uploadPic();
         }
     }
@@ -411,6 +428,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
 
 
     private String mHeadImgPath = "";
+
     private void saveCroppedImage(Bitmap bmp) {
 
         try {
@@ -447,19 +465,20 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
         Map<String, Object> signMap = new HashMap<>();
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(UserInfoActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(UserInfoActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, Object> fileMap = new HashMap<>();
-        fileMap.put("file",mHeadImgPath);
+        fileMap.put("file", mHeadImgPath);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.postFileToMap(mHeaderMap, MethodUrl.USER_HEAD_IMAGE,signMap, map,fileMap);
+        mRequestPresenterImp.postFileToMap(mHeaderMap, MethodUrl.USER_HEAD_IMAGE, signMap, map, fileMap);
     }
+
     private void submitPicPath() {
         mRequestTag = MethodUrl.headPath;
         Map<String, String> map = new HashMap<>();
-        map.put("remotepath",mHeadPath.get("remotepath")+"");
-        map.put("filemd5",mHeadPath.get("filemd5")+"");
+        map.put("remotepath", mHeadPath.get("remotepath") + "");
+        map.put("filemd5", mHeadPath.get("filemd5") + "");
         Map<String, String> mHeaderMap = new HashMap<>();
         mRequestPresenterImp.requestGetToMap(mHeaderMap, MethodUrl.headPath, map);
     }
@@ -520,7 +539,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
          * 故将图片保存在Uri中，调用时将Uri转换为Bitmap，此方法还可解决miui系统不能return data的问题
          */
         imgName = System.currentTimeMillis() + ".jpg";
-        uritempFile = Uri.parse("file:///"  + MbsConstans.BASE_PATH + "/" + imgName);
+        uritempFile = Uri.parse("file:///" + MbsConstans.BASE_PATH + "/" + imgName);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         startActivityForResult(intent, 3);
@@ -528,16 +547,9 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
     }
 
 
-
-
-
-
-
     protected void toast(@StringRes int message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
-
 
 
     @Override
@@ -555,17 +567,17 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
         Intent intent;
         switch (mType) {
             case MethodUrl.USER_INFO:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0": //请求成功
                         MbsConstans.USER_MAP = (Map<String, Object>) tData.get("data");
-                        if (!UtilTools.empty(MbsConstans.USER_MAP)){
+                        if (!UtilTools.empty(MbsConstans.USER_MAP)) {
                             SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.LOGIN_INFO, JSONUtil.getInstance().objectToJson(MbsConstans.USER_MAP));
-                            mPhoneTv.setText(MbsConstans.USER_MAP.get("name")+"");
-                            GlideUtils.loadImage2(UserInfoActivity.this,MbsConstans.USER_MAP.get("portrait")+"",mHeadImageView,R.drawable.head);
+                            mPhoneTv.setText(MbsConstans.USER_MAP.get("name") + "");
+                            GlideUtils.loadImage2(UserInfoActivity.this, MbsConstans.USER_MAP.get("portrait") + "", mHeadImageView, R.drawable.head);
                         }
                         break;
                     case "-1": //请求失败
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
 
                     case "1": //token过期
@@ -579,14 +591,14 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
 
                 break;
             case MethodUrl.USER_HEAD_IMAGE:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0": //请求成功
                         showToastMsg("上传头像成功");
                         //MbsConstans.USER_MAP = (Map<String, Object>) tData.get("data");
                         getUserInfoAction();
                         break;
                     case "-1": //请求失败
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
 
                     case "1": //token过期
@@ -626,7 +638,14 @@ public class UserInfoActivity extends BasicActivity implements RequestView{
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
 
-        dealFailInfo(map,mType);
+        dealFailInfo(map, mType);
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

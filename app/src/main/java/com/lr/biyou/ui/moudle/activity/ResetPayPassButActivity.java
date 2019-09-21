@@ -1,7 +1,8 @@
 package com.lr.biyou.ui.moudle.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -15,27 +16,20 @@ import android.widget.ToggleButton;
 
 import androidx.core.content.ContextCompat;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
-import com.lr.biyou.ui.moudle1.activity.UserInfoActivity;
-import com.lr.biyou.utils.imageload.GlideUtils;
-import com.lr.biyou.utils.secret.RSAUtils;
 import com.lr.biyou.utils.tool.JSONUtil;
-import com.lr.biyou.utils.tool.LogUtilDebug;
-import com.lr.biyou.utils.tool.RegexUtil;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
-import com.zhangke.websocket.util.LogUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -110,9 +104,117 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
         if (UtilTools.empty(paycode)){ //设置支付密码
             mType = "0";
             oldLay.setVisibility(View.GONE);
+            etPasswordAgain.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (s.toString().length()>0 && !UtilTools.empty(etPassword.getText()+"")){
+                        btSure.setEnabled(true);
+                    }else {
+                        btSure.setEnabled(false);
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+
+            etPassword.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (s.toString().length()>0 && !UtilTools.empty(etPasswordAgain.getText()+"")){
+                        btSure.setEnabled(true);
+                    }else {
+                        btSure.setEnabled(false);
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+
         }else {
             mType = "1";
             oldLay.setVisibility(View.VISIBLE); //重置支付密码
+            etOldPassword.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (s.toString().length()>0 && !UtilTools.empty(etPasswordAgain.getText()+"") && !UtilTools.empty(etPassword.getText()+"")){
+                        btSure.setEnabled(true);
+                    }else {
+                        btSure.setEnabled(false);
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+            etPasswordAgain.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (s.toString().length()>0 && !UtilTools.empty(etPassword.getText()+"") && !UtilTools.empty(etOldPassword.getText()+"")){
+                        btSure.setEnabled(true);
+                    }else {
+                        btSure.setEnabled(false);
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+
+            etPassword.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (s.toString().length()>0 && !UtilTools.empty(etPasswordAgain.getText()+"") && !UtilTools.empty(etOldPassword.getText()+"")){
+                        btSure.setEnabled(true);
+                    }else {
+                        btSure.setEnabled(false);
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
         }
 
 
@@ -218,6 +320,7 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.UPDATE_PAYCODE, map);
 
         paycode = password;
+        btSure.setEnabled(false);
 
     }
 
@@ -277,6 +380,7 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
                         break;
 
                 }
+                btSure.setEnabled(true);
                 break;
             case MethodUrl.USER_INFO:
                 switch (tData.get("code")+""){
@@ -314,6 +418,7 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
+        btSure.setEnabled(true);
         dealFailInfo(map, mType);
     }
 

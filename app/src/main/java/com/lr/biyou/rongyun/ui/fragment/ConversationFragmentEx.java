@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.lr.biyou.ui.moudle2.activity.TransferMoneyActivity;
 import com.lr.biyou.utils.tool.UtilTools;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import io.rong.common.RLog;
@@ -202,7 +204,6 @@ public class ConversationFragmentEx extends ConversationFragment {
             if (getConversationType() == Conversation.ConversationType.PRIVATE) {
                 //私聊发送消息
                 activity.sendMessageAction(text);
-
                 TextMessage textMessage = TextMessage.obtain(text);
                 MentionedInfo mentionedInfo = RongMentionManager.getInstance().onSendButtonClick();
                 if (mentionedInfo != null) {
@@ -319,5 +320,11 @@ public class ConversationFragmentEx extends ConversationFragment {
     }
 
 
+
+    @Override
+    public void onImageResult(LinkedHashMap<String, Integer> selectedMedias, boolean origin) {
+        super.onImageResult(selectedMedias, origin);
+        Log.i("show","图片&&&&:"+selectedMedias.toString());
+    }
 
 }

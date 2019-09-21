@@ -71,6 +71,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.emoticon.AndroidEmoji;
 import io.rong.imlib.RongIMClient;
@@ -148,7 +149,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
     private String qrcodeImgUrl = "";
     private String identiType = ""; //身份类型  ：0普通用户，1管理员，2群主
     private String name = "";
-    private List<Map<String,Object>> memberList;
+    private List<Map<String, Object>> memberList;
 
     private String protect;
 
@@ -183,11 +184,24 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
 
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
         //获取群组信息
         getGroupInfoAction();
+    }
+
+    @OnClick({R.id.back_img, R.id.left_back_lay})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.back_img:
+                finish();
+                break;
+            case R.id.left_back_lay:
+                finish();
+                break;
+        }
     }
 
     private void getGroupInfoAction() {
@@ -197,7 +211,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
             MbsConstans.ACCESS_TOKEN = SPUtils.get(GroupChatItemActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("group_id",groupId);
+        map.put("group_id", groupId);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUPS_INFO, map);
 
@@ -218,7 +232,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
 
             @Override
             public void onMemberClicked(GroupMember groupMember) {
-                if (protect.equals("0")){
+                if (protect.equals("0")) {
                     showMemberInfo(groupMember);
                 }
             }
@@ -332,12 +346,11 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
             MbsConstans.ACCESS_TOKEN = SPUtils.get(GroupChatItemActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("group_id",groupId);
-        map.put("type",type);
+        map.put("group_id", groupId);
+        map.put("type", type);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_GROUP_CHANAGE_STATUS, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_CHANAGE_STATUS, map);
     }
-
 
 
     private boolean requestReadPermissions() {
@@ -381,7 +394,6 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                 }
             }
         });
-
 
 
         // 获取清除历史消息结果
@@ -554,7 +566,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
             case R.id.profile_siv_group_manager: //群管理
                 intent = new Intent(this, GroupChatManagerActivity.class);
                 intent.putExtra(IntentExtra.GROUP_ID, groupId);
-                intent.putExtra("DATA", (Serializable)memberList);
+                intent.putExtra("DATA", (Serializable) memberList);
                 startActivity(intent);
                 break;
             case R.id.profile_siv_group_clean_timming:
@@ -578,7 +590,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
     private void showMemberInfo(GroupMember groupMember) {
         //Intent intent = new Intent(this, UserDetailActivity.class);
         Intent intent = new Intent(this, AddFriendActivity.class);
-        String qrCodeText = "1,"+groupMember.getUserId();
+        String qrCodeText = "1," + groupMember.getUserId();
         intent.putExtra("DATA", qrCodeText);
        /* intent.putExtra(IntentExtra.FRIEND_ID, groupMember.getUserId());
         Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(groupId);
@@ -596,12 +608,12 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
     private void toMemberManage(boolean isAdd) {
         if (isAdd) { //添加
             Intent intent = new Intent(this, SelectContractListActivity.class);
-            intent.putExtra("TYPE","2");
+            intent.putExtra("TYPE", "2");
             startActivityForResult(intent, REQUEST_ADD_GROUP_MEMBER);
         } else { //删除
             Intent intent = new Intent(this, SelectContractListActivity.class);
-            intent.putExtra("TYPE","2");
-            intent.putExtra("DATA", (Serializable)memberList);
+            intent.putExtra("TYPE", "2");
+            intent.putExtra("DATA", (Serializable) memberList);
            /* ArrayList<String> excludeList = new ArrayList<>();  // 不可选择的成员 id 列表
             String currentId = IMManager.getInstance().getCurrentId();
             excludeList.add(currentId);
@@ -633,10 +645,10 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
         intent.putExtra(IntentExtra.STR_TARGET_ID, groupId);
         intent.putExtra(IntentExtra.SERIA_CONVERSATION_TYPE, Conversation.ConversationType.GROUP);
         //群名
-        LogUtilDebug.i("show","groupName:"+groupName);
+        LogUtilDebug.i("show", "groupName:" + groupName);
         intent.putExtra(IntentExtra.STR_CHAT_NAME, groupName);
         //群组的头像
-        LogUtilDebug.i("show","grouportraitUrl:"+grouportraitUrl);
+        LogUtilDebug.i("show", "grouportraitUrl:" + grouportraitUrl);
         intent.putExtra(IntentExtra.STR_CHAT_PORTRAIT, grouportraitUrl);
         startActivity(intent);
 
@@ -654,7 +666,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
         dialog.setInputDialogListener(new SimpleInputDialog.InputDialogListener() {
             @Override
             public boolean onConfirmClicked(EditText input) {
-               name = input.getText().toString();
+                name = input.getText().toString();
 
                 if (name.length() < Constant.GROUP_NAME_MIN_LENGTH || name.length() > Constant.GROUP_NAME_MAX_LENGTH) {
                     ToastUtils.showToast(getString(R.string.profile_group_name_word_limit_format, Constant.GROUP_NAME_MIN_LENGTH, Constant.GROUP_NAME_MAX_LENGTH));
@@ -681,8 +693,8 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
             MbsConstans.ACCESS_TOKEN = SPUtils.get(GroupChatItemActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("group_id",groupId);
-        map.put("name",name);
+        map.put("group_id", groupId);
+        map.put("name", name);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_EDIT_NAME, map);
     }
@@ -754,7 +766,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
             MbsConstans.ACCESS_TOKEN = SPUtils.get(GroupChatItemActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("group_id",groupId);
+        map.put("group_id", groupId);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_EXIT, map);
     }
@@ -769,12 +781,12 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                     groupDetailViewModel.cleanHistoryMessage();
                 }).show();*/
 
-        SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(GroupChatItemActivity.this,true);
-        sureOrNoDialog.initValue("提示","是否清除聊天记录？");
+        SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(GroupChatItemActivity.this, true);
+        sureOrNoDialog.initValue("提示", "是否清除聊天记录？");
         sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()){
+                switch (v.getId()) {
                     case R.id.cancel:
                         sureOrNoDialog.dismiss();
                         break;
@@ -784,12 +796,12 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                         RongIM.getInstance().clearMessages(conversationType, groupId, new RongIMClient.ResultCallback<Boolean>() {
                             @Override
                             public void onSuccess(Boolean aBoolean) {
-                                LogUtilDebug.i("show","清除成功");
+                                LogUtilDebug.i("show", "清除成功");
                             }
 
                             @Override
                             public void onError(RongIMClient.ErrorCode errorCode) {
-                                LogUtilDebug.i("show","清除失败"+errorCode);
+                                LogUtilDebug.i("show", "清除失败" + errorCode);
                             }
                         });
 
@@ -871,8 +883,8 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
             MbsConstans.ACCESS_TOKEN = SPUtils.get(GroupChatItemActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("group_id",groupId);
-        map.put("id",ids);
+        map.put("group_id", groupId);
+        map.put("id", ids);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_ADD, map);
 
@@ -884,8 +896,8 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
             MbsConstans.ACCESS_TOKEN = SPUtils.get(GroupChatItemActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("group_id",groupId);
-        map.put("id",ids);
+        map.put("group_id", groupId);
+        map.put("id", ids);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_DELETE, map);
 
@@ -942,42 +954,42 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         Intent intent;
-        switch (mType){
+        switch (mType) {
             case MethodUrl.CHAT_GROUPS_INFO:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
-                        if (!UtilTools.empty(tData.get("data")+"")){
-                            Map<String,Object> map = (Map<String, Object>) tData.get("data");
-                            if (!UtilTools.empty(map)){
-                                groupName = map.get("name")+"";
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            Map<String, Object> map = (Map<String, Object>) tData.get("data");
+                            if (!UtilTools.empty(map)) {
+                                groupName = map.get("name") + "";
                                 groupNameSiv.setValue(groupName);
-                                grouportraitUrl = map.get("portrait")+"";
-                                qrcodeImgUrl = map.get("qrcode")+"";
-                                if ((map.get("disturb")+"").equals("0")){
+                                grouportraitUrl = map.get("portrait") + "";
+                                qrcodeImgUrl = map.get("qrcode") + "";
+                                if ((map.get("disturb") + "").equals("0")) {
                                     disSwitch.setChecked(false);
-                                }else {
+                                } else {
                                     disSwitch.setChecked(true);
                                 }
-                                if ((map.get("top")+"").equals("0")){
+                                if ((map.get("top") + "").equals("0")) {
                                     topSwitch.setChecked(false);
-                                }else {
+                                } else {
                                     topSwitch.setChecked(true);
                                 }
-                                protect = map.get("protect")+"";
+                                protect = map.get("protect") + "";
 
 
-                                if (!UtilTools.empty(map.get("member")+"")){
+                                if (!UtilTools.empty(map.get("member") + "")) {
                                     memberList = (List<Map<String, Object>>) map.get("member");
                                     List<GroupMember> groupMemberList = new ArrayList<>();
-                                    for (Map<String,Object> map1:memberList){
+                                    for (Map<String, Object> map1 : memberList) {
                                         GroupMember member = new GroupMember();
-                                        member.setName(map1.get("name")+"");
-                                        member.setUserId(map1.get("id")+"");
+                                        member.setName(map1.get("name") + "");
+                                        member.setUserId(map1.get("id") + "");
                                         member.setGroupId(groupId);
-                                        member.setPortraitUri(map1.get("portrait")+"");
-                                        if (UtilTools.empty(identiType)){
+                                        member.setPortraitUri(map1.get("portrait") + "");
+                                        if (UtilTools.empty(identiType)) {
                                             member.setRole(0);
-                                        }else {
+                                        } else {
                                             member.setRole(Integer.parseInt(identiType));
                                         }
                                         groupMemberList.add(member);
@@ -987,10 +999,10 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                                 }
 
                                 //身份
-                                identiType = map.get("type")+"";
-                                if (identiType.equals("2")){
+                                identiType = map.get("type") + "";
+                                if (identiType.equals("2")) {
                                     managerLay.setVisibility(View.VISIBLE);
-                                }else {
+                                } else {
                                     managerLay.setVisibility(View.GONE);
                                 }
 
@@ -1005,14 +1017,14 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
 
                 break;
 
             case MethodUrl.CHAT_GROUP_CHANAGE_STATUS:
-                switch (tData.get("code")+"") {
+                switch (tData.get("code") + "") {
                     case "0":
                         showToastMsg(tData.get("msg") + "");
                         break;
@@ -1028,7 +1040,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                 }
                 break;
             case MethodUrl.CHAT_GROUP_EDIT_NAME:
-                switch (tData.get("code")+"") {
+                switch (tData.get("code") + "") {
                     case "0":
                         showToastMsg(tData.get("msg") + "");
                         groupNameSiv.setValue(name);
@@ -1045,7 +1057,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                 }
                 break;
             case MethodUrl.CHAT_GROUP_ADD:
-                switch (tData.get("code")+"") {
+                switch (tData.get("code") + "") {
                     case "0":
                         showToastMsg(tData.get("msg") + "");
                         getGroupInfoAction();
@@ -1062,7 +1074,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                 }
                 break;
             case MethodUrl.CHAT_GROUP_DELETE:
-                switch (tData.get("code")+"") {
+                switch (tData.get("code") + "") {
                     case "0":
                         showToastMsg(tData.get("msg") + "");
                         getGroupInfoAction();
@@ -1079,14 +1091,14 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                 }
                 break;
             case MethodUrl.CHAT_GROUP_EXIT:
-                switch (tData.get("code")+"") {
+                switch (tData.get("code") + "") {
                     case "0":
                         showToastMsg(tData.get("msg") + "");
                         finish();
                         //Eventbus  发送事件
                         MessageEvent event = new MessageEvent();
                         event.setType(MbsConstans.MessageEventType.CLOSE_CONACTIVITY);
-                        Map<Object,Object> map = new HashMap<>();
+                        Map<Object, Object> map = new HashMap<>();
                         event.setMessage(map);
                         EventBus.getDefault().post(event);
 
@@ -1107,6 +1119,10 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
-        dealFailInfo(map,mType);
+        dealFailInfo(map, mType);
     }
+
+
+
+
 }

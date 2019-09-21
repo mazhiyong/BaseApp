@@ -16,6 +16,7 @@ import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.SelectBackListener;
+import com.lr.biyou.listener.SoftKeyBoardListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.rongyun.common.IntentExtra;
@@ -125,6 +126,19 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
 
         //获取我的二维码信息
         //getQrCodeAction();
+
+        SoftKeyBoardListener.setListener(AddFriendActivity.this, new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+            @Override
+            public void keyBoardShow(int height) {
+                //Toast.makeText(getActivity(), "键盘显示 高度" + height, Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void keyBoardHide(int height) {
+                //Toast.makeText(getActivity(), "键盘隐藏 高度" + height, Toast.LENGTH_SHORT).show();
+                searchFriendAction();
+            }
+        });
+
     }
 
 

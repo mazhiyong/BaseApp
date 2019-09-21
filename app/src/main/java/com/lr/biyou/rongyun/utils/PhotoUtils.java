@@ -15,10 +15,12 @@ import android.util.Log;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.lr.biyou.R;
+import com.lr.biyou.utils.tool.LogUtilDebug;
+
 import java.io.File;
 import java.util.List;
 
-import com.lr.biyou.R;
 import io.rong.imkit.RongContext;
 
 
@@ -164,13 +166,17 @@ public class PhotoUtils {
      * @return
      */
     private Uri buildUri(Activity activity) {
+        LogUtilDebug.i("show","&&&&&&&&&&&&&&&&&&Uri:");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            LogUtilDebug.i("show","&&&&&&&&&&&&&&&&&&Uri-----------------N");
             Uri uri = FileProvider.getUriForFile(RongContext.getInstance(),
                     activity.getPackageName()
                             + activity.getResources().getString(R.string.rc_authorities_fileprovider)
                     , new File(Environment.getExternalStorageDirectory().getPath() + File.separator + CROP_FILE_NAME));
+            LogUtilDebug.i("show","rcUri:"+uri);
             return uri;
         } else {
+            LogUtilDebug.i("show","&&&&&&&&&&&&&&&&&&Uri-----------------");
             return Uri.fromFile(Environment.getExternalStorageDirectory()).buildUpon().appendPath(CROP_FILE_NAME).build();
         }
     }

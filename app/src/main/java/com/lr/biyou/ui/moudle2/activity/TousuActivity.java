@@ -115,7 +115,6 @@ public class TousuActivity extends BasicActivity implements RequestView, SelectB
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
 
-
     }
 
 
@@ -356,7 +355,7 @@ public class TousuActivity extends BasicActivity implements RequestView, SelectB
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //下面这句指定调用相机拍照后的照片存储的路径
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(TousuActivity.this, AppUtil.getAppProcessName(this)+".fileProvider", new File(Environment.getExternalStorageDirectory(), "xiaoma.jpg"));
+            uri = FileProvider.getUriForFile(TousuActivity.this, AppUtil.getAppProcessName(this)+".FileProvider", new File(Environment.getExternalStorageDirectory(), "xiaoma.jpg"));
         } else {
             uri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "xiaoma.jpg"));
         }
@@ -381,7 +380,7 @@ public class TousuActivity extends BasicActivity implements RequestView, SelectB
                 File temp = new File(Environment.getExternalStorageDirectory() + "/xiaoma.jpg");
                 if (temp.exists()) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        uri = FileProvider.getUriForFile(TousuActivity.this, AppUtil.getAppProcessName(TousuActivity.this)+".fileProvider", temp);
+                        uri = FileProvider.getUriForFile(TousuActivity.this, AppUtil.getAppProcessName(TousuActivity.this)+".FileProvider", temp);
                     } else {
                         uri = Uri.fromFile(temp);
                     }

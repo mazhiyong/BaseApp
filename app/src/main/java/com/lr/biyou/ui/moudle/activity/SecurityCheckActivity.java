@@ -3,6 +3,8 @@ package com.lr.biyou.ui.moudle.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,22 +14,17 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
-import com.lr.biyou.bean.MessageEvent;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
-import com.jaeger.library.StatusBarUtil;
-import com.lr.biyou.ui.moudle1.activity.UserInfoActivity;
-import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -103,6 +100,50 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
         }*/
         etPhoneEmail.setHint("请输入手机/邮箱帐号");
 
+        etPhoneEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(etCode.getText()+"")){
+                    btNext.setEnabled(true);
+                }else {
+                    btNext.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        etCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(etPhoneEmail.getText()+"")){
+                    btNext.setEnabled(true);
+                }else {
+                    btNext.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
     }
 
 
@@ -146,7 +187,7 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
             return;
         }
 
-
+        btNext.setEnabled(false);
         mRequestTag = MethodUrl.EDIT_ACCOUNT;
         Map<String,Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
@@ -234,6 +275,7 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
                         break;
 
                 }
+                btNext.setEnabled(true);
                 break;
             case MethodUrl.USER_INFO:
                 switch (tData.get("code")+""){
@@ -264,6 +306,7 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
+        btNext.setEnabled(true);
         dealFailInfo(map, mType);
     }
 

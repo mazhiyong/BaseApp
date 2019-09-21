@@ -24,22 +24,20 @@ import androidx.core.content.FileProvider;
 
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle.activity.MainActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;
 import com.lr.biyou.utils.tool.AppUtil;
-import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 import com.yanzhenjie.permission.Permission;
 
 import java.io.File;
@@ -498,7 +496,7 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //下面这句指定调用相机拍照后的照片存储的路径
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(AddPayWayActivity.this, AppUtil.getAppProcessName(this)+".fileProvider", new File(Environment.getExternalStorageDirectory(), "xiaoma.jpg"));
+            uri = FileProvider.getUriForFile(AddPayWayActivity.this, AppUtil.getAppProcessName(this)+".FileProvider", new File(Environment.getExternalStorageDirectory(), "xiaoma.jpg"));
         } else {
             uri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "xiaoma.jpg"));
         }
@@ -523,7 +521,7 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
                 File temp = new File(Environment.getExternalStorageDirectory() + "/xiaoma.jpg");
                 if (temp.exists()) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        uri = FileProvider.getUriForFile(AddPayWayActivity.this, AppUtil.getAppProcessName(AddPayWayActivity.this)+".fileProvider", temp);
+                        uri = FileProvider.getUriForFile(AddPayWayActivity.this, AppUtil.getAppProcessName(AddPayWayActivity.this)+".FileProvider", temp);
                     } else {
                         uri = Uri.fromFile(temp);
                     }

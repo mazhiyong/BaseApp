@@ -2,6 +2,8 @@ package com.lr.biyou.ui.moudle.activity;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,13 +13,13 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -80,6 +82,53 @@ public class ResetLoginPassActivity extends BasicActivity implements RequestView
         divideLine.setVisibility(View.GONE);
 
         mTimeCount = new TimeCount(1 * 60 * 1000, 1000);
+
+
+        etPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(etCode.getText()+"")){
+                    btNext.setEnabled(true);
+                }else {
+                    btNext.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        etCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(etPhone.getText()+"")){
+                    btNext.setEnabled(true);
+                }else {
+                    btNext.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
     }
 
 

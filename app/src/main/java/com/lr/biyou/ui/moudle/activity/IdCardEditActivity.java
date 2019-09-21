@@ -2,6 +2,8 @@ package com.lr.biyou.ui.moudle.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +19,6 @@ import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
-import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
@@ -25,7 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -90,6 +90,52 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
         mBackText.setText("");
+
+        nameEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(idcardEdit.getText()+"")){
+                    butNext.setEnabled(true);
+                }else {
+                    butNext.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        idcardEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(nameEdit.getText()+"")){
+                    butNext.setEnabled(true);
+                }else {
+                    butNext.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
     }
 
 
@@ -194,7 +240,7 @@ public class IdCardEditActivity extends BasicActivity implements RequestView {
                         startActivity(intent);
                         break;
                 }
-
+                butNext.setEnabled(true);
                 break;
             case MethodUrl.REFRESH_TOKEN:
                 MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";

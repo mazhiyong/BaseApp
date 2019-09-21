@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true">
+    <item android:state_enabled="true">
         <layer-list>
             <item>
                 <shape android:shape="rectangle">
@@ -17,22 +17,12 @@
             <item>
                 <shape android:shape="rectangle">
                     <corners android:radius="@dimen/dp_5"/>
-                    <gradient android:type="linear" android:useLevel="true" android:startColor="#3D80CE" android:endColor="#3D80CE" android:angle="180"/>
-                    <solid android:color="@color/btn_login_disabled" />
+                    <gradient android:type="linear" android:useLevel="true" android:startColor="@color/gray_light" android:endColor="@color/gray_light" android:angle="180"/>
+                    <solid android:color="@color/gray_light" />
                 </shape>
             </item>
         </layer-list>
     </item>
-    <item >
-        <layer-list>
-            <item>
-                <shape android:shape="rectangle">
-                    <gradient android:type="linear" android:useLevel="true" android:startColor="#3D80CE" android:endColor="#3D80CE" android:angle="180"/>
-                    <corners android:radius="@dimen/dp_5"/>
-                    <!--<solid android:color="@color/btn_login_normal" />-->
-                </shape>
-            </item>
-        </layer-list>
-    </item>
+
 </selector>
 

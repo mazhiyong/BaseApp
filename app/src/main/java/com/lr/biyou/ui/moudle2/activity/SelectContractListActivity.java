@@ -179,11 +179,11 @@ public class SelectContractListActivity extends BasicActivity implements Request
                 mSelectList.add(mSelectMap);
             }
         }
-        if (mSelectList.size() == 0) {
+       /* if (mSelectList.size() == 0) {
             showToastMsg("请选择联系人");
             return;
         }
-
+*/
         switch (view.getId()) {
             case R.id.back_img:
                 finish();

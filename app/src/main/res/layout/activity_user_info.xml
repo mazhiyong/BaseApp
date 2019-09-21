@@ -459,6 +459,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/divide_hight"
                             android:background="@color/divide_line"/>
+                        <TextView
+                            android:id="@+id/exit_tv"
+                            android:layout_width="match_parent"
+                            android:layout_margin="@dimen/dp_35"
+                            android:text="退  出  应  用"
+                            android:padding="@dimen/dp_10"
+                            android:background="@drawable/btn_next"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14"
+                            android:gravity="center_horizontal"
+                            android:layout_height="wrap_content" />
                 </LinearLayout>
         </ScrollView>
 </LinearLayout>

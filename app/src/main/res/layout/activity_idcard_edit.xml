@@ -57,6 +57,7 @@
             android:background="@color/divide_line" />
         <Button
             android:id="@+id/but_next"
+            android:enabled="false"
             android:layout_marginTop="@dimen/dp_50"
             android:layout_marginRight="@dimen/dp_25"
             android:layout_marginLeft="@dimen/dp_25"

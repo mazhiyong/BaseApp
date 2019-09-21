@@ -154,7 +154,7 @@
 				android:layout_height="@dimen/but_height"
 				android:layout_marginLeft="@dimen/dp_40"
 				android:layout_marginRight="@dimen/dp_40"
-				android:background="@color/gray_light"
+				android:background="@drawable/btn_next"
 				android:text="登 录"
 				android:textSize="@dimen/sp_16"
 				android:textColor="@color/btn_login_text"

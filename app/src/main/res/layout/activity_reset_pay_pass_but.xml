@@ -161,7 +161,7 @@
             android:layout_marginTop="@dimen/dp_15"
             android:layout_marginBottom="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_10"
-            android:inputType="textPassword|number"
+            android:inputType="number|textPassword"
             android:maxLength="6"
             android:textSize="@dimen/sp_15"
             android:layout_height="wrap_content"/>
@@ -193,7 +193,7 @@
             android:layout_marginTop="@dimen/dp_15"
             android:layout_marginBottom="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_10"
-            android:inputType="textPassword|number"
+            android:inputType="number|textPassword"
             android:maxLength="6"
             android:textSize="@dimen/sp_15"
             android:layout_height="wrap_content"/>
@@ -228,7 +228,7 @@
             android:layout_marginTop="@dimen/dp_15"
             android:layout_marginBottom="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_10"
-            android:inputType="textPassword|number"
+            android:inputType="number|textPassword"
             android:textSize="@dimen/sp_15"
             android:maxLength="6"
             android:layout_height="wrap_content"/>
@@ -251,8 +251,9 @@
         android:text="@string/confirm"
         android:id="@+id/bt_sure"
         android:textSize="@dimen/sp_16"
+        android:enabled="false"
         android:textColor="@color/white"
-        android:background="@color/blue1"
+        android:background="@drawable/btn_next"
         />
 
 

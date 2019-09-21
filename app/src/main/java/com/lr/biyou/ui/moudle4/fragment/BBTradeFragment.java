@@ -418,7 +418,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                             clPrice.setVisibility(View.VISIBLE);
                             tvCnyPrice.setVisibility(View.GONE);
                             etPrice.setHint("价格");
-                        }else { //市价
+                        }else { //市价 卖
+                            etNumber.setHint("数量");
                             clPrice.setVisibility(View.GONE);
                             tvCnyPrice.setVisibility(View.VISIBLE);
                         }
@@ -438,10 +439,15 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                             clPrice.setVisibility(View.VISIBLE);
                             tvCnyPrice.setVisibility(View.GONE);
                             etPrice.setHint("价格");
-                        }else { //市价
-                            clPrice.setVisibility(View.VISIBLE);
+                        }else { //市价买
+                           /* clPrice.setVisibility(View.VISIBLE);
                             tvCnyPrice.setVisibility(View.GONE);
-                            etPrice.setHint("金额");
+                            etPrice.setHint("金额");*/
+                            etNumber.setHint("金额");
+                            clPrice.setVisibility(View.GONE);
+                            tvCnyPrice.setVisibility(View.VISIBLE);
+
+
                         }
                         break;
                 }
@@ -646,7 +652,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         map.put("direction",mKindType);
         map.put("type",mSelectType);
         if (mSelectType.equals("1") && mKindType.equals("0")){
-            map.put("total",etPrice.getText()+"");
+            map.put("number","");
+            map.put("total",etNumber.getText()+""); //市价买
         }else {
             map.put("price",etPrice.getText()+"");
         }
@@ -1231,14 +1238,17 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     mSelectType = "1";
 
                     if (mKindType.equals("0")){ //买入
-                        clPrice.setVisibility(View.VISIBLE);
+                       /* clPrice.setVisibility(View.VISIBLE);
                         tvCnyPrice.setVisibility(View.GONE);
-                        etPrice.setHint("金额");
-
-                    }else { //卖出
+                        etPrice.setHint("金额");*/
+                        etNumber.setHint("金额");
                         clPrice.setVisibility(View.GONE);
                         tvCnyPrice.setVisibility(View.VISIBLE);
-                        etPrice.setHint("价格");
+
+                    }else { //卖出
+                        etNumber.setHint("数量");
+                        clPrice.setVisibility(View.GONE);
+                        tvCnyPrice.setVisibility(View.VISIBLE);
                     }
 
                 }

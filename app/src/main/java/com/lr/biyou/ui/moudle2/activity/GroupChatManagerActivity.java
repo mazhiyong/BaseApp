@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class GroupChatManagerActivity extends BasicActivity implements View.OnClickListener {
     @BindView(R.id.back_img)
@@ -61,7 +62,6 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
     SwitchButton joinSwitch;
     @BindView(R.id.transfer_lay)
     LinearLayout transferLay;
-
 
 
     /**
@@ -111,9 +111,9 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
         mTitleText.setText("管理员设置");
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
-        if (getIntent() != null){
-            Bundle bundle =getIntent().getExtras();
-            if (bundle != null){
+        if (getIntent() != null) {
+            Bundle bundle = getIntent().getExtras();
+            if (bundle != null) {
                 groupId = bundle.getString(IntentExtra.GROUP_ID);
                 memberList = (List<Map<String, Object>>) bundle.getSerializable("DATA");
             }
@@ -139,7 +139,7 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
 
             @Override
             public void onMemberClicked(GroupMember groupMember) {
-                if (!protectSwitch.isChecked()){
+                if (!protectSwitch.isChecked()) {
                     //查看群成员信息
                     showMemberInfo(groupMember);
                 }
@@ -199,7 +199,7 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
                 Intent intentTransfer = new Intent(GroupChatManagerActivity.this, SelectContractListActivity.class);
                 intentTransfer.putExtra("TYPE", "4");
                 intentTransfer.putExtra(IntentExtra.GROUP_ID, groupId);
-                startActivityForResult(intentTransfer,REQUEST_SET_NEW_OWNER);
+                startActivityForResult(intentTransfer, REQUEST_SET_NEW_OWNER);
             }
         });
 
@@ -208,9 +208,17 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
         getGroupInfoAction();
     }
 
-
-
-
+    @OnClick({R.id.back_img, R.id.left_back_lay})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.back_img:
+                finish();
+                break;
+            case R.id.left_back_lay:
+                finish();
+                break;
+        }
+    }
 
     private void getGroupInfoAction() {
 
@@ -232,10 +240,10 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
             MbsConstans.ACCESS_TOKEN = SPUtils.get(GroupChatManagerActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("group_id",groupId);
-        map.put("type",type);
+        map.put("group_id", groupId);
+        map.put("type", type);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_GROUP_MANAGE, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_MANAGE, map);
     }
 
 
@@ -247,7 +255,7 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
     private void showMemberInfo(GroupMember groupMember) {
         //Intent intent = new Intent(this, UserDetailActivity.class);
         Intent intent = new Intent(this, AddFriendActivity.class);
-        String qrCodeText = "1,"+groupMember.getUserId();
+        String qrCodeText = "1," + groupMember.getUserId();
         intent.putExtra("DATA", qrCodeText);
        /* intent.putExtra(IntentExtra.FRIEND_ID, groupMember.getUserId());
         Group groupInfo = RongUserInfoManager.getInstance().getGroupInfo(groupId);
@@ -256,6 +264,7 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
         }*/
         startActivity(intent);
     }
+
     private void initViewModel() {
         groupManagementViewModel = ViewModelProviders.of(this, new GroupManagementViewModel.Factory(groupId, getApplication())).get(GroupManagementViewModel.class);
 
@@ -317,7 +326,7 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
                 Intent intentTransfer = new Intent(this, SelectContractListActivity.class);
                 intentTransfer.putExtra("TYPE", "4");
                 intentTransfer.putExtra(IntentExtra.GROUP_ID, groupId);
-                startActivityForResult(intentTransfer,REQUEST_SET_NEW_OWNER);
+                startActivityForResult(intentTransfer, REQUEST_SET_NEW_OWNER);
                 break;
             default:
                 // Do nothing
@@ -340,7 +349,7 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
             // 删除群组成员
             String ids = data.getStringExtra(IntentExtra.LIST_STR_ID_LIST);
             deleteGroupMemberAction(ids);
-        }else if (requestCode == REQUEST_SET_NEW_OWNER && resultCode == RESULT_OK){
+        } else if (requestCode == REQUEST_SET_NEW_OWNER && resultCode == RESULT_OK) {
             //转让
             String id = data.getStringExtra(IntentExtra.LIST_STR_ID_LIST);
             transGroupAction(id);
@@ -354,8 +363,8 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
             MbsConstans.ACCESS_TOKEN = SPUtils.get(GroupChatManagerActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("group_id",groupId);
-        map.put("id",ids);
+        map.put("group_id", groupId);
+        map.put("id", ids);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_ADMIN_ADD, map);
 
@@ -367,8 +376,8 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
             MbsConstans.ACCESS_TOKEN = SPUtils.get(GroupChatManagerActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("group_id",groupId);
-        map.put("id",id);
+        map.put("group_id", groupId);
+        map.put("id", id);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_TRANSFER, map);
 
@@ -380,14 +389,12 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
             MbsConstans.ACCESS_TOKEN = SPUtils.get(GroupChatManagerActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("group_id",groupId);
-        map.put("id",ids);
+        map.put("group_id", groupId);
+        map.put("id", ids);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_ADMIN_DELETE, map);
 
     }
-
-
 
 
     /**
@@ -398,12 +405,12 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
     private void toMemberManage(boolean isAdd) {
         if (isAdd) { //添加
             Intent intent = new Intent(this, SelectContractListActivity.class);
-            intent.putExtra("TYPE","3");
+            intent.putExtra("TYPE", "3");
             intent.putExtra("DATA", (Serializable) memberList);
             startActivityForResult(intent, REQUEST_ADD_GROUP_MEMBER);
         } else { //删除
             Intent intent = new Intent(this, SelectContractListActivity.class);
-            intent.putExtra("TYPE","3");
+            intent.putExtra("TYPE", "3");
             intent.putExtra("DATA", (Serializable) managerList);
            /* ArrayList<String> excludeList = new ArrayList<>();  // 不可选择的成员 id 列表
             String currentId = IMManager.getInstance().getCurrentId();
@@ -459,19 +466,19 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
 
                                 identiType = map.get("administrators") + "";
 
-                                if ((map.get("talk")+"").equals("0")){
+                                if ((map.get("talk") + "").equals("0")) {
                                     talkSwitch.setChecked(false);
-                                }else {
+                                } else {
                                     talkSwitch.setChecked(true);
                                 }
-                                if ((map.get("protect")+"").equals("0")){
+                                if ((map.get("protect") + "").equals("0")) {
                                     protectSwitch.setChecked(false);
-                                }else {
+                                } else {
                                     protectSwitch.setChecked(true);
                                 }
-                                if ((map.get("join")+"").equals("0")){
+                                if ((map.get("join") + "").equals("0")) {
                                     joinSwitch.setChecked(false);
-                                }else {
+                                } else {
                                     joinSwitch.setChecked(true);
                                 }
 
@@ -507,7 +514,7 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
                 }
                 break;
             case MethodUrl.CHAT_GROUP_ADMIN_ADD:
-                switch (tData.get("code")+"") {
+                switch (tData.get("code") + "") {
                     case "0":
                         showToastMsg(tData.get("msg") + "");
                         getGroupInfoAction();
@@ -526,7 +533,7 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
 
 
             case MethodUrl.CHAT_GROUP_TRANSFER:
-                switch (tData.get("code")+"") {
+                switch (tData.get("code") + "") {
                     case "0":
                         showToastMsg(tData.get("msg") + "");
                         finish();
@@ -544,7 +551,7 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
                 break;
 
             case MethodUrl.CHAT_GROUP_ADMIN_DELETE:
-                switch (tData.get("code")+"") {
+                switch (tData.get("code") + "") {
                     case "0":
                         showToastMsg(tData.get("msg") + "");
                         getGroupInfoAction();
@@ -568,6 +575,8 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
     public void loadDataError(Map<String, Object> map, String mType) {
         dealFailInfo(map, mType);
     }
+
+
 
 
 }

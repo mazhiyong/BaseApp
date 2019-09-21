@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
@@ -25,7 +28,6 @@ import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -112,49 +114,48 @@ public class RegistActivity extends BasicActivity implements RequestView, Select
         }
 
 
-//        List<Map<String, Object>> mDataList = SelectDataUtil.getListByKeyList(SelectDataUtil.getNameCodeByType("firmKind"));
-//
-//
-//        if (mDataList != null && mDataList.size() > 0) {
-//            if (mDataList.size() == 1) {
-//                mZhutiLay.setEnabled(false);
-//                mArrowView.setVisibility(View.GONE);
-//            } else {
-//                mZhutiLay.setEnabled(true);
-//                mArrowView.setVisibility(View.VISIBLE);
-//            }
-//            mKindMap = mDataList.get(0);
-//            mTvZhuti.setText(mKindMap.get("name") + "");
-//            String code = mKindMap.get("code") + "";
-//            if (code.equals("0")) {
-//                mEtPhone.setHint(R.string.please_use_phone_regist2);
-//            } else {
-//                mEtPhone.setHint(R.string.please_use_phone_regist);
-//            }
-//        }
-//
-//
-//        TextViewUtils textViewUtils = new TextViewUtils();
-//        String s = mTvTip.getText().toString();
-//        textViewUtils.init(s, mTvTip);
-//        textViewUtils.setTextColor(s.indexOf("号") + 1, s.length(), ContextCompat.getColor(this, R.color.blue1));
-//        textViewUtils.setTextClick(s.indexOf("《"), s.length(), new TextViewUtils.ClickCallBack() {
-//            @Override
-//            public void onClick() {
-//                //Toast.makeText(RegistActivity.this, "阅读协议", Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(RegistActivity.this, HtmlActivity.class);
-//                //intent.putExtra("id",MbsConstans.XIEYI_URL+"H5/static/html/wyxy.html");
-//                intent.putExtra("id",MbsConstans.SERVER_URL+"#/yhxy");
-//                intent.putExtra("title","平台用户协议");
-//                startActivity(intent);
-//
-//            }
-//
-//        });
-//        textViewUtils.build();
-//
-//        //获取临时Toten
-//        //getTempTokenAction();
+        mEtPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(mEtCode.getText()+"")){
+                    mBtNext.setEnabled(true);
+                }else {
+                    mBtNext.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        mEtCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(mEtPhone.getText()+"")){
+                    mBtNext.setEnabled(true);
+                }else {
+                    mBtNext.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 

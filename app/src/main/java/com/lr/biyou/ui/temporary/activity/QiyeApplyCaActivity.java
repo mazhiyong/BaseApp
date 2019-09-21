@@ -425,7 +425,7 @@ public class QiyeApplyCaActivity extends BasicActivity implements RequestView {
 
         //下面这句指定调用相机拍照后的照片存储的路径
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            uri = FileProvider.getUriForFile(QiyeApplyCaActivity.this, AppUtil.getAppProcessName(QiyeApplyCaActivity.this) + ".fileProvider", new File(savePath, fileName + ".jpg"));
+            uri = FileProvider.getUriForFile(QiyeApplyCaActivity.this, AppUtil.getAppProcessName(QiyeApplyCaActivity.this) + ".FileProvider", new File(savePath, fileName + ".jpg"));
         } else {
             uri = Uri.fromFile(new File(savePath, fileName + ".jpg"));
         }

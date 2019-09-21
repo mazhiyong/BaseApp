@@ -235,7 +235,6 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
 
 
         mTogglePwd.setOnCheckedChangeListener(this);
-        mBtnLogin.setEnabled(true);
 
     }
 
@@ -289,9 +288,11 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
     private void loginAction() {
 
         if (UtilTools.isEmpty(mEditUid, getResources().getString(R.string.phone_number))) {
+            mBtnLogin.setEnabled(true);
             return;
         }
         if (UtilTools.isEmpty(mEditPsw, getResources().getString(R.string.pass_word))) {
+            mBtnLogin.setEnabled(true);
             return;
         }
 
@@ -389,8 +390,7 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
                 break;
             case R.id.btn_login:
                 loginAction();
-
-                //mBtnLogin.setEnabled(false);
+                mBtnLogin.setEnabled(false);
 //                CrashReport.testJavaCrash();
 //                intent = new Intent(LoginActivity.this, ModifyFileActivity.class);
 //                startActivity(intent);
@@ -490,7 +490,7 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
                         break;
                 }
 
-
+                mBtnLogin.setEnabled(true);
                 break;
             case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
                 MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";

@@ -964,12 +964,12 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
                 id = mParentMap.get("id") + "";
                 if (direction.equals("1")) {
-                    showDialog("购买 " + mParentMap.get("symbol"),
-                            mParentMap.get("price") + "", "交易数量 0 USDT",
+                    showDialog("购买 ",mParentMap.get("symbol")+"",
+                            mParentMap.get("price") + "", "交易数量 0 "+mParentMap.get("symbol"),
                             "按价格购买", "按数量购买");
                 } else {
-                    showDialog("出售 " + mParentMap.get("symbol"),
-                            mParentMap.get("price") + "", "交易数量 0 USDT",
+                    showDialog("出售 ",mParentMap.get("symbol")+"",
+                            mParentMap.get("price") + "", "交易数量 0 "+mParentMap.get("symbol"),
                             "按价格出售", "按数量出售");
                 }
 
@@ -1550,11 +1550,11 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private String tradeNumber = "";
 
 
-    public void showDialog(String type, String price, String number, String tab1, String tab2) {
-        initPopupWindow(type, price, number, tab1, tab2);
+    public void showDialog(String deal,String type, String price, String number, String tab1, String tab2) {
+        initPopupWindow(deal,type, price, number, tab1, tab2);
     }
 
-    private void initPopupWindow(String type, String price, String number, String tab1, String tab2) {//
+    private void initPopupWindow(String deal,String type, String price, String number, String tab1, String tab2) {//
         int nH = UtilTools.getNavigationBarHeight(getActivity());
         LinearLayout mNagView;
         if (mConditionDialog == null) {
@@ -1569,7 +1569,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
             mConditionDialog.setFocusable(true);
             mConditionDialog.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             mConditionDialog.showAtLocation(getParentFragment().getActivity().getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
-            initViewData(type, price, number, tab1, tab2);
+            initViewData(deal,type, price, number, tab1, tab2);
             toggleBright();
             mConditionDialog.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -1579,7 +1579,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
             });
         } else {
             mConditionDialog.showAtLocation(getParentFragment().getActivity().getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
-            initViewData(type, price, number, tab1, tab2);
+            initViewData(deal,type, price, number, tab1, tab2);
             toggleBright();
         }
     }
@@ -1638,7 +1638,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
             public void onTabSelected(XTabLayout.Tab tab) {
                 etNumber.setText("");
                 etNumber.setHint("请输入");
-                tvNumber.setText("交易数量 0 USDT");
+                tvNumber.setText("交易数量 0 "+symbol);
                 tvMoney.setText("¥ 0.00");
                 tradeType = tab.getPosition();
                 switch (tab.getPosition()) {
@@ -1646,7 +1646,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         tvType.setText("CNY");
                         break;
                     case 1:
-                        tvType.setText("USDT");
+                        tvType.setText(symbol);
                         break;
                 }
             }
@@ -1694,14 +1694,14 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                             tradePrice = s.toString();
 
                             tradeNumber = Float.parseFloat(tradePrice) / Float.parseFloat(tvPrice.getText().toString().replaceAll(",", "").trim()) + "";
-                            tvNumber.setText("交易数量 " + UtilTools.getNormalMoney(tradeNumber) + " USDT");
+                            tvNumber.setText("交易数量 " + UtilTools.getNormalMoney(tradeNumber) +symbol);
                             tvMoney.setText(UtilTools.getRMBMoney(tradePrice));
 
                             break;
                         case 1:  //按数量够买
                             tradeNumber = s.toString();
                             tradePrice = Float.parseFloat(tradeNumber) * Float.parseFloat(tvPrice.getText().toString().replaceAll(",", "").trim()) + "";
-                            tvNumber.setText("交易数量 " + UtilTools.getNormalMoney(tradeNumber) + " USDT");
+                            tvNumber.setText("交易数量 " + UtilTools.getNormalMoney(tradeNumber) + symbol);
                             tvMoney.setText(UtilTools.getRMBMoney(tradePrice));
 
                             break;
@@ -1709,7 +1709,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     }
                 } else {
                     etNumber.setHint("请输入");
-                    tvNumber.setText("交易数量 0 USDT");
+                    tvNumber.setText("交易数量 0 "+symbol);
                     tvMoney.setText("¥ 0.00");
                 }
             }
@@ -1747,12 +1747,22 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_BUY_DEAL, map);
     }
 
-    public void initViewData(String type, String price, String number, String tab1, String tab2) {
-        tvTitle.setText(type);
+    public void initViewData(String deal,String type, String price, String number, String tab1, String tab2) {
+        tvTitle.setText(deal + type);
         tvPrice.setText(UtilTools.getNormalMoney(price));
         tvNumber.setText(number);
         tabDialog1.setText(tab1);
         tabDialog2.setText(tab2);
+
+        switch (tradeType){
+            case 0:
+                tvType.setText("CNY");
+                break;
+            case 1:
+                tvType.setText(symbol);
+                break;
+        }
+
         switch (TAB_POSITION) {
             case 0:
                 tvBuy.setText("买入");
@@ -1764,7 +1774,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
         etNumber.setText("");
         etNumber.setHint("请输入");
-        tvNumber.setText("交易数量 0 USDT");
+        tvNumber.setText("交易数量 0 "+type);
         tvMoney.setText("¥ 0.00");
     }
 

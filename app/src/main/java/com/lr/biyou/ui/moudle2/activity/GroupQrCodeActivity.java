@@ -121,9 +121,12 @@ public class GroupQrCodeActivity extends BasicActivity implements RequestView {
 
 
 
-    @OnClick({R.id.yqcode_copy_tv, R.id.yqlink_copy_tv})
+    @OnClick({R.id.left_back_lay,R.id.yqcode_copy_tv, R.id.yqlink_copy_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.left_back_lay:
+                finish();
+                break;
             case R.id.yqcode_copy_tv:
                 clipData = ClipData.newPlainText("币友",yqCode);
                 mClipboardManager.setPrimaryClip(clipData);

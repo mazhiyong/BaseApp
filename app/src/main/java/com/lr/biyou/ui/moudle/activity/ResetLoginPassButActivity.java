@@ -2,6 +2,8 @@ package com.lr.biyou.ui.moudle.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.ToggleButton;
 
 import androidx.core.content.ContextCompat;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
@@ -22,7 +25,6 @@ import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.utils.tool.RegexUtil;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -140,6 +142,50 @@ public class ResetLoginPassButActivity extends BasicActivity implements RequestV
             }
         });
 
+
+        etPasswordAgain.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(etPassword.getText()+"")){
+                    btSure.setEnabled(true);
+                }else {
+                    btSure.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(etPasswordAgain.getText()+"")){
+                    btSure.setEnabled(true);
+                }else {
+                    btSure.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
 
@@ -156,7 +202,7 @@ public class ResetLoginPassButActivity extends BasicActivity implements RequestV
         String passwordAgain = etPasswordAgain.getText() + "";
 
 
-        if (UtilTools.empty(password)) {
+       /* if (UtilTools.empty(password)) {
             showToastMsg("请设置密码");
             return;
         }
@@ -165,7 +211,7 @@ public class ResetLoginPassButActivity extends BasicActivity implements RequestV
         if (UtilTools.empty(passwordAgain)) {
             showToastMsg("请再次输入密码");
             return;
-        }
+        }*/
         if (!password.equals(passwordAgain)) {
             showToastMsg("两次输入密码不一样，请重新输入");
             return;
@@ -188,7 +234,7 @@ public class ResetLoginPassButActivity extends BasicActivity implements RequestV
                 showToastMsg(getResources().getString(R.string.set_new_pass_tip));
                 return;
         }
-
+        btSure.setEnabled(false);
         // String pass = AESHelper.encrypt(password, AESHelper.password);
         //String pass = RSAUtils.encryptContent(password, RSAUtils.publicKey);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -209,6 +255,8 @@ public class ResetLoginPassButActivity extends BasicActivity implements RequestV
             map.put("repassword",passwordAgain);
             mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.RESET_PASSWORD, map);
         }
+
+
 
 
 
@@ -249,6 +297,7 @@ public class ResetLoginPassButActivity extends BasicActivity implements RequestV
             case MethodUrl.RESET_PASSWORD:
                 switch (tData.get("code")+""){
                     case "0":
+                        btSure.setEnabled(true);
                         showToastMsg("重置密码成功");
                         //backTo(LoginActivity.class, false);
                         closeAllActivity();
