@@ -38,11 +38,13 @@ import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicFragment;
 import com.lr.biyou.basic.BasicRecycleViewAdapter;
 import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.listener.OnChildClickListener;
 import com.lr.biyou.listener.OnMyItemClickListener;
 import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
+import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
@@ -933,7 +935,53 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         } else {
             mPageView.showContent();
         }
+
+        mWeiTuoListAdapter.setmCallBack(new OnChildClickListener() {
+            @Override
+            public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
+                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(getActivity(), true);
+                sureOrNoDialog.initValue("提示", "是否撤销当前委托？");
+                sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.cancel:
+                                sureOrNoDialog.dismiss();
+                                break;
+                            case R.id.confirm:
+                                sureOrNoDialog.dismiss();
+                                //撤销委托
+                                cancelWeituoAction(mParentMap);
+                                break;
+                        }
+                    }
+                });
+                sureOrNoDialog.show();
+                sureOrNoDialog.setCanceledOnTouchOutside(false);
+                sureOrNoDialog.setCancelable(true);
+
+
+            }
+        });
+
+
+
+
     }
+
+    private void cancelWeituoAction(Map<String, Object> mParentMap) {
+        mRequestTag = MethodUrl.CANCEL_WEITUO;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("id", mParentMap.get("id") + "");
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CANCEL_WEITUO, map);
+    }
+
+
 
 
     @Override
@@ -1191,6 +1239,25 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 }
 
                 break;
+            case MethodUrl.CANCEL_WEITUO:
+                switch (tData.get("code") + ""){
+                    case "0":
+                        showToastMsg(tData.get("msg")+"");
+                        //查询委托单
+                        getEntrustListAction();
+                        break;
+                    case "1":
+                        if (getParentFragment().getActivity() != null){
+                            getParentFragment().getActivity().finish();
+                        }
+                        intent = new Intent(getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+                }
+
             case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
                 MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
                 mIsRefreshToken = false;

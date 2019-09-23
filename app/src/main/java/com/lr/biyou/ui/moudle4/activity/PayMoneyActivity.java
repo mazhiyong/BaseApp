@@ -1,6 +1,5 @@
 package com.lr.biyou.ui.moudle4.activity;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -9,22 +8,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
+import android.os.CountDownTimer;
 import android.text.TextPaint;
-import android.text.method.LinkMovementMethod;
-import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,42 +26,29 @@ import android.widget.Toast;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
-import com.lr.biyou.mywidget.dialog.BankCardSelectDialog;
 import com.lr.biyou.mywidget.dialog.CancelDialog;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle.activity.ResetPayPassButActivity;
 import com.lr.biyou.ui.moudle.activity.ShowDetailPictrue;
-import com.lr.biyou.ui.temporary.activity.ApplyAmountActivity;
-import com.lr.biyou.ui.temporary.activity.FujianShowActivity;
 import com.lr.biyou.ui.temporary.activity.PDFLookActivity;
-import com.lr.biyou.ui.temporary.activity.ResultMoneyActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
-import com.lr.biyou.utils.tool.JSONUtil;
-import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
-import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
-import com.zhangke.websocket.util.LogUtil;
-
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -202,6 +180,8 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
 
     private ClipboardManager mClipboardManager;
     private ClipData clipData;
+
+    private TimeCount mTimeCount;
     @Override
     public int getContentView() {
         return R.layout.pay_money_layout;
@@ -415,6 +395,21 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                             Map<String, Object> mapAppendInfo = (Map<String, Object>) mapData.get("appendinfo");
                             if (!UtilTools.empty(mapAppendInfo)) {
                                 payTimeTv.setText(mapAppendInfo.get("tips") + "");
+                                //启动定时器
+                                String timeCount = mapAppendInfo.get("remaining_second") + "";
+                                if (!UtilTools.empty(timeCount)){
+                                    int time = Integer.parseInt(timeCount);
+                                    if (time > 0){
+                                        if (mTimeCount != null){
+                                            mTimeCount.cancel();
+                                            mTimeCount = null;
+                                        }
+                                        mTimeCount = new TimeCount(time * 1000, 1000);
+                                        mTimeCount.start();
+                                    }
+                                }
+
+
                                 payTypeTv.setText(mapAppendInfo.get("title") + "");
                                 payMoneyTv.setText(UtilTools.getRMBMoney(mapAppendInfo.get("total") + ""));
 
@@ -565,8 +560,6 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                                     }
 
                                 }
-
-
                                 mDialog = new KindSelectDialog(PayMoneyActivity.this, true, mDataList, 30);
                                 mDialog.setSelectBackListener(this);
 
@@ -829,6 +822,57 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mBroadcastReceiver);
+        if (mTimeCount != null){
+            mTimeCount.cancel();
+            mTimeCount = null;
+        }
     }
+
+
+    /* 定义一个倒计时的内部类 */
+    private class TimeCount extends CountDownTimer {
+
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);//参数依次为总时长,和计时的时间间隔
+        }
+
+        @Override
+        public void onFinish() {//计时完毕时触发
+            //tvCod.setText(getResources().getString(R.string.msg_code_again));
+            //tvCode.setClickable(true);
+            //MbsConstans.CURRENT_TIME = 0;
+
+            //刷新订单状态
+            getDingdanInfoAction();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {//计时过程显示
+            //tvCode.setClickable(false);
+            //tvCode.setText(millisUntilFinished / 1000 + "秒");
+            Log.i("show","格式化时间:"+UtilTools.getStandardDate2(millisUntilFinished));
+            switch (status){
+                case "0": //请在 1天23:54:2 内完成付款
+                    if (payTimeTv.getText().toString().contains("内完成付款")){
+                        payTimeTv.setText("请在 "+UtilTools.getStandardDate2(millisUntilFinished)+" 内完成付款");
+                    }
+
+                    if (payTimeTv.getText().toString().contains("后订单自动取消")){
+                        payTimeTv.setText(UtilTools.getStandardDate2(millisUntilFinished)+" 后订单自动取消");
+                    }
+                    break;
+
+                case "1":
+
+                    break;
+            }
+
+
+        }
+    }
+
+
+
+
 
 }

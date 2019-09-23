@@ -500,4 +500,6 @@ public class RegistActivity extends BasicActivity implements RequestView, Select
         }
     }
 
+
+
 }

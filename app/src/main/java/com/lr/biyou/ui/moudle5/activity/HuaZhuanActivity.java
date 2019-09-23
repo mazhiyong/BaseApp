@@ -174,6 +174,7 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
                 break;
             case R.id.huzhuan_tv:
                 huazhuanSumbitAction();
+                huzhuanTv.setEnabled(false);
                 break;
         }
     }
@@ -181,6 +182,7 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
     private void huazhuanSumbitAction() {
         if (UtilTools.empty(numberEt.getText()) || typeTv.getText().toString().equals("请选择")){
             showToastMsg("请填写完善信息");
+            huzhuanTv.setEnabled(true);
             return;
         }
 
@@ -194,10 +196,12 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
 
         if (fromTv.getText().toString().equals("请选择") || toTv.getText().toString().equals("请选择")){
             showToastMsg("请完善划转账户信息");
+            huzhuanTv.setEnabled(true);
             return;
         }
         if (fromTv.getText().toString().equals(toTv.getText().toString())){
             showToastMsg("不能向相同账户类型划转");
+            huzhuanTv.setEnabled(true);
             return;
         }
 
@@ -338,12 +342,14 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
                         startActivity(intent);
                         break;
                 }
+                huzhuanTv.setEnabled(true);
                 break;
         }
     }
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
+        huzhuanTv.setEnabled(true);
         dealFailInfo(map, mType);
     }
 
@@ -354,12 +360,14 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
             case 10:
                 String s= (String) map.get("name"); //选择账户
                 fromTv.setText(s);
+                huzhuanTv.setEnabled(true);
                 break;
             case 30: //选择币种
                 String str= (String) map.get("name"); //选择账户
                 typeTv.setText(str);
                 type2Tv.setText(str);
                 getAviableMoneyAction(str);
+                huzhuanTv.setEnabled(true);
                 break;
         }
     }

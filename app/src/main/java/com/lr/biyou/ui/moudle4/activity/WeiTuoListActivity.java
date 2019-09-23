@@ -28,6 +28,7 @@ import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
@@ -38,17 +39,15 @@ import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.DateSelectDialog;
+import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle4.adapter.WeiTuoListAdapter;
 import com.lr.biyou.ui.temporary.adapter.TradeDialogAdapter;
 import com.lr.biyou.utils.tool.AnimUtil;
-import com.lr.biyou.utils.tool.JSONUtil;
-import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -276,12 +275,33 @@ public class WeiTuoListActivity extends BasicActivity implements RequestView, Re
         mListAdapter.setmCallBack(new OnChildClickListener() {
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-                //撤销委托
-                cancelWeituoAction(mParentMap);
+                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(WeiTuoListActivity.this, true);
+                sureOrNoDialog.initValue("提示", "是否撤销当前委托？");
+                sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.cancel:
+                                sureOrNoDialog.dismiss();
+                                break;
+                            case R.id.confirm:
+                                sureOrNoDialog.dismiss();
+                                //撤销委托
+                                cancelWeituoAction(mParentMap);
+                                break;
+                        }
+                    }
+                });
+                sureOrNoDialog.show();
+                sureOrNoDialog.setCanceledOnTouchOutside(false);
+                sureOrNoDialog.setCancelable(true);
+
+
 
             }
         });
     }
+
 
     private void cancelWeituoAction(Map<String, Object> mParentMap) {
         mRequestTag = MethodUrl.CANCEL_WEITUO;
@@ -294,8 +314,6 @@ public class WeiTuoListActivity extends BasicActivity implements RequestView, Re
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CANCEL_WEITUO, map);
     }
-
-
 
     private void responseData1() {
         if (mListAdapter1 == null) {
@@ -647,12 +665,15 @@ public class WeiTuoListActivity extends BasicActivity implements RequestView, Re
                     case "0":
                         mDataList = (List<Map<String, Object>>) tData.get("data");
                         if (mDataList != null && mDataList.size()>0){
+                            for (Map<String,Object> map :mDataList){
+                                map.put("status",status);
+                            }
+
                             mPageView.showContent();
                             responseData();
                         }else {
                             mPageView.showEmpty();
                         }
-
                         break;
                     case "1":
                         closeActivity();
@@ -672,6 +693,7 @@ public class WeiTuoListActivity extends BasicActivity implements RequestView, Re
                 switch (tData.get("code") + ""){
                     case "0":
                         showToastMsg(tData.get("msg")+"");
+                        trustdListAction(status);
                         break;
                     case "1":
                         closeActivity();

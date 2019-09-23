@@ -238,6 +238,7 @@ public class MethodUrl {
     public static final String CHAT_SEND_ZHUANZHANG = "chat_red/transferActive";//转账操作
     public static final String CHAT_ZHUANZHANG_INFO= "chat_red/tranInfo";//查看转账信息
     public static final String CHAT_ZHUANZHANG_RECORD = "chat_red/tranRecord";//转账记录记录
+    public static final String CHAT_TIME_LONG = "chat/chatTime";//聊天时长
 
 
 
@@ -282,6 +283,9 @@ public class MethodUrl {
     public static final String K_LINE = "Coin/k_chart";//K线图
     public static final String GUADAN_TRADE = "coin_trade/index";//买卖挂单操作
     public static final String COIN_DEPTH = "Coin/queryDepth";//市场深度数据(右侧买卖数据)
+    public static final String COIN_ADD_CANCEL = "Coin/addOptional";//添加取消自选
+
+
 
 
 

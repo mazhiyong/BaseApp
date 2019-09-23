@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lr.biyou.R;
 import com.lr.biyou.listener.OnChildClickListener;
 import com.lr.biyou.ui.moudle.adapter.ListBaseAdapter;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.TextViewUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
@@ -99,6 +100,8 @@ public class WeiTuoListAdapter extends ListBaseAdapter {
             @Override
             public void onClick(View v) {
                 //撤销
+                //status
+                LogUtilDebug.i("show","status&&&&:"+item.get("status")+"");
                 if ((item.get("status")+"").equals("1") && mCallBack != null){
                     mCallBack.onChildClickListener(viewHolder.itemLay, position, item);
                 }

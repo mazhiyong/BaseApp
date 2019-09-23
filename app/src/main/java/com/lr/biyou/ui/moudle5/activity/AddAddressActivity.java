@@ -2,6 +2,8 @@ package com.lr.biyou.ui.moudle5.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -90,6 +92,48 @@ public class AddAddressActivity extends BasicActivity implements RequestView {
         mTitleText.setCompoundDrawables(null, null, null, null);
         rightImg.setVisibility(View.GONE);
         rightImg.setImageResource(R.drawable.icon6_dingdan);
+
+        addressEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(numberEt.getText()+"")){
+                    tibiTv.setEnabled(true);
+                }else {
+                    tibiTv.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        numberEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(addressEt.getText()+"")){
+                    tibiTv.setEnabled(true);
+                }else {
+                    tibiTv.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 
@@ -106,6 +150,7 @@ public class AddAddressActivity extends BasicActivity implements RequestView {
                 break;
             case R.id.tibi_tv: //确定
                 addAddressSumbitAction();
+                tibiTv.setEnabled(false);
                 break;
 
         }
@@ -116,6 +161,7 @@ public class AddAddressActivity extends BasicActivity implements RequestView {
         String text = numberEt.getText().toString();
         if (UtilTools.empty(address)){
             showToastMsg("请输入地址信息");
+            tibiTv.setEnabled(true);
             return;
         }
         Map<String, Object> map = new HashMap<>();
@@ -167,7 +213,9 @@ public class AddAddressActivity extends BasicActivity implements RequestView {
                         startActivity(intent);
                         break;
                 }
+                tibiTv.setEnabled(true);
                 break;
+
             case MethodUrl.ADDRESS_EDIT:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
@@ -191,6 +239,7 @@ public class AddAddressActivity extends BasicActivity implements RequestView {
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
+        tibiTv.setEnabled(true);
         dealFailInfo(map, mType);
     }
 

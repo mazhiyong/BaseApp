@@ -39,6 +39,7 @@ import com.lr.biyou.mywidget.dialog.IndexChooseDialog;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
+import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 import com.lr.biyou.utils.websocketparams.CoinCoinKlineParams;
 import com.lr.biyou.utils.websocketparams.CurrenctPriceWsParams;
@@ -105,6 +106,10 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
     private boolean isLogin = false;
     private String mRequestTag = "";
     protected Bundle mBundle;
+
+
+    private  String areaID = "";
+    private  String areaOptional = "";
 
 
 
@@ -334,22 +339,25 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                     }
                 });
                 break;
-            case R.id.ivSelf:  //收藏
-            /*    if (isLogin) {
-                    if (ivSelf.isSelected()) {
-                        mPresenter.setDelSelf(symbol + "/" + area);
-                    } else {
-                        mPresenter.setSelf(symbol + "/" + area);
-                    }
-                } else {
-                    bundle.clear();
-                    bundle.putInt("loginFrom", 2);
-                    startActivityForResult(CoinInfoDetailActivity.this, bundle, AppConstant.LOGIN_INFO, LoginActivity.class);
-                }*/
+            case R.id.ivSelf:
+                setSelfAction();
                 break;
             default:
         }
     }
+
+    private void setSelfAction() {
+        mRequestTag = MethodUrl.COIN_ADD_CANCEL;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(CoinInfoDetailActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("id",areaID);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.COIN_ADD_CANCEL, map);
+    }
+
     protected void initData() {
         wsManage1 = BasicApplication.getWsManager1();
         wsManage2 = BasicApplication.getWsManager2();
@@ -1043,6 +1051,16 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                                 tvLowPrice.setText(UtilTools.formatNumber(mapData.get("low")+"", "#.########"));
                                 // 成交量
                                 tv24H.setText(UtilTools.formatNumber(mapData.get("volume")+"", "0"));
+
+                                areaID = mapData.get("id")+"";
+                                areaOptional = mapData.get("optional")+"";
+                                if (!UtilTools.empty(areaOptional) && areaOptional.equals("1")){
+                                    //已经自选
+                                    ivSelf.setImageResource(R.drawable.icon_xing_s);
+                                }else {
+                                    ivSelf.setImageResource(R.drawable.icon_xing);
+                                }
+
                             }
                         }
 
@@ -1099,6 +1117,23 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                             });
                         }
 
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(CoinInfoDetailActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                break;
+
+            case MethodUrl.COIN_ADD_CANCEL:
+                switch (tData.get("code")+""){
+                    case "0": //请求成功
+                        getCurrentPriceAction();
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg")+"");

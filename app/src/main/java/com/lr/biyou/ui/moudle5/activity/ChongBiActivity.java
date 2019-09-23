@@ -4,6 +4,8 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -109,6 +111,49 @@ public class ChongBiActivity extends BasicActivity implements RequestView {
             }
         });
 
+
+        etAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(etNumber.getText()+"")){
+                    chongbiTv.setEnabled(true);
+                }else {
+                    chongbiTv.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        etNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(etAddress.getText()+"")){
+                    chongbiTv.setEnabled(true);
+                }else {
+                    chongbiTv.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
     private void getBiMessageAction() {
@@ -151,6 +196,7 @@ public class ChongBiActivity extends BasicActivity implements RequestView {
 
             case R.id.chongbi_tv:
                 chongbiSumbitAction();
+                chongbiTv.setEnabled(false);
                 break;
 
 
@@ -164,10 +210,12 @@ public class ChongBiActivity extends BasicActivity implements RequestView {
 
         if (UtilTools.empty(number)){
             showToastMsg("请输入充值数量");
+            chongbiTv.setEnabled(true);
             return;
         }
         if (UtilTools.empty(address)){
             showToastMsg("请输入充值地址");
+            chongbiTv.setEnabled(true);
             return;
         }
         showProgressDialog();
@@ -238,12 +286,14 @@ public class ChongBiActivity extends BasicActivity implements RequestView {
                         startActivity(intent);
                         break;
                 }
+                chongbiTv.setEnabled(true);
                 break;
         }
     }
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
+        chongbiTv.setEnabled(true);
         dealFailInfo(map, mType);
     }
 

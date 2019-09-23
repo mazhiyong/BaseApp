@@ -79,7 +79,7 @@ public class DingDanListAdapter extends ListBaseAdapter {
                      intent.putExtra("id",item.get("id")+"");
                      mContext.startActivity(intent);
                 }else { //挂单历史
-                     if (mCallBack != null) {
+                     if (mCallBack != null && (item.get("status")+"").equals("0")) {
                          mCallBack.onChildClickListener(viewHolder.tradeLay, position, item);
                      }
                  }

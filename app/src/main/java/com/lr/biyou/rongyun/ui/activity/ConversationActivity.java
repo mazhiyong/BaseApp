@@ -2,6 +2,7 @@ package com.lr.biyou.rongyun.ui.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -98,7 +99,34 @@ public class ConversationActivity extends BasicActivity {
     public Conversation.ConversationType conversationType;
     private ScreenCaptureUtil screenCaptureUtil;
 
+    private Handler handler2 = new Handler();
+
     private String mRequestTag = "";
+
+    //HTTP请求  轮询
+    private Runnable cnyRunnable = new Runnable() {
+        @Override
+        public void run() {
+            // 统计聊天时长
+            tongjiChatTimeAction();
+            handler2.postDelayed(this, MbsConstans.SECOND_TIME_30);
+        }
+    };
+
+    private void tongjiChatTimeAction() {
+        mRequestTag = MethodUrl.CHAT_TIME_LONG;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(ConversationActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+        }
+        map.put("token",MbsConstans.ACCESS_TOKEN);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_TIME_LONG, map);
+    }
+
+
+
+
 
     @Override
     public int getContentView() {
@@ -145,6 +173,8 @@ public class ConversationActivity extends BasicActivity {
         super.onResume();
         /*getTitleStr(targetId, conversationType, title);
         refreshScreenCaptureStatus();*/
+
+        handler2.post(cnyRunnable);
     }
 
     @Override
@@ -152,6 +182,10 @@ public class ConversationActivity extends BasicActivity {
         super.onPause();
         if (screenCaptureUtil != null) {
             screenCaptureUtil.unRegister();
+        }
+
+        if (handler2 != null && cnyRunnable != null){
+            handler2.removeCallbacks(cnyRunnable);
         }
     }
 
@@ -647,6 +681,22 @@ public class ConversationActivity extends BasicActivity {
                 }
 
                 break;
+            case MethodUrl.CHAT_TIME_LONG:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        Intent intent = new Intent(ConversationActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+
+                break;
         }
     }
 
@@ -672,6 +722,10 @@ public class ConversationActivity extends BasicActivity {
 
         }
     }
+
+
+
+
 
 
     @Override

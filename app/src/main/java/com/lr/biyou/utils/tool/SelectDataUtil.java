@@ -897,13 +897,19 @@ public class SelectDataUtil {
     public static List<Map<String,Object>> getPriceType(){//类型
         List<Map<String,Object>> mDataList=new ArrayList<>();
         Map<String,Object> map1=new HashMap<>();
-        map1.put("name","限价");
+
+        map1.put("name","市价");
         map1.put("code","0");
         mDataList.add(map1);
 
         map1=new HashMap<>();
-        map1.put("name","计划委托");
+        map1.put("name","限价");
         map1.put("code","1");
+        mDataList.add(map1);
+
+        map1=new HashMap<>();
+        map1.put("name","计划委托");
+        map1.put("code","2");
         mDataList.add(map1);
 
         return mDataList;

@@ -2,6 +2,8 @@ package com.lr.biyou.ui.moudle5.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -92,6 +94,49 @@ public class TiBiActivity extends BasicActivity implements RequestView ,TradePas
         mTitleText.setCompoundDrawables(null, null, null, null);
         rightImg.setVisibility(View.VISIBLE);
         rightImg.setImageResource(R.drawable.icon6_dingdan);
+
+        addressEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(numberEt.getText()+"")){
+                    tibiTv.setEnabled(true);
+                }else {
+                    tibiTv.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        numberEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(addressEt.getText()+"")){
+                    tibiTv.setEnabled(true);
+                }else {
+                    tibiTv.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         getBiMesssageAction();
     }
 

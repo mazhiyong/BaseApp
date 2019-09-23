@@ -43,6 +43,7 @@ import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
+import com.lr.biyou.mywidget.dialog.TradePassDialog;
 import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
@@ -70,7 +71,7 @@ import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 /**
  * 法币交易
  */
-public class FBTradeFragment extends BasicFragment implements RequestView, ReLoadingData, SelectBackListener {
+public class FBTradeFragment extends BasicFragment implements RequestView, ReLoadingData, TradePassDialog.PassFullListener,SelectBackListener {
 
     @BindView(R.id.refresh_list_view)
     LRecyclerView mRefreshListView;
@@ -1676,7 +1677,16 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
             @Override
             public void onClick(View v) {
                 //买卖下单操作
-                postDingdanAction();
+                switch (TAB_POSITION) {
+                    case 0: //买入
+                        postDingdanAction();
+                        break;
+                    case 1: //出售
+                        showPassDialog();
+                        break;
+                }
+
+
             }
         });
 
@@ -1722,6 +1732,54 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
 
     }
+    private TradePassDialog mTradePassDialog;
+
+    private void showPassDialog() {
+
+        if (mTradePassDialog == null) {
+            mTradePassDialog = new TradePassDialog(getActivity(), true);
+            mTradePassDialog.setPassFullListener(this::onPassFullListener);
+            mTradePassDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
+            mTradePassDialog.mPasswordEditText.setText(null);
+
+            //忘记密码
+            mTradePassDialog.mForgetPassTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //getMsgCodeAction();
+                }
+            });
+
+        } else {
+            mTradePassDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
+            mTradePassDialog.mPasswordEditText.setText(null);
+        }
+    }
+
+    @Override
+    public void onPassFullListener(String pass) {
+        mTradePassDialog.mPasswordEditText.setText(null);
+        mRequestTag = MethodUrl.USER_BUY_DEAL;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
+        }
+        //map.put("token","a147ff5721babca2e7c7b976023af933");
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("id", id);
+        map.put("number", tradeNumber);
+        /*//传参交易密码
+        String paycode = "";
+        if (!UtilTools.empty(MbsConstans.PAY_CODE)) {
+            paycode = MbsConstans.PAY_CODE;
+        } else {
+            paycode = SPUtils.get(getParentFragment().getActivity(), MbsConstans.SharedInfoConstans.PAY_CODE, "").toString();
+        }
+*/
+        map.put("payment_password",pass);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_BUY_DEAL, map);
+    }
 
 
     private void postDingdanAction() {
@@ -1734,15 +1792,15 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("id", id);
         map.put("number", tradeNumber);
-        //传参交易密码
+        /*//传参交易密码
         String paycode = "";
         if (!UtilTools.empty(MbsConstans.PAY_CODE)) {
             paycode = MbsConstans.PAY_CODE;
         } else {
             paycode = SPUtils.get(getParentFragment().getActivity(), MbsConstans.SharedInfoConstans.PAY_CODE, "").toString();
         }
-
-        map.put("payment_password", paycode);
+*/
+        map.put("payment_password","");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.USER_BUY_DEAL, map);
     }

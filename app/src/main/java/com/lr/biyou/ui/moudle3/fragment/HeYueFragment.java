@@ -234,7 +234,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     EditText etJihuaPrice;
     @BindView(R.id.jihua_lay)
     LinearLayout jihuaLay;
-
+    @BindView(R.id.lay_chufan)
+    LinearLayout layChufan;
 
 
     private LoadingWindow mLoadingWindow;
@@ -271,7 +272,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     private String USDT_Account = "0";
 
 
-    private float bilv ;
+    private float bilv;
 
 
     private KindSelectDialog mDialog;
@@ -373,38 +374,42 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
             @Override
             public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
-                if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etJihuaPrice.getText().toString())){
+                if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etJihuaPrice.getText().toString())) {
                     showToastMsg("请输入价格");
                     return;
                 }
                 if (progress > 0) {
-                    etHand.setEnabled(false);
                     etHand.setHintTextColor(ContextCompat.getColor(getActivity(), R.color.colorBlack));
-                    switch (type){
+                    float maxNumber = 0;
+                    int number = 0;
+                    switch (type) {
                         case 0: //开多买入
-                            if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString());
-                                LogUtilDebug.i("show","限价maxNumber:"+maxNumber);
-                                int number = (int) (maxNumber*progress/100);
-                                etHand.setText(number+"");
-                            }else {
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etJihuaPrice.getText().toString());
-                                LogUtilDebug.i("show","计划委托maxNumber:"+maxNumber);
-                                int number = (int) (maxNumber*progress/100);
-                                etHand.setText(number+"");
+                            if (mSelectType.equals("0")) { //限价
+                                maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString());
+                                LogUtilDebug.i("show", "限价maxNumber:" + maxNumber);
+                                number = (int) (maxNumber * progress / 100);
+                                etHand.setText(number + "");
+                            } else {
+                                maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etJihuaPrice.getText().toString());
+                                LogUtilDebug.i("show", "计划委托maxNumber:" + maxNumber);
+                                number = (int) (maxNumber * progress / 100);
+                                etHand.setText(number + "");
                             }
+
                             break;
 
-                        case 1: //开出卖空
-                            int number = (int) (Float.parseFloat(BTC_Account)*progress/100);
-                            etHand.setText(number+"");
+                        case 1: //开出卖空   可用BTC 乘以 百分比率
+                            number = (int) (Float.parseFloat(BTC_Account) * progress / 100);
+                            etHand.setText(number + "");
                             break;
                     }
 
-
-
+                   /* if ( number > 0 ){
+                        etHand.setEnabled(false);
+                    }else {
+                        etHand.setEnabled(true);
+                    }*/
                 } else {
-                    etHand.setEnabled(true);
                     etHand.setHint(R.string.number);
                     etHand.setHintTextColor(ContextCompat.getColor(getActivity(), R.color.colorGray));
                 }
@@ -503,8 +508,6 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         });
 
 
-
-
         nestScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -517,14 +520,13 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                     //dealAllIv.setVisibility(View.GONE);
                     mTabLayout.setVisibility(View.GONE);
                     tlTradeList.setVisibility(View.VISIBLE);
-                    if (oldScrollY > scrollY){
-                        LogUtilDebug.i("show","下滑");
+                    if (oldScrollY > scrollY) {
+                        LogUtilDebug.i("show", "下滑");
                         Objects.requireNonNull(tlTradeList.getTabAt(tlTradeList2.getSelectedTabPosition())).select();
-                    }else {
-                        LogUtilDebug.i("show","上滑");
+                    } else {
+                        LogUtilDebug.i("show", "上滑");
                     }
                 }
-
 
 
             }
@@ -540,9 +542,22 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String input = s.toString();
-                if (input.length() > 0){
-                    tvCnyPrice.setText("≈"+bilv*Float.parseFloat(input)+"CNY");
-                }else {
+                if (input.length() > 0) {
+                    tvCnyPrice.setText("≈" + bilv * Float.parseFloat(input) + "CNY");
+
+                    if (mSelectType.equals("0")) { //限价
+                        float maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString());
+                        LogUtilDebug.i("show", "限价maxNumber:" + maxNumber);
+                        int number = (int) (maxNumber * bundleSeekBar.getProgress() / 100);
+                        etHand.setText(number + "");
+                    } else {
+                        float maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etJihuaPrice.getText().toString());
+                        LogUtilDebug.i("show", "计划委托maxNumber:" + maxNumber);
+                        int number = (int) (maxNumber * bundleSeekBar.getProgress() / 100);
+                        etHand.setText(number + "");
+                    }
+
+                } else {
                     tvCnyPrice.setText("≈0 CNY");
                 }
 
@@ -559,7 +574,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             }
         });
 
-        etHand.addTextChangedListener(new TextWatcher() {
+        etJihuaPrice.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -568,6 +583,21 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+                String input = s.toString();
+                if (input.length() > 0) {
+                    if (mSelectType.equals("0")) { //限价
+                        float maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString());
+                        LogUtilDebug.i("show", "限价maxNumber:" + maxNumber);
+                        int number = (int) (maxNumber * bundleSeekBar.getProgress() / 100);
+                        etHand.setText(number + "");
+                    } else {
+                        float maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etJihuaPrice.getText().toString());
+                        LogUtilDebug.i("show", "计划委托maxNumber:" + maxNumber);
+                        int number = (int) (maxNumber * bundleSeekBar.getProgress() / 100);
+                        etHand.setText(number + "");
+                    }
+
+                }
             }
 
             @Override
@@ -575,8 +605,6 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
             }
         });
-
-
 
 
     }
@@ -625,8 +653,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 Intent intent1 = new Intent(getActivity(), CoinInfoDetailActivity.class);
                 intent1.putExtra("symbol", symbol);
                 intent1.putExtra("area", "USDT");
-                intent1.putExtra("from","2");
-                startActivityForResult(intent1,QUEST_CODE);
+                intent1.putExtra("from", "2");
+                startActivityForResult(intent1, QUEST_CODE);
                 break;
             case R.id.rb_number1:
                 break;
@@ -642,12 +670,12 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 buyAndSellAction();
                 break;
             case R.id.deal_all_iv:
-                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(getActivity(),true);
-                sureOrNoDialog.initValue("提示","是否一键平仓？");
+                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(getActivity(), true);
+                sureOrNoDialog.initValue("提示", "是否一键平仓？");
                 sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        switch (v.getId()){
+                        switch (v.getId()) {
                             case R.id.cancel:
                                 sureOrNoDialog.dismiss();
                                 break;
@@ -749,7 +777,6 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
         buyAdapter.setBuyTradeInfo(mBuyDataList, precision);
 
-
         mPageView.setContentView(mContent);
         mPageView.setReLoadingData(this);
         mPageView.showLoading();
@@ -786,9 +813,9 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.AVIABLE_MONEY;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(Objects.requireNonNull(getActivity()), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(Objects.requireNonNull(getActivity()), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("symbol", symbol);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.AVIABLE_MONEY, map);
@@ -799,9 +826,9 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.PAIR_DEPTH;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("symbol", symbol);
         map.put("depth", "1");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -813,7 +840,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.CONTRACT_LEVER;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
         //map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -825,7 +852,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.AREA_ALL;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
         //map.put("token",MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -833,13 +860,13 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     }
 
 
-    private void   getCoinAccountAction() {
+    private void getCoinAccountAction() {
         mRequestTag = MethodUrl.COIN_ACCOUNT;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("symbol", symbol);
         map.put("area", "USDT");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -847,15 +874,13 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     }
 
 
-
-
     private void getChicangListAction() {
         mRequestTag = MethodUrl.CHICANG_LIST;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("symbol", symbol);
         map.put("size", "10");
         map.put("page", mPage);
@@ -867,9 +892,9 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.WEITUO_LIST;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("symbol", symbol);
         map.put("size", "10");
         map.put("page", mPage);
@@ -882,9 +907,9 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.CHENGJIAO_LIST;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("symbol", symbol);
         map.put("size", "10");
         map.put("page", mPage);
@@ -896,9 +921,9 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.PING_CANG;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("id", mParentMap.get("id") + "");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.PING_CANG, map);
@@ -909,9 +934,9 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.PING_CANG_ALL;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.PING_CANG_ALL, map);
     }
@@ -920,40 +945,43 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRequestTag = MethodUrl.CHE_XIAO;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("id", mParentMap.get("id") + "");
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHE_XIAO, map);
     }
 
-    private void  buyAndSellAction() {
+    private void buyAndSellAction() {
         mRequestTag = MethodUrl.CONTRACT_TRADE;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
-        map.put("symbol",symbol);
-        map.put("mode",type);
-        map.put("entrustType",mSelectType);
-        if (mSelectType.equals("0")){
-            map.put("price",etPrice.getText()+"");
-        }else {
-            map.put("price",etJihuaPrice.getText()+"");
-            map.put("trigger",etchufa.getText()+"");
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("symbol", symbol);
+        map.put("mode", type);
+        map.put("entrustType", mSelectType);
+        switch (mSelectType){
+            case "0"://限价
+                map.put("price", etPrice.getText() + "");
+                break;
+            case "1"://计划委托
+                map.put("price", etJihuaPrice.getText() + "");
+                map.put("trigger", etchufa.getText() + "");
+                break;
+            case "2"://市价单
+                map.put("price", etJihuaPrice.getText() + "");
+                break;
         }
-        map.put("number",etHand.getText()+"");
-        map.put("stop_profit",etZhiYing.getText()+"");
-        map.put("loss_limit",etZhiSun.getText()+"");
-        map.put("ratio",cnyRatio);
+        map.put("number", etHand.getText() + "");
+        map.put("stop_profit", etZhiYing.getText() + "");
+        map.put("loss_limit", etZhiSun.getText() + "");
+        map.put("ratio", cnyRatio);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CONTRACT_TRADE, map);
     }
-
-
-
 
 
     @Override
@@ -972,7 +1000,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         Intent intent;
         switch (mType) {
             case MethodUrl.AVIABLE_MONEY:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0": //请求成功
                         Map<String, Object> map = (Map<String, Object>) tData.get("data");
                         if (!UtilTools.empty(map)) {
@@ -985,11 +1013,11 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         }
                         break;
                     case "-1": //请求失败
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
 
                     case "1": //token过期
-                        if (getActivity() != null){
+                        if (getActivity() != null) {
                             getActivity().finish();
                         }
                         intent = new Intent(getActivity(), LoginActivity.class);
@@ -1032,7 +1060,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         }
                         break;
                     case "1":
-                        if (getActivity() != null){
+                        if (getActivity() != null) {
                             getActivity().finish();
                         }
                         intent = new Intent(getActivity(), LoginActivity.class);
@@ -1041,7 +1069,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
                     case "-1":
                         mPageView.showNetworkError();
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
 
@@ -1054,14 +1082,14 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         getChicangListAction();
                         break;
                     case "1":
-                        if (getActivity() != null){
+                        if (getActivity() != null) {
                             getActivity().finish();
                         }
                         intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
 
@@ -1073,14 +1101,14 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         getWeituoListAction();
                         break;
                     case "1":
-                        if (getActivity() != null){
+                        if (getActivity() != null) {
                             getActivity().finish();
                         }
                         intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
                 break;
@@ -1094,9 +1122,9 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                             if (!UtilTools.empty(pairMap)) {
                                 String pri = pairMap.get("price") + "";
                                 tvPrice.setText(UtilTools.getNormalMoney(pri));
-                                String cny = pairMap.get("cny_number")+"";
-                                tvCnyNumber.setText("≈" + UtilTools.getNormalNumber(cny)+"CNY");
-                                bilv = Float.parseFloat(cny)/Float.parseFloat(pri);
+                                String cny = pairMap.get("cny_number") + "";
+                                tvCnyNumber.setText("≈" + UtilTools.getNormalNumber(cny) + "CNY");
+                                bilv = Float.parseFloat(cny) / Float.parseFloat(pri);
                             }
 
                             if (!UtilTools.empty(depthMap)) {
@@ -1123,14 +1151,14 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
                         break;
                     case "1":
-                        if (getActivity() != null){
+                        if (getActivity() != null) {
                             getActivity().finish();
                         }
                         intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
                 break;
@@ -1150,14 +1178,14 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         }
                         break;
                     case "1":
-                        if (getActivity() != null){
+                        if (getActivity() != null) {
                             getActivity().finish();
                         }
                         intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
                 break;
@@ -1168,14 +1196,14 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         mDatas = (List<Map<String, Object>>) tData.get("data");
                         break;
                     case "1":
-                        if (getActivity() != null){
+                        if (getActivity() != null) {
                             getActivity().finish();
                         }
                         intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
 
                         break;
                 }
@@ -1184,34 +1212,34 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             case MethodUrl.COIN_ACCOUNT:
                 switch ((tData.get("code") + "")) {
                     case "0":
-                        Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
-                        if (!UtilTools.empty(mapData)){
-                            BTC_Account = mapData.get("symbol")+"";
-                            USDT_Account = mapData.get("area")+"";
-                            LogUtilDebug.i("show","USDT_Account:"+USDT_Account);
+                        Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
+                        if (!UtilTools.empty(mapData)) {
+                            BTC_Account = mapData.get("symbol") + "";
+                            USDT_Account = mapData.get("area") + "";
+                            LogUtilDebug.i("show", "USDT_Account:" + USDT_Account);
                         }
                         break;
                     case "1":
-                        if (getActivity() != null){
+                        if (getActivity() != null) {
                             getActivity().finish();
                         }
                         intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
                 break;
 
             case MethodUrl.CONTRACT_TRADE:
-                showToastMsg(tData.get("msg")+"");
+                showToastMsg(tData.get("msg") + "");
                 switch ((tData.get("code") + "")) {
                     case "0":
-                        switch (kind){
+                        switch (kind) {
                             case "0":
                                 getChicangListAction();
-                            break;
+                                break;
                             case "1":
                                 getWeituoListAction();
                                 break;
@@ -1221,14 +1249,14 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         }
                         break;
                     case "1":
-                        if (getActivity() != null){
+                        if (getActivity() != null) {
                             getActivity().finish();
                         }
                         intent = new Intent(getActivity(), LoginActivity.class);
                         startActivity(intent);
                         break;
                     case "-1":
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
                 }
                 break;
@@ -1306,12 +1334,12 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 SureOrNoDialog sureOrNoDialog;
                 switch (mParentMap.get("kind") + "") {
                     case "0": //平仓
-                        sureOrNoDialog = new SureOrNoDialog(getActivity(),true);
-                        sureOrNoDialog.initValue("提示","是否确定平仓？");
+                        sureOrNoDialog = new SureOrNoDialog(getActivity(), true);
+                        sureOrNoDialog.initValue("提示", "是否确定平仓？");
                         sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                switch (v.getId()){
+                                switch (v.getId()) {
                                     case R.id.cancel:
                                         sureOrNoDialog.dismiss();
                                         break;
@@ -1328,12 +1356,12 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
                         break;
                     case "1": //撤销
-                        sureOrNoDialog = new SureOrNoDialog(getActivity(),true);
-                        sureOrNoDialog.initValue("提示","是否确定撤销？");
+                        sureOrNoDialog = new SureOrNoDialog(getActivity(), true);
+                        sureOrNoDialog.initValue("提示", "是否确定撤销？");
                         sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                switch (v.getId()){
+                                switch (v.getId()) {
                                     case R.id.cancel:
                                         sureOrNoDialog.dismiss();
                                         break;
@@ -1518,14 +1546,24 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         switch (type) {
             case 10: //限价
                 tvLimitPrice.setText(map.get("name") + "");
-                if ((map.get("name") + "").equals("限价")) {
-                    mSelectType = "0";
-                    xianjiaLay.setVisibility(View.VISIBLE);
-                    jihuaLay.setVisibility(View.GONE);
-                } else {
-                    mSelectType = "1";
-                    xianjiaLay.setVisibility(View.GONE);
-                    jihuaLay.setVisibility(View.VISIBLE);
+                switch (map.get("code") + "") {
+                    case "0"://市价
+                        mSelectType = "2";
+                        xianjiaLay.setVisibility(View.GONE);
+                        jihuaLay.setVisibility(View.VISIBLE);
+                        layChufan.setVisibility(View.GONE);
+                        break;
+                    case "1"://限价
+                        mSelectType = "0";
+                        xianjiaLay.setVisibility(View.VISIBLE);
+                        jihuaLay.setVisibility(View.GONE);
+                        break;
+                    case "2"://计划委托
+                        mSelectType = "1";
+                        xianjiaLay.setVisibility(View.GONE);
+                        jihuaLay.setVisibility(View.VISIBLE);
+                        layChufan.setVisibility(View.VISIBLE);
+                        break;
                 }
                 break;
 
@@ -1544,11 +1582,11 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         if (resultCode == RESULT_OK) {
             if (requestCode == QUEST_CODE) {
                 Bundle bundle = data.getExtras();
-                if (bundle != null){
+                if (bundle != null) {
                     String buySell = bundle.getString("buySell");
-                    if (buySell.equals("1")){ //买入
+                    if (buySell.equals("1")) { //买入
                         rbOpen.setChecked(true);
-                    }else {  //卖出
+                    } else {  //卖出
                         rbClose.setChecked(true);
                     }
                 }
@@ -1561,7 +1599,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     @Override
     public void onPause() {
         super.onPause();
-        if (handler != null && cnyRunnable != null){
+        if (handler != null && cnyRunnable != null) {
             handler.removeCallbacks(cnyRunnable);
         }
     }
@@ -1581,14 +1619,14 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (hidden){
-            if (handler != null && cnyRunnable != null){
+        if (hidden) {
+            if (handler != null && cnyRunnable != null) {
                 handler.removeCallbacks(cnyRunnable);
             }
             setUserVisibleHint(false);
-            LogUtilDebug.i("show","onHiddenChanged()*******HeYueFragment不可见");
-        }else {
-            if (handler != null && cnyRunnable != null){
+            LogUtilDebug.i("show", "onHiddenChanged()*******HeYueFragment不可见");
+        } else {
+            if (handler != null && cnyRunnable != null) {
                 handler.post(cnyRunnable);
             }
             setUserVisibleHint(true);

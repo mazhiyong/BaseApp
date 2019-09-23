@@ -52,7 +52,7 @@
                 android:id="@+id/ivSelf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/selector_self"
+                android:src="@drawable/icon_xing"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/toolBar"

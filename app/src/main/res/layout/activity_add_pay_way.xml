@@ -306,8 +306,9 @@
         android:text="@string/confirm"
         android:id="@+id/bt_sure"
         android:textSize="@dimen/sp_16"
+        android:enabled="false"
         android:textColor="@color/white"
-        android:background="@color/blue1"
+        android:background="@drawable/btn_next"
         />
 
 

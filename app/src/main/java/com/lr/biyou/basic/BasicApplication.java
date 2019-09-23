@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.multidex.MultiDex;
@@ -21,6 +22,7 @@ import com.lr.biyou.rongyun.im.IMManager;
 import com.lr.biyou.rongyun.utils.SearchUtils;
 import com.lr.biyou.rongyun.wx.WXManager;
 import com.lr.biyou.utils.tool.AppContextUtil;
+import com.lr.biyou.utils.tool.UtilTools;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.SPCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
@@ -157,6 +159,7 @@ public class BasicApplication extends MultiDexApplication {
 		initWS1();
 		initWS2();
 		initWS3();
+
 
 	}
 

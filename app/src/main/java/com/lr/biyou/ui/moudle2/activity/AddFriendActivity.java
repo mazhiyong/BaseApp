@@ -168,7 +168,7 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
                 }else {
                     addFriendAction();
                 }
-
+                addTv.setEnabled(false);
                 break;
         }
     }
@@ -348,6 +348,7 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
                         startActivity(intent);
                         break;
                 }
+                addTv.setEnabled(true);
                 break;
             case MethodUrl.CHAT_FRIEDN_INFO:
                 switch (tData.get("code") + "") {
@@ -467,7 +468,7 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
                             });
 
                         }
-
+                        addTv.setEnabled(true);
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg") + "");
@@ -517,6 +518,7 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
+        addTv.setEnabled(true);
         dealFailInfo(map, mType);
     }
 

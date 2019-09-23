@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -53,8 +55,6 @@ import butterknife.OnClick;
 
 /**
  * 添加支付方式  界面
- *
- *
  */
 public class AddPayWayActivity extends BasicActivity implements RequestView {
 
@@ -197,6 +197,26 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
         divideLine.setVisibility(View.GONE);
 
 
+        etName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0){
+                    btSure.setEnabled(true);
+                }else {
+                    btSure.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 
@@ -239,10 +259,10 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
 
 
     private void submitAction() {
-        if (UtilTools.empty(etName.getText().toString())){
+       /* if (UtilTools.empty(etName.getText().toString())){
             showToastMsg("请输入姓名信息");
             return;
-        }
+        }*/
         Map<String, String> mHeaderMap ;
         Map<String, Object> map ;
 
@@ -251,10 +271,12 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
                 mRequestTag = MethodUrl.UPDATE_BANK;
                 if (UtilTools.empty(etNumber.getText().toString())){
                     showToastMsg("请输入银行卡账号信息");
+                    btSure.setEnabled(true);
                     return;
                 }
                 if (UtilTools.empty(etBank.getText().toString())){
                     showToastMsg("请输入开户行信息");
+                    btSure.setEnabled(true);
                     return;
                 }
                 mHeaderMap = new HashMap<>();
@@ -274,10 +296,12 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
                 mRequestTag = MethodUrl.UPDATE_ALIPAY;
                 if (UtilTools.empty(etNumber.getText().toString())){
                     showToastMsg("请输入支付宝账号信息");
+                    btSure.setEnabled(true);
                     return;
                 }
                 if (UtilTools.empty(imgUrl)){
                     showToastMsg("请上传收款二维码图片信息");
+                    btSure.setEnabled(true);
                     return;
                 }
 
@@ -297,10 +321,12 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
                 mRequestTag = MethodUrl.UPDATE_WECHAT;
                 if (UtilTools.empty(etNumber.getText().toString())){
                     showToastMsg("请输入微信账号信息");
+                    btSure.setEnabled(true);
                     return;
                 }
                 if (UtilTools.empty(imgUrl)){
                     showToastMsg("请上传收款二维码图片信息");
+                    btSure.setEnabled(true);
                     return;
                 }
 
@@ -389,7 +415,7 @@ public class AddPayWayActivity extends BasicActivity implements RequestView {
                 }
 
 
-
+                btSure.setEnabled(true);
 
                 break;
 
