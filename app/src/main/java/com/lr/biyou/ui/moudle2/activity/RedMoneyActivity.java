@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -426,10 +425,5 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

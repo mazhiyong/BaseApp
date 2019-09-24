@@ -1,13 +1,21 @@
 package com.lr.biyou.rongyun.ui.activity;
 
+import android.animation.Animator;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -18,6 +26,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.flyco.dialog.utils.CornerUtils;
 import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
@@ -39,6 +48,10 @@ import com.lr.biyou.rongyun.viewmodel.ConversationViewModel;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle2.activity.ChatItemActivity;
 import com.lr.biyou.ui.moudle2.activity.GroupChatItemActivity;
+import com.lr.biyou.utils.imageload.GlideUtils;
+import com.lr.biyou.utils.tool.AnimUtil;
+import com.lr.biyou.utils.tool.JSONUtil;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.UtilTools;
 
 import org.greenrobot.eventbus.EventBus;
@@ -90,9 +103,12 @@ public class ConversationActivity extends BasicActivity {
     /**
      * 对方id
      */
+
     public String targetId;
     public String Id;
 
+    public String targetId2;
+    private  Map<Object, Object> mapMessage;
     /**
      * 会话类型
      */
@@ -103,6 +119,8 @@ public class ConversationActivity extends BasicActivity {
 
     private String mRequestTag = "";
 
+    private AnimUtil mAnimUtil;
+
     //HTTP请求  轮询
     private Runnable cnyRunnable = new Runnable() {
         @Override
@@ -112,6 +130,7 @@ public class ConversationActivity extends BasicActivity {
             handler2.postDelayed(this, MbsConstans.SECOND_TIME_30);
         }
     };
+
 
     private void tongjiChatTimeAction() {
         mRequestTag = MethodUrl.CHAT_TIME_LONG;
@@ -150,6 +169,8 @@ public class ConversationActivity extends BasicActivity {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
 
         targetId = intent.getData().getQueryParameter("targetId");
+        IMManager.getInstance().tarId = targetId;
+
         conversationType = Conversation.ConversationType.valueOf(intent.getData()
                 .getLastPathSegment().toUpperCase(Locale.US));
         title = intent.getData().getQueryParameter("title");
@@ -163,6 +184,8 @@ public class ConversationActivity extends BasicActivity {
         initView();
         initViewModel();
 
+        mAnimUtil = new AnimUtil();
+
         //根据rc_id查询用户本地id
         getidFromRcidAction();
     }
@@ -175,6 +198,9 @@ public class ConversationActivity extends BasicActivity {
         refreshScreenCaptureStatus();*/
 
         handler2.post(cnyRunnable);
+
+        IMManager.getInstance().isShowTitleWindow = true;
+
     }
 
     @Override
@@ -686,7 +712,7 @@ public class ConversationActivity extends BasicActivity {
                     case "0": //请求成功
                         break;
                     case "-1": //请求失败
-                        showToastMsg(tData.get("msg") + "");
+                        //showToastMsg(tData.get("msg") + "");
                         break;
 
                     case "1": //token过期
@@ -695,7 +721,30 @@ public class ConversationActivity extends BasicActivity {
                         startActivity(intent);
                         break;
                 }
+                break;
 
+            case  MethodUrl.CHAT_QUERY_USERINFO:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        if (!UtilTools.empty(tData.get("data")+"")){
+                            Map<String,Object> map = (Map<String, Object>) tData.get("data");
+                            mapMessage.put("name",map.get("name")+"");
+                            mapMessage.put("image",map.get("portrait")+"");
+                        }
+                        initPopupWindow();
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        Intent intent = new Intent(ConversationActivity.this, LoginActivity.class);
+                        startActivity(intent);
+
+                        break;
+
+                }
                 break;
         }
     }
@@ -712,18 +761,204 @@ public class ConversationActivity extends BasicActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateUI(MessageEvent event) {
         switch (event.getType()) {
-            case 0:
-                break;
-            case 1:
-                break;
             case 2:
                 finish();
+                break;
+            case 3://弹窗
+                mapMessage = event.getMessage();
+                targetId2 = mapMessage.get("id")+"";
+                getUserInfoAction(targetId2);
                 break;
 
         }
     }
 
+    /**
+     * 查询用户信息
+     */
+    public void getUserInfoAction(String targetId) {
+        mRequestTag = MethodUrl.CHAT_QUERY_USERINFO;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(ConversationActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("rc_id", targetId);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_QUERY_USERINFO, map);
+    }
 
+
+    private View popView;
+    private PopupWindow mConditionDialog;
+    private boolean bright = false;
+
+    private void initPopupWindow() {
+
+        int nH = UtilTools.getNavigationBarHeight(ConversationActivity.this);
+        LinearLayout mNagView;
+        if (mConditionDialog == null) {
+            popView = LayoutInflater.from(ConversationActivity.this).inflate(R.layout.item_head_news, null);
+            mConditionDialog = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            mConditionDialog.setClippingEnabled(false);
+            initConditionDialog(popView);
+            int screenWidth=UtilTools.getScreenWidth(ConversationActivity.this);
+            //int screenHeight=UtilTools.getScreenHeight(getActivity());
+            mConditionDialog.setWidth((int) (0.8f*screenWidth));
+            mConditionDialog.setHeight(UtilTools.dip2px(ConversationActivity.this, 50));
+
+            //设置background后在外点击才会消失
+            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(ConversationActivity.this, 5)));
+            //mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
+            //自定义动画
+            //mConditionDialog.setAnimationStyle(R.style.PopupAnimation);
+            mConditionDialog.setAnimationStyle(android.R.style.Animation_Activity);//使用系统动画
+            mConditionDialog.update();
+            mConditionDialog.setTouchable(true);
+            mConditionDialog.setFocusable(true);
+            //popView.requestFocus();//pop设置不setBackgroundDrawable情况，把焦点给popView，添加popView.setOnKeyListener。可实现点击外部不消失，点击反键才消失
+            //			mConditionDialog.showAtLocation(mCityTv, Gravity.TOP|Gravity.RIGHT, 0, 0); //设置layout在PopupWindow中显示的位置
+            //mConditionDialog.showAtLocation(getActivity().getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
+            int offX = (UtilTools.getScreenWidth(ConversationActivity.this)-mConditionDialog.getWidth())/2;
+            mConditionDialog.showAsDropDown(divideLine,offX , UtilTools.dip2px(ConversationActivity.this,10), Gravity.LEFT);
+            //toggleBright();
+            mConditionDialog.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    //toggleBright();
+                }
+            });
+        } else {
+
+            //mConditionDialog.showAtLocation(getActivity().getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
+            int offX = (UtilTools.getScreenWidth(ConversationActivity.this)-mConditionDialog.getWidth())/2;
+            mConditionDialog.showAsDropDown(divideLine, offX, UtilTools.dip2px(ConversationActivity.this,10), Gravity.LEFT);
+            //toggleBright();
+        }
+
+        updata(mapMessage);
+    }
+
+
+    private void toggleBright() {
+        //三个参数分别为： 起始值 结束值 时长 那么整个动画回调过来的值就是从0.5f--1f的
+        mAnimUtil.setValueAnimator(0.7f, 1f, 300);
+        mAnimUtil.addUpdateListener(new AnimUtil.UpdateListener() {
+            @Override
+            public void progress(float progress) {
+                //此处系统会根据上述三个值，计算每次回调的值是多少，我们根据这个值来改变透明度
+                float bgAlpha = bright ? progress : (1.7f - progress);//三目运算，应该挺好懂的。
+                //bgAlpha = progress;//三目运算，应该挺好懂的。
+                bgAlpha(bgAlpha);//在此处改变背景，这样就不用通过Handler去刷新了。
+            }
+        });
+        mAnimUtil.addEndListner(new AnimUtil.EndListener() {
+            @Override
+            public void endUpdate(Animator animator) {
+                //在一次动画结束的时候，翻转状态
+                bright = !bright;
+            }
+        });
+        mAnimUtil.startAnimator();
+    }
+
+
+    private void bgAlpha(float alpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = alpha;// 0.0-1.0
+        getWindow().setAttributes(lp);
+    }
+
+
+    TextView seeTV;
+    TextView nameTV;
+    TextView contentTV;
+    ImageView headIv;
+
+    private void initConditionDialog(View view) {
+        seeTV = view.findViewById(R.id.see_tv);
+        nameTV= view.findViewById(R.id.name_tv);
+        contentTV = view.findViewById(R.id.content_tv);
+        headIv = view.findViewById(R.id.head_iv);
+
+       /* final View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                switch (v.getId()) {
+                    case R.id.see_tv:
+                        mConditionDialog.dismiss();
+                        showToastMsg("查看详情");
+
+                        RongIM.getInstance().startPrivateChat(ConversationActivity.this,targetId2,"弹窗");
+                        break;
+
+                }
+            }
+        };*/
+
+
+        //seeTV.setOnClickListener(onClickListener);
+    }
+
+    private CountTimer countTimer;
+    private void updata(Map<Object, Object> mapMessage) {
+        GlideUtils.loadCircleImage(ConversationActivity.this,mapMessage.get("image")+"",headIv);
+        nameTV.setText(mapMessage.get("name")+"");
+        LogUtilDebug.i("show","content:"+mapMessage.get("content")+"");
+        switch (mapMessage.get("type")+""){
+            case "0": //text
+                if (!UtilTools.empty(mapMessage.get("content")+"")){
+                    Map<String,Object> mapContent = JSONUtil.getInstance().jsonMap(mapMessage.get("content")+"");
+                    if (!UtilTools.empty(mapContent)){
+                        LogUtilDebug.i("show","mapContent22:"+mapContent.toString());
+                        contentTV.setText(mapContent.get("content")+"");
+                        LogUtilDebug.i("show","Content:"+mapContent.get("content")+"");
+                    }
+                }
+                break;
+            case "1": //imag
+                contentTV.setText("向您发送了一条图片消息");
+                break;
+            case "2": //红包
+                contentTV.setText("向您发送了一条红包消息");
+                break;
+            case "3": //其他
+                contentTV.setText("向您发送了一条新消息");
+                break;
+        }
+        cancelTimer();
+        countTimer = new CountTimer(2500, 1000);
+        countTimer.start();
+
+    }
+
+    private class CountTimer extends CountDownTimer {
+        public CountTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+        @Override
+        public void onFinish() {
+            cancel();
+        }
+        @Override
+        public void onTick(long millisUntilFinished) {
+            if (millisUntilFinished < 1000 && mConditionDialog.isShowing()) {
+               mConditionDialog.dismiss();
+            }
+        }
+    }
+
+
+    public void cancelTimer(){
+        if (countTimer != null){
+            countTimer.cancel();
+            countTimer = null;
+        }
+       /* if (mConditionDialog != null && mConditionDialog.isShowing()) {
+            mConditionDialog.dismiss();
+        }*/
+    }
 
 
 
@@ -735,7 +970,14 @@ public class ConversationActivity extends BasicActivity {
         if (eventBus.isRegistered(this)) {
             eventBus.unregister(this);
         }
+
+        IMManager.getInstance().isShowTitleWindow = false;
+
+        cancelTimer();
     }
+
+
+
 
 
 }

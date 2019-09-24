@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
@@ -26,11 +27,12 @@ import com.lr.biyou.utils.share.ShareUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 import com.yanzhenjie.permission.Permission;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -105,6 +107,8 @@ public class SettingActivity extends BasicActivity implements RequestView , Sele
         mDialog=new KindSelectDialog(SettingActivity.this,true,mDataList2,30);
         mDialog.setSelectBackListener(this);
         //getZiChanDataAction();
+
+
     }
 
 

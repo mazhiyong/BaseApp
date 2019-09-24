@@ -172,13 +172,16 @@ public class SelectContractListActivity extends BasicActivity implements Request
         Intent intent = null;
         List<Map<String, Object>> list = mListAdapter.getBooleanList();
         mSelectList.clear();
-        for (Map map : list) {
-            boolean b = (Boolean) map.get("selected");
-            Map<String, Object> mSelectMap = (Map<String, Object>) map.get("value");
-            if (b) {
-                mSelectList.add(mSelectMap);
+        if (list != null && list.size()> 0){
+            for (Map map : list) {
+                boolean b = (Boolean) map.get("selected");
+                Map<String, Object> mSelectMap = (Map<String, Object>) map.get("value");
+                if (b) {
+                    mSelectList.add(mSelectMap);
+                }
             }
         }
+
        /* if (mSelectList.size() == 0) {
             showToastMsg("请选择联系人");
             return;

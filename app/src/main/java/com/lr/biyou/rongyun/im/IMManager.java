@@ -13,6 +13,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
 import com.lr.biyou.R;
+import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.bean.MessageEvent;
 import com.lr.biyou.rongyun.common.ErrorCode;
 import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.rongyun.common.LogTag;
@@ -47,8 +49,12 @@ import com.lr.biyou.rongyun.utils.log.SLog;
 import com.lr.biyou.ui.moudle2.activity.AddFriendActivity;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.rong.contactcard.ContactCardExtensionModule;
 import io.rong.contactcard.IContactCardInfoProvider;
@@ -106,6 +112,8 @@ public class IMManager {
 
     private IMInfoProvider imInfoProvider;
 
+    public boolean isShowTitleWindow = false;
+    public String tarId = "";
 
     private IMManager() {
     }
@@ -857,7 +865,29 @@ public class IMManager {
             public boolean onReceived(Message message, int i) {
                 messageRouter.postValue(message);
                 MessageContent messageContent = message.getContent();
-               // LogUtilDebug.i("show","messageContent:"+message.getContent());
+
+                if (isShowTitleWindow && !tarId.equals(message.getTargetId())){
+                    //Eventbus  发送事件
+                    MessageEvent event = new MessageEvent();
+                    event.setType(MbsConstans.MessageEventType.SHOW_WINDOW);
+                    Map<Object, Object> map = new HashMap<>();
+                    event.setMessage(map);
+                    map.put("id",message.getTargetId());
+
+                    map.put("content",messageContent.toString());
+                    if (messageContent instanceof  TextMessage){
+                        map.put("type","0");
+                    }else if (messageContent instanceof  ImageMessage){
+                        map.put("type","1");
+                    }else if (messageContent instanceof  RongRedPacketMessage){
+                        map.put("type","2");
+                    }else {
+                        map.put("type","3");
+                    }
+
+                    EventBus.getDefault().post(event);
+                }
+
                 if (messageContent instanceof ContactNotificationMessage) { // 添加好友状态信息
                     //Toast.makeText(context,"收到好友申请验证消息",Toast.LENGTH_LONG).show();
                     ContactNotificationMessage contactNotificationMessage = (ContactNotificationMessage) messageContent;
@@ -1371,6 +1401,9 @@ public class IMManager {
             kickedOffline.postValue(false);
         }
     }
+
+
+
 }
 
 

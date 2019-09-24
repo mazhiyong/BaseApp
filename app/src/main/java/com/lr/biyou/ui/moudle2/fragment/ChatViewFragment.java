@@ -736,7 +736,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
                 //启动聊天
-
                 if (RongIM.getInstance() != null){
                     RongIM.getInstance().startPrivateChat(getActivity(),mParentMap.get("rc_id")+"",mParentMap.get("name")+"");
                 }
@@ -957,6 +956,8 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             mConditionDialog.showAsDropDown(divideLine, -UtilTools.dip2px(getActivity(), 20), 0, Gravity.RIGHT);
             toggleBright();
         }
+
+
     }
 
     private void toggleBright() {

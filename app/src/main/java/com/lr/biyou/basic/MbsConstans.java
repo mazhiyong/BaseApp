@@ -78,6 +78,7 @@ public class MbsConstans {
 	public static String ACCESS_TOKEN = "";
 	public static String REFRESH_TOKEN = "";
 	public static String PAY_CODE = "";
+	public static String redAndGreenType = "0";
 
 	public static boolean LOGIN_OUT = false;
 	//记录列表更新时间的文件名称
@@ -97,7 +98,7 @@ public class MbsConstans {
 
 	public static final long SECOND_TIME_500 = 500;
 
-	public static final long SECOND_TIME_5000 = 500000;
+	public static final long SECOND_TIME_5000 = 5000;
 	public static final long SECOND_TIME_30 = 30*1000;
 
 	public static boolean isNet = false;
@@ -294,6 +295,7 @@ public class MbsConstans {
 		public static int DOWN_LOAD = 0;
 		public static int UPDATE_USERINFO = 1;
 		public static int CLOSE_CONACTIVITY = 2;
+		public static int SHOW_WINDOW = 3;
 	}
 
 	public static String APP_ID = "jpc4fc50f01af247bf";

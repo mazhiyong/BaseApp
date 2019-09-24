@@ -174,6 +174,8 @@ public class ActivityManager {
 			}
 		}
 		//关闭项目
-		activity.finish();
+		if (activity != null){
+			activity.finish();
+		}
 	}
 }

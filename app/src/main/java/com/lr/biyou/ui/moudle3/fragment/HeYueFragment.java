@@ -196,8 +196,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     TextView buyMoreTv;
     @BindView(R.id.tlTradeList)
     TabLayout tlTradeList;
-    @BindView(R.id.tlTradeList2)
-    TabLayout tlTradeList2;
+    //@BindView(R.id.tlTradeList2)
+    //TabLayout tlTradeList2;
     @BindView(R.id.refresh_list_view)
     LRecyclerView mRefreshListView;
     @BindView(R.id.content)
@@ -444,7 +444,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         List<Map<String, Object>> maps = SelectDataUtil.getTabValues2();
         for (Map<String, Object> map : maps) {
             tlTradeList.addTab(tlTradeList.newTab().setText(map.get("name") + ""));
-            tlTradeList2.addTab(tlTradeList2.newTab().setText(map.get("name") + ""));
+            //tlTradeList2.addTab(tlTradeList2.newTab().setText(map.get("name") + ""));
         }
 
         tlTradeList.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -477,7 +477,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             }
         });
 
-        tlTradeList2.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+     /*   tlTradeList2.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
@@ -506,9 +506,9 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
             }
         });
+*/
 
-
-        nestScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+      /*  nestScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (scrollY > tlTradeList.getTop() || scrollY == tlTradeList.getTop()) {
@@ -531,7 +531,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
             }
         });
-
+*/
 
         etPrice.addTextChangedListener(new TextWatcher() {
             @Override
@@ -1031,33 +1031,36 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             case MethodUrl.CHENGJIAO_LIST:
                 switch ((tData.get("code") + "")) {
                     case "0":
-                        Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
-                        if (!UtilTools.empty(mapData)) {
-                            mDataList = (List<Map<String, Object>>) mapData.get("list");
-                            if (!UtilTools.empty(mDataList) && mDataList.size() > 0) {
-                                for (Map<String, Object> map : mDataList) {
-                                    map.put("kind", kind);
+                        if (!UtilTools.empty(tData.get("data")+"")){
+                            Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
+                            if (!UtilTools.empty(mapData)) {
+                                mDataList = (List<Map<String, Object>>) mapData.get("list");
+                                if (!UtilTools.empty(mDataList) && mDataList.size() > 0) {
+                                    for (Map<String, Object> map : mDataList) {
+                                        map.put("kind", kind);
+                                    }
+                                    mPageView.showContent();
+                                    responseData();
+                                    switch (kind) {
+                                        case "0":
+                                            dealAllIv.setVisibility(View.VISIBLE);
+                                            break;
+                                        case "1":
+                                            dealAllIv.setVisibility(View.GONE);
+                                            break;
+                                        case "2":
+                                            dealAllIv.setVisibility(View.GONE);
+                                            break;
+                                    }
+                                } else {
+                                    mPageView.showEmpty();
                                 }
-                                mPageView.showContent();
-                                responseData();
-                                switch (kind) {
-                                    case "0":
-                                        dealAllIv.setVisibility(View.VISIBLE);
-                                        break;
-                                    case "1":
-                                        dealAllIv.setVisibility(View.GONE);
-                                        break;
-                                    case "2":
-                                        dealAllIv.setVisibility(View.GONE);
-                                        break;
-                                }
+
                             } else {
                                 mPageView.showEmpty();
                             }
-
-                        } else {
-                            mPageView.showEmpty();
                         }
+
                         break;
                     case "1":
                         if (getActivity() != null) {

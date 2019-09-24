@@ -18,9 +18,7 @@ import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle.activity.MainActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
-import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.TextViewUtils;
 import com.lr.biyou.utils.tool.UtilTools;
@@ -29,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -129,9 +126,12 @@ public class YaoQingActivity extends BasicActivity implements RequestView {
     }
 
 
-    @OnClick({R.id.yqcode_copy_tv, R.id.yqlink_copy_tv})
+    @OnClick({R.id.left_back_lay,R.id.yqcode_copy_tv, R.id.yqlink_copy_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.left_back_lay:
+                finish();
+                break;
             case R.id.yqcode_copy_tv:
                 clipData = ClipData.newPlainText("币友",yqCode);
                 mClipboardManager.setPrimaryClip(clipData);

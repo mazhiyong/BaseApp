@@ -329,7 +329,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             getAreaListItemAction();
 
             //查询委托单
-            getEntrustListAction();
+            //getEntrustListAction();
 
             //账户当前交易区交易币可用
             getCurAreaAccountAction();
@@ -461,26 +461,47 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         coinCoinSeekBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString().replaceAll(",","").trim())){
-                    showToastMsg("请输入价格");
-                    return;
+                switch (mSelectType){
+                    case "0": //限价
+                        if (mKindType.equals("0")){ //买入
+                            if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString().replaceAll(",","").trim())){
+                                showToastMsg("请输入价格");
+                                return;
+                            }
+                        }
+                        break;
+
+                    case "1": //市价
+
+                        break;
                 }
+
                 switch (checkedId){
                     case R.id.rb_number1: //10
                         if (mKindType.equals("0")){ //买入
-                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
-                            int number = (int) (maxNumber*0.1f);
-                            etNumber.setText(number+"");
+                            if (mSelectType.equals("0")){ //限价
+                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                int number = (int) (maxNumber*0.1f);
+                                etNumber.setText(number+"");
+                            }else { //市价
+                                etNumber.setText("10");
+                            }
+
                         }else { //卖出
+                            LogUtilDebug.i("show","BTC_Account:"+BTC_Account);
                             int number = (int) (Float.parseFloat(BTC_Account)*0.1f);
                             etNumber.setText(number+"");
                         }
                         break;
                     case R.id.rb_number2: //20
                         if (mKindType.equals("0")){ //买入
-                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
-                            int number = (int) (maxNumber*0.2f);
-                            etNumber.setText(number+"");
+                            if (mSelectType.equals("0")){ //限价
+                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                int number = (int) (maxNumber*0.2f);
+                                etNumber.setText(number+"");
+                            }else { //市价
+                                etNumber.setText("20");
+                            }
                         }else { //卖出
                             int number = (int) (Float.parseFloat(BTC_Account)*0.2f);
                             etNumber.setText(number+"");
@@ -489,9 +510,13 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                     case R.id.rb_number3: //50
                         if (mKindType.equals("0")){ //买入
-                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
-                            int number = (int) (maxNumber*0.5f);
-                            etNumber.setText(number+"");
+                            if (mSelectType.equals("0")){ //限价
+                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                int number = (int) (maxNumber*0.5f);
+                                etNumber.setText(number+"");
+                            }else { //市价
+                                etNumber.setText("50");
+                            }
                         }else { //卖出
                             int number = (int) (Float.parseFloat(BTC_Account)*0.5f);
                             etNumber.setText(number+"");
@@ -500,9 +525,14 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                     case R.id.rb_number4: //100
                         if (mKindType.equals("0")){ //买入
-                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
-                            int number = (int) (maxNumber*1.0f);
-                            etNumber.setText(number+"");
+                            if (mSelectType.equals("0")){ //限价
+                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                int number = (int) (maxNumber*1.0f);
+                                etNumber.setText(number+"");
+                            }else { //市价
+                                etNumber.setText("50");
+                            }
+
                         }else { //卖出
                             int number = (int) (Float.parseFloat(BTC_Account)*1.0f);
                             etNumber.setText(number+"");
@@ -911,9 +941,10 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
         } else {
 
-            if (mPage == 1) {
+           /* if (mPage == 1) {
                 mWeiTuoListAdapter.clear();
-            }
+            }*/
+            mWeiTuoListAdapter.clear();
             mWeiTuoListAdapter.addAll(mDataList);
             mWeiTuoListAdapter.notifyDataSetChanged();
             mLRecyclerViewAdapter.notifyDataSetChanged();//必须调用此方法
@@ -1034,6 +1065,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                 map.put("status","1");
                             }
                             mPageView.showContent();
+                            mapOneList.clear();
                             mapOneList.add(mDataList.get(0));
                             mDataList.clear();
                             mDataList.addAll(mapOneList);
@@ -1123,6 +1155,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 switch ((tData.get("code") + "")) {
                     case "0":
                         showToastMsg(tData.get("msg")+"");
+                        //查询委托单
+                        getEntrustListAction();
                         break;
                     case "1":
                         if (getParentFragment().getActivity() != null){
@@ -1302,7 +1336,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
 
                 } else {
-                    mSelectType = "1";
+                    mSelectType = "1"; //市价
 
                     if (mKindType.equals("0")){ //买入
                        /* clPrice.setVisibility(View.VISIBLE);
@@ -1452,6 +1486,14 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             handler.removeCallbacks(cnyRunnable);
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtilDebug.i("show", "刷新查询委托单");
+        //查询委托单
+        getEntrustListAction();
     }
 
     @Override

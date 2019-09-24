@@ -186,10 +186,10 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
     private void getCurrentPriceAction() {
         mRequestTag = MethodUrl.CURRENT_PRICE;
         Map<String, Object> map = new HashMap<>();
-       /* if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(CoinInfoDetailActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);*/
+        map.put("token",MbsConstans.ACCESS_TOKEN);
         map.put("area",area);
         map.put("symbol",symbol);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
