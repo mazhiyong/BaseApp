@@ -158,6 +158,7 @@
 
     <com.lr.biyou.mywidget.view.PageView
         android:id="@+id/page_view"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
         <LinearLayout
@@ -173,4 +174,10 @@
         </LinearLayout>
     </com.lr.biyou.mywidget.view.PageView>
 
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/line_view" >
+    </FrameLayout>
 </LinearLayout>

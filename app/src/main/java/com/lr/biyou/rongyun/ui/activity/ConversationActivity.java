@@ -67,11 +67,7 @@ import butterknife.OnClick;
 import io.rong.callkit.util.SPUtils;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.RongKitIntent;
-import io.rong.imkit.mention.RongMentionManager;
-import io.rong.imlib.IRongCallback;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.MentionedInfo;
-import io.rong.message.TextMessage;
 
 /**
  * 会话页面
@@ -637,7 +633,7 @@ public class ConversationActivity extends BasicActivity {
             case MethodUrl.CHAT_GROUP_SEND_NEWS:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
-                        TextMessage textMessage = TextMessage.obtain(conText);
+                         /*TextMessage textMessage = TextMessage.obtain(conText);
                         MentionedInfo mentionedInfo = RongMentionManager.getInstance().onSendButtonClick();
                         if (mentionedInfo != null) {
                             if (mentionedInfo.getMentionedUserIdList().contains("-1")) {
@@ -647,8 +643,9 @@ public class ConversationActivity extends BasicActivity {
                             }
                             textMessage.setMentionedInfo(mentionedInfo);
                         }
+
                         io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(conId, conType, textMessage);
-                        RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
+                        RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);*/
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg") + "");

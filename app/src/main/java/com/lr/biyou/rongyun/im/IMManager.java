@@ -1191,7 +1191,7 @@ public class IMManager {
      * @param conversationTypes 指定清理的会话类型
      */
     public void clearMessageUnreadStatus(Conversation.ConversationType[] conversationTypes) {
-        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+       /* RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
             @Override
             public void onSuccess(List<Conversation> conversations) {
                 if (conversations != null && conversations.size() > 0) {
@@ -1205,7 +1205,7 @@ public class IMManager {
             public void onError(RongIMClient.ErrorCode e) {
 
             }
-        }, conversationTypes);
+        }, conversationTypes);*/
     }
 
     /**

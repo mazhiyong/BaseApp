@@ -444,16 +444,28 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                             // 成交量
                             tv24H.setText(UtilTools.formatNumber(map.get("volume")+"", "0"));
 
+                            //0 红跌绿涨   1红涨绿跌
+                            String colorType =  SPUtils.get(CoinInfoDetailActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0").toString();
                             // 涨跌幅
                             if ((mapData.get("ratio")+"").contains("-")) {
+                                if (colorType.equals("0")){
+                                    tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
+                                    tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
+                                }else {
+                                    tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
+                                    tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
+                                }
 
-                                tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
-                                tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
                                 tvUpRatio.setText(UtilTools.formatNumber(mapData.get("ratio")+"", "#.##") + "%");
                             } else {
+                                if (colorType.equals("0")){
+                                    tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
+                                    tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
+                                }else {
+                                    tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
+                                    tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
+                                }
                                 tvUpRatio.setText("+" + UtilTools.formatNumber(mapData.get("ratio")+"", "#.##") + "%");
-                                tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
-                                tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
                             }
                         }
 
@@ -1036,14 +1048,27 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                                 tvCoinPrice.setText(mapData.get("price")+"");
                                 //tvCnyPrice.setText("≈"+mapData.get("cny_number")+"CNY");
                                 tvCnyPrice.setText(getResources().getString(R.string.defaultCny).replace("%S", UtilTools.formatNumber(mapData.get("cny_number")+"", "#.##")));
-                                if ((mapData.get("ratio")+"").contains("-")) {
-                                    tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
-                                    tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
+                                //0 红跌绿涨   1红涨绿跌
+                                String colorType =  SPUtils.get(CoinInfoDetailActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0").toString();
+                                if ((mapData.get("ratio")+"").contains("-")) { //跌
+                                    if (colorType.equals("0")){
+                                        tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
+                                        tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
+                                    }else {
+                                        tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
+                                        tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
+                                    }
+
                                     tvUpRatio.setText(UtilTools.formatNumber(mapData.get("ratio")+"", "#.##") + "%");
                                 } else {
-                                    tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
+                                    if (colorType.equals("0")){
+                                        tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
+                                        tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
+                                    }else {
+                                        tvCoinPrice.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
+                                        tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorRed));
+                                    }
                                     tvUpRatio.setText("+" + UtilTools.formatNumber(mapData.get("ratio")+"", "#.##") + "%");
-                                    tvUpRatio.setTextColor(ContextCompat.getColor(CoinInfoDetailActivity.this,R.color.colorGreen));
                                 }
                                 // 高
                                 tvHighPrice.setText(UtilTools.formatNumber(mapData.get("high")+"", "#.########"));

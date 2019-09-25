@@ -1,4 +1,5 @@
 package com.lr.biyou.ui.moudle1.adapter;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lr.biyou.R;
+import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
 import java.util.List;
@@ -64,6 +67,9 @@ public class MoreTypeAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
+
+
+
             RiseRankViewHolder riseRankViewHolder = (RiseRankViewHolder) viewHolder;
             Map<String,Object> listUpBean = (Map<String, Object>) content;
 //            riseRankViewHolder.tvCoinName.setText(Html.fromHtml(UiTools.getString(R.string.defaultName)
@@ -74,11 +80,23 @@ public class MoreTypeAdapter extends RecyclerView.Adapter {
 //            riseRankViewHolder.tvCurrentPriceCny.setText(UiTools.getString(R.string.defaultCny4)
 //                    .replace("%s", UiTools.formatNumber(listUpBean.getCnyNumber(), "#.##")));
 //            riseRankViewHolder.tvCurrentPriceCny.setText(listUpBean.get("cnyNumber")+"CNY");
-            if ((listUpBean.get("increase")+"").contains("-")) {
-                riseRankViewHolder.tvRiseFallRatio.setBackgroundResource(R.drawable.shape_rise_bg);
+
+                //0 红跌绿涨   1红涨绿跌
+            String colorType =  SPUtils.get(context, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0").toString();
+
+            if ((listUpBean.get("increase")+"").contains("-")) { //跌
+                if (colorType.equals("0")){
+                    riseRankViewHolder.tvRiseFallRatio.setBackgroundResource(R.drawable.shape_rise_bg);
+                }else {
+                    riseRankViewHolder.tvRiseFallRatio.setBackgroundResource(R.drawable.shape_fall_bg);
+                }
                 riseRankViewHolder.tvRiseFallRatio.setText(listUpBean.get("increase")+ "");
             } else {
-                riseRankViewHolder.tvRiseFallRatio.setBackgroundResource(R.drawable.shape_fall_bg);
+                if (colorType.equals("0")){
+                    riseRankViewHolder.tvRiseFallRatio.setBackgroundResource(R.drawable.shape_fall_bg);
+                }else {
+                    riseRankViewHolder.tvRiseFallRatio.setBackgroundResource(R.drawable.shape_rise_bg);
+                }
                 riseRankViewHolder.tvRiseFallRatio.setText(listUpBean.get("increase")+"");
             }
         }

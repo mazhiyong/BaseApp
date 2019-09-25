@@ -881,7 +881,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("symbol", symbol);
+        //map.put("symbol", symbol);
+        map.put("symbol", "");
         map.put("size", "10");
         map.put("page", mPage);
         Map<String, String> mHeaderMap = new HashMap<String, String>();

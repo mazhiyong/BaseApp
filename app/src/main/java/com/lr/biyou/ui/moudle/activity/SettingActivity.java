@@ -25,6 +25,7 @@ import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;
 import com.lr.biyou.utils.share.ShareUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
+import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
 import com.yanzhenjie.permission.Permission;
@@ -108,6 +109,20 @@ public class SettingActivity extends BasicActivity implements RequestView , Sele
         mDialog.setSelectBackListener(this);
         //getZiChanDataAction();
 
+
+        //0 红跌绿涨   1红涨绿跌
+       String colorType =  SPUtils.get(SettingActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0").toString();
+       if (colorType.equals("0")){
+           MbsConstans.COLOR_LOW = MbsConstans.COLOR_RED;
+           MbsConstans.COLOR_TOP = MbsConstans.COLOR_GREEN;
+           typeTv.setText("红跌绿涨");
+
+       }else {
+           MbsConstans.COLOR_LOW = MbsConstans.COLOR_GREEN;
+           MbsConstans.COLOR_TOP = MbsConstans.COLOR_RED;
+
+           typeTv.setText("红涨绿跌");
+       }
 
     }
 
@@ -406,6 +421,15 @@ public class SettingActivity extends BasicActivity implements RequestView , Sele
             case 30:
                 String str= (String) map.get("name");
                 typeTv.setText(str);
+                SPUtils.put(SettingActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,map.get("code")+"");
+
+                if ((map.get("code")+"").equals("0")){
+                    MbsConstans.COLOR_LOW = MbsConstans.COLOR_RED;
+                    MbsConstans.COLOR_TOP = MbsConstans.COLOR_GREEN;
+                }else {
+                    MbsConstans.COLOR_LOW = MbsConstans.COLOR_GREEN;
+                    MbsConstans.COLOR_TOP = MbsConstans.COLOR_RED;
+                }
                 break;
 
         }

@@ -228,7 +228,12 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
         map.put("symbol", typeTv.getText() + "");
         map.put("number", etnumber.getText() + "");
         map.put("total", etmoney.getText()+"");
-        map.put("remake", beizhuEt.getText() + "");
+        if (UtilTools.empty(beizhuEt.getText().toString())){
+            map.put("remake", "恭喜发财");
+        }else {
+            map.put("remake", beizhuEt.getText() + "");
+        }
+
         if (type.equals("1")) {
             map.put("id", id);
         } else {

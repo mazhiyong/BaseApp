@@ -27,6 +27,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MyRecentChatListAdapter extends ListBaseAdapter implements Filterable {
 
@@ -90,7 +91,7 @@ public class MyRecentChatListAdapter extends ListBaseAdapter implements Filterab
 
         viewHolder.nameTv.setText(item.get("name") + "");
         viewHolder.contentTv.setText(item.get("content")+"");
-        GlideUtils.loadImage(mContext,item.get("portrait")+"",viewHolder.headIv);
+        GlideUtils.loadCustRoundCircleImage(mContext,item.get("portrait")+"",viewHolder.headIv, RoundedCornersTransformation.CornerType.ALL);
         viewHolder.tradeLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

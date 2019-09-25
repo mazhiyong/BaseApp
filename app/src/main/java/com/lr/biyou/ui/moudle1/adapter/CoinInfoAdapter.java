@@ -1,19 +1,20 @@
 package com.lr.biyou.ui.moudle1.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lr.biyou.R;
 import com.lr.biyou.basic.BasicRecycleViewAdapter;
+import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.wanou.framelibrary.utils.UiTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,14 +64,29 @@ public class CoinInfoAdapter extends BasicRecycleViewAdapter {
        coinInfoViewHolder.tvCoinPrice.setText(UtilTools.getNormalMoney(map.get("price")+""));
        coinInfoViewHolder.tvCoinConvert.setText("≈ "+map.get("cny")+" CNY");
        //coinInfoViewHolder.tvCoinConvert.setText(UiTools.getString(R.string.defaultCny).replace("%S", frontBean.getCnyNumber()));
+
+        if (UtilTools.empty(MbsConstans.COLOR_LOW) || UtilTools.empty(MbsConstans.COLOR_TOP)){
+            //0 红跌绿涨   1红涨绿跌
+            String colorType =  SPUtils.get(mContext, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0").toString();
+            if (colorType.equals("0")){
+                MbsConstans.COLOR_LOW = MbsConstans.COLOR_RED;
+                MbsConstans.COLOR_TOP = MbsConstans.COLOR_GREEN;
+            }else {
+                MbsConstans.COLOR_LOW = MbsConstans.COLOR_GREEN;
+                MbsConstans.COLOR_TOP = MbsConstans.COLOR_RED;
+
+            }
+        }
+
         if ((map.get("increase") + "").contains("-")) {
             coinInfoViewHolder.tvCoinRatio.setText(map.get("increase") + "");
-           coinInfoViewHolder.tvCoinPrice.setTextColor(ContextCompat.getColor(mContext,R.color.colorRed));
-            coinInfoViewHolder.tvCoinRatio.setTextColor(ContextCompat.getColor(mContext,R.color.colorRed));
+
+            coinInfoViewHolder.tvCoinPrice.setTextColor(Color.parseColor(MbsConstans.COLOR_LOW));
+            coinInfoViewHolder.tvCoinRatio.setTextColor(Color.parseColor(MbsConstans.COLOR_LOW));
         } else {
-            coinInfoViewHolder.tvCoinRatio.setText("+" +map.get("increase"));
-            coinInfoViewHolder.tvCoinPrice.setTextColor(ContextCompat.getColor(mContext,R.color.colorGreen));
-           coinInfoViewHolder.tvCoinRatio.setTextColor(ContextCompat.getColor(mContext,R.color.colorGreen));
+            coinInfoViewHolder.tvCoinRatio.setText("" +map.get("increase"));
+            coinInfoViewHolder.tvCoinPrice.setTextColor(Color.parseColor(MbsConstans.COLOR_TOP));
+           coinInfoViewHolder.tvCoinRatio.setTextColor(Color.parseColor(MbsConstans.COLOR_TOP));
         }
     }
 

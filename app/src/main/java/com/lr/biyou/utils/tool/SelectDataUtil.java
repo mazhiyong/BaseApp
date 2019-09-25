@@ -793,13 +793,13 @@ public class SelectDataUtil {
         List<Map<String,Object>> mDataList=new ArrayList<>();
         Map<String,Object> map1=new HashMap<>();
 
-        map1.put("name","红涨绿跌");
-        map1.put("code","1");
+        map1.put("name","红跌绿涨");
+        map1.put("code","0");
         mDataList.add(map1);
 
         map1=new HashMap<>();
-        map1.put("name","红跌绿涨");
-        map1.put("code","2");
+        map1.put("name","红涨绿跌");
+        map1.put("code","1");
         mDataList.add(map1);
 
 

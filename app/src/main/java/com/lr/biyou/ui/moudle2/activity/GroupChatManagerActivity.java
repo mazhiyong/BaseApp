@@ -428,7 +428,7 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
 
     @Override
     public void showProgress() {
-        showProgressDialog();
+        //showProgressDialog();
     }
 
     @Override

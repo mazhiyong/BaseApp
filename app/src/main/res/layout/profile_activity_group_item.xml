@@ -95,6 +95,44 @@
                 android:orientation="horizontal"
                 android:background="@color/white"
                 android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+                    <com.lr.biyou.rongyun.ui.view.SettingItemView
+                        android:id="@+id/profile_siv_group_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:item_content="@string/profile_group_portrait"
+                        app:item_divider="true">
+                    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+                    <ImageView
+                        android:id="@id/head_iv"
+                        android:layout_width="@dimen/dp_30"
+                        android:src="@drawable/head"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="@dimen/dp_30" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/head_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="@dimen/item_padding"
+                    android:layout_marginBottom="@dimen/item_padding"
+                    android:paddingRight="@dimen/dp_15"
+                    android:layout_gravity="center"
+                    android:src="@drawable/android_list_idex"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:background="@color/white"
+                android:layout_height="wrap_content">
                 <com.lr.biyou.rongyun.ui.view.SettingItemView
                     android:id="@+id/profile_siv_group_qrcode"
                     android:layout_width="0dp"
@@ -242,6 +280,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:orientation="horizontal"
                 android:background="@color/white"
                 android:layout_height="wrap_content">

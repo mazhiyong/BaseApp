@@ -187,6 +187,18 @@ public class MainActivity extends BasicActivity implements RequestView {
                                 LogUtilDebug.i("show","链接rong融云失败");
                             }
                         });
+
+
+
+        //0 红跌绿涨   1红涨绿跌
+        String colorType =  SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0").toString();
+        if (colorType.equals("0")){
+            MbsConstans.COLOR_LOW = MbsConstans.COLOR_RED;
+            MbsConstans.COLOR_TOP = MbsConstans.COLOR_GREEN;
+        }else {
+            MbsConstans.COLOR_LOW = MbsConstans.COLOR_GREEN;
+            MbsConstans.COLOR_TOP = MbsConstans.COLOR_RED;
+        }
     }
 
 

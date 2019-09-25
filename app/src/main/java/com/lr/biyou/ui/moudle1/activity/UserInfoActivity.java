@@ -212,6 +212,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                                 MbsConstans.ACCESS_TOKEN = "";
                                 SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.LOGIN_OUT, true);
                                 SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "");
+                                SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0");
                                 Intent intent = new Intent(UserInfoActivity.this, LoginActivity.class);
                                 startActivity(intent);
 

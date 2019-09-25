@@ -1041,6 +1041,23 @@
             android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
 
+        <!--  帮助列表  -->
+        <activity
+            android:name="com.lr.biyou.ui.moudle1.activity.HelpListActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
+
+        <!--  帮助详情  -->
+        <activity
+            android:name="com.lr.biyou.ui.moudle1.activity.HelpDetialActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan">
+        </activity>
+
         <!--  委托列表  -->
         <activity
             android:name="com.lr.biyou.ui.moudle4.activity.WeiTuoListActivity"

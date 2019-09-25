@@ -5,16 +5,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.Nullable;
-
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -30,9 +29,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.signature.ObjectKey;
 import com.lr.biyou.R;
+import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.utils.tool.AsyncTaskUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
-import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.utils.tool.RotatePictureUtil;
 import com.lr.biyou.utils.tool.UtilTools;
 
@@ -382,7 +381,7 @@ public class GlideUtils {
                 .placeholder(placeholderSoWhite)
                 .error(errorSoWhite)
                 //.priority(Priority.HIGH)
-                .bitmapTransform(new RoundedCornersTransformation(45, 0, type))
+                .bitmapTransform(new RoundedCornersTransformation(8, 0, type))
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
 
         Glide.with(context).load(url).apply(options).into(imageView);

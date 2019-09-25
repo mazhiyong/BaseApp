@@ -23,11 +23,14 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/head_iv"
-                android:layout_width="@dimen/dp_35"
+                android:layout_width="@dimen/dp_45"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginBottom="@dimen/dp_5"
                 android:src="@drawable/default_headimg"
-                android:layout_height="@dimen/dp_35" />
+                android:layout_height="@dimen/dp_45" />
             <TextView
                 android:id="@+id/name_tv"
                 android:layout_width="0dp"

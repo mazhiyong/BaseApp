@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.lr.biyou.rongyun.db.model.GroupNoticeInfo;
 import com.lr.biyou.rongyun.model.Resource;
 import com.lr.biyou.rongyun.model.Status;
-import com.lr.biyou.rongyun.ui.activity.MainActivity;
 import com.lr.biyou.rongyun.ui.adapter.ConversationListAdapterEx;
 import com.lr.biyou.rongyun.viewmodel.GroupNoticeInfoViewModel;
 
@@ -26,7 +25,7 @@ public class MainConversationListFragment extends ConversationListFragment {
 
     private ConversationListAdapterEx conversationListAdapterEx;
     private GroupNoticeInfoViewModel groupNoticeInfoViewModel;
-    private MainActivity mainActivity;
+    //private MainActivity mainActivity;
 
     Conversation.ConversationType[] mConversationsTypes = new Conversation.ConversationType[]{Conversation.ConversationType.PRIVATE,
             Conversation.ConversationType.GROUP,
@@ -46,7 +45,7 @@ public class MainConversationListFragment extends ConversationListFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mainActivity = (MainActivity) getActivity();
+        //mainActivity = (MainActivity) getActivity();
     }
 
     private void setUri() {
@@ -86,9 +85,9 @@ public class MainConversationListFragment extends ConversationListFragment {
      * @param num
      */
     public void updateGroupNotifyUnReadCount(int num) {
-        if (mainActivity != null) {
+      /*  if (mainActivity != null) {
             mainActivity.mainViewModel.setGroupNotifyUnReadNum(num);
-        }
+        }*/
     }
 
     private void initViewModel() {

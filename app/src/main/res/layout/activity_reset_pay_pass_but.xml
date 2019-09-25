@@ -153,7 +153,7 @@
         <EditText
             android:id="@+id/et_old_password"
             android:layout_width="wrap_content"
-            android:hint="请输入原支付密码"
+            android:hint="请输入原支付密码(首次设置不必输入)"
             android:background="@null"
             android:layout_weight="1"
             android:textColor="@color/black"

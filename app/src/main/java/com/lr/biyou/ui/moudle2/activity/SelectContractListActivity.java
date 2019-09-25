@@ -1,6 +1,7 @@
 package com.lr.biyou.ui.moudle2.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.rongyun.common.IntentExtra;
+import com.lr.biyou.rongyun.im.IMManager;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle2.adapter.SelectContractListAdapter;
 import com.lr.biyou.utils.tool.AnimUtil;
@@ -46,6 +48,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 /**
  * 选择联系人 界面
@@ -95,6 +98,7 @@ public class SelectContractListActivity extends BasicActivity implements Request
 
     private AnimUtil mAnimUtil;
     private String type;
+    private String groupId;
 
     @Override
     public int getContentView() {
@@ -429,8 +433,10 @@ public class SelectContractListActivity extends BasicActivity implements Request
                     case "0":
                         //showToastMsg(tData.get("msg")+"");
                         LogUtilDebug.i("show", "创建成功");
-                        RongIM.getInstance().startGroupChat(SelectContractListActivity.this, tData.get("data") + "", "新建群聊");
-                        finish();
+                        groupId = tData.get("data") + "";
+                        getGroupInfoAction(groupId);
+                        //RongIM.getInstance().startGroupChat(SelectContractListActivity.this, tData.get("data") + "", "新建群聊");
+
                         break;
                     case "1":
                         closeAllActivity();
@@ -444,7 +450,31 @@ public class SelectContractListActivity extends BasicActivity implements Request
                 }
                 break;
 
+            case MethodUrl.CHAT_GROUPS_INFO:
+                switch (tData.get("code") + "") {
+                    case "0":
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            Map<String, Object> map = (Map<String, Object>) tData.get("data");
+                            if (!UtilTools.empty(map)) {
+                               // 更新 IMKit 缓存群组数据
+                                IMManager.getInstance().updateGroupInfoCache(groupId, map.get("name") + "", Uri.parse(map.get("portrait")+""));
+                                RongIM.getInstance().startConversation(this, Conversation.ConversationType.GROUP, groupId, map.get("name") + "");
+                                finish();
+                            }
+                        }
 
+                        break;
+                    case "1":
+                        closeAllActivity();
+                        intent = new Intent(SelectContractListActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+                }
+
+                break;
             case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
                 MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
                 mIsRefreshToken = false;
@@ -483,6 +513,20 @@ public class SelectContractListActivity extends BasicActivity implements Request
 
         dealFailInfo(map, mType);
     }
+
+    private void getGroupInfoAction(String groupId) {
+
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(SelectContractListActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("group_id", groupId);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUPS_INFO, map);
+
+    }
+
 
     @Override
     public void reLoadingData() {

@@ -37,6 +37,7 @@ import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.MainActivity;
 import com.lr.biyou.ui.moudle.activity.SecurityActivity;
 import com.lr.biyou.ui.moudle.activity.SettingActivity;
+import com.lr.biyou.ui.moudle1.activity.HelpListActivity;
 import com.lr.biyou.ui.moudle1.activity.NoticeDetialActivity;
 import com.lr.biyou.ui.moudle1.activity.NoticeListActivity;
 import com.lr.biyou.ui.moudle1.activity.PayListActivity;
@@ -165,7 +166,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
     private List<Map<String, Object>> noticeList;
 
     private AnimUtil mAnimUtil;
-    private String biType = "自选";
+    private String biType = "1";
 
     private int mPage = 1;
     private Handler handler = new Handler();
@@ -231,7 +232,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
-                        biType = "自选";
+                        biType = "1";
                         getBiInfoAction();
                         break;
                     case 1:
@@ -247,7 +248,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                         getBiInfoAction();
                         break;
                     case 4:
-                        biType = "涨幅榜";
+                        biType = "2";
                         getBiInfoAction();
                         break;
 
@@ -395,7 +396,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                             List<Map<String, Object>> rankList = new ArrayList<>();
                             Map<String, Object> mapMarket = null;
                             switch (biType) {
-                                case "自选":
+                                case "1":
                                     if (!UtilTools.empty(mapData.get("market_tickers")+"")){
                                         rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
                                     }
@@ -416,7 +417,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                                         rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
                                     }
                                     break;
-                                case "涨幅榜":
+                                case "2":
                                     if (!UtilTools.empty(mapData.get("market_tickers")+"")){
                                         rankList = (List<Map<String, Object>>) mapData.get("market_tickers");
                                     }
@@ -720,7 +721,8 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                         startActivity(intent);
                         break;
                     case R.id.lay_bangzhu:
-
+                        intent = new Intent(getActivity(), HelpListActivity.class);
+                        startActivity(intent);
                         break;
                     case R.id.lay_shezhi:
                         intent = new Intent(getActivity(), SettingActivity.class);

@@ -78,7 +78,10 @@ public class MbsConstans {
 	public static String ACCESS_TOKEN = "";
 	public static String REFRESH_TOKEN = "";
 	public static String PAY_CODE = "";
-	public static String redAndGreenType = "0";
+	public static String COLOR_TOP = "";
+	public static String COLOR_LOW = "";
+	public static String COLOR_RED = "#C05364";
+	public static String COLOR_GREEN = "#0DA88B";
 
 	public static boolean LOGIN_OUT = false;
 	//记录列表更新时间的文件名称
@@ -225,6 +228,8 @@ public class MbsConstans {
 		public static String REFRESH_TOKEN = "REFRESH_TOKEN";
 
 		public static String PAY_CODE = "PAY_CODE";
+
+		public static String COLOR_TYPE = "COLOR_TYPE";
 
 		//记录列表更新时间的文件名称
 		public static String UPDATETIME = "DELIVERY_UPDATETIME";

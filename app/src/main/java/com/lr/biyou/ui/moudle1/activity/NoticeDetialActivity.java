@@ -2,6 +2,8 @@ package com.lr.biyou.ui.moudle1.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
@@ -19,7 +22,6 @@ import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -131,7 +133,8 @@ public class NoticeDetialActivity extends BasicActivity implements RequestView, 
                         if (!UtilTools.empty(map)) {
                             tvTitle.setText(map.get("title")+"");
                             tvTime.setText(map.get("time")+"");
-                            tvContent.setText(map.get("content")+"");
+                            tvContent.setMovementMethod(LinkMovementMethod.getInstance());
+                            tvContent.setText(Html.fromHtml(map.get("content")+""));
                         }
                         break;
                     case "-1": //请求失败

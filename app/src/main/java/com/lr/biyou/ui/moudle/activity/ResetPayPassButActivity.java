@@ -91,7 +91,7 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
 
-        mTitleText.setText("安全中心");
+        mTitleText.setText("设置支付密码");
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
 
@@ -101,51 +101,54 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
             paycode = SPUtils.get(ResetPayPassButActivity.this, MbsConstans.SharedInfoConstans.PAY_CODE, "").toString();
         }
 
-        if (UtilTools.empty(paycode)){ //设置支付密码
+        etPasswordAgain.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(etPassword.getText()+"")){
+                    btSure.setEnabled(true);
+                }else {
+                    btSure.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0 && !UtilTools.empty(etPasswordAgain.getText()+"")){
+                    btSure.setEnabled(true);
+                }else {
+                    btSure.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+       /* if (UtilTools.empty(paycode)){ //设置支付密码
             mType = "0";
             oldLay.setVisibility(View.GONE);
-            etPasswordAgain.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (s.toString().length()>0 && !UtilTools.empty(etPassword.getText()+"")){
-                        btSure.setEnabled(true);
-                    }else {
-                        btSure.setEnabled(false);
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
-
-
-            etPassword.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    if (s.toString().length()>0 && !UtilTools.empty(etPasswordAgain.getText()+"")){
-                        btSure.setEnabled(true);
-                    }else {
-                        btSure.setEnabled(false);
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
 
 
         }else {
@@ -215,7 +218,7 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
                 }
             });
 
-        }
+        }*/
 
 
         mTogglePwd1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -271,11 +274,11 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
         String oldpassword =etOldPassword.getText().toString();
         String password = etPassword.getText().toString();
         String passwordAgain = etPasswordAgain.getText().toString();
-        if (mType.equals("1") && UtilTools.empty(oldpassword)) {
+        /*if (mType.equals("1") && UtilTools.empty(oldpassword)) {
             showToastMsg("请输入原支付密码");
             return;
         }
-
+*/
         if (UtilTools.empty(password)) {
             showToastMsg("请输入支付密码");
             return;
@@ -365,6 +368,7 @@ public class ResetPayPassButActivity extends BasicActivity implements RequestVie
                             showToastMsg("重置成功");
                         }
 
+                        MbsConstans.PAY_CODE = paycode;
                         SPUtils.put(ResetPayPassButActivity.this, MbsConstans.SharedInfoConstans.PAY_CODE, paycode);
 
                         finish();

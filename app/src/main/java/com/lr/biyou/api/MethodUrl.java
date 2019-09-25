@@ -170,6 +170,8 @@ public class MethodUrl {
     public static final String NOTICE_LIST = "Home/noticeList";//公告列表
     public static final String NOTICE_LIST_ITEM = "Home/noticeDetails";//公告列表
     public static final String LIST_INFO = "Home/listInfo";//首页实时数据
+    public static final String HELP_INFO = "Home/helpDetails";//帮助中心详情
+    public static final String LIST_HELP = "Home/helpList";//帮助中心列表
 
 
 
@@ -239,6 +241,9 @@ public class MethodUrl {
     public static final String CHAT_ZHUANZHANG_INFO= "chat_red/tranInfo";//查看转账信息
     public static final String CHAT_ZHUANZHANG_RECORD = "chat_red/tranRecord";//转账记录记录
     public static final String CHAT_TIME_LONG = "chat/chatTime";//聊天时长
+    public static final String CHAT_GROUP_HEADIMG = "chat_group/editPortrait";//修改群头像
+    public static final String CHAT_GROUP_RLEASE = "chat_group/dissolution";//解散群
+
 
 
 

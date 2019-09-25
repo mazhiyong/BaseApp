@@ -25,6 +25,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class MyFriendListAdapter extends ListBaseAdapter implements Filterable {
 
@@ -62,7 +63,7 @@ public class MyFriendListAdapter extends ListBaseAdapter implements Filterable {
         final Map<String, Object> item = mDataList.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
         viewHolder.nameTv.setText(item.get("name") + "");
-        GlideUtils.loadImage(mContext,item.get("portrait")+"",viewHolder.headIv);
+        GlideUtils.loadCustRoundCircleImage(mContext,item.get("portrait")+"",viewHolder.headIv, RoundedCornersTransformation.CornerType.ALL);
         viewHolder.tradeLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
