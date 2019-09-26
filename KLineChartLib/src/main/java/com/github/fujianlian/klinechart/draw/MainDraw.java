@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -47,15 +49,31 @@ public class MainDraw implements IChartDraw<ICandle> {
     private Status status = Status.MA;
     private KLineChartView kChartView;
 
+    private  Context context;
+
     public MainDraw(BaseKLineChartView view) {
-        Context context = view.getContext();
+        context = view.getContext();
         kChartView = (KLineChartView) view;
         mContext = context;
-        mRedPaint.setColor(ContextCompat.getColor(context, R.color.chart_red));
-        mGreenPaint.setColor(ContextCompat.getColor(context, R.color.chart_green));
         mLinePaint.setColor(ContextCompat.getColor(context, R.color.chart_line));
         paint.setColor(ContextCompat.getColor(context, R.color.chart_line_background));
     }
+    //0 红跌绿涨   1红涨绿跌
+    public void setcolor(String type){
+        if (type.equals("0")){
+            Log.i("show","红跌绿涨");
+            mRedPaint.setColor(ContextCompat.getColor(context, R.color.chart_red));
+            mGreenPaint.setColor(ContextCompat.getColor(context, R.color.chart_green));
+        }else {
+            Log.i("show","红涨绿跌");
+            mRedPaint.setColor(ContextCompat.getColor(context, R.color.chart_green));
+            mGreenPaint.setColor(ContextCompat.getColor(context, R.color.chart_red));
+        }
+
+
+    }
+
+
 
     public void setStatus(Status status) {
         this.status = status;

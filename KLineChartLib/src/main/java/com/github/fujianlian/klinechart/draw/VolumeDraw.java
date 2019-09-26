@@ -25,12 +25,21 @@ public class VolumeDraw implements IChartDraw<IVolume> {
     private Paint ma5Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Paint ma10Paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private int pillarWidth = 0;
-
+    private Context context;
     public VolumeDraw(BaseKLineChartView view) {
-        Context context = view.getContext();
-        mRedPaint.setColor(ContextCompat.getColor(context, R.color.chart_red));
-        mGreenPaint.setColor(ContextCompat.getColor(context, R.color.chart_green));
+        context = view.getContext();
         pillarWidth = ViewUtil.Dp2Px(context, 4);
+
+    }
+
+    public void setcolor(String type){
+        if (type.equals("0")){
+            mRedPaint.setColor(ContextCompat.getColor(context, R.color.chart_red));
+            mGreenPaint.setColor(ContextCompat.getColor(context, R.color.chart_green));
+        }else {
+            mRedPaint.setColor(ContextCompat.getColor(context, R.color.chart_green));
+            mGreenPaint.setColor(ContextCompat.getColor(context, R.color.chart_red));
+        }
     }
 
     @Override

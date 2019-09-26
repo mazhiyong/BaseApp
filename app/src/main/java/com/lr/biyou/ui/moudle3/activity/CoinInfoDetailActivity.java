@@ -113,7 +113,7 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
 
 
 
-
+    private  String colorType ="0";
 
    /* private Runnable currentPriceRunnable = new Runnable() {
         @Override
@@ -233,6 +233,9 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
         nestedScrollView = findViewById(R.id.nestedScrollView);
 
         kLineChartView = findViewById(R.id.kLineChartView);
+        //0 红跌绿涨   1红涨绿跌
+        colorType =  SPUtils.get(CoinInfoDetailActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0").toString();
+        kLineChartView.setcolor(colorType);
         viewGone(tvDataNotice);
     }
 
@@ -445,7 +448,7 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                             tv24H.setText(UtilTools.formatNumber(map.get("volume")+"", "0"));
 
                             //0 红跌绿涨   1红涨绿跌
-                            String colorType =  SPUtils.get(CoinInfoDetailActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0").toString();
+                            //String colorType =  SPUtils.get(CoinInfoDetailActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0").toString();
                             // 涨跌幅
                             if ((mapData.get("ratio")+"").contains("-")) {
                                 if (colorType.equals("0")){

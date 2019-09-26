@@ -3,14 +3,14 @@ package com.github.fujianlian.klinechart;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-
-import androidx.annotation.ColorRes;
-import androidx.annotation.DimenRes;
-import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
+
+import androidx.annotation.ColorRes;
+import androidx.annotation.DimenRes;
+import androidx.core.content.ContextCompat;
 
 import com.github.fujianlian.klinechart.draw.KDJDraw;
 import com.github.fujianlian.klinechart.draw.MACDDraw;
@@ -38,7 +38,7 @@ public class KLineChartView extends BaseKLineChartView {
     private MainDraw mMainDraw;
     private KDJDraw mKDJDraw;
     private WRDraw mWRDraw;
-    private VolumeDraw mVolumeDraw;
+    public VolumeDraw mVolumeDraw;
 
 
     public KLineChartView(Context context) {
@@ -55,7 +55,7 @@ public class KLineChartView extends BaseKLineChartView {
         initAttrs(attrs);
     }
 
-    private void initView() {
+    public void initView() {
         mProgressBar = new ProgressBar(getContext());
         LayoutParams layoutParams = new LayoutParams(dp2px(50), dp2px(50));
         layoutParams.addRule(CENTER_IN_PARENT);
@@ -74,6 +74,14 @@ public class KLineChartView extends BaseKLineChartView {
         setVolDraw(mVolumeDraw);
         setMainDraw(mMainDraw);
     }
+
+    //0 红跌绿涨   1红涨绿跌
+    public void setcolor(String type){
+        mMainDraw.setcolor(type);
+        mMACDDraw.setcolor(type);
+        mVolumeDraw.setcolor(type);
+    }
+
 
     private void initAttrs(AttributeSet attrs) {
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.KLineChartView);

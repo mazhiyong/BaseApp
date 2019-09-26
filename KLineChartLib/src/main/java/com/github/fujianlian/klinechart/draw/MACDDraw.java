@@ -31,11 +31,23 @@ public class MACDDraw implements IChartDraw<IMACD> {
      */
     private float mMACDWidth = 0;
 
+    private  Context context;
     public MACDDraw(BaseKLineChartView view) {
-        Context context = view.getContext();
-        mRedPaint.setColor(ContextCompat.getColor(context, R.color.chart_red));
-        mGreenPaint.setColor(ContextCompat.getColor(context, R.color.chart_green));
+        context = view.getContext();
+
     }
+
+    public void setcolor(String type){
+        if (type.equals("0")){
+            mRedPaint.setColor(ContextCompat.getColor(context, R.color.chart_red));
+            mGreenPaint.setColor(ContextCompat.getColor(context, R.color.chart_green));
+        }else {
+            mRedPaint.setColor(ContextCompat.getColor(context, R.color.chart_green));
+            mGreenPaint.setColor(ContextCompat.getColor(context, R.color.chart_red));
+        }
+
+    }
+
 
     @Override
     public void drawTranslated(@Nullable IMACD lastPoint, @NonNull IMACD curPoint, float lastX, float curX, @NonNull Canvas canvas, @NonNull BaseKLineChartView view, int position) {

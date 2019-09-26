@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,33 +23,31 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.androidkun.xtablayout.XTabLayout;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
-import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
-import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
-import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicFragment;
 import com.lr.biyou.basic.BasicRecycleViewAdapter;
 import com.lr.biyou.basic.MbsConstans;
-import com.lr.biyou.listener.OnChildClickListener;
 import com.lr.biyou.listener.OnMyItemClickListener;
 import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
-import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
@@ -57,6 +56,8 @@ import com.lr.biyou.ui.moudle3.adapter.BuyAdapter;
 import com.lr.biyou.ui.moudle3.adapter.SellAdapter;
 import com.lr.biyou.ui.moudle3.adapter.ShouMoneyListAdapter;
 import com.lr.biyou.ui.moudle3.adapter.TypeSelectAdapter;
+import com.lr.biyou.ui.moudle4.adapter.MyViewPagerAdapter;
+import com.lr.biyou.ui.moudle4.fragment.FBTradeFragment;
 import com.lr.biyou.utils.tool.AnimUtil;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
@@ -78,8 +79,12 @@ import butterknife.OnClick;
 import static android.app.Activity.RESULT_OK;
 
 public class HeYueFragment extends BasicFragment implements RequestView, ReLoadingData, SelectBackListener {
-    @BindView(R.id.top_layout)
-    LinearLayout mTitleBarView;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.appbar_layout)
+    AppBarLayout mAppbarLayout;
+    /*@BindView(R.id.top_layout_toolbar)
+    ConstraintLayout mTitleBarView;*/
     @BindView(R.id.back_img)
     ImageView mBackImg;
     @BindView(R.id.back_text)
@@ -204,16 +209,14 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
-    @BindView(R.id.nestScrollView)
-    NestedScrollView nestScrollView;
+   /* @BindView(R.id.nestScrollView)
+    NestedScrollView nestScrollView;*/
     @BindView(R.id.iv_toCoinInfo)
     ImageView ivToCoinInfo;
     @BindView(R.id.lay)
     LinearLayout lay;
-    @BindView(R.id.deal_all_iv)
-    ImageView dealAllIv;
-    @BindView(R.id.tab_layout)
-    LinearLayout mTabLayout;
+
+
     @BindView(R.id.tv_price)
     TextView tvPrice;
     @BindView(R.id.tv_cny_number)
@@ -236,6 +239,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     LinearLayout jihuaLay;
     @BindView(R.id.lay_chufan)
     LinearLayout layChufan;
+    @BindView(R.id.viewpager)
+    ViewPager mViewpager;
 
 
     private LoadingWindow mLoadingWindow;
@@ -262,6 +267,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
     private AnimUtil mAnimUtil;
     private int mPage = 1;
+    private int maxPage = 1;
+
     private int precision = 2;
     private String precisionStr = "0.01";
     private String symbol = "BTC";
@@ -283,6 +290,11 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
     private Handler handler = new Handler();
 
+    private List<Fragment> mFragments=new ArrayList<>();
+    private ChiCangFragment chiCangFragment;
+    private WeituoFragment weituoFragment;
+    private ChengJiaoFragment chengJiaoFragment;
+
     //HTTP请求  轮询
     private Runnable cnyRunnable = new Runnable() {
         @Override
@@ -299,16 +311,18 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_borrow;
+        return R.layout.fragment_heyue;
     }
 
 
     @TargetApi(Build.VERSION_CODES.M)
     @Override
     public void init() {
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) getActivity().getResources().getDimension(R.dimen.title_item_height) + UtilTools.getStatusHeight2(getActivity()));
+ /*       ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, (int) getActivity().getResources().getDimension(R.dimen.title_item_height) + UtilTools.getStatusHeight2(getActivity()));
         mTitleBarView.setLayoutParams(layoutParams);
-        mTitleBarView.setPadding(0, UtilTools.getStatusHeight2(getActivity()), 0, 0);
+        mTitleBarView.setPadding(0, UtilTools.getStatusHeight2(getActivity()), 0, 0);*/
+
+
 
         mAnimUtil = new AnimUtil();
         initView();
@@ -320,7 +334,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
         mLoadingWindow = new LoadingWindow(getActivity(), R.style.Dialog);
         mLoadingWindow.showView();
-        setBarTextColor();
+        //setBarTextColor();
+       //setAvatorChange();
 
         rgOpenClose.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -424,9 +439,6 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         //获取保证金
         getAvaiableMoneyAction();
 
-        //获取持仓列表数据
-        getChicangListAction();
-
         //获取合约价格以及深度信息
         //getPairDepthAction();
         //handler.post(cnyRunnable);
@@ -441,29 +453,35 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         getCoinAccountAction();
 
 
-        List<Map<String, Object>> maps = SelectDataUtil.getTabValues2();
+     /*   List<Map<String, Object>> maps = SelectDataUtil.getTabValues2();
         for (Map<String, Object> map : maps) {
             tlTradeList.addTab(tlTradeList.newTab().setText(map.get("name") + ""));
             //tlTradeList2.addTab(tlTradeList2.newTab().setText(map.get("name") + ""));
-        }
+        }*/
 
+        tlTradeList.addTab(tlTradeList.newTab().setText("持仓"));
+        tlTradeList.addTab(tlTradeList.newTab().setText("委托"));
+        tlTradeList.addTab(tlTradeList.newTab().setText("成交"));
+
+   /*     chiCangFragment= new ChiCangFragment();
+        weituoFragment = new WeituoFragment();
+        chengJiaoFragment = new ChengJiaoFragment();*/
+        FBTradeFragment fbTradeFragment=new FBTradeFragment();
+        mFragments.add(fbTradeFragment);
+        mFragments.add(fbTradeFragment);
+        mFragments.add(fbTradeFragment);
+
+      /*  mFragments.add(chengJiaoFragment);
+        mFragments.add(weituoFragment);
+        mFragments.add(chengJiaoFragment);*/
+
+        mViewpager.setAdapter(new MyViewPagerAdapter(getChildFragmentManager(), mFragments));
+
+        mViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tlTradeList));
         tlTradeList.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        kind = "0";
-                        getChicangListAction();
-                        break;
-                    case 1:
-                        kind = "1";
-                        getWeituoListAction();
-                        break;
-                    case 2:
-                        kind = "2";
-                        getChengjiaoListAction();
-                        break;
-                }
+                mViewpager.setCurrentItem(tab.getPosition());
             }
 
             @Override
@@ -476,6 +494,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
             }
         });
+
 
      /*   tlTradeList2.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -508,30 +527,49 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         });
 */
 
-      /*  nestScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+        /*nestScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > tlTradeList.getTop() || scrollY == tlTradeList.getTop()) {
-                    //dealAllIv.setVisibility(View.VISIBLE);
-                    mTabLayout.setVisibility(View.VISIBLE);
-                    tlTradeList.setVisibility(View.GONE);
-                    Objects.requireNonNull(tlTradeList2.getTabAt(tlTradeList.getSelectedTabPosition())).select();
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+              *//*  if (scrollY > tlTradeList.getTop() || scrollY == tlTradeList.getTop()) {
+
                 } else {
-                    //dealAllIv.setVisibility(View.GONE);
-                    mTabLayout.setVisibility(View.GONE);
-                    tlTradeList.setVisibility(View.VISIBLE);
                     if (oldScrollY > scrollY) {
                         LogUtilDebug.i("show", "下滑");
                         Objects.requireNonNull(tlTradeList.getTabAt(tlTradeList2.getSelectedTabPosition())).select();
                     } else {
                         LogUtilDebug.i("show", "上滑");
                     }
+                }*//*
+
+                if(scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())){
+                    //滑动到底部
+                    LogUtilDebug.i("show","滑动到底部");
+                    LogUtilDebug.i("show","maxPage:"+maxPage);
+                    LogUtilDebug.i("show","currentgage:"+mPage);
+                    if (mPage < maxPage){
+                        mPage = mPage + 1;
+                        switch (mRequestTag){
+                            case MethodUrl.CHICANG_LIST:
+                                getChicangListAction();
+                                LogUtilDebug.i("show","持仓加载更多");
+                                break;
+                            case MethodUrl.WEITUO_LIST:
+                                getWeituoListAction();
+                                LogUtilDebug.i("show","委托加载更多");
+                                break;
+                            case MethodUrl.CHENGJIAO_LIST:
+                                LogUtilDebug.i("show","成交加载更多");
+                                getChengjiaoListAction();
+                                break;
+                        }
+                    }
+
                 }
 
 
+
             }
-        });
-*/
+        });*/
 
         etPrice.addTextChangedListener(new TextWatcher() {
             @Override
@@ -641,7 +679,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     }
 
 
-    @OnClick({R.id.deal_all_iv, R.id.left_back_lay, R.id.iv_toCoinInfo, R.id.rb_number1, R.id.rb_number2, R.id.rb_number3, R.id.rb_number4, R.id.seekBar, R.id.buy_more_tv,
+    @OnClick({R.id.left_back_lay, R.id.iv_toCoinInfo, R.id.rb_number1, R.id.rb_number2, R.id.rb_number3, R.id.rb_number4, R.id.seekBar, R.id.buy_more_tv,
             R.id.tvLimitPrice, R.id.tvLessChoose, R.id.ivPlus, R.id.ivLess})
     public void onViewClicked(View view) {
         Intent intent;
@@ -669,28 +707,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             case R.id.buy_more_tv:
                 buyAndSellAction();
                 break;
-            case R.id.deal_all_iv:
-                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(getActivity(), true);
-                sureOrNoDialog.initValue("提示", "是否一键平仓？");
-                sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        switch (v.getId()) {
-                            case R.id.cancel:
-                                sureOrNoDialog.dismiss();
-                                break;
-                            case R.id.confirm:
-                                sureOrNoDialog.dismiss();
-                                pingCangAllAction();
-                                break;
-                        }
-                    }
-                });
-                sureOrNoDialog.show();
-                sureOrNoDialog.setCanceledOnTouchOutside(false);
-                sureOrNoDialog.setCancelable(true);
 
-                break;
             case R.id.tvLimitPrice:
                 mDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
                 break;
@@ -785,32 +802,42 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRefreshListView.setLayoutManager(manager);
         mRefreshListView.setNestedScrollingEnabled(false);
 
-        //刷新
-        mRefreshListView.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPage = 1;
-                getChicangListAction();
-            }
-        });
+    }
 
-        //加载更多
-        mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
+
+    /**
+     * 渐变toolbar背景
+     */
+    private void setAvatorChange() {
+        mAppbarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
-            public void onLoadMore() {
-                mPage = mPage + 1;
-                getChicangListAction();
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                //verticalOffset始终为0以下的负数
+                float percent = (Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange());
+
+                mToolbar.setBackgroundColor(changeAlpha(Color.WHITE, percent));
             }
         });
+    }
+
+    /**
+     * 根据百分比改变颜色透明度
+     */
+    public int changeAlpha(int color, float fraction) {
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        int alpha = (int) (Color.alpha(color) * fraction);
+        return Color.argb(alpha, red, green, blue);
     }
 
 
     public void setBarTextColor() {
-        StatusBarUtil.setLightMode(Objects.requireNonNull(getActivity()));
+        //StatusBarUtil.setLightMode(Objects.requireNonNull(getActivity()));
     }
 
     private void getAvaiableMoneyAction() {
-        mRequestTag = MethodUrl.AVIABLE_MONEY;
+        //mRequestTag = MethodUrl.AVIABLE_MONEY;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(Objects.requireNonNull(getActivity()), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
@@ -823,7 +850,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
 
     private void getPairDepthAction() {
-        mRequestTag = MethodUrl.PAIR_DEPTH;
+        //mRequestTag = MethodUrl.PAIR_DEPTH;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
@@ -837,7 +864,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
 
     private void getContractLeverAction() {
-        mRequestTag = MethodUrl.CONTRACT_LEVER;
+        //mRequestTag = MethodUrl.CONTRACT_LEVER;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
@@ -849,7 +876,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
 
     private void getAreaAction() {
-        mRequestTag = MethodUrl.AREA_ALL;
+        //mRequestTag = MethodUrl.AREA_ALL;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
@@ -861,7 +888,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
 
     private void getCoinAccountAction() {
-        mRequestTag = MethodUrl.COIN_ACCOUNT;
+        //mRequestTag = MethodUrl.COIN_ACCOUNT;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
@@ -874,88 +901,16 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     }
 
 
-    private void getChicangListAction() {
-        mRequestTag = MethodUrl.CHICANG_LIST;
-        Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
-        }
-        map.put("token", MbsConstans.ACCESS_TOKEN);
-        //map.put("symbol", symbol);
-        map.put("symbol", "");
-        map.put("size", "10");
-        map.put("page", mPage);
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHICANG_LIST, map);
-    }
-
-    private void getWeituoListAction() {
-        mRequestTag = MethodUrl.WEITUO_LIST;
-        Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
-        }
-        map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("symbol", symbol);
-        map.put("size", "10");
-        map.put("page", mPage);
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.WEITUO_LIST, map);
-    }
 
 
-    private void getChengjiaoListAction() {
-        mRequestTag = MethodUrl.CHENGJIAO_LIST;
-        Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
-        }
-        map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("symbol", symbol);
-        map.put("size", "10");
-        map.put("page", mPage);
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHENGJIAO_LIST, map);
-    }
-
-    private void pingCangAction(Map<String, Object> mParentMap) {
-        mRequestTag = MethodUrl.PING_CANG;
-        Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
-        }
-        map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("id", mParentMap.get("id") + "");
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.PING_CANG, map);
-    }
 
 
-    private void pingCangAllAction() {
-        mRequestTag = MethodUrl.PING_CANG_ALL;
-        Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
-        }
-        map.put("token", MbsConstans.ACCESS_TOKEN);
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.PING_CANG_ALL, map);
-    }
 
-    private void cheXiaoAction(Map<String, Object> mParentMap) {
-        mRequestTag = MethodUrl.CHE_XIAO;
-        Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
-        }
-        map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("id", mParentMap.get("id") + "");
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHE_XIAO, map);
-    }
+
+
 
     private void buyAndSellAction() {
-        mRequestTag = MethodUrl.CONTRACT_TRADE;
+        //mRequestTag = MethodUrl.CONTRACT_TRADE;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
@@ -1027,95 +982,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 }
 
                 break;
-            case MethodUrl.CHICANG_LIST:
-            case MethodUrl.WEITUO_LIST:
-            case MethodUrl.CHENGJIAO_LIST:
-                switch ((tData.get("code") + "")) {
-                    case "0":
-                        if (!UtilTools.empty(tData.get("data")+"")){
-                            Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
-                            if (!UtilTools.empty(mapData)) {
-                                mDataList = (List<Map<String, Object>>) mapData.get("list");
-                                if (!UtilTools.empty(mDataList) && mDataList.size() > 0) {
-                                    for (Map<String, Object> map : mDataList) {
-                                        map.put("kind", kind);
-                                    }
-                                    mPageView.showContent();
-                                    responseData();
-                                    switch (kind) {
-                                        case "0":
-                                            dealAllIv.setVisibility(View.VISIBLE);
-                                            break;
-                                        case "1":
-                                            dealAllIv.setVisibility(View.GONE);
-                                            break;
-                                        case "2":
-                                            dealAllIv.setVisibility(View.GONE);
-                                            break;
-                                    }
-                                } else {
-                                    mPageView.showEmpty();
-                                }
 
-                            } else {
-                                mPageView.showEmpty();
-                            }
-                        }
 
-                        break;
-                    case "1":
-                        if (getActivity() != null) {
-                            getActivity().finish();
-                        }
-                        intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                        break;
-
-                    case "-1":
-                        mPageView.showNetworkError();
-                        showToastMsg(tData.get("msg") + "");
-                        break;
-                }
-
-                break;
-            case MethodUrl.PING_CANG_ALL:
-            case MethodUrl.PING_CANG:
-                switch ((tData.get("code") + "")) {
-                    case "0":
-                        showToastMsg("平仓成功");
-                        getChicangListAction();
-                        break;
-                    case "1":
-                        if (getActivity() != null) {
-                            getActivity().finish();
-                        }
-                        intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                        break;
-                    case "-1":
-                        showToastMsg(tData.get("msg") + "");
-                        break;
-                }
-
-                break;
-            case MethodUrl.CHE_XIAO:
-                switch ((tData.get("code") + "")) {
-                    case "0":
-                        showToastMsg("撤销成功");
-                        getWeituoListAction();
-                        break;
-                    case "1":
-                        if (getActivity() != null) {
-                            getActivity().finish();
-                        }
-                        intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                        break;
-                    case "-1":
-                        showToastMsg(tData.get("msg") + "");
-                        break;
-                }
-                break;
             case MethodUrl.PAIR_DEPTH:
                 switch ((tData.get("code") + "")) {
                     case "0":
@@ -1240,7 +1108,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 showToastMsg(tData.get("msg") + "");
                 switch ((tData.get("code") + "")) {
                     case "0":
-                        switch (kind) {
+                       /* switch (kind) {
                             case "0":
                                 getChicangListAction();
                                 break;
@@ -1250,7 +1118,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                             case "2":
                                 getChengjiaoListAction();
                                 break;
-                        }
+                        }*/
                         break;
                     case "1":
                         if (getActivity() != null) {
@@ -1265,22 +1133,11 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 }
                 break;
 
-            case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
-                MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
-                mIsRefreshToken = false;
-                switch (mRequestTag) {
-                    case MethodUrl.borrowList:
-                        getAvaiableMoneyAction();
-                        break;
-                }
-                break;
         }
     }
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
-
-
         mLoadingWindow.cancleView();
         dealFailInfo(map, mType);
     }
@@ -1288,7 +1145,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     @Override
     public void reLoadingData() {
         mLoadingWindow.showView();
-        getAvaiableMoneyAction();
+        //getAvaiableMoneyAction();
+
     }
 
 
@@ -1323,72 +1181,12 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             if (mPage == 1) {
                 shouMoneyListAdapter.clear();
             }
+            LogUtilDebug.i("show","mDataList:"+mDataList.size());
             shouMoneyListAdapter.addAll(mDataList);
             shouMoneyListAdapter.notifyDataSetChanged();
             mLRecyclerViewAdapter.notifyDataSetChanged();//必须调用此方法
         }
 
-        shouMoneyListAdapter.setmCallBack(new OnChildClickListener() {
-            @Override
-            public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-                LogUtilDebug.i("show", "itemClick()");
-                // mRefreshListView.smoothScrollToPosition(0);
-                // mRefreshListView.scrollTo(0,0);
-                // nestScrollView.scrollTo(0, tlTradeList.getTop());
-                SureOrNoDialog sureOrNoDialog;
-                switch (mParentMap.get("kind") + "") {
-                    case "0": //平仓
-                        sureOrNoDialog = new SureOrNoDialog(getActivity(), true);
-                        sureOrNoDialog.initValue("提示", "是否确定平仓？");
-                        sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                switch (v.getId()) {
-                                    case R.id.cancel:
-                                        sureOrNoDialog.dismiss();
-                                        break;
-                                    case R.id.confirm:
-                                        sureOrNoDialog.dismiss();
-                                        pingCangAction(mParentMap);
-                                        break;
-                                }
-                            }
-                        });
-                        sureOrNoDialog.show();
-                        sureOrNoDialog.setCanceledOnTouchOutside(false);
-                        sureOrNoDialog.setCancelable(true);
-
-                        break;
-                    case "1": //撤销
-                        sureOrNoDialog = new SureOrNoDialog(getActivity(), true);
-                        sureOrNoDialog.initValue("提示", "是否确定撤销？");
-                        sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                switch (v.getId()) {
-                                    case R.id.cancel:
-                                        sureOrNoDialog.dismiss();
-                                        break;
-                                    case R.id.confirm:
-                                        sureOrNoDialog.dismiss();
-                                        cheXiaoAction(mParentMap);
-                                        break;
-                                }
-                            }
-                        });
-                        sureOrNoDialog.show();
-                        sureOrNoDialog.setCanceledOnTouchOutside(false);
-                        sureOrNoDialog.setCancelable(true);
-
-                        break;
-                    case "2":
-
-                        break;
-                }
-
-
-            }
-        });
 
         mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -1408,11 +1206,11 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mRecyclerView.setFooterViewColor(R.color.colorAccent, R.color.red ,android.R.color.white);*/
 
         mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-        if (mDataList.size() < 10) {
+        /*if (mDataList.size() < 10) {
             mRefreshListView.setNoMore(true);
         } else {
             mRefreshListView.setNoMore(false);
-        }
+        }*/
 
         mRefreshListView.refreshComplete(10);
         shouMoneyListAdapter.notifyDataSetChanged();
@@ -1527,8 +1325,6 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                     //获取保证金
                     getAvaiableMoneyAction();
 
-                    //获取持仓列表数据
-                    getChicangListAction();
 
                     //获取合约价格以及深度信息
                     getPairDepthAction();

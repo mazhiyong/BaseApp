@@ -3,29 +3,28 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="@color/white"
-    >
+              android:background="@color/white">
 
     <include
         android:id="@+id/top_layout"
         layout="@layout/title_leftbut_bar"/>
-    <com.lr.biyou.mywidget.view.PageView
-        android:id="@+id/page_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-        <LinearLayout
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-            <com.github.jdsjlzx.recyclerview.LRecyclerView
-                android:id="@+id/refresh_list_view"
-                android:background="@color/body_bg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </com.github.jdsjlzx.recyclerview.LRecyclerView>
-        </LinearLayout>
-    </com.lr.biyou.mywidget.view.PageView>
 
+            <com.lr.biyou.mywidget.view.PageView
+                android:id="@+id/page_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+                <LinearLayout
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+                    <com.github.jdsjlzx.recyclerview.LRecyclerView
+                        android:id="@+id/refresh_list_view"
+                        android:background="@color/body_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </com.github.jdsjlzx.recyclerview.LRecyclerView>
+                </LinearLayout>
+            </com.lr.biyou.mywidget.view.PageView>
 
 </LinearLayout>

@@ -95,7 +95,6 @@ import io.rong.message.NotificationMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
 import io.rong.recognizer.RecognizeExtensionModule;
-import io.rong.sight.SightExtensionModule;
 
 public class IMManager {
     private static volatile IMManager instance;
@@ -585,13 +584,12 @@ public class IMManager {
      */
     public void updateGroupMemberInfoCache(String groupId, String userId, String nickName) {
         GroupUserInfo oldGroupUserInfo = RongUserInfoManager.getInstance().getGroupUserInfo(groupId, userId);
-        if(oldGroupUserInfo == null
-            || (
-                    !oldGroupUserInfo.getNickname().equals(nickName)
-                )
-        ){
+        if(oldGroupUserInfo == null || (!oldGroupUserInfo.getNickname().equals(nickName))){
+            LogUtilDebug.i("show","oldGroupInfo************0");
             GroupUserInfo groupMemberInfo = new GroupUserInfo(groupId, userId, nickName);
             RongIM.getInstance().refreshGroupUserInfoCache(groupMemberInfo);
+        }else {
+            LogUtilDebug.i("show","oldGroupInfo************1");
         }
     }
 
@@ -749,7 +747,7 @@ public class IMManager {
         // 语音输入
         RongExtensionManager.getInstance().registerExtensionModule(new RecognizeExtensionModule());
         // 小视频
-        RongExtensionManager.getInstance().registerExtensionModule(new SightExtensionModule());
+        //RongExtensionManager.getInstance().registerExtensionModule(new SightExtensionModule());
     }
 
     /**

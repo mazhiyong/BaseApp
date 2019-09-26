@@ -33,8 +33,7 @@
             android:layout_marginTop="@dimen/dp_15"
             android:layout_marginBottom="@dimen/dp_15"
             android:layout_marginRight="@dimen/dp_10"
-            android:inputType="number"
-            android:maxLength="11"
+            android:maxLength="21"
             android:textSize="@dimen/sp_15"
             android:layout_height="wrap_content"/>
 

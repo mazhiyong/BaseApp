@@ -1,25 +1,22 @@
-<LinearLayout
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/body_bg">
-    <include
-        android:id="@+id/top_layout"
-        layout="@layout/title_leftbut_bar" />
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestScrollView"
-        android:fillViewport="true"
-        android:scrollbars="none"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
             <RelativeLayout
+                android:layout_marginTop="@dimen/dp_65"
                 android:background="@color/body_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -930,7 +927,8 @@
                         app:layout_constraintTop_toBottomOf="@id/lay" />
 
                     <com.google.android.material.tabs.TabLayout
-                        android:id="@+id/tlTradeList"
+
+                        android:visibility="gone"
                         android:layout_width="@dimen/dp_0"
                         android:layout_height="@dimen/dp_40"
                         android:layout_marginLeft="@dimen/dp_45"
@@ -946,29 +944,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/divide_hight"
                         android:background="@color/divide_line"
-                        app:layout_constraintTop_toBottomOf="@id/tlTradeList" />
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/lay" />
 
-                    <com.lr.biyou.mywidget.view.PageView
-                        android:id="@+id/page_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/divide_line">
-                        <LinearLayout
-                            android:id="@+id/content"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical" >
-                            <com.github.jdsjlzx.recyclerview.LRecyclerView
-                                android:id="@+id/refresh_list_view"
-                                android:background="@color/body_bg"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-                            </com.github.jdsjlzx.recyclerview.LRecyclerView>
-                        </LinearLayout>
-                    </com.lr.biyou.mywidget.view.PageView>
 
                     <include
                         android:id="@+id/clErrorView6"
@@ -981,7 +959,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tlTradeList" />
+                        app:layout_constraintTop_toBottomOf="@id/lay" />
 
                     <include
                         android:id="@+id/clEmptyView1"
@@ -994,7 +972,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tlTradeList" />
+                        app:layout_constraintTop_toBottomOf="@id/lay" />
 
                     <include
                         android:id="@+id/clLoadView1"
@@ -1007,14 +985,11 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tlTradeList" />
+                        app:layout_constraintTop_toBottomOf="@id/lay" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
                 <LinearLayout
-                    android:id="@+id/tab_layout"
                     android:visibility="gone"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_width="match_parent"
@@ -1036,20 +1011,65 @@
                         android:background="@color/divide_line"
                         app:layout_constraintTop_toBottomOf="@id/tlTradeList" />
                 </LinearLayout>
-                <ImageView
-                    android:id="@+id/deal_all_iv"
-                    android:padding="@dimen/dp_15"
-                    android:visibility="gone"
-                    android:src="@drawable/icon3_pingcang"
-                    android:layout_marginBottom="@dimen/dp_30"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_width="@dimen/dp_80"
-                    android:layout_height="@dimen/dp_80" />
+
             </RelativeLayout>
 
-        </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_marginTop="@dimen/dp_20"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:alpha="1"
+                app:contentInsetStart="0dp"
+                style="@style/Base.V7.Widget.AppCompat.Toolbar"
+                app:layout_collapseMode="pin">
+                <include
+                    android:id="@+id/top_layout_toolbar"
+                    layout="@layout/title_bar"/>
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tlTradeList"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginLeft="@dimen/dp_45"
+            android:layout_marginRight="@dimen/dp_45"
+            app:tabSelectedTextColor="@color/colorBlue" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.viewpager.widget.ViewPager>
+    <com.lr.biyou.mywidget.view.PageView
+        android:id="@+id/page_view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divide_line">
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+            <com.github.jdsjlzx.recyclerview.LRecyclerView
+                android:id="@+id/refresh_list_view"
+                android:background="@color/body_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </com.github.jdsjlzx.recyclerview.LRecyclerView>
+        </LinearLayout>
+    </com.lr.biyou.mywidget.view.PageView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

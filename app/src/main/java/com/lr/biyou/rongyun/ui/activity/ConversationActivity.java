@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -35,14 +36,21 @@ import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.bean.MessageEvent;
 import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.rongyun.common.ThreadManager;
+import com.lr.biyou.rongyun.db.DbManager;
+import com.lr.biyou.rongyun.db.dao.GroupMemberDao;
+import com.lr.biyou.rongyun.db.dao.UserDao;
+import com.lr.biyou.rongyun.db.model.GroupMemberInfoEntity;
 import com.lr.biyou.rongyun.im.IMManager;
 import com.lr.biyou.rongyun.model.Resource;
 import com.lr.biyou.rongyun.model.ScreenCaptureResult;
 import com.lr.biyou.rongyun.model.Status;
 import com.lr.biyou.rongyun.model.TypingInfo;
+import com.lr.biyou.rongyun.model.UserSimpleInfo;
 import com.lr.biyou.rongyun.ui.fragment.ConversationFragmentEx;
 import com.lr.biyou.rongyun.ui.view.AnnouceView;
+import com.lr.biyou.rongyun.utils.RongGenerate;
 import com.lr.biyou.rongyun.utils.ScreenCaptureUtil;
+import com.lr.biyou.rongyun.utils.SearchUtils;
 import com.lr.biyou.rongyun.utils.log.SLog;
 import com.lr.biyou.rongyun.viewmodel.ConversationViewModel;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
@@ -58,7 +66,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -184,6 +194,13 @@ public class ConversationActivity extends BasicActivity {
 
         //根据rc_id查询用户本地id
         getidFromRcidAction();
+
+        if (conversationType == Conversation.ConversationType.GROUP) {
+            //如果是群聊,获取群聊用户信息并刷新
+            getGroupInfoAction();
+        }
+
+
     }
 
 
@@ -550,6 +567,21 @@ public class ConversationActivity extends BasicActivity {
     }
 
     /**
+     * 获取群聊信息
+     */
+    public void getGroupInfoAction() {
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(ConversationActivity.this, MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("group_id", targetId);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUPS_INFO, map);
+    }
+
+
+    /**
      * 获取用户信息
      */
     public void getFriendInfoAction() {
@@ -742,6 +774,123 @@ public class ConversationActivity extends BasicActivity {
                         break;
 
                 }
+                break;
+            case MethodUrl.CHAT_GROUPS_INFO:
+                switch (tData.get("code") + "") {
+                    case "0":
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            Map<String, Object> map = (Map<String, Object>) tData.get("data");
+                            if (!UtilTools.empty(map) && !UtilTools.empty(map.get("member")+"")) {
+                                // 更新 IMKit 缓存群组成员数据
+                                List<Map<String,Object>> memberList =  (List<Map<String, Object>>) map.get("member");
+                               /* if (memberList != null && memberList.size()> 0){
+                                    for (Map<String,Object> mapMember:memberList){
+                                        IMManager.getInstance().updateGroupMemberInfoCache(targetId, mapMember.get("rc_id")+"", mapMember.get("name")+"");
+                                    }
+                                }*/
+                                DbManager dbManager = DbManager.getInstance(ConversationActivity.this);
+                                GroupMemberDao groupMemberDao = dbManager.getGroupMemberDao();
+                                UserDao userDao = dbManager.getUserDao();
+
+
+
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // 获取新数据前清除掉原成员信息
+                                        if (groupMemberDao != null) {
+                                            groupMemberDao.deleteGroupMember(targetId);
+                                        }
+                                    }
+                                }).start();
+
+
+                                List<GroupMemberInfoEntity> groupEntityList = new ArrayList<>();
+                                List<com.lr.biyou.rongyun.db.model.UserInfo> newUserList = new ArrayList<>();
+                                if (memberList != null && memberList.size()> 0){
+                                    for (Map<String,Object> mapMember:memberList){
+                                            UserSimpleInfo user = new UserSimpleInfo();
+                                            user.setId(mapMember.get("rc_id")+"");
+                                            user.setName(mapMember.get("name")+"");
+                                            user.setPortraitUri(mapMember.get("portrait")+"");
+
+                                            GroupMemberInfoEntity groupEntity = new GroupMemberInfoEntity();
+                                            groupEntity.setGroupId(targetId);
+
+                                            groupEntity.setNickName("");
+                                            groupEntity.setUserId(user.getId());
+                                            //groupEntity.setRole("");
+                                            //groupEntity.setCreateTime(info.getCreatedTime());
+                                            //groupEntity.setUpdateTime(info.getUpdatedTime());
+                                            //groupEntity.setJoinTime(info.getTimestamp());
+                                            groupEntityList.add(groupEntity);
+
+
+                                            // 更新 IMKit 缓存群组成员数据
+                                            IMManager.getInstance().updateGroupMemberInfoCache(targetId, user.getId(), user.getName());
+                                            IMManager.getInstance().updateUserInfoCache(user.getId(), user.getName(), Uri.parse(user.getPortraitUri()));
+
+
+                                            if (userDao != null) {
+                                                // 更新已存在的用户信息
+                                                String portraitUri = user.getPortraitUri();
+                                                Log.i("show","头像Uri:"+portraitUri);
+
+                                                // 当没有头像时生成默认头像
+                                                if (TextUtils.isEmpty(portraitUri)) {
+                                                    portraitUri = RongGenerate.generateDefaultAvatar(ConversationActivity.this, user.getId(), user.getName());
+                                                    user.setPortraitUri(portraitUri);
+                                                }
+
+                                            }else {
+                                                Log.i("show","头像Uri&&&"+user.getPortraitUri());
+
+                                                new Thread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                            com.lr.biyou.rongyun.db.model.UserInfo userInfo = new com.lr.biyou.rongyun.db.model.UserInfo();
+                                                            userInfo.setId(user.getId());
+                                                            userInfo.setName(user.getName());
+                                                            userInfo.setNameSpelling(SearchUtils.fullSearchableString(user.getName()));
+                                                            userInfo.setPortraitUri(user.getPortraitUri());
+                                                    }
+                                                }).start();
+                                            }
+                                        }
+
+                                        //IMManager.getInstance().updateGroupMemberInfoCache(targetId, mapMember.get("rc_id")+"", mapMember.get("name")+"");
+                                    }
+                                // 更新群组成员
+
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (groupMemberDao != null) {
+                                            groupMemberDao.insertGroupMemberList(groupEntityList);
+                                        }
+
+                                        if (userDao != null) {
+                                            // 插入新的用户信息
+                                            userDao.insertUserListIgnoreExist(newUserList);
+                                        }
+                                    }
+                                }).start();
+
+
+                            }
+
+                            }
+                        break;
+                    case "1":
+                        closeAllActivity();
+                        Intent intent = new Intent(ConversationActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+                }
+
                 break;
         }
     }
