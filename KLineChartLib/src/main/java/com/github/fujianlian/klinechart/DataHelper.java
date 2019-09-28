@@ -1,5 +1,7 @@
 package com.github.fujianlian.klinechart;
 
+import com.github.fujianlian.klinechart.entity.KLineEntity;
+
 import java.util.List;
 
 /**

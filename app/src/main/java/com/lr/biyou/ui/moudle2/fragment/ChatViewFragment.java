@@ -975,8 +975,8 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
             //int screenWidth=UtilTools.getScreenWidth(getActivity());
             //int screenHeight=UtilTools.getScreenHeight(getActivity());
-            mConditionDialog.setWidth(UtilTools.dip2px(getActivity(), 130));
-            mConditionDialog.setHeight(UtilTools.dip2px(getActivity(), 150));
+            mConditionDialog.setWidth(UtilTools.dip2px(getActivity(), 150));
+            mConditionDialog.setHeight(UtilTools.dip2px(getActivity(), 180));
 
             //设置background后在外点击才会消失
             mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(getActivity(), 5)));

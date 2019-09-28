@@ -72,7 +72,9 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
     private String symbol = "";
     private String direction = "1"; //0 买  1卖
 
-    private String direction2 = "1"; //0 买  1卖
+
+
+    private int maxPage = 1;
     private int mPage = 1;
     private String id = "";
 
@@ -104,7 +106,7 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
     }
 
     public boolean prepareFetchData() {
-        return prepareFetchData(false);
+        return prepareFetchData(true);
     }
 
     public boolean prepareFetchData(boolean forceUpdate) {
@@ -116,11 +118,12 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
 //            }
             //请求数据 只在进入时加载数据，不进行预加载数据
             //mLoadingWindow.showView();
+            mPage = 1;
             //获取持仓列表
             getChengjiaoListAction();
 
 
-            LogUtilDebug.i("show", "FB懒加载数据");
+            LogUtilDebug.i("show", "成交懒加载数据");
             isDataInitiated = true;
             return true;
         }
@@ -162,8 +165,11 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
         mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mPage = mPage + 1;
-                getChengjiaoListAction();
+                if (mDataList == null || mDataList.size() < 10) {
+                    mRefreshListView.setNoMore(true);
+                } else {
+                    getChengjiaoListAction();
+                }
             }
         });
 
@@ -208,27 +214,21 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
         mLoadingWindow.cancleView();
         Intent intent;
         switch (mType) {
-            case MethodUrl.CHICANG_LIST:
+            case MethodUrl.CHENGJIAO_LIST:
                 switch (tData.get("code") + "") {
                     case "0":
                         if (!UtilTools.empty(tData.get("data")+"")){
                             Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
                             if (!UtilTools.empty(mapData)) {
-                                List<Map<String,Object>> list = (List<Map<String, Object>>) mapData.get("list");
-
-                                LogUtilDebug.i("show","list:"+list.size());
+                                mDataList = (List<Map<String, Object>>) mapData.get("list");
                                 if (!UtilTools.empty(mapData.get("page_mum")+"")){
-                                    //maxPage = Integer.parseInt(mapData.get("page_mum")+"");
+                                    maxPage = Integer.parseInt(mapData.get("page_mum")+"");
                                 }
 
-                                if (!UtilTools.empty(list) && list.size() > 0) {
+                                if (!UtilTools.empty(mDataList) && mDataList.size() > 0) {
                                     for (Map<String, Object> map : mDataList) {
                                         map.put("kind", "2");
                                     }
-                                    if (mPage == 1){
-                                        mDataList.clear();
-                                    }
-                                    mDataList.addAll(list);
                                     mPageView.showContent();
                                     responseData1();
                                     mRefreshListView.refreshComplete(10);
@@ -373,7 +373,7 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
 
             mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
             mRefreshListView.setPullRefreshEnabled(true);
-            mRefreshListView.setLoadMoreEnabled(false);
+            mRefreshListView.setLoadMoreEnabled(true);
 
             mRefreshListView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
             mRefreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
@@ -395,22 +395,36 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
 //                    .build();
 //            mRefreshListView.addItemDecoration(divider2);
         } else {
-           /* if (mPage == 1) {
-                mRepaymentAdapter.clear();
-            }*/
-//            shouMoneyListAdapter.clear();
-//            shouMoneyListAdapter.addAll(mDataList);
-//            shouMoneyListAdapter.notifyDataSetChanged();
-//            mLRecyclerViewAdapter1.notifyDataSetChanged();//必须调用此方法
-
-            shouMoneyListAdapter.clear();
+            if (mPage == 1) {
+                shouMoneyListAdapter.clear();
+            }
             shouMoneyListAdapter.addAll(mDataList);
-            mRefreshListView.setAdapter(mLRecyclerViewAdapter1);
+
+            shouMoneyListAdapter.notifyDataSetChanged();
+            mLRecyclerViewAdapter1.notifyDataSetChanged();
 
         }
 
         mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-        if (mDataList.size() < 10) {
+        mRefreshListView.refreshComplete(10);
+
+        if (mDataList== null && mDataList.size() < 10) {
+
+        } else {
+            if (mPage < maxPage ){
+                mPage++;
+            }
+        }
+
+        if (shouMoneyListAdapter.getDataList().size() <= 0) {
+            mPageView.showEmpty();
+            LogUtilDebug.i("show","******************** mPageView.showEmpty()");
+
+        } else {
+            mPageView.showContent();
+            LogUtilDebug.i("show","******************** mPageView.showContent()");
+        }
+     /*   if (mDataList.size() < 10) {
             mRefreshListView.setNoMore(true);
         } else {
             mRefreshListView.setNoMore(false);
@@ -420,8 +434,7 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
             mPageView.showEmpty();
         } else {
             mPageView.showContent();
-        }
-
+        }*/
         shouMoneyListAdapter.setmCallBack(new OnChildClickListener() {
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {

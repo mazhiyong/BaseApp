@@ -19,6 +19,7 @@ import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.rongyun.common.IntentExtra;
+import com.lr.biyou.rongyun.im.IMManager;
 import com.lr.biyou.rongyun.ui.activity.SearchHistoryMessageActivity;
 import com.lr.biyou.rongyun.ui.widget.switchbutton.SwitchButton;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
@@ -131,15 +132,10 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
         quiteSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* if (quiteSwitch.isChecked()){
-                    quiteSwitch.setChecked(false);
-                }else {
-                    quiteSwitch.setChecked(true);
-                }*/
                 updateStatusAction("2");
+
             }
         });
-
 
     }
 
@@ -311,9 +307,14 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
 
                             if ((map.get("disturb")+"").equals("0")) {
                                 quiteSwitch.setChecked(false);
+                                //IMManager.getInstance().setConversationNotificationStatus(conversationType,targId, false);
                             }else {
                                 quiteSwitch.setChecked(true);
+                                //IMManager.getInstance().setConversationNotificationStatus(conversationType,targId, true);
                             }
+
+
+
                         }
 
 
@@ -335,6 +336,14 @@ public class ChatItemActivity extends BasicActivity implements RequestView, Sele
                     case "0": //请求成功
                         //showToastMsg(tData.get("msg") + "");
                         //getFriendInfoAction();
+                        if (quiteSwitch.isChecked()){
+                            IMManager.getInstance().setConversationNotificationStatus(conversationType,targId, false);
+                            LogUtilDebug.i("show","开启免打扰");
+                        }else {
+                            IMManager.getInstance().setConversationNotificationStatus(conversationType,targId, true);
+                            LogUtilDebug.i("show","关闭免打扰");
+                        }
+
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg") + "");

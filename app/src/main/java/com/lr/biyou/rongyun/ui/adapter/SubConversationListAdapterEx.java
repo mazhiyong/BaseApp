@@ -28,5 +28,7 @@ public class SubConversationListAdapterEx extends SubConversationListAdapter {
             data.setUnreadType(UIConversation.UnreadRemindType.REMIND_ONLY);
         }
         super.bindView(v, position, data);
+
+
     }
 }

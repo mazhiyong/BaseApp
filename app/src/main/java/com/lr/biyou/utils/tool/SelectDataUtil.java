@@ -898,9 +898,6 @@ public class SelectDataUtil {
         List<Map<String,Object>> mDataList=new ArrayList<>();
         Map<String,Object> map1=new HashMap<>();
 
-        map1.put("name","市价");
-        map1.put("code","0");
-        mDataList.add(map1);
 
         map1=new HashMap<>();
         map1.put("name","限价");

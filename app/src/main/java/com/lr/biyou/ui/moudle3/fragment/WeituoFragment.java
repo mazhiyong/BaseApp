@@ -25,6 +25,7 @@ import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.OnChildClickListener;
 import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.mvp.view.RequestView;
+import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
@@ -68,7 +69,7 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
     private List<Map<String, Object>> mDataList = new ArrayList<>();
 
 
-
+    private int maxPage = 1;
     private int mPage = 1;
     private String id = "";
 
@@ -100,7 +101,7 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
     }
 
     public boolean prepareFetchData() {
-        return prepareFetchData(false);
+        return prepareFetchData(true);
     }
 
     public boolean prepareFetchData(boolean forceUpdate) {
@@ -112,11 +113,12 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
 //            }
             //请求数据 只在进入时加载数据，不进行预加载数据
             //mLoadingWindow.showView();
+            mPage = 1;
             //获取持仓列表
             getWeituoListAction();
 
 
-            LogUtilDebug.i("show", "FB懒加载数据");
+            LogUtilDebug.i("show", "委托懒加载数据");
             isDataInitiated = true;
             return true;
         }
@@ -137,6 +139,7 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
     @Override
     public void init() {
         mLoadingWindow = new LoadingWindow(getActivity(), R.style.Dialog);
+
         mPageView.setContentView(mContent);
         mPageView.setReLoadingData(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -158,8 +161,12 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
         mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mPage = mPage + 1;
-                getWeituoListAction();
+                //mPage = mPage + 1;
+                if (mDataList == null || mDataList.size() < 10) {
+                    mRefreshListView.setNoMore(true);
+                } else {
+                    getWeituoListAction();
+                }
             }
         });
 
@@ -213,27 +220,21 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
         mLoadingWindow.cancleView();
         Intent intent;
         switch (mType) {
-            case MethodUrl.CHICANG_LIST:
+            case MethodUrl.WEITUO_LIST:
                 switch (tData.get("code") + "") {
                     case "0":
                         if (!UtilTools.empty(tData.get("data")+"")){
                             Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
                             if (!UtilTools.empty(mapData)) {
-                                List<Map<String,Object>> list = (List<Map<String, Object>>) mapData.get("list");
-
-                                LogUtilDebug.i("show","list:"+list.size());
+                                mDataList = (List<Map<String, Object>>) mapData.get("list");
                                 if (!UtilTools.empty(mapData.get("page_mum")+"")){
-                                    //maxPage = Integer.parseInt(mapData.get("page_mum")+"");
+                                    maxPage = Integer.parseInt(mapData.get("page_mum")+"");
                                 }
 
-                                if (!UtilTools.empty(list) && list.size() > 0) {
+                                if (!UtilTools.empty(mDataList) && mDataList.size() > 0) {
                                     for (Map<String, Object> map : mDataList) {
                                         map.put("kind", "1");
                                     }
-                                    if (mPage == 1){
-                                        mDataList.clear();
-                                    }
-                                    mDataList.addAll(list);
                                     mPageView.showContent();
                                     responseData1();
                                     mRefreshListView.refreshComplete(10);
@@ -264,6 +265,13 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
                 switch ((tData.get("code") + "")) {
                     case "0":
                         showToastMsg("撤销成功");
+                        if (shouMoneyListAdapter.getDataList().size()%10 == 1){
+                            //撤销之前为11,21...撤销成功后,为10,20,分页加载需要减去1
+                            if (mPage > 1){
+                                mPage = mPage -1;
+                            }
+
+                        }
                         getWeituoListAction();
                         break;
                     case "1":
@@ -362,7 +370,7 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
 
             mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
             mRefreshListView.setPullRefreshEnabled(true);
-            mRefreshListView.setLoadMoreEnabled(false);
+            mRefreshListView.setLoadMoreEnabled(true);
 
             mRefreshListView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
             mRefreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
@@ -384,22 +392,35 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
 //                    .build();
 //            mRefreshListView.addItemDecoration(divider2);
         } else {
-           /* if (mPage == 1) {
-                mRepaymentAdapter.clear();
-            }*/
-//            shouMoneyListAdapter.clear();
-//            shouMoneyListAdapter.addAll(mDataList);
-//            shouMoneyListAdapter.notifyDataSetChanged();
-//            mLRecyclerViewAdapter1.notifyDataSetChanged();//必须调用此方法
-
-            shouMoneyListAdapter.clear();
+            if (mPage == 1) {
+                shouMoneyListAdapter.clear();
+            }
             shouMoneyListAdapter.addAll(mDataList);
-            mRefreshListView.setAdapter(mLRecyclerViewAdapter1);
+
+            shouMoneyListAdapter.notifyDataSetChanged();
+            mLRecyclerViewAdapter1.notifyDataSetChanged();
 
         }
 
         mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-        if (mDataList.size() < 10) {
+        mRefreshListView.refreshComplete(10);
+
+        if (mDataList==null&&mDataList.size() < 10) {
+        } else {
+            if (mPage < maxPage ){
+                mPage++;
+            }
+        }
+
+        if (shouMoneyListAdapter.getDataList().size() <= 0) {
+            mPageView.showEmpty();
+            LogUtilDebug.i("show","******************** mPageView.showEmpty()");
+
+        } else {
+            mPageView.showContent();
+            LogUtilDebug.i("show","******************** mPageView.showContent()");
+        }
+     /*   if (mDataList.size() < 10) {
             mRefreshListView.setNoMore(true);
         } else {
             mRefreshListView.setNoMore(false);
@@ -409,16 +430,48 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
             mPageView.showEmpty();
         } else {
             mPageView.showContent();
-        }
+        }*/
 
         shouMoneyListAdapter.setmCallBack(new OnChildClickListener() {
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-                id = mParentMap.get("id") + "";
+                LogUtilDebug.i("show", "itemClick()");
+                // mRefreshListView.smoothScrollToPosition(0);
+                // mRefreshListView.scrollTo(0,0);
+                // nestScrollView.scrollTo(0, tlTradeList.getTop());
+                SureOrNoDialog sureOrNoDialog;
+                switch (mParentMap.get("kind") + "") {
+                    case "1": //撤销
+                        sureOrNoDialog = new SureOrNoDialog(getActivity(), true);
+                        sureOrNoDialog.initValue("提示", "是否确定撤销？");
+                        sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                switch (v.getId()) {
+                                    case R.id.cancel:
+                                        sureOrNoDialog.dismiss();
+                                        break;
+                                    case R.id.confirm:
+                                        sureOrNoDialog.dismiss();
+                                        cheXiaoAction(mParentMap);
+                                        break;
+                                }
+                            }
+                        });
+                        sureOrNoDialog.show();
+                        sureOrNoDialog.setCanceledOnTouchOutside(false);
+                        sureOrNoDialog.setCancelable(true);
+
+                        break;
+                    case "2":
+                        break;
+
+                }
 
 
             }
         });
+
     }
 
 

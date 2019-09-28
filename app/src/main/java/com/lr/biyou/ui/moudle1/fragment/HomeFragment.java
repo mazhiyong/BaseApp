@@ -38,6 +38,7 @@ import com.lr.biyou.ui.moudle.activity.MainActivity;
 import com.lr.biyou.ui.moudle.activity.SecurityActivity;
 import com.lr.biyou.ui.moudle.activity.SettingActivity;
 import com.lr.biyou.ui.moudle1.activity.HelpListActivity;
+import com.lr.biyou.ui.moudle1.activity.HtmlActivity;
 import com.lr.biyou.ui.moudle1.activity.NoticeDetialActivity;
 import com.lr.biyou.ui.moudle1.activity.NoticeListActivity;
 import com.lr.biyou.ui.moudle1.activity.PayListActivity;
@@ -338,29 +339,33 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                     case "0": //请求成功
                         Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
                         if (!UtilTools.empty(mapData)) {
-                            List<String> bannerList = (List<String>) mapData.get("banner");
-                            if (!UtilTools.empty(bannerList)) {
-                                localImageInfos.clear();
-                                for (String str : bannerList) {
-                                    CustomViewsInfo customViewsInfo = new CustomViewsInfo(str);
-                                    localImageInfos.add(customViewsInfo);
-                                }
-                                xBanner.setBannerData(localImageInfos);
-                                xBanner.setOnItemClickListener(new XBanner.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(XBanner banner, Object model, View view, int position) {
-//                              bundle.clear();
-//                              bundle.putString("url", "https://www.baidu.com/");
-//                              startActivity(HomeFragment.this, bundle, NewsDetailActivity.class);
-                                    }
-                                });
+                            if (!UtilTools.empty(mapData.get("banner")+"")){
+                                List<Map<String,Object>> bannerMapList = (List<Map<String, Object>>) mapData.get("banner");
+                                if (bannerMapList != null && bannerMapList.size() > 0){
+                                        localImageInfos.clear();
+                                        for (Map<String,Object> map : bannerMapList) {
+                                            CustomViewsInfo customViewsInfo = new CustomViewsInfo(map.get("link")+"");
+                                            localImageInfos.add(customViewsInfo);
+                                        }
+                                        xBanner.setBannerData(localImageInfos);
+                                        xBanner.setOnItemClickListener(new XBanner.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(XBanner banner, Object model, View view, int position) {
+                                                ;
+                                                Intent intent1 = new Intent(getActivity(), HtmlActivity.class);
+                                                intent1.putExtra("id",bannerMapList.get(position).get("web")+"");
+                                                startActivity(intent1);
+                                            }
+                                        });
 
-                                xBanner.loadImage(new XBanner.XBannerAdapter() {
-                                    @Override
-                                    public void loadBanner(XBanner banner, Object model, View view, int position) {
-                                        GlideUtils.loadRoundCircleImage(getActivity(), ((CustomViewsInfo) model).getXBannerUrl(), (ImageView) view);
+                                        xBanner.loadImage(new XBanner.XBannerAdapter() {
+                                            @Override
+                                            public void loadBanner(XBanner banner, Object model, View view, int position) {
+                                                GlideUtils.loadRoundCircleImage(getActivity(), ((CustomViewsInfo) model).getXBannerUrl(), (ImageView) view);
+                                            }
+                                        });
                                     }
-                                });
+
                             }
                         }
 

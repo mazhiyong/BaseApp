@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/coordintaor_lay"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.appbar.AppBarLayout
@@ -72,8 +73,9 @@
                         android:layout_width="@dimen/dp_0"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/lay"
                         app:layout_constraintTop_toBottomOf="@+id/lay22">
 
                         <LinearLayout
@@ -536,7 +538,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:layout_marginTop="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_5"
                                 app:layout_constraintBottom_toTopOf="@id/tvMoreOperate"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -574,7 +576,7 @@
                                     android:id="@+id/llAvailableCloseEmpty"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dp_10"
+                                    android:layout_marginTop="@dimen/dp_5"
                                     android:gravity="center"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -602,7 +604,7 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/dp_10"
+                                    android:layout_marginTop="@dimen/dp_5"
                                     android:gravity="center"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -853,6 +855,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/constraintLayout11">
 
                         <LinearLayout
@@ -867,8 +871,8 @@
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/dp_10"
                                 android:layout_marginTop="@dimen/dp_5"
-                                android:layout_marginRight="@dimen/dp_10"
                                 android:layout_marginBottom="@dimen/dp_5"
+                                android:layout_marginRight="@dimen/dp_10"
                                 android:text="止盈价格"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14" />
@@ -893,8 +897,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/dp_10"
-                                android:layout_marginTop="@dimen/dp_5"
                                 android:layout_marginRight="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_5"
                                 android:layout_marginBottom="@dimen/dp_5"
                                 android:text="止损价格"
                                 android:textColor="@color/black"
@@ -1017,14 +1021,11 @@
 
 
             <androidx.appcompat.widget.Toolbar
-                android:layout_marginTop="@dimen/dp_20"
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#fff"
-                android:alpha="1"
                 app:contentInsetStart="0dp"
-                style="@style/Base.V7.Widget.AppCompat.Toolbar"
                 app:layout_collapseMode="pin">
                 <include
                     android:id="@+id/top_layout_toolbar"
@@ -1043,7 +1044,7 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </androidx.viewpager.widget.ViewPager>

@@ -2,26 +2,26 @@ package com.lr.biyou.basic;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+
 import com.lr.biyou.R;
+import com.lr.biyou.api.ErrorHandler;
+import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.di.component.DaggerPersenerComponent;
 import com.lr.biyou.di.module.PersenerModule;
 import com.lr.biyou.manage.ActivityManager;
-import com.lr.biyou.mvp.view.RequestView;
-import com.lr.biyou.ui.temporary.activity.ChoosePhoneActivity;
-import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.api.ErrorHandler;
-import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.mvp.presenter.RequestPresenterImp;
+import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.view.TipsToast;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.ui.temporary.activity.ChoosePhoneActivity;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +57,7 @@ public abstract class BasicFragment extends Fragment implements RequestView {
 			if(parent!=null){
 				parent.removeView(mRootView);
 			}
-			//mUnbinder =ButterKnife.bind(this,mRootView);
+			mUnbinder =ButterKnife.bind(this,mRootView);
 			return mRootView;
 		}
 

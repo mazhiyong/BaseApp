@@ -18,6 +18,17 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+       /* Fragment page = null;
+        if (mFragments.size()> position){
+            page = mFragments.get(position);
+            if (page != null){
+                return page;
+            }
+        }
+        while (position > mFragments.size()){
+            mFragments.add(null);
+        }*/
+
         return mFragments.get(position);
     }
 

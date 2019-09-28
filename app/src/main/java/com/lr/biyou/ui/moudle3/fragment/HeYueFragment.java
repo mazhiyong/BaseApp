@@ -24,6 +24,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -38,6 +39,7 @@ import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicFragment;
@@ -57,7 +59,6 @@ import com.lr.biyou.ui.moudle3.adapter.SellAdapter;
 import com.lr.biyou.ui.moudle3.adapter.ShouMoneyListAdapter;
 import com.lr.biyou.ui.moudle3.adapter.TypeSelectAdapter;
 import com.lr.biyou.ui.moudle4.adapter.MyViewPagerAdapter;
-import com.lr.biyou.ui.moudle4.fragment.FBTradeFragment;
 import com.lr.biyou.utils.tool.AnimUtil;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
@@ -209,8 +210,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
-   /* @BindView(R.id.nestScrollView)
-    NestedScrollView nestScrollView;*/
+    /* @BindView(R.id.nestScrollView)
+     NestedScrollView nestScrollView;*/
     @BindView(R.id.iv_toCoinInfo)
     ImageView ivToCoinInfo;
     @BindView(R.id.lay)
@@ -241,6 +242,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     LinearLayout layChufan;
     @BindView(R.id.viewpager)
     ViewPager mViewpager;
+    @BindView(R.id.coordintaor_lay)
+    CoordinatorLayout coordintaorLay;
 
 
     private LoadingWindow mLoadingWindow;
@@ -290,7 +293,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
     private Handler handler = new Handler();
 
-    private List<Fragment> mFragments=new ArrayList<>();
+    private List<Fragment> mFragments = new ArrayList<>();
     private ChiCangFragment chiCangFragment;
     private WeituoFragment weituoFragment;
     private ChengJiaoFragment chengJiaoFragment;
@@ -323,7 +326,6 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mTitleBarView.setPadding(0, UtilTools.getStatusHeight2(getActivity()), 0, 0);*/
 
 
-
         mAnimUtil = new AnimUtil();
         initView();
 
@@ -335,7 +337,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mLoadingWindow = new LoadingWindow(getActivity(), R.style.Dialog);
         mLoadingWindow.showView();
         //setBarTextColor();
-       //setAvatorChange();
+        //setAvatorChange();
 
         rgOpenClose.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -453,31 +455,50 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         getCoinAccountAction();
 
 
-     /*   List<Map<String, Object>> maps = SelectDataUtil.getTabValues2();
+       /* List<Map<String, Object>> maps = SelectDataUtil.getTabValues2();
         for (Map<String, Object> map : maps) {
             tlTradeList.addTab(tlTradeList.newTab().setText(map.get("name") + ""));
             //tlTradeList2.addTab(tlTradeList2.newTab().setText(map.get("name") + ""));
         }*/
 
+        mAppbarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                //折叠时
+                if (verticalOffset == -appBarLayout.getTotalScrollRange()) {
+                    mPageView.setEnabled(true);
+                }
+            }
+        });
+
+
+      /*  CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) coordintaorLay.getLayoutParams();
+        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        assert behavior != null;
+        behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+            @Override
+            public boolean canDrag(@NotNull AppBarLayout appBarLayout) {
+                return true;
+            }
+        });*/
+
+
         tlTradeList.addTab(tlTradeList.newTab().setText("持仓"));
         tlTradeList.addTab(tlTradeList.newTab().setText("委托"));
         tlTradeList.addTab(tlTradeList.newTab().setText("成交"));
 
-   /*     chiCangFragment= new ChiCangFragment();
+        chiCangFragment = new ChiCangFragment();
         weituoFragment = new WeituoFragment();
-        chengJiaoFragment = new ChengJiaoFragment();*/
-        FBTradeFragment fbTradeFragment=new FBTradeFragment();
-        mFragments.add(fbTradeFragment);
-        mFragments.add(fbTradeFragment);
-        mFragments.add(fbTradeFragment);
+        chengJiaoFragment = new ChengJiaoFragment();
 
-      /*  mFragments.add(chengJiaoFragment);
+        mFragments.add(chiCangFragment);
         mFragments.add(weituoFragment);
-        mFragments.add(chengJiaoFragment);*/
+        mFragments.add(chengJiaoFragment);
 
         mViewpager.setAdapter(new MyViewPagerAdapter(getChildFragmentManager(), mFragments));
 
         mViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tlTradeList));
+
         tlTradeList.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -833,7 +854,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
 
 
     public void setBarTextColor() {
-        //StatusBarUtil.setLightMode(Objects.requireNonNull(getActivity()));
+        StatusBarUtil.setLightMode(Objects.requireNonNull(getActivity()));
     }
 
     private void getAvaiableMoneyAction() {
@@ -901,14 +922,6 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     }
 
 
-
-
-
-
-
-
-
-
     private void buyAndSellAction() {
         //mRequestTag = MethodUrl.CONTRACT_TRADE;
         Map<String, Object> map = new HashMap<>();
@@ -919,7 +932,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         map.put("symbol", symbol);
         map.put("mode", type);
         map.put("entrustType", mSelectType);
-        switch (mSelectType){
+        switch (mSelectType) {
             case "0"://限价
                 map.put("price", etPrice.getText() + "");
                 break;
@@ -1181,7 +1194,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             if (mPage == 1) {
                 shouMoneyListAdapter.clear();
             }
-            LogUtilDebug.i("show","mDataList:"+mDataList.size());
+            LogUtilDebug.i("show", "mDataList:" + mDataList.size());
             shouMoneyListAdapter.addAll(mDataList);
             shouMoneyListAdapter.notifyDataSetChanged();
             mLRecyclerViewAdapter.notifyDataSetChanged();//必须调用此方法

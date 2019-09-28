@@ -145,42 +145,43 @@ public class ConversationFragmentEx extends ConversationFragment {
     @Override
     public void onPluginClicked(IPluginModule pluginModule, int position) {
         Intent intent;
-        switch (position){
-            case 3: //名片
-                intent = new Intent(getActivity(), SelectContractListActivity.class);
-                intent.putExtra("TYPE","5");
-                intent.putExtra(IS_FROM_CARD,true);
-                startActivityForResult(intent, REQUEST_CONTACT);
+        ConversationActivity activity = (ConversationActivity) getActivity();
+        if (activity != null && activity.conversationType != Conversation.ConversationType.SYSTEM){
+            switch (position){
+                case 3: //名片
+                    intent = new Intent(getActivity(), SelectContractListActivity.class);
+                    intent.putExtra("TYPE","5");
+                    intent.putExtra(IS_FROM_CARD,true);
+                    startActivityForResult(intent, REQUEST_CONTACT);
 
-                break;
-            case 4: //红包
-                intent = new Intent(getActivity(), RedMoneyActivity.class);
-                ConversationActivity activity = (ConversationActivity) getActivity();
-                if (!UtilTools.empty(activity)){
-                    intent.putExtra("tarid",activity.targetId);
-                    if (activity.conversationType == Conversation.ConversationType.PRIVATE){
-                        intent.putExtra("type","1");
-                        intent.putExtra("id",activity.Id);
-                    }else {
-                        intent.putExtra("type","2");
-                    }
-                    startActivity(intent);
-                }
-                break;
-            case 5: //转账
-                intent = new Intent(getContext(), TransferMoneyActivity.class);
-                ConversationActivity activity1 = (ConversationActivity) getActivity();
-                if (!UtilTools.empty(activity1)){
-                    intent.putExtra("tarid",activity1.targetId);
-                    if (activity1.conversationType == Conversation.ConversationType.PRIVATE){
-                        intent.putExtra("type","1");
-                        intent.putExtra("id",activity1.Id);
+                    break;
+                case 4: //红包
+                    intent = new Intent(getActivity(), RedMoneyActivity.class);
+                    if (!UtilTools.empty(activity)){
+                        intent.putExtra("tarid",activity.targetId);
+                        if (activity.conversationType == Conversation.ConversationType.PRIVATE){
+                            intent.putExtra("type","1");
+                            intent.putExtra("id",activity.Id);
+                        }else {
+                            intent.putExtra("type","2");
+                        }
                         startActivity(intent);
-                    }else {
-                        intent.putExtra("type","2");
-                        Toast.makeText(getActivity(),"群聊不支持转账功能",Toast.LENGTH_LONG).show();
                     }
-                }
+                    break;
+                case 5: //转账
+                    intent = new Intent(getContext(), TransferMoneyActivity.class);
+                    ConversationActivity activity1 = (ConversationActivity) getActivity();
+                    if (!UtilTools.empty(activity1)){
+                        intent.putExtra("tarid",activity1.targetId);
+                        if (activity1.conversationType == Conversation.ConversationType.PRIVATE){
+                            intent.putExtra("type","1");
+                            intent.putExtra("id",activity1.Id);
+                            startActivity(intent);
+                        }else {
+                            intent.putExtra("type","2");
+                            Toast.makeText(getActivity(),"群聊不支持转账功能",Toast.LENGTH_LONG).show();
+                        }
+                    }
 
                /* final String[] stringItems = {"拍照", "从手机相册选择"};
                 final ActionSheetDialog dialog = new ActionSheetDialog(getActivity(), stringItems, null);
@@ -229,10 +230,22 @@ public class ConversationFragmentEx extends ConversationFragment {
                 });
 */
 
-                break;
-            default:
-                super.onPluginClicked(pluginModule, position);
-                break;
+                    break;
+                default:
+                    super.onPluginClicked(pluginModule, position);
+                    break;
+            }
+
+        }else {
+            switch (position){
+                case 3:
+                    Toast.makeText(getActivity(),"系统消息不支持发送当前消息类型",Toast.LENGTH_LONG).show();
+                    break;
+                case 4:
+                    Toast.makeText(getActivity(),"系统消息不支持发送当前消息类型",Toast.LENGTH_LONG).show();
+                    break;
+            }
+
         }
 
     }

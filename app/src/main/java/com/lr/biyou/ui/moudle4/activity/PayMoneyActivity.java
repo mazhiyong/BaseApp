@@ -35,6 +35,7 @@ import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.CancelDialog;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
+import com.lr.biyou.mywidget.dialog.KindSelectDialog2;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.ShowDetailPictrue;
 import com.lr.biyou.ui.temporary.activity.PDFLookActivity;
@@ -49,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -144,7 +146,8 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
     LinearLayout bac_color_lay2;
     @BindView(R.id.copy_tv)
     ImageView tvCopy;
-
+    @BindView(R.id.contact_tv)
+    TextView contactTv;
 
 
     private String mRequestTag = "";
@@ -158,10 +161,9 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
     private Map<String, Object> mPayCreateMap = new HashMap<>();
 
 
-    private KindSelectDialog mDialog;
+    private KindSelectDialog2 mDialog;
     private List<Map<String, Object>> mDataList;
     private List<Map<String, Object>> mImageList = new ArrayList<>();
-
 
 
     private KindSelectDialog mKindSelectDialog;
@@ -182,6 +184,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
     private ClipData clipData;
 
     private TimeCount mTimeCount;
+
     @Override
     public int getContentView() {
         return R.layout.pay_money_layout;
@@ -269,7 +272,6 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
     };
 
 
-
     private void getDingdanInfoAction() {
 
         mRequestTag = MethodUrl.DING_INFO;
@@ -314,34 +316,32 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
     }
 
 
-
-    @OnClick({R.id.cancel, R.id.order, R.id.copy_tv,R.id.iv_code,R.id.back_img, R.id.left_back_lay, R.id.toggle_money,R.id.iv_select_pay})
+    @OnClick({R.id.cancel, R.id.order, R.id.copy_tv, R.id.iv_code, R.id.back_img, R.id.left_back_lay, R.id.toggle_money, R.id.iv_select_pay})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
             case R.id.cancel: //取消
-                if (payTypeTv.getText().toString().equals("请付款")){
-                    showDialog("确认取消交易","如果已向卖家付款,请不要取消交易","","1");
+                if (payTypeTv.getText().toString().equals("请付款")) {
+                    showDialog("确认取消交易", "如果已向卖家付款,请不要取消交易", "", "1");
                 }
 
-                if (payTypeTv.getText().toString().equals("等待买家付款")){
-                    showDialog("确认取消交易","","如果买家已付款,恶意取消交易,查明后做封号处理!","2");
+                if (payTypeTv.getText().toString().equals("等待买家付款")) {
+                    showDialog("确认取消交易", "", "如果买家已付款,恶意取消交易,查明后做封号处理!", "2");
                 }
 
 
-                if (payTypeTv.getText().toString().equals("买家已付款")){
-                    showDialog("确认取消交易","","买家已付款,您不能取消订单,请耐心等待,如果15分钟还未到账,请联系客服处理","3");
+                if (payTypeTv.getText().toString().equals("买家已付款")) {
+                    showDialog("确认取消交易", "", "买家已付款,您不能取消订单,请耐心等待,如果15分钟还未到账,请联系客服处理", "3");
                 }
                 break;
             case R.id.order://完成付款
-                if (payTypeTv.getText().toString().equals("请付款")){
-                    showDialog("付款确认","请确认您已完成付款.","如未付款,点击确认,后台查明后做封号处理.","4");
+                if (payTypeTv.getText().toString().equals("请付款")) {
+                    showDialog("付款确认", "请确认您已完成付款.", "如未付款,点击确认,后台查明后做封号处理.", "4");
                 }
 
-                if (payTypeTv.getText().toString().equals("等待买家付款")){
-                    showDialog("确认收款","确认之后,将会把币打给买家","如果买家已付款,恶意取消交易,查明后做封号处理!","5");
+                if (payTypeTv.getText().toString().equals("等待买家付款")) {
+                    showDialog("确认收款", "确认之后,将会把币打给买家", "如果买家已付款,恶意取消交易,查明后做封号处理!", "5");
                 }
-
 
 
                 break;
@@ -357,15 +357,15 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                 }
                 break;
             case R.id.copy_tv:
-                clipData = ClipData.newPlainText("币友",bankNumberTv.getText()+"");
+                clipData = ClipData.newPlainText("币友", bankNumberTv.getText() + "");
                 mClipboardManager.setPrimaryClip(clipData);
                 showToastMsg("复制成功");
                 break;
 
             case R.id.iv_code:
                 intent = new Intent(PayMoneyActivity.this, ShowDetailPictrue.class);
-                intent.putExtra("position",0);
-                intent.putExtra("DATA",(Serializable) mImageList);
+                intent.putExtra("position", 0);
+                intent.putExtra("DATA", (Serializable) mImageList);
                 startActivity(intent);
                 overridePendingTransition(R.anim.zoomin, R.anim.zoomout);
                 break;
@@ -397,10 +397,10 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                                 payTimeTv.setText(mapAppendInfo.get("tips") + "");
                                 //启动定时器
                                 String timeCount = mapAppendInfo.get("remaining_second") + "";
-                                if (!UtilTools.empty(timeCount)){
+                                if (!UtilTools.empty(timeCount)) {
                                     int time = Integer.parseInt(timeCount);
-                                    if (time > 0){
-                                        if (mTimeCount != null){
+                                    if (time > 0) {
+                                        if (mTimeCount != null) {
                                             mTimeCount.cancel();
                                             mTimeCount = null;
                                         }
@@ -416,6 +416,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                                 dingdanNumberTv.setText(mapAppendInfo.get("order") + "");
                                 dingdanMoneyTv.setText(UtilTools.getRMBMoney(mapAppendInfo.get("price") + ""));
                                 dingdanAmountTv.setText(mapAppendInfo.get("number") + "");
+                                contactTv.setText(mapData.get("account")+"");
 
                                 status = mapAppendInfo.get("status") + "";
                                 switch (status) {
@@ -463,29 +464,29 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
 
                             }
 
-                            String btnData = mapData.get("btn")+"";
-                            if (UtilTools.empty(btnData)){
+                            String btnData = mapData.get("btn") + "";
+                            if (UtilTools.empty(btnData)) {
                                 cancel.setVisibility(View.GONE);
                                 order.setVisibility(View.GONE);
-                            }else {
-                            Map<String, Object> mapBtn = (Map<String, Object>) mapData.get("btn");
-                            if (!UtilTools.empty(mapBtn)) {
-                                cancel.setText(mapBtn.get("cancel") + "");
-                                order.setText(mapBtn.get("confirm") + "");
-                               }
+                            } else {
+                                Map<String, Object> mapBtn = (Map<String, Object>) mapData.get("btn");
+                                if (!UtilTools.empty(mapBtn)) {
+                                    cancel.setText(mapBtn.get("cancel") + "");
+                                    order.setText(mapBtn.get("confirm") + "");
+                                }
                             }
 
 
                             Map<String, Object> mapPayWay = (Map<String, Object>) mapData.get("receivables");
                             if (!UtilTools.empty(mapPayWay)) {
-                                if (!UtilTools.empty(mapPayWay.get("bank")+"")){
+                                if (!UtilTools.empty(mapPayWay.get("bank") + "")) {
                                     mapBank = (Map<String, Object>) mapPayWay.get("bank");
                                 }
-                                if (!UtilTools.empty(mapPayWay.get("alipay")+"")){
+                                if (!UtilTools.empty(mapPayWay.get("alipay") + "")) {
                                     mapAliPay = (Map<String, Object>) mapPayWay.get("alipay");
                                 }
 
-                                if (!UtilTools.empty(mapPayWay.get("wechat")+"")){
+                                if (!UtilTools.empty(mapPayWay.get("wechat") + "")) {
                                     mapWeChat = (Map<String, Object>) mapPayWay.get("wechat");
                                 }
 
@@ -511,14 +512,14 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                                     mDataList.add(mapWeChat);
                                 }
 
-                                if (mDataList.size()>0){
-                                    Map<String,Object> map =mDataList.get(0);
+                                if (mDataList.size() > 0) {
+                                    Map<String, Object> map = mDataList.get(0);
                                     switch (map.get("code") + "") {
                                         case "0": //银行卡
                                             ivIcon.setImageResource(R.drawable.icon4_bank);
                                             bankPayLay.setVisibility(View.VISIBLE);
                                             mobilePayLay.setVisibility(View.GONE);
-                                            mZhifuNameTv.setText(map.get("type")+"");
+                                            mZhifuNameTv.setText(map.get("type") + "");
                                             bankPeopleTv.setText(map.get("name") + "");
                                             bankNumberTv.setText(map.get("number") + "");
                                             bankTv.setText(map.get("bank_name") + "");
@@ -530,13 +531,13 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                                             ivIcon.setImageResource(R.drawable.icon4_alipay);
                                             bankPayLay.setVisibility(View.GONE);
                                             mobilePayLay.setVisibility(View.VISIBLE);
-                                            mZhifuNameTv.setText(map.get("type")+"");
+                                            mZhifuNameTv.setText(map.get("type") + "");
                                             bankPeopleTv.setText(map.get("name") + "");
                                             GlideUtils.loadImage(PayMoneyActivity.this, map.get("qrcode") + "", ivCode);
 
                                             mImageList.clear();
-                                            Map<String,Object> mapImage= new HashMap<>();
-                                            mapImage.put("url",map.get("qrcode") + "");
+                                            Map<String, Object> mapImage = new HashMap<>();
+                                            mapImage.put("url", map.get("qrcode") + "");
                                             mImageList.add(mapImage);
 
                                             mPayType = "alipay";
@@ -546,13 +547,13 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                                             ivIcon.setImageResource(R.drawable.icon4_wechat);
                                             bankPayLay.setVisibility(View.GONE);
                                             mobilePayLay.setVisibility(View.VISIBLE);
-                                            mZhifuNameTv.setText(map.get("type")+"");
+                                            mZhifuNameTv.setText(map.get("type") + "");
                                             bankPeopleTv.setText(map.get("name") + "");
                                             GlideUtils.loadImage(PayMoneyActivity.this, map.get("qrcode") + "", ivCode);
 
                                             mImageList.clear();
-                                            Map<String,Object> mapImage1= new HashMap<>();
-                                            mapImage1.put("url",map.get("qrcode") + "");
+                                            Map<String, Object> mapImage1 = new HashMap<>();
+                                            mapImage1.put("url", map.get("qrcode") + "");
                                             mImageList.add(mapImage1);
 
                                             mPayType = "wechat";
@@ -560,7 +561,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                                     }
 
                                 }
-                                mDialog = new KindSelectDialog(PayMoneyActivity.this, true, mDataList, 30);
+                                mDialog = new KindSelectDialog2(PayMoneyActivity.this, true, mDataList, 30);
                                 mDialog.setSelectBackListener(this);
 
                             }
@@ -580,7 +581,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                 break;
 
             case MethodUrl.DING_CANCEL:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
                         showToastMsg(tData.get("msg") + "");
                         getDingdanInfoAction();
@@ -598,7 +599,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
 
                 break;
             case MethodUrl.SELLER_SURE:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
                         showToastMsg(tData.get("msg") + "");
                         getDingdanInfoAction();
@@ -616,7 +617,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
 
                 break;
             case MethodUrl.BUYER_SURE:
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0":
                         showToastMsg(tData.get("msg") + "");
                         getDingdanInfoAction();
@@ -656,7 +657,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                         ivIcon.setImageResource(R.drawable.icon4_bank);
                         bankPayLay.setVisibility(View.VISIBLE);
                         mobilePayLay.setVisibility(View.GONE);
-                        mZhifuNameTv.setText(map.get("type")+"");
+                        mZhifuNameTv.setText(map.get("type") + "");
                         bankPeopleTv.setText(map.get("name") + "");
                         bankNumberTv.setText(map.get("number") + "");
                         bankTv.setText(map.get("bank_name") + "");
@@ -668,13 +669,13 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                         ivIcon.setImageResource(R.drawable.icon4_alipay);
                         bankPayLay.setVisibility(View.GONE);
                         mobilePayLay.setVisibility(View.VISIBLE);
-                        mZhifuNameTv.setText(map.get("type")+"");
+                        mZhifuNameTv.setText(map.get("type") + "");
                         bankPeopleTv.setText(map.get("name") + "");
                         GlideUtils.loadImage(PayMoneyActivity.this, map.get("qrcode") + "", ivCode);
 
                         mImageList.clear();
-                        Map<String,Object> mapImage= new HashMap<>();
-                        mapImage.put("url",map.get("qrcode") + "");
+                        Map<String, Object> mapImage = new HashMap<>();
+                        mapImage.put("url", map.get("qrcode") + "");
                         mImageList.add(mapImage);
 
                         mPayType = "alipay";
@@ -684,13 +685,13 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                         ivIcon.setImageResource(R.drawable.icon4_wechat);
                         bankPayLay.setVisibility(View.GONE);
                         mobilePayLay.setVisibility(View.VISIBLE);
-                        mZhifuNameTv.setText(map.get("type")+"");
+                        mZhifuNameTv.setText(map.get("type") + "");
                         bankPeopleTv.setText(map.get("name") + "");
                         GlideUtils.loadImage(PayMoneyActivity.this, map.get("qrcode") + "", ivCode);
 
                         mImageList.clear();
-                        Map<String,Object> mapImage1= new HashMap<>();
-                        mapImage1.put("url",map.get("qrcode") + "");
+                        Map<String, Object> mapImage1 = new HashMap<>();
+                        mapImage1.put("url", map.get("qrcode") + "");
                         mImageList.add(mapImage1);
 
                         mPayType = "wechat";
@@ -699,6 +700,13 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
                 break;
         }
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
 
@@ -726,48 +734,48 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
 
     private CancelDialog mTipsDialog;
 
-    private void showDialog(String title,String message1,String message2,String type) {
+    private void showDialog(String title, String message1, String message2, String type) {
 
-            mTipsDialog = new CancelDialog(this, title, message1,
-                    message2, "我再想想", "确认");
-            mTipsDialog.setClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    switch (v.getId()) {
-                        case R.id.cancel_tv:
-                            mTipsDialog.dismiss();
-                            break;
-                        case R.id.sure_tv:
-                            switch (type){
-                                case "1":
-                                    //取消订单
-                                    cancelDingDanAction();
-                                    break;
-                                case "2":
-                                    //取消订单
-                                    cancelDingDanAction();
-                                    break;
-                                case "3":
-                                    break;
-                                case "4":
-                                    //付款确认
-                                    surePayMoneyAction();
-                                    break;
-                                case "5":
-                                    //收款确认
-                                    sureShouKuanAction();
-                                    break;
+        mTipsDialog = new CancelDialog(this, title, message1,
+                message2, "我再想想", "确认");
+        mTipsDialog.setClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.cancel_tv:
+                        mTipsDialog.dismiss();
+                        break;
+                    case R.id.sure_tv:
+                        switch (type) {
+                            case "1":
+                                //取消订单
+                                cancelDingDanAction();
+                                break;
+                            case "2":
+                                //取消订单
+                                cancelDingDanAction();
+                                break;
+                            case "3":
+                                break;
+                            case "4":
+                                //付款确认
+                                surePayMoneyAction();
+                                break;
+                            case "5":
+                                //收款确认
+                                sureShouKuanAction();
+                                break;
 
-                            }
-                            mTipsDialog.dismiss();
-                            break;
-                    }
+                        }
+                        mTipsDialog.dismiss();
+                        break;
                 }
-            });
+            }
+        });
 
-            mTipsDialog.setCanceledOnTouchOutside(false);
-            mTipsDialog.setCancelable(true);
-            mTipsDialog.show();
+        mTipsDialog.setCanceledOnTouchOutside(false);
+        mTipsDialog.setCancelable(true);
+        mTipsDialog.show();
 
     }
 
@@ -780,7 +788,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("id", mID);
-        map.put("payType",mPayType);
+        map.put("payType", mPayType);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.BUYER_SURE, map);
     }
@@ -812,7 +820,6 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
     }
 
 
-
     protected void toast(@StringRes int message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
@@ -822,7 +829,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mBroadcastReceiver);
-        if (mTimeCount != null){
+        if (mTimeCount != null) {
             mTimeCount.cancel();
             mTimeCount = null;
         }
@@ -850,15 +857,15 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
         public void onTick(long millisUntilFinished) {//计时过程显示
             //tvCode.setClickable(false);
             //tvCode.setText(millisUntilFinished / 1000 + "秒");
-            Log.i("show","格式化时间:"+UtilTools.getStandardDate2(millisUntilFinished));
-            switch (status){
+            Log.i("show", "格式化时间:" + UtilTools.getStandardDate2(millisUntilFinished));
+            switch (status) {
                 case "0": //请在 1天23:54:2 内完成付款
-                    if (payTimeTv.getText().toString().contains("内完成付款")){
-                        payTimeTv.setText("请在 "+UtilTools.getStandardDate2(millisUntilFinished)+" 内完成付款");
+                    if (payTimeTv.getText().toString().contains("内完成付款")) {
+                        payTimeTv.setText("请在 " + UtilTools.getStandardDate2(millisUntilFinished) + " 内完成付款");
                     }
 
-                    if (payTimeTv.getText().toString().contains("后订单自动取消")){
-                        payTimeTv.setText(UtilTools.getStandardDate2(millisUntilFinished)+" 后订单自动取消");
+                    if (payTimeTv.getText().toString().contains("后订单自动取消")) {
+                        payTimeTv.setText(UtilTools.getStandardDate2(millisUntilFinished) + " 后订单自动取消");
                     }
                     break;
 
@@ -870,9 +877,6 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
 
         }
     }
-
-
-
 
 
 }

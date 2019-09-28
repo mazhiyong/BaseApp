@@ -23,7 +23,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.github.fujianlian.klinechart.DataHelper;
 import com.github.fujianlian.klinechart.KLineChartAdapter;
 import com.github.fujianlian.klinechart.KLineChartView;
-import com.github.fujianlian.klinechart.KLineEntity;
+import com.github.fujianlian.klinechart.entity.KLineEntity;
 import com.github.fujianlian.klinechart.draw.Status;
 import com.github.fujianlian.klinechart.formatter.DateMiddleTimeFormatter;
 import com.google.android.material.tabs.TabLayout;

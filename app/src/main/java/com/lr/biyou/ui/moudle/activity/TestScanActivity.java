@@ -25,7 +25,7 @@ import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.db.FaPiaoData;
 import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.ui.moudle2.activity.AddFriendActivity;
-import com.lr.biyou.ui.temporary.activity.HtmlActivity;
+import com.lr.biyou.ui.moudle1.activity.HtmlActivity;
 import com.lr.biyou.ui.temporary.activity.InvoiceListActivity;
 import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;

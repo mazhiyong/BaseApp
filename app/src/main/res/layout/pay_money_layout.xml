@@ -580,6 +580,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/divide_hight"
                     android:background="@color/divide_line"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -620,7 +621,40 @@
                     android:layout_height="@dimen/divide_hight"
                     android:background="@color/divide_line"/>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_15"
+                android:paddingTop="@dimen/item_padding"
+                android:paddingBottom="@dimen/item_padding"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="联系对方"
+                    android:textSize="@dimen/sp_16"
+                    android:textColor="@color/gray"
+                    />
+                <TextView
+                    android:id="@+id/contact_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text=""
+                    android:textSize="@dimen/sp_16"
+                    android:layout_marginRight="@dimen/dp_5"
+                    android:textColor="@color/black"
+                    />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divide_hight"
+                android:background="@color/divide_line"/>
             <LinearLayout
                 android:id="@+id/xiyi_lay"
                 android:visibility="gone"

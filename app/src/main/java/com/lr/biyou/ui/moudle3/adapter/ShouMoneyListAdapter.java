@@ -15,7 +15,6 @@ import com.lr.biyou.listener.OnChildClickListener;
 import com.lr.biyou.ui.moudle.adapter.ListBaseAdapter;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.wanou.framelibrary.utils.UiTools;
 
 import java.util.Map;
 
@@ -60,7 +59,8 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
                 if (UtilTools.empty(profit)){
                     viewHolder.tv3.setText("--");
                 }else {
-                    viewHolder.tv3.setText(UtilTools.getNormalMoney(profit));
+                    //viewHolder.tv3.setText(UtilTools.getNormalMoney(profit));
+                    viewHolder.tv3.setText(profit);
                 }
                 viewHolder.dealTv.setText("平仓");
                 break;
@@ -71,7 +71,8 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
                 if (UtilTools.empty(trigger)){
                     viewHolder.tv3.setText("--");
                 }else {
-                    viewHolder.tv3.setText(UtilTools.getNormalMoney(trigger));
+                    //viewHolder.tv3.setText(UtilTools.getNormalMoney(trigger));
+                    viewHolder.tv3.setText(trigger);
                 }
                 viewHolder.dealTv.setText("撤销");
                 break;
@@ -82,7 +83,8 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
                 if (UtilTools.empty(profit1)){
                     viewHolder.tv3.setText("--");
                 }else {
-                    viewHolder.tv3.setText(UtilTools.getNormalMoney(profit1));
+                    //viewHolder.tv3.setText(UtilTools.getNormalMoney(profit1));
+                    viewHolder.tv3.setText(profit1);
                 }
                 viewHolder.dealTv.setText("成交");
                 viewHolder.dealTv.setTextColor(ContextCompat.getColor(mContext,R.color.gray));
@@ -122,14 +124,16 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
         if (UtilTools.empty(number)){
             viewHolder.tv1.setText("--");
         }else {
-            viewHolder.tv1.setText(UtilTools.getNormalMoney(number));
+            //viewHolder.tv1.setText(UtilTools.getNormalMoney(number));
+            viewHolder.tv1.setText(number);
         }
 
         String depot_avg= item.get("depot_avg")+"";
         if (UtilTools.empty(depot_avg)){
             viewHolder.tv2.setText("--");
         }else {
-            viewHolder.tv2.setText(UtilTools.getNormalMoney(depot_avg));
+            //viewHolder.tv2.setText(UtilTools.getNormalMoney(depot_avg));
+            viewHolder.tv2.setText(depot_avg);
         }
 
 
@@ -137,7 +141,8 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
         if (UtilTools.empty(finish_number)){
             viewHolder.tv4.setText("--");
         }else {
-            viewHolder.tv4.setText(UtilTools.getNormalMoney(finish_number));
+            //viewHolder.tv4.setText(UtilTools.getNormalMoney(finish_number));
+            viewHolder.tv4.setText(finish_number);
         }
 
 
@@ -146,35 +151,40 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
         if (UtilTools.empty(average_price)){
             viewHolder.tv5.setText("--");
         }else {
-            viewHolder.tv5.setText(UtilTools.getNormalMoney(average_price));
+            //viewHolder.tv5.setText(UtilTools.getNormalMoney(average_price));
+            viewHolder.tv5.setText(average_price);
         }
 
         String fee= item.get("fee")+"";
         if (UtilTools.empty(fee)){
             viewHolder.tv6.setText("--");
         }else {
-            viewHolder.tv6.setText(UtilTools.getNormalMoney(fee));
+            //viewHolder.tv6.setText(UtilTools.getNormalMoney(fee));
+            viewHolder.tv6.setText(fee);
         }
 
         String stop_profit= item.get("stop_profit")+"";
         if (UtilTools.empty(stop_profit)){
             viewHolder.tv7.setText("--");
         }else {
-            viewHolder.tv7.setText(UtilTools.getNormalMoney(stop_profit));
+            //viewHolder.tv7.setText(UtilTools.getNormalMoney(stop_profit));
+            viewHolder.tv7.setText(stop_profit);
         }
 
         String loss_limit= item.get("loss_limit")+"";
         if (UtilTools.empty(loss_limit)){
             viewHolder.tv8.setText("--");
         }else {
-            viewHolder.tv8.setText(UtilTools.getNormalMoney(loss_limit));
+            //viewHolder.tv8.setText(UtilTools.getNormalMoney(loss_limit));
+            viewHolder.tv8.setText(loss_limit);
         }
 
         String bond= item.get("bond")+"";
         if (UtilTools.empty(bond)){
             viewHolder.tv9.setText("--");
         }else {
-            viewHolder.tv9.setText(UtilTools.getNormalMoney(bond));
+            //viewHolder.tv9.setText(UtilTools.getNormalMoney(bond));
+            viewHolder.tv9.setText(bond);
         }
 
 

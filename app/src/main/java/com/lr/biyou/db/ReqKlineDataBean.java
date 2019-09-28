@@ -1,6 +1,6 @@
 package com.lr.biyou.db;
 
-import com.github.fujianlian.klinechart.KLineEntity;
+import com.github.fujianlian.klinechart.entity.KLineEntity;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;

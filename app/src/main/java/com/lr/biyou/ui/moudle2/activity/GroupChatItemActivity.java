@@ -45,6 +45,7 @@ import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.rongyun.common.Constant;
 import com.lr.biyou.rongyun.common.IntentExtra;
 import com.lr.biyou.rongyun.db.model.GroupEntity;
+import com.lr.biyou.rongyun.im.IMManager;
 import com.lr.biyou.rongyun.model.GroupMember;
 import com.lr.biyou.rongyun.model.Resource;
 import com.lr.biyou.rongyun.model.ScreenCaptureResult;
@@ -1285,6 +1286,7 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
                                 qrcodeImgUrl = map.get("qrcode") + "";
                                 if ((map.get("disturb") + "").equals("0")) {
                                     disSwitch.setChecked(false);
+                                    //IMManager.getInstance().setConversationNotificationStatus(conversationType,groupId, false);
                                 } else {
                                     disSwitch.setChecked(true);
                                 }
@@ -1344,7 +1346,16 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
             case MethodUrl.CHAT_GROUP_CHANAGE_STATUS:
                 switch (tData.get("code") + "") {
                     case "0":
-                        showToastMsg(tData.get("msg") + "");
+                        //showToastMsg(tData.get("msg") + "");
+                        //getGroupInfoAction();
+
+                        if (disSwitch.isChecked()){
+                            IMManager.getInstance().setConversationNotificationStatus(conversationType,groupId, false);
+                            LogUtilDebug.i("show","开启免打扰");
+                        }else {
+                            IMManager.getInstance().setConversationNotificationStatus(conversationType,groupId, true);
+                            LogUtilDebug.i("show","关闭免打扰");
+                        }
                         break;
                     case "1":
                         closeAllActivity();

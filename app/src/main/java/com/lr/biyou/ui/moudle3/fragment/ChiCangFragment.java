@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -56,6 +57,8 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
+    @BindView(R.id.deal_all_iv)
+    ImageView dealAllIv;
 
     private int TYPE = 0;
     public LoadingWindow mLoadingWindow;
@@ -66,10 +69,11 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
     private String mRequestTag = "";
 
     private List<Map<String, Object>> mDataList = new ArrayList<>();
- 
 
- 
+
     private int mPage = 1;
+    private int maxPage = 1;
+
     private String id = "";
 
 
@@ -100,7 +104,7 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
     }
 
     public boolean prepareFetchData() {
-        return prepareFetchData(false);
+        return prepareFetchData(true);
     }
 
     public boolean prepareFetchData(boolean forceUpdate) {
@@ -112,11 +116,13 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
 //            }
             //请求数据 只在进入时加载数据，不进行预加载数据
             //mLoadingWindow.showView();
+
+            mPage = 1;
             //获取持仓列表
             getChicangListAction();
 
 
-            LogUtilDebug.i("show", "FB懒加载数据");
+            LogUtilDebug.i("show", "持仓懒加载数据");
             isDataInitiated = true;
             return true;
         }
@@ -158,8 +164,12 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
         mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mPage = mPage + 1;
-                getChicangListAction();
+                // mPage = mPage + 1;
+                if (mDataList == null || mDataList.size() < 10) {
+                    mRefreshListView.setNoMore(true);
+                } else {
+                    getChicangListAction();
+                }
             }
         });
 
@@ -167,6 +177,12 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
 
     }
 
+   /* public void  refresh(){
+        if (mPageView != null){
+            mPageView.setEnabled(true);
+        }
+
+    }*/
 
 
     private void getChicangListAction() {
@@ -210,9 +226,6 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
     }
 
 
-
-
-
     @Override
     public void showProgress() {
         mLoadingWindow.showView();
@@ -231,33 +244,31 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
             case MethodUrl.CHICANG_LIST:
                 switch (tData.get("code") + "") {
                     case "0":
-                        if (!UtilTools.empty(tData.get("data")+"")){
+                        if (!UtilTools.empty(tData.get("data") + "")) {
                             Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
                             if (!UtilTools.empty(mapData)) {
-                                List<Map<String,Object>> list = (List<Map<String, Object>>) mapData.get("list");
-
-                                LogUtilDebug.i("show","list:"+list.size());
-                                if (!UtilTools.empty(mapData.get("page_mum")+"")){
-                                    //maxPage = Integer.parseInt(mapData.get("page_mum")+"");
+                                //List<Map<String,Object>> list = (List<Map<String, Object>>) mapData.get("list");
+                                mDataList = (List<Map<String, Object>>) mapData.get("list");
+                                if (!UtilTools.empty(mapData.get("page_mum") + "")) {
+                                    maxPage = Integer.parseInt(mapData.get("page_mum") + "");
                                 }
 
-                                if (!UtilTools.empty(list) && list.size() > 0) {
+                                if (!UtilTools.empty(mDataList) && mDataList.size() > 0) {
                                     for (Map<String, Object> map : mDataList) {
                                         map.put("kind", "0");
                                     }
-                                    if (mPage == 1){
-                                        mDataList.clear();
-                                    }
-                                    mDataList.addAll(list);
                                     mPageView.showContent();
+                                    dealAllIv.setVisibility(View.VISIBLE);
                                     responseData1();
                                     mRefreshListView.refreshComplete(10);
                                 } else {
                                     mPageView.showEmpty();
+                                    dealAllIv.setVisibility(View.GONE);
                                 }
 
                             } else {
                                 mPageView.showEmpty();
+                                dealAllIv.setVisibility(View.GONE);
                             }
                         }
 
@@ -280,6 +291,13 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
                 switch ((tData.get("code") + "")) {
                     case "0":
                         showToastMsg("平仓成功");
+                        if (shouMoneyListAdapter.getDataList().size() % 10 == 1) {
+                            //撤销之前为11,21...撤销成功后,为10,20,分页加载需要减去1
+                            if (mPage > 1) {
+                                mPage = mPage - 1;
+                            }
+
+                        }
                         getChicangListAction();
                         break;
                     case "1":
@@ -297,15 +315,6 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
                 break;
 
 
-            case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
-                MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
-                mIsRefreshToken = false;
-                switch (mRequestTag) {
-                    case MethodUrl.shoumoneyList:
-                        //getShouMoneyInfoList();
-                        break;
-                }
-                break;
         }
     }
 
@@ -408,7 +417,7 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
 
             mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
             mRefreshListView.setPullRefreshEnabled(true);
-            mRefreshListView.setLoadMoreEnabled(false);
+            mRefreshListView.setLoadMoreEnabled(true);
 
             mRefreshListView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
             mRefreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
@@ -430,22 +439,38 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
 //                    .build();
 //            mRefreshListView.addItemDecoration(divider2);
         } else {
-           /* if (mPage == 1) {
-                mRepaymentAdapter.clear();
-            }*/
-//            shouMoneyListAdapter.clear();
-//            shouMoneyListAdapter.addAll(mDataList);
-//            shouMoneyListAdapter.notifyDataSetChanged();
-//            mLRecyclerViewAdapter1.notifyDataSetChanged();//必须调用此方法
-
-            shouMoneyListAdapter.clear();
+            if (mPage == 1) {
+                shouMoneyListAdapter.clear();
+            }
             shouMoneyListAdapter.addAll(mDataList);
-            mRefreshListView.setAdapter(mLRecyclerViewAdapter1);
+
+            shouMoneyListAdapter.notifyDataSetChanged();
+            mLRecyclerViewAdapter1.notifyDataSetChanged();
 
         }
 
         mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-        if (mDataList.size() < 10) {
+        mRefreshListView.refreshComplete(10);
+
+        if (mDataList == null && mDataList.size() < 10) {
+        } else {
+            if (mPage < maxPage) {
+                mPage++;
+            }
+
+        }
+
+        if (shouMoneyListAdapter.getDataList().size() <= 0) {
+            mPageView.showEmpty();
+            dealAllIv.setVisibility(View.GONE);
+            LogUtilDebug.i("show", "******************** mPageView.showEmpty()");
+
+        } else {
+            mPageView.showContent();
+            dealAllIv.setVisibility(View.VISIBLE);
+            LogUtilDebug.i("show", "******************** mPageView.showContent()");
+        }
+     /*   if (mDataList.size() < 10) {
             mRefreshListView.setNoMore(true);
         } else {
             mRefreshListView.setNoMore(false);
@@ -455,19 +480,10 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
             mPageView.showEmpty();
         } else {
             mPageView.showContent();
-        }
+        }*/
+
 
         shouMoneyListAdapter.setmCallBack(new OnChildClickListener() {
-            @Override
-            public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-                id = mParentMap.get("id") + "";
-
-
-            }
-        });
-
-
-      /*  shouMoneyListAdapter.setmCallBack(new OnChildClickListener() {
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
                 LogUtilDebug.i("show", "itemClick()");
@@ -498,39 +514,14 @@ public class ChiCangFragment extends BasicFragment implements RequestView, ReLoa
                         sureOrNoDialog.setCancelable(true);
 
                         break;
-                    case "1": //撤销
-                        sureOrNoDialog = new SureOrNoDialog(getActivity(), true);
-                        sureOrNoDialog.initValue("提示", "是否确定撤销？");
-                        sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                switch (v.getId()) {
-                                    case R.id.cancel:
-                                        sureOrNoDialog.dismiss();
-                                        break;
-                                    case R.id.confirm:
-                                        sureOrNoDialog.dismiss();
-                                        cheXiaoAction(mParentMap);
-                                        break;
-                                }
-                            }
-                        });
-                        sureOrNoDialog.show();
-                        sureOrNoDialog.setCanceledOnTouchOutside(false);
-                        sureOrNoDialog.setCancelable(true);
 
-                        break;
-                    case "2":
-
-                        break;
                 }
 
 
             }
-        });*/
+        });
 
     }
-
 
 
 }
