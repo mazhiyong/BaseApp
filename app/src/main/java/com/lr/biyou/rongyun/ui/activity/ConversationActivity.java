@@ -1,9 +1,11 @@
 package com.lr.biyou.rongyun.ui.activity;
 
 import android.animation.Animator;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -17,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -56,6 +59,7 @@ import com.lr.biyou.rongyun.viewmodel.ConversationViewModel;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle2.activity.ChatItemActivity;
 import com.lr.biyou.ui.moudle2.activity.GroupChatItemActivity;
+import com.lr.biyou.ui.moudle2.activity.SelectContractListActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.tool.AnimUtil;
 import com.lr.biyou.utils.tool.JSONUtil;
@@ -66,6 +70,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -73,11 +78,19 @@ import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.callkit.util.SPUtils;
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.RongKitIntent;
+import io.rong.imkit.mention.RongMentionManager;
+import io.rong.imlib.IRongCallback;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.MentionedInfo;
+import io.rong.imlib.model.Message;
+import io.rong.imlib.model.UserInfo;
+import io.rong.message.TextMessage;
 
 /**
  * 会话页面
@@ -100,12 +113,15 @@ public class ConversationActivity extends BasicActivity {
     LinearLayout rightLay;
     @BindView(R.id.divide_line)
     View divideLine;
+    @BindView(R.id.rl_lay)
+    RelativeLayout rlLay;
     private String TAG = ConversationActivity.class.getSimpleName();
     private ConversationFragmentEx fragment;
     private AnnouceView annouceView;
     private ConversationViewModel conversationViewModel;
     private String title;
     private int screenCaptureStatus;
+
     /**
      * 对方id
      */
@@ -114,7 +130,13 @@ public class ConversationActivity extends BasicActivity {
     public String Id;
 
     public String targetId2;
-    private  Map<Object, Object> mapMessage;
+    private Map<Object, Object> mapMessage;
+
+    //艾特群成员
+    private final int REQUEST_AI_TE = 99;
+
+    //群组成员
+    private List<Map<String, Object>> memberList;
     /**
      * 会话类型
      */
@@ -142,21 +164,20 @@ public class ConversationActivity extends BasicActivity {
         mRequestTag = MethodUrl.CHAT_TIME_LONG;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(ConversationActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(ConversationActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
-        map.put("token",MbsConstans.ACCESS_TOKEN);
+        map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_TIME_LONG, map);
     }
 
 
-
-
-
     @Override
     public int getContentView() {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         return R.layout.conversation_activity_conversation;
     }
+
 
     @Override
     public void init() {
@@ -182,7 +203,7 @@ public class ConversationActivity extends BasicActivity {
         title = intent.getData().getQueryParameter("title");
 
         titleText.setText(title);
-        titleText.setCompoundDrawables(null,null,null,null);
+        titleText.setCompoundDrawables(null, null, null, null);
 
         rightImg.setVisibility(View.VISIBLE);
         rightImg.setImageResource(R.drawable.icon2_gengduo);
@@ -191,6 +212,9 @@ public class ConversationActivity extends BasicActivity {
         initViewModel();
 
         mAnimUtil = new AnimUtil();
+
+        LogUtilDebug.i("show", "状态栏高度:" + UtilTools.getStatusBarHeight());
+
 
         //根据rc_id查询用户本地id
         getidFromRcidAction();
@@ -201,7 +225,17 @@ public class ConversationActivity extends BasicActivity {
         }
 
 
+
     }
+
+
+
+
+
+
+
+
+
 
 
     @Override
@@ -223,7 +257,7 @@ public class ConversationActivity extends BasicActivity {
             screenCaptureUtil.unRegister();
         }
 
-        if (handler2 != null && cnyRunnable != null){
+        if (handler2 != null && cnyRunnable != null) {
             handler2.removeCallbacks(cnyRunnable);
         }
     }
@@ -330,7 +364,7 @@ public class ConversationActivity extends BasicActivity {
                     } else {
                         titleResId = R.string.seal_conversation_title_defult;
                     }
-                   // getTitleBar().setTitle(titleResId);
+                    // getTitleBar().setTitle(titleResId);
 
                 } else {
                     //getTitleBar().setTitle(title);
@@ -352,7 +386,7 @@ public class ConversationActivity extends BasicActivity {
                         titleText.setText(title);
                     } else {
                         TypingInfo.Typing typing = typingInfo.typingList.get(typingInfo.typingList.size() - 1);
-                       // getTitleBar().setType(SealTitleBar.Type.TYPING);
+                        // getTitleBar().setType(SealTitleBar.Type.TYPING);
                         if (typing.type == TypingInfo.Typing.Type.text) {
                             //getTitleBar().setTyping(R.string.seal_conversation_remote_side_is_typing);
                             titleText.setText(R.string.seal_conversation_remote_side_is_typing);
@@ -370,12 +404,13 @@ public class ConversationActivity extends BasicActivity {
             @Override
             public void onChanged(String s) {
                 // 跳转选择界面
-                /*Intent intent = new Intent(RongContext.getInstance(), SelectContractListActivity.class);
-                intent.putExtra("conversationType", conversationType.getValue());
-                intent.putExtra("targetId", targetId);
-                intent.putExtra("TYPE","1");
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);*/
+                Intent intent = new Intent(RongContext.getInstance(), SelectContractListActivity.class);
+                intent.putExtra("TYPE", "1");
+                intent.putExtra("DATA", (Serializable) memberList);
+                startActivityForResult(intent, REQUEST_AI_TE);
+                startActivity(intent);
+
+
             }
         });
 
@@ -563,7 +598,7 @@ public class ConversationActivity extends BasicActivity {
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("rc_id", targetId);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_QUERY_ID, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_QUERY_ID, map);
     }
 
     /**
@@ -593,28 +628,29 @@ public class ConversationActivity extends BasicActivity {
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("id", Id);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_FRIEDN_INFO, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_FRIEDN_INFO, map);
     }
 
 
-    public void sendMessageAction(String text){
+    public void sendMessageAction(String text) {
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(ConversationActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("type", "1");
-        map.put("content",text+"");
-        map.put("receiver_id",Id);
+        map.put("content", text + "");
+        map.put("receiver_id", Id);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_SEND_NEWS, map);
     }
 
 
-    String conText ;
+    String conText;
     String conId;
     Conversation.ConversationType conType;
-    public void sendGroupMessageAction(String text, String ConId, Conversation.ConversationType ConType){
+
+    public void sendGroupMessageAction(String text, String ConId, Conversation.ConversationType ConType) {
         conText = text;
         conId = ConId;
         conType = ConType;
@@ -623,13 +659,11 @@ public class ConversationActivity extends BasicActivity {
             MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(ConversationActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("content",text);
-        map.put("group_id",targetId);
+        map.put("content", text);
+        map.put("group_id", targetId);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_SEND_NEWS, map);
     }
-
-
 
 
     @Override
@@ -656,7 +690,7 @@ public class ConversationActivity extends BasicActivity {
 
                     case "1": //token过期
                         closeAllActivity();
-                        Intent intent = new Intent(ConversationActivity.this, com.lr.biyou.ui.moudle.activity.LoginActivity.class);
+                        Intent intent = new Intent(ConversationActivity.this, LoginActivity.class);
                         startActivity(intent);
                         break;
                 }
@@ -665,7 +699,7 @@ public class ConversationActivity extends BasicActivity {
             case MethodUrl.CHAT_GROUP_SEND_NEWS:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
-                         /*TextMessage textMessage = TextMessage.obtain(conText);
+                        TextMessage textMessage = TextMessage.obtain(conText);
                         MentionedInfo mentionedInfo = RongMentionManager.getInstance().onSendButtonClick();
                         if (mentionedInfo != null) {
                             if (mentionedInfo.getMentionedUserIdList().contains("-1")) {
@@ -676,8 +710,8 @@ public class ConversationActivity extends BasicActivity {
                             textMessage.setMentionedInfo(mentionedInfo);
                         }
 
-                        io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(conId, conType, textMessage);
-                        RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);*/
+                        Message message = Message.obtain(conId, conType, textMessage);
+                        RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg") + "");
@@ -685,7 +719,7 @@ public class ConversationActivity extends BasicActivity {
 
                     case "1": //token过期
                         closeAllActivity();
-                        Intent intent = new Intent(ConversationActivity.this, com.lr.biyou.ui.moudle.activity.LoginActivity.class);
+                        Intent intent = new Intent(ConversationActivity.this, LoginActivity.class);
                         startActivity(intent);
                         break;
                 }
@@ -706,7 +740,7 @@ public class ConversationActivity extends BasicActivity {
 
                     case "1": //token过期
                         closeAllActivity();
-                        Intent intent = new Intent(ConversationActivity.this, com.lr.biyou.ui.moudle.activity.LoginActivity.class);
+                        Intent intent = new Intent(ConversationActivity.this, LoginActivity.class);
                         startActivity(intent);
                         break;
                 }
@@ -716,10 +750,10 @@ public class ConversationActivity extends BasicActivity {
                     case "0": //请求成功
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             Map<String, Object> map = (Map<String, Object>) tData.get("data");
-                            if (!UtilTools.empty(map)){
-                                IMManager.getInstance().updateUserInfoCache(map.get("rc_id") +"",
-                                        map.get("name")+"",
-                                        Uri.parse(map.get("portrait")+""));
+                            if (!UtilTools.empty(map)) {
+                                IMManager.getInstance().updateUserInfoCache(map.get("rc_id") + "",
+                                        map.get("name") + "",
+                                        Uri.parse(map.get("portrait") + ""));
                             }
                         }
 
@@ -752,13 +786,13 @@ public class ConversationActivity extends BasicActivity {
                 }
                 break;
 
-            case  MethodUrl.CHAT_QUERY_USERINFO:
+            case MethodUrl.CHAT_QUERY_USERINFO:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
-                        if (!UtilTools.empty(tData.get("data")+"")){
-                            Map<String,Object> map = (Map<String, Object>) tData.get("data");
-                            mapMessage.put("name",map.get("name")+"");
-                            mapMessage.put("image",map.get("portrait")+"");
+                        if (!UtilTools.empty(tData.get("data") + "")) {
+                            Map<String, Object> map = (Map<String, Object>) tData.get("data");
+                            mapMessage.put("name", map.get("name") + "");
+                            mapMessage.put("image", map.get("portrait") + "");
                         }
                         initPopupWindow();
                         break;
@@ -780,9 +814,9 @@ public class ConversationActivity extends BasicActivity {
                     case "0":
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             Map<String, Object> map = (Map<String, Object>) tData.get("data");
-                            if (!UtilTools.empty(map) && !UtilTools.empty(map.get("member")+"")) {
+                            if (!UtilTools.empty(map) && !UtilTools.empty(map.get("member") + "")) {
                                 // 更新 IMKit 缓存群组成员数据
-                                List<Map<String,Object>> memberList =  (List<Map<String, Object>>) map.get("member");
+                                memberList = (List<Map<String, Object>>) map.get("member");
                                /* if (memberList != null && memberList.size()> 0){
                                     for (Map<String,Object> mapMember:memberList){
                                         IMManager.getInstance().updateGroupMemberInfoCache(targetId, mapMember.get("rc_id")+"", mapMember.get("name")+"");
@@ -791,7 +825,6 @@ public class ConversationActivity extends BasicActivity {
                                 DbManager dbManager = DbManager.getInstance(ConversationActivity.this);
                                 GroupMemberDao groupMemberDao = dbManager.getGroupMemberDao();
                                 UserDao userDao = dbManager.getUserDao();
-
 
 
                                 new Thread(new Runnable() {
@@ -807,59 +840,58 @@ public class ConversationActivity extends BasicActivity {
 
                                 List<GroupMemberInfoEntity> groupEntityList = new ArrayList<>();
                                 List<com.lr.biyou.rongyun.db.model.UserInfo> newUserList = new ArrayList<>();
-                                if (memberList != null && memberList.size()> 0){
-                                    for (Map<String,Object> mapMember:memberList){
-                                            UserSimpleInfo user = new UserSimpleInfo();
-                                            user.setId(mapMember.get("rc_id")+"");
-                                            user.setName(mapMember.get("name")+"");
-                                            user.setPortraitUri(mapMember.get("portrait")+"");
+                                if (memberList != null && memberList.size() > 0) {
+                                    for (Map<String, Object> mapMember : memberList) {
+                                        UserSimpleInfo user = new UserSimpleInfo();
+                                        user.setId(mapMember.get("rc_id") + "");
+                                        user.setName(mapMember.get("name") + "");
+                                        user.setPortraitUri(mapMember.get("portrait") + "");
 
-                                            GroupMemberInfoEntity groupEntity = new GroupMemberInfoEntity();
-                                            groupEntity.setGroupId(targetId);
+                                        GroupMemberInfoEntity groupEntity = new GroupMemberInfoEntity();
+                                        groupEntity.setGroupId(targetId);
 
-                                            groupEntity.setNickName("");
-                                            groupEntity.setUserId(user.getId());
-                                            //groupEntity.setRole("");
-                                            //groupEntity.setCreateTime(info.getCreatedTime());
-                                            //groupEntity.setUpdateTime(info.getUpdatedTime());
-                                            //groupEntity.setJoinTime(info.getTimestamp());
-                                            groupEntityList.add(groupEntity);
-
-
-                                            // 更新 IMKit 缓存群组成员数据
-                                            IMManager.getInstance().updateGroupMemberInfoCache(targetId, user.getId(), user.getName());
-                                            IMManager.getInstance().updateUserInfoCache(user.getId(), user.getName(), Uri.parse(user.getPortraitUri()));
+                                        groupEntity.setNickName("");
+                                        groupEntity.setUserId(user.getId());
+                                        //groupEntity.setRole("");
+                                        //groupEntity.setCreateTime(info.getCreatedTime());
+                                        //groupEntity.setUpdateTime(info.getUpdatedTime());
+                                        //groupEntity.setJoinTime(info.getTimestamp());
+                                        groupEntityList.add(groupEntity);
 
 
-                                            if (userDao != null) {
-                                                // 更新已存在的用户信息
-                                                String portraitUri = user.getPortraitUri();
-                                                Log.i("show","头像Uri:"+portraitUri);
+                                        // 更新 IMKit 缓存群组成员数据
+                                        IMManager.getInstance().updateGroupMemberInfoCache(targetId, user.getId(), user.getName());
+                                        IMManager.getInstance().updateUserInfoCache(user.getId(), user.getName(), Uri.parse(user.getPortraitUri()));
 
-                                                // 当没有头像时生成默认头像
-                                                if (TextUtils.isEmpty(portraitUri)) {
-                                                    portraitUri = RongGenerate.generateDefaultAvatar(ConversationActivity.this, user.getId(), user.getName());
-                                                    user.setPortraitUri(portraitUri);
-                                                }
 
-                                            }else {
-                                                Log.i("show","头像Uri&&&"+user.getPortraitUri());
+                                        if (userDao != null) {
+                                            // 更新已存在的用户信息
+                                            String portraitUri = user.getPortraitUri();
+                                            Log.i("show", "头像Uri:" + portraitUri);
 
-                                                new Thread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                            com.lr.biyou.rongyun.db.model.UserInfo userInfo = new com.lr.biyou.rongyun.db.model.UserInfo();
-                                                            userInfo.setId(user.getId());
-                                                            userInfo.setName(user.getName());
-                                                            userInfo.setNameSpelling(SearchUtils.fullSearchableString(user.getName()));
-                                                            userInfo.setPortraitUri(user.getPortraitUri());
-                                                    }
-                                                }).start();
+                                            // 当没有头像时生成默认头像
+                                            if (TextUtils.isEmpty(portraitUri)) {
+                                                portraitUri = RongGenerate.generateDefaultAvatar(ConversationActivity.this, user.getId(), user.getName());
+                                                user.setPortraitUri(portraitUri);
                                             }
-                                        }
 
-                                        //IMManager.getInstance().updateGroupMemberInfoCache(targetId, mapMember.get("rc_id")+"", mapMember.get("name")+"");
+                                        } else {
+                                            Log.i("show", "头像Uri&&&" + user.getPortraitUri());
+                                            new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    com.lr.biyou.rongyun.db.model.UserInfo userInfo = new com.lr.biyou.rongyun.db.model.UserInfo();
+                                                    userInfo.setId(user.getId());
+                                                    userInfo.setName(user.getName());
+                                                    userInfo.setNameSpelling(SearchUtils.fullSearchableString(user.getName()));
+                                                    userInfo.setPortraitUri(user.getPortraitUri());
+                                                }
+                                            }).start();
+                                        }
                                     }
+
+                                    //IMManager.getInstance().updateGroupMemberInfoCache(targetId, mapMember.get("rc_id")+"", mapMember.get("name")+"");
+                                }
                                 // 更新群组成员
 
                                 new Thread(new Runnable() {
@@ -868,7 +900,6 @@ public class ConversationActivity extends BasicActivity {
                                         if (groupMemberDao != null) {
                                             groupMemberDao.insertGroupMemberList(groupEntityList);
                                         }
-
                                         if (userDao != null) {
                                             // 插入新的用户信息
                                             userDao.insertUserListIgnoreExist(newUserList);
@@ -879,7 +910,7 @@ public class ConversationActivity extends BasicActivity {
 
                             }
 
-                            }
+                        }
                         break;
                     case "1":
                         closeAllActivity();
@@ -897,11 +928,10 @@ public class ConversationActivity extends BasicActivity {
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
-        dealFailInfo(map,mType);
+        dealFailInfo(map, mType);
     }
 
     /**
-     *
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -912,7 +942,7 @@ public class ConversationActivity extends BasicActivity {
                 break;
             case 3://弹窗
                 mapMessage = event.getMessage();
-                targetId2 = mapMessage.get("id")+"";
+                targetId2 = mapMessage.get("id") + "";
                 getUserInfoAction(targetId2);
                 break;
 
@@ -931,7 +961,7 @@ public class ConversationActivity extends BasicActivity {
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("rc_id", targetId);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap,MethodUrl.CHAT_QUERY_USERINFO, map);
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_QUERY_USERINFO, map);
     }
 
 
@@ -948,25 +978,25 @@ public class ConversationActivity extends BasicActivity {
             mConditionDialog = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             mConditionDialog.setClippingEnabled(false);
             initConditionDialog(popView);
-            int screenWidth=UtilTools.getScreenWidth(ConversationActivity.this);
+            int screenWidth = UtilTools.getScreenWidth(ConversationActivity.this);
             //int screenHeight=UtilTools.getScreenHeight(getActivity());
-            mConditionDialog.setWidth((int) (0.8f*screenWidth));
-            mConditionDialog.setHeight(UtilTools.dip2px(ConversationActivity.this, 50));
+            mConditionDialog.setWidth((int) (0.8f * screenWidth));
+            mConditionDialog.setHeight(UtilTools.dip2px(ConversationActivity.this, 55));
 
             //设置background后在外点击才会消失
             mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(ConversationActivity.this, 5)));
             //mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
             //自定义动画
-            //mConditionDialog.setAnimationStyle(R.style.PopupAnimation);
-            mConditionDialog.setAnimationStyle(android.R.style.Animation_Activity);//使用系统动画
+            mConditionDialog.setAnimationStyle(R.style.popWindowStyle);
+            //mConditionDialog.setAnimationStyle(android.R.style.Animation_Activity);//使用系统动画
             mConditionDialog.update();
             mConditionDialog.setTouchable(true);
             mConditionDialog.setFocusable(true);
             //popView.requestFocus();//pop设置不setBackgroundDrawable情况，把焦点给popView，添加popView.setOnKeyListener。可实现点击外部不消失，点击反键才消失
             //			mConditionDialog.showAtLocation(mCityTv, Gravity.TOP|Gravity.RIGHT, 0, 0); //设置layout在PopupWindow中显示的位置
             //mConditionDialog.showAtLocation(getActivity().getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
-            int offX = (UtilTools.getScreenWidth(ConversationActivity.this)-mConditionDialog.getWidth())/2;
-            mConditionDialog.showAsDropDown(divideLine,offX , UtilTools.dip2px(ConversationActivity.this,10), Gravity.LEFT);
+            int offX = (UtilTools.getScreenWidth(ConversationActivity.this) - mConditionDialog.getWidth()) / 2;
+            mConditionDialog.showAsDropDown(divideLine, offX, UtilTools.dip2px(ConversationActivity.this, 10), Gravity.LEFT);
             //toggleBright();
             mConditionDialog.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -977,8 +1007,8 @@ public class ConversationActivity extends BasicActivity {
         } else {
 
             //mConditionDialog.showAtLocation(getActivity().getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
-            int offX = (UtilTools.getScreenWidth(ConversationActivity.this)-mConditionDialog.getWidth())/2;
-            mConditionDialog.showAsDropDown(divideLine, offX, UtilTools.dip2px(ConversationActivity.this,10), Gravity.LEFT);
+            int offX = (UtilTools.getScreenWidth(ConversationActivity.this) - mConditionDialog.getWidth()) / 2;
+            mConditionDialog.showAsDropDown(divideLine, offX, UtilTools.dip2px(ConversationActivity.this, 10), Gravity.LEFT);
             //toggleBright();
         }
 
@@ -1023,7 +1053,7 @@ public class ConversationActivity extends BasicActivity {
 
     private void initConditionDialog(View view) {
         seeTV = view.findViewById(R.id.see_tv);
-        nameTV= view.findViewById(R.id.name_tv);
+        nameTV = view.findViewById(R.id.name_tv);
         contentTV = view.findViewById(R.id.content_tv);
         headIv = view.findViewById(R.id.head_iv);
 
@@ -1048,18 +1078,19 @@ public class ConversationActivity extends BasicActivity {
     }
 
     private CountTimer countTimer;
+
     private void updata(Map<Object, Object> mapMessage) {
-        GlideUtils.loadCircleImage(ConversationActivity.this,mapMessage.get("image")+"",headIv);
-        nameTV.setText(mapMessage.get("name")+"");
-        LogUtilDebug.i("show","content:"+mapMessage.get("content")+"");
-        switch (mapMessage.get("type")+""){
+        GlideUtils.loadCircleImage(ConversationActivity.this, mapMessage.get("image") + "", headIv);
+        nameTV.setText(mapMessage.get("name") + "");
+        LogUtilDebug.i("show", "content:" + mapMessage.get("content") + "");
+        switch (mapMessage.get("type") + "") {
             case "0": //text
-                if (!UtilTools.empty(mapMessage.get("content")+"")){
-                    Map<String,Object> mapContent = JSONUtil.getInstance().jsonMap(mapMessage.get("content")+"");
-                    if (!UtilTools.empty(mapContent)){
-                        LogUtilDebug.i("show","mapContent22:"+mapContent.toString());
-                        contentTV.setText(mapContent.get("content")+"");
-                        LogUtilDebug.i("show","Content:"+mapContent.get("content")+"");
+                if (!UtilTools.empty(mapMessage.get("content") + "")) {
+                    Map<String, Object> mapContent = JSONUtil.getInstance().jsonMap(mapMessage.get("content") + "");
+                    if (!UtilTools.empty(mapContent)) {
+                        LogUtilDebug.i("show", "mapContent22:" + mapContent.toString());
+                        contentTV.setText(mapContent.get("content") + "");
+                        LogUtilDebug.i("show", "Content:" + mapContent.get("content") + "");
                     }
                 }
                 break;
@@ -1074,30 +1105,40 @@ public class ConversationActivity extends BasicActivity {
                 break;
         }
         cancelTimer();
-        countTimer = new CountTimer(2500, 1000);
+        countTimer = new CountTimer(2000, 1500);
         countTimer.start();
 
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
     private class CountTimer extends CountDownTimer {
         public CountTimer(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
         }
+
         @Override
         public void onFinish() {
             cancel();
         }
+
         @Override
         public void onTick(long millisUntilFinished) {
+            LogUtilDebug.i("show", "milll:" + millisUntilFinished);
             if (millisUntilFinished < 1000 && mConditionDialog.isShowing()) {
-               mConditionDialog.dismiss();
+                mConditionDialog.dismiss();
             }
         }
     }
 
 
-    public void cancelTimer(){
-        if (countTimer != null){
+    public void cancelTimer() {
+        if (countTimer != null) {
             countTimer.cancel();
             countTimer = null;
         }
@@ -1107,7 +1148,22 @@ public class ConversationActivity extends BasicActivity {
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_AI_TE && resultCode == Activity.RESULT_OK) {
+            if (data.getExtras() != null) {
+                Map<String, Object> mapMember = (Map<String, Object>) data.getExtras().get("DATA");
+                if (!UtilTools.empty(mapMember)) {
+                    UserInfo userInfo = new UserInfo(mapMember.get("rc_id") + "", mapMember.get("name") + "", Uri.parse(mapMember.get("portrait") + ""));
+                    RongMentionManager.getInstance().mentionMember(userInfo);
+                }
 
+
+            }
+
+        }
+    }
 
     @Override
     protected void onDestroy() {
@@ -1121,9 +1177,6 @@ public class ConversationActivity extends BasicActivity {
 
         cancelTimer();
     }
-
-
-
 
 
 }

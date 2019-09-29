@@ -640,12 +640,12 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
     @Override
     public void showProgress() {
-        mLoadingWindow.showView();
+        //mLoadingWindow.showView();
     }
 
     @Override
     public void disimissProgress() {
-        mLoadingWindow.cancleView();
+        //mLoadingWindow.cancleView();
     }
 
     @Override

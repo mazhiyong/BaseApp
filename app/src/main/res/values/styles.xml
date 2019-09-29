@@ -88,7 +88,10 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-
+    <style name="popWindowStyle">
+        <item name="android:windowEnterAnimation">@anim/base_slide_up_in</item>
+        <item name="android:windowExitAnimation">@anim/base_slide_up_out</item>
+    </style>
     <style name="page_view_text">
         <item name="android:textColor">@color/page_view_text_color</item>
         <item name="android:textSize">14sp</item>

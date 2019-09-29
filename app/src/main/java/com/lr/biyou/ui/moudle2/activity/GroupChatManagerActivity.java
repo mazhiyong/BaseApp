@@ -403,12 +403,12 @@ public class GroupChatManagerActivity extends BasicActivity implements View.OnCl
      * @param isAdd
      */
     private void toMemberManage(boolean isAdd) {
-        if (isAdd) { //添加
+        if (isAdd) { //添加  从群成员中添加
             Intent intent = new Intent(this, SelectContractListActivity.class);
             intent.putExtra("TYPE", "3");
             intent.putExtra("DATA", (Serializable) memberList);
             startActivityForResult(intent, REQUEST_ADD_GROUP_MEMBER);
-        } else { //删除
+        } else { //删除 从管理员中删除
             Intent intent = new Intent(this, SelectContractListActivity.class);
             intent.putExtra("TYPE", "3");
             intent.putExtra("DATA", (Serializable) managerList);

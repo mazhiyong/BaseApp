@@ -261,26 +261,24 @@ public class ConversationFragmentEx extends ConversationFragment {
 
         ConversationActivity activity = (ConversationActivity) getActivity();
         if (!UtilTools.empty(activity)){
-            //发送消息(文本)
-            TextMessage textMessage = TextMessage.obtain(text);
-            MentionedInfo mentionedInfo = RongMentionManager.getInstance().onSendButtonClick();
-
-            if (mentionedInfo != null) {
-                if (mentionedInfo.getMentionedUserIdList().contains("-1")) {
-                    mentionedInfo.setType(MentionedInfo.MentionedType.ALL);
-                } else {
-                    mentionedInfo.setType(MentionedInfo.MentionedType.PART);
-                }
-                textMessage.setMentionedInfo(mentionedInfo);
-            }
-
-            io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(getTargetId(), getConversationType(), textMessage);
-            RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
-
             if (getConversationType() == Conversation.ConversationType.PRIVATE) {
                 //私聊发送消息
                 activity.sendMessageAction(text);
+                //发送消息(文本)
+                TextMessage textMessage = TextMessage.obtain(text);
+                MentionedInfo mentionedInfo = RongMentionManager.getInstance().onSendButtonClick();
 
+                if (mentionedInfo != null) {
+                    if (mentionedInfo.getMentionedUserIdList().contains("-1")) {
+                        mentionedInfo.setType(MentionedInfo.MentionedType.ALL);
+                    } else {
+                        mentionedInfo.setType(MentionedInfo.MentionedType.PART);
+                    }
+                    textMessage.setMentionedInfo(mentionedInfo);
+                }
+
+                io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(getTargetId(), getConversationType(), textMessage);
+                RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
 
             } else if (getConversationType()== Conversation.ConversationType.GROUP) {
                 //群聊设置发送消息(文本)

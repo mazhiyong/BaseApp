@@ -338,7 +338,17 @@ public class SelectContractListActivity extends BasicActivity implements Request
                             finish();
                         }
 
+
+
                         if (type.equals("5")){
+                            Intent intent = new Intent();
+                            intent.putExtra("DATA", (Serializable) mParentMap);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+
+
+                        if (type.equals("1")){
                             Intent intent = new Intent();
                             intent.putExtra("DATA", (Serializable) mParentMap);
                             setResult(RESULT_OK, intent);

@@ -637,11 +637,11 @@ public class GroupChatItemActivity extends BasicActivity implements View.OnClick
      * @param isAdd
      */
     private void toMemberManage(boolean isAdd) {
-        if (isAdd) { //添加
+        if (isAdd) { //添加 从好友列表中选择添加
             Intent intent = new Intent(this, SelectContractListActivity.class);
             intent.putExtra("TYPE", "2");
             startActivityForResult(intent, REQUEST_ADD_GROUP_MEMBER);
-        } else { //删除
+        } else { //删除 从群成员中删除
             Intent intent = new Intent(this, SelectContractListActivity.class);
             intent.putExtra("TYPE", "2");
             intent.putExtra("DATA", (Serializable) memberList);

@@ -1,6 +1,5 @@
 package com.lr.biyou.ui.moudle1.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.StringRes;
-import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -33,6 +31,7 @@ import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.ShowImageDialog;
+import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.rongyun.utils.qrcode.QRCodeUtils;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.UpdateNichengActivity;
@@ -198,14 +197,18 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                 overridePendingTransition(R.anim.zoomin, R.anim.zoomout);*/
                 break;
             case R.id.exit_tv:
-                new AlertDialog.Builder(this)
-                        .setCancelable(false)
-                        .setTitle(R.string.title_dialog)
-                        .setMessage("确定要退出登录吗？")
-                        .setPositiveButton(R.string.but_sure, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //logoutAction();
+
+                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(UserInfoActivity.this, true);
+                sureOrNoDialog.initValue("提示", "确定要退出登录吗？");
+                sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switch (v.getId()) {
+                            case R.id.cancel:
+                                sureOrNoDialog.dismiss();
+                                break;
+                            case R.id.confirm:
+                                sureOrNoDialog.dismiss();
                                 closeAllActivity();
                                 MbsConstans.USER_MAP = null;
                                 MbsConstans.RONGYUN_MAP = null;
@@ -216,16 +219,13 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                                 Intent intent = new Intent(UserInfoActivity.this, LoginActivity.class);
                                 startActivity(intent);
 
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .show();
-
-
+                                break;
+                        }
+                    }
+                });
+                sureOrNoDialog.show();
+                sureOrNoDialog.setCanceledOnTouchOutside(false);
+                sureOrNoDialog.setCancelable(true);
                 break;
         }
     }

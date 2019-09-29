@@ -32,6 +32,7 @@ import com.lr.biyou.ui.moudle3.adapter.ShouMoneyListAdapter;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,13 +55,17 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
 
     private int TYPE = 0;
     public LoadingWindow mLoadingWindow;
 
     private LRecyclerViewAdapter mLRecyclerViewAdapter1 = null;
 
-    private  ShouMoneyListAdapter shouMoneyListAdapter;
+    private ShouMoneyListAdapter shouMoneyListAdapter;
 
 
     private String mRequestTag = "";
@@ -71,7 +76,6 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
 
     private String symbol = "";
     private String direction = "1"; //0 买  1卖
-
 
 
     private int maxPage = 1;
@@ -150,6 +154,14 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         mRefreshListView.setLayoutManager(linearLayoutManager);
 
+      /*  recyclerView.setLayoutManager(linearLayoutManager);
+        mRefreshListView.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                showToastMsg("下拉刷新");
+            }
+        });
+*/
         //刷新
         mRefreshListView.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -175,8 +187,10 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
 
         setBarTextColor();
 
-    }
 
+
+
+    }
 
 
     private void getChengjiaoListAction() {
@@ -192,11 +206,6 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHENGJIAO_LIST, map);
     }
-
-
-
-
-
 
 
     @Override
@@ -217,12 +226,12 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
             case MethodUrl.CHENGJIAO_LIST:
                 switch (tData.get("code") + "") {
                     case "0":
-                        if (!UtilTools.empty(tData.get("data")+"")){
+                        if (!UtilTools.empty(tData.get("data") + "")) {
                             Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
                             if (!UtilTools.empty(mapData)) {
                                 mDataList = (List<Map<String, Object>>) mapData.get("list");
-                                if (!UtilTools.empty(mapData.get("page_mum")+"")){
-                                    maxPage = Integer.parseInt(mapData.get("page_mum")+"");
+                                if (!UtilTools.empty(mapData.get("page_mum") + "")) {
+                                    maxPage = Integer.parseInt(mapData.get("page_mum") + "");
                                 }
 
                                 if (!UtilTools.empty(mDataList) && mDataList.size() > 0) {
@@ -408,21 +417,21 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
         mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
         mRefreshListView.refreshComplete(10);
 
-        if (mDataList== null && mDataList.size() < 10) {
+        if (mDataList == null && mDataList.size() < 10) {
 
         } else {
-            if (mPage < maxPage ){
+            if (mPage < maxPage) {
                 mPage++;
             }
         }
 
         if (shouMoneyListAdapter.getDataList().size() <= 0) {
             mPageView.showEmpty();
-            LogUtilDebug.i("show","******************** mPageView.showEmpty()");
+            LogUtilDebug.i("show", "******************** mPageView.showEmpty()");
 
         } else {
             mPageView.showContent();
-            LogUtilDebug.i("show","******************** mPageView.showContent()");
+            LogUtilDebug.i("show", "******************** mPageView.showContent()");
         }
      /*   if (mDataList.size() < 10) {
             mRefreshListView.setNoMore(true);
@@ -444,7 +453,6 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
             }
         });
     }
-
 
 
 }

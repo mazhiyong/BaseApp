@@ -464,20 +464,25 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         mAppbarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                //折叠时
+                //折叠时顶部
                 if (verticalOffset == -appBarLayout.getTotalScrollRange()) {
-                    mPageView.setEnabled(true);
+                    //mPageView.setEnabled(true);
+                    //mPageView.setNestedScrollingEnabled(false);
+                    //coordintaorLay.setNestedScrollingEnabled(false);
+                    //LogUtilDebug.i("show","&&&&&&&&&&&&Nestscroll:"+coordintaorLay.onStartNestedScroll());
+                }else {
+                    LogUtilDebug.i("show","************Nestscroll:"+coordintaorLay.isNestedScrollingEnabled());
                 }
             }
         });
 
 
-      /*  CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) coordintaorLay.getLayoutParams();
+        /*CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) coordintaorLay.getLayoutParams();
         AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
         assert behavior != null;
         behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
             @Override
-            public boolean canDrag(@NotNull AppBarLayout appBarLayout) {
+            public boolean canDrag(AppBarLayout appBarLayout) {
                 return true;
             }
         });*/
