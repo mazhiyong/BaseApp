@@ -4,14 +4,13 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.KeyCharacterMap;
+import android.view.KeyEvent;
 import android.view.WindowInsets;
 import android.widget.LinearLayout;
-
 import androidx.annotation.RequiresApi;
-
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.UtilTools;
-
 public class WindowInsetsFrameLayout extends LinearLayout {
 
     private Context mContenx;
@@ -86,13 +85,13 @@ public class WindowInsetsFrameLayout extends LinearLayout {
             LogUtilDebug.i("show","window$$:"+insets.getSystemWindowInsetBottom());
             LogUtilDebug.i("show","windowAA:"+ UtilTools.getNavigationBarHeight(mContenx));
             if (insets.getSystemWindowInsetBottom()>0){ //键盘开启
-               /* if (UtilTools.isNavigationBarShow(mContenx)) {
+                boolean hasHomeKey = KeyCharacterMap.deviceHasKey(KeyEvent.KEYCODE_HOME);
+                if (!hasHomeKey) {
                     return super.onApplyWindowInsets(insets.replaceSystemWindowInsets(0, 0, 0, insets.getSystemWindowInsetBottom()-UtilTools.getNavigationBarHeight(mContenx)));
                 }else {
                     return super.onApplyWindowInsets(insets.replaceSystemWindowInsets(0, 0, 0, insets.getSystemWindowInsetBottom()));
-                }*/
-                return super.onApplyWindowInsets(insets.replaceSystemWindowInsets(0, 0, 0, insets.getSystemWindowInsetBottom()-UtilTools.getNavigationBarHeight(mContenx)));
-
+                }
+               // return super.onApplyWindowInsets(insets.replaceSystemWindowInsets(0, 0, 0, insets.getSystemWindowInsetBottom()-UtilTools.getNavigationBarHeight(mContenx)));
             }else { //键盘关闭
 
                 return super.onApplyWindowInsets(insets.replaceSystemWindowInsets(0, 0, 0, insets.getSystemWindowInsetBottom()));

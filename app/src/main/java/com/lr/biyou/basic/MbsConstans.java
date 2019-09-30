@@ -301,6 +301,7 @@ public class MbsConstans {
 		public static int UPDATE_USERINFO = 1;
 		public static int CLOSE_CONACTIVITY = 2;
 		public static int SHOW_WINDOW = 3;
+		public static int UPDATE_BBFRAGMENT = 4;
 	}
 
 	public static String APP_ID = "jpc4fc50f01af247bf";

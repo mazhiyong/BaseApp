@@ -661,9 +661,12 @@ public class MainActivity extends BasicActivity implements RequestView {
         rlay3.performClick();
     }
 
-    public void toBBFragment(){
+    public void toBBFragment(String selectArea,String slectSymbol,String type){
         rlay4.performClick();
         mRepaymentFragment.TYPE = 0;
+        mRepaymentFragment.selectSymbol = slectSymbol;
+        mRepaymentFragment.selectArea = selectArea;
+        mRepaymentFragment.buySell = type;
     }
 
     public void toFBFragment(){

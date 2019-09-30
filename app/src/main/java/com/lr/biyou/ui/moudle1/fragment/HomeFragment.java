@@ -3,6 +3,7 @@ package com.lr.biyou.ui.moudle1.fragment;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -68,6 +69,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.app.Activity.RESULT_OK;
 
 public class HomeFragment extends BasicFragment implements RequestView, ReLoadingData {
 
@@ -171,6 +174,11 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
 
     private int mPage = 1;
     private Handler handler = new Handler();
+
+    private final int QUEST_CODE = 500;
+    private String selectArea = "";
+    private String selectSymbol = "";
+
 
     //HTTP请求  轮询
     private Runnable cnyRunnable = new Runnable() {
@@ -438,10 +446,12 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                                     @Override
                                     public void onItemClickListener(View view, int position) {
                                         Intent intent1 = new Intent(getActivity(), CoinInfoDetailActivity.class);
-                                        intent1.putExtra("symbol", finalRankList.get(position).get("name")+"");
-                                        intent1.putExtra("area", finalRankList.get(position).get("area")+"");
-                                        intent1.putExtra("from","1");
-                                        startActivity(intent1);
+                                        selectSymbol = finalRankList.get(position).get("name")+"";
+                                        selectArea = finalRankList.get(position).get("area")+"";
+                                        intent1.putExtra("symbol",selectSymbol );
+                                        intent1.putExtra("area", selectArea);
+                                        intent1.putExtra("from","2");
+                                        startActivityForResult(intent1,QUEST_CODE);
                                     }
                                 });
 
@@ -460,12 +470,13 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                                 mainCoinAdapter.setItemClickListener(new MainCoinAdapter.ItemClickListener() {
                                     @Override
                                     public void onItemClickListener(Map<String, Object> listUpBean) {
-
                                         Intent intent1 = new Intent(getActivity(), CoinInfoDetailActivity.class);
-                                        intent1.putExtra("symbol", listUpBean.get("name")+"");
-                                        intent1.putExtra("area", listUpBean.get("area")+"");
-                                        intent1.putExtra("from","1");
-                                        startActivity(intent1);
+                                        selectSymbol = listUpBean.get("name")+"";
+                                        selectArea = listUpBean.get("area")+"";
+                                        intent1.putExtra("symbol",selectSymbol);
+                                        intent1.putExtra("area",selectArea);
+                                        intent1.putExtra("from","2");
+                                        startActivityForResult(intent1,QUEST_CODE);
                                     }
                                 });
                             }
@@ -546,7 +557,7 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
                 break;
             case R.id.to_bb_lay: //币币交易
                 if (activity != null){
-                    activity.toBBFragment();
+                    activity.toBBFragment("USDT","BTC","1");
                 }
                 break;
             case R.id.fast_buy_lay: //快捷购买
@@ -775,6 +786,24 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         if (handler != null && cnyRunnable != null){
             handler.removeCallbacks(cnyRunnable);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == QUEST_CODE) {
+                LogUtilDebug.i("show","HomeFragment onActivityResult()");
+                Bundle bundle = data.getExtras();
+                if (bundle != null){
+                    String buySell = bundle.getString("buySell");
+                    MainActivity activity = (MainActivity) getActivity();
+                        activity.toBBFragment(selectArea,selectSymbol,buySell);
+                    }
+
+                }
+
+            }
     }
 
 

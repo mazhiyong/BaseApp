@@ -215,8 +215,11 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private KindSelectDialog mDialog;
 
     private String mRequestTag = "";
-    private String area ="USDT";
-    private String symbol ="BTC";
+    public String area ="USDT";
+    public String symbol ="BTC";
+    public String buysell = "1";
+    private String buysell2 = "0";
+
 
 
 
@@ -338,7 +341,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             //handler.post(runnable);
 
             handler.post(cnyRunnable);
-            LogUtilDebug.i("show", "BB懒加载数据");
+            LogUtilDebug.i("show", "BB懒加载数据,每次进入界面加载");
             isDataInitiated = true;
             return true;
         }
@@ -390,6 +393,14 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 //        mTitleText.setText(getResources().getString(R.string.bottom_heyue));
 //        mLeftBackLay.setVisibility(View.GONE);
         //wsManager = BasicApplication.getWsManager();
+
+     /*   if (buysell.equals("1")){ //买入
+            rbBuy.setChecked(true);
+        }else {  //卖出
+            rbSell.setChecked(true);
+        }
+
+        selectTv.setText(area + "/" + symbol);*/
 
         mAnimUtil = new AnimUtil();
 
@@ -541,6 +552,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 }
             }
         });
+
+
 
     }
 
@@ -1461,13 +1474,37 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     };
 
 
-    public void restartWs() {
+
+    public void restartWs(String selectArea,String selectSymbol,String buySell) {
        /* handler.removeCallbacks(runnable);
         setWebsocketListener();
         handler.post(runnable);*/
+
+       /*area = selectArea;
+       symbol = selectSymbol;
+*/
+       /* if (buySell.equals("1")){ //买入
+            rbBuy.setChecked(true);
+        }else {  //卖出
+            rbSell.setChecked(true);
+        }*/
+
+    /*    //查询交易区列表项
+        getAreaListItemAction();
+
+        //查询委托单
+        getEntrustListAction();
+
+        //账户当前交易区交易币可用
+        getCurAreaAccountAction();*/
+
        if (handler != null && cnyRunnable!= null){
            handler.post(cnyRunnable);
        }
+        LogUtilDebug.i("show", "BB轮询数据,每次一进入界面开始轮询");
+
+
+
 
     }
 
@@ -1492,8 +1529,64 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     public void onResume() {
         super.onResume();
         LogUtilDebug.i("show", "刷新查询委托单");
+
+        if (!buysell2.equals("0")){
+            buysell = buysell2;
+        }
+
         //查询委托单
         getEntrustListAction();
+
+        LogUtilDebug.i("show","buysell&&&&&&&&&&&:"+buysell);
+        if (buysell.equals("1")){ //买入
+            rbBuy.setChecked(true);
+            mKindType = "0";
+            tvOperateCoin.setText("买入 BTC");
+            tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
+            rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
+            rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house2);
+            rbNumber3.setBackgroundResource(R.drawable.selector_open_close_house2);
+            rbNumber4.setBackgroundResource(R.drawable.selector_open_close_house2);
+
+            if (mSelectType.equals("0")){ //限价
+                clPrice.setVisibility(View.VISIBLE);
+                tvCnyPrice.setVisibility(View.GONE);
+                etPrice.setHint("价格");
+            }else { //市价买
+                           /* clPrice.setVisibility(View.VISIBLE);
+                            tvCnyPrice.setVisibility(View.GONE);
+                            etPrice.setHint("金额");*/
+                etNumber.setHint("金额");
+                clPrice.setVisibility(View.GONE);
+                tvCnyPrice.setVisibility(View.VISIBLE);
+
+            }
+
+        }else {  //卖出
+            rbSell.setChecked(true);
+
+            mKindType = "1";
+            tvOperateCoin.setText("卖出 BTC");
+            tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
+            rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house3);
+            rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house3);
+            rbNumber3.setBackgroundResource(R.drawable.selector_open_close_house3);
+            rbNumber4.setBackgroundResource(R.drawable.selector_open_close_house3);
+
+            if (mSelectType.equals("0")){ //限价
+                clPrice.setVisibility(View.VISIBLE);
+                tvCnyPrice.setVisibility(View.GONE);
+                etPrice.setHint("价格");
+            }else { //市价 卖
+                etNumber.setHint("数量");
+                clPrice.setVisibility(View.GONE);
+                tvCnyPrice.setVisibility(View.VISIBLE);
+            }
+        }
+
+        selectTv.setText(area + "/" + symbol);
+
+        buysell2 = "0";
     }
 
     @Override
@@ -1543,18 +1636,23 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == QUEST_CODE) {
+                LogUtilDebug.i("show","BBTradeFragment onActivityResult()");
                 Bundle bundle = data.getExtras();
                 if (bundle != null){
-                    String buySell = bundle.getString("buySell");
-                    if (buySell.equals("1")){ //买入
+                    buysell2 = bundle.getString("buySell");
+                    LogUtilDebug.i("show","buysell2>>>"+buysell2);
+                    //buysell = buySell2;
+                  /*  if (buySell2.equals("1")){ //买入
                         rbBuy.setChecked(true);
                     }else {  //卖出
                         rbSell.setChecked(true);
-                    }
+                    }*/
                 }
 
             }
         }
     }
+
+
 
 }

@@ -23,8 +23,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.github.fujianlian.klinechart.DataHelper;
 import com.github.fujianlian.klinechart.KLineChartAdapter;
 import com.github.fujianlian.klinechart.KLineChartView;
-import com.github.fujianlian.klinechart.entity.KLineEntity;
 import com.github.fujianlian.klinechart.draw.Status;
+import com.github.fujianlian.klinechart.entity.KLineEntity;
 import com.github.fujianlian.klinechart.formatter.DateMiddleTimeFormatter;
 import com.google.android.material.tabs.TabLayout;
 import com.gyf.immersionbar.ImmersionBar;
@@ -255,6 +255,16 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                 finish();
                 break;
             case R.id.tvBuyIn: //买入
+                //Eventbus  发送事件
+               /* MessageEvent event = new MessageEvent();
+                event.setType(MbsConstans.MessageEventType.UPDATE_BBFRAGMENT);
+                Map<Object, Object> map = new HashMap<>();
+                map.put("area",area);
+                map.put("symbol",symbol);
+                event.setMessage(map);
+                EventBus.getDefault().post(event);
+*/
+
                 intent.putExtra("buySell", "1");
                 //intent.putExtra("area", area);
                 //intent.putExtra("symbol", symbol);
