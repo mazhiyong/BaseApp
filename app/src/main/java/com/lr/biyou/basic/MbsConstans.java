@@ -213,14 +213,6 @@ public class MbsConstans {
 	
 	/**----------------------------------------------------
 	 * 一些SharedPreferences配置文件信息
-
-	 * 作者：刘英超
-
-	 * 时间：2014年12月29日 下午3:56:02
-
-	 * 电子邮件：646869341@qq.com
-
-	 * QQ：646869341
 	 */
 	public static final class SharedInfoConstans{
 

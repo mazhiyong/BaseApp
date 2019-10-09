@@ -14,14 +14,6 @@ import java.util.Map;
  * 
  * @Description:首页缓存本地数据库信息
  *
- * @author 刘英超 
- *
- * @time 2016年5月14日 下午5:41:19
- *
- * @email:646869341@qq.com
- *
- * QQ:646869341
- *
  */
 public class IndexData {
 

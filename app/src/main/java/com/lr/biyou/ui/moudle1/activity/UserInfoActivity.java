@@ -208,7 +208,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                                 sureOrNoDialog.dismiss();
                                 break;
                             case R.id.confirm:
-                                sureOrNoDialog.dismiss();
+                               // sureOrNoDialog.dismiss();
                                 closeAllActivity();
                                 MbsConstans.USER_MAP = null;
                                 MbsConstans.RONGYUN_MAP = null;

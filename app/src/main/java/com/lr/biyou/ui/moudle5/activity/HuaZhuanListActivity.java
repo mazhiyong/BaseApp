@@ -299,7 +299,7 @@ public class HuaZhuanListActivity extends BasicActivity implements RequestView,R
 
             //设置background后在外点击才会消失
             mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(HuaZhuanListActivity.this,5)));
-            //mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
+            mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
             //自定义动画
             mConditionDialog.setAnimationStyle(R.style.PopupAnimation);
 //            mConditionDialog.setAnimationStyle(android.R.style.Animation_Activity);//使用系统动画

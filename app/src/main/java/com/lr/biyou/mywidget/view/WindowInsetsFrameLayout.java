@@ -12,7 +12,6 @@ import androidx.annotation.RequiresApi;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.UtilTools;
 public class WindowInsetsFrameLayout extends LinearLayout {
-
     private Context mContenx;
 
    /* public WindowInsetsFrameLayout(Context context) {

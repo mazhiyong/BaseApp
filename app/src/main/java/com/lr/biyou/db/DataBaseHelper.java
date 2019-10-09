@@ -4,20 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.lr.biyou.utils.tool.LogUtilDebug;
 
 /**
  * 
 * @description: 数据库操作的类
-*
-* @author 作者：刘英超
-*
-* @date：2015年12月23日 上午10:27:32
-*
-* @E-mail: 646869341@qq.com
-*
  */
 public class DataBaseHelper extends SQLiteOpenHelper {
 	

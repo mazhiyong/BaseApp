@@ -25,7 +25,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.androidkun.xtablayout.XTabLayout;
+import com.flyco.dialog.utils.CornerUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
@@ -348,7 +348,6 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         buyMoreTv.setText("买入开多");
                         bundleSeekBar.setProgress(0);
                         etHand.setText("");
-                        etHand.setHint("数量");
                         buyMoreTv.setBackgroundResource(R.drawable.btn_next_green);
                         rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
                         rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house2);
@@ -363,7 +362,6 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         buyMoreTv.setText("卖出开空");
                         bundleSeekBar.setProgress(0);
                         etHand.setText("");
-                        etHand.setHint("数量");
                         buyMoreTv.setBackgroundResource(R.drawable.btn_next_red);
                         rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house3);
                         rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house3);
@@ -376,6 +374,270 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             }
 
         });
+
+        etPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()> 0){
+                    tvCnyPrice.setText("≈" + bilv * Float.parseFloat(s.toString()) + "CNY");
+                    float maxNumber = 0;
+                    int number = 0;
+                    if (rbNumber1.isChecked()){
+                        if (mSelectType.equals("0")) { //限价
+                            maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString());
+                            LogUtilDebug.i("show", "限价maxNumber:" + maxNumber);
+                            number = (int) (maxNumber * 0.10f);
+                            etHand.setText(number + "");
+                        }
+
+                    }
+
+                    if (rbNumber2.isChecked()){
+                        if (mSelectType.equals("0")) { //限价
+                            maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString());
+                            LogUtilDebug.i("show", "限价maxNumber:" + maxNumber);
+                            number = (int) (maxNumber * 0.20f);
+                            etHand.setText(number + "");
+                        }
+                    }
+
+                    if (rbNumber3.isChecked()){
+                        if (mSelectType.equals("0")) { //限价
+                            maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString());
+                            LogUtilDebug.i("show", "限价maxNumber:" + maxNumber);
+                            number = (int) (maxNumber * 0.50f);
+                            etHand.setText(number + "");
+                        }
+                    }
+
+                    if (rbNumber4.isChecked()){
+                        if (mSelectType.equals("0")) { //限价
+                            maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString());
+                            LogUtilDebug.i("show", "限价maxNumber:" + maxNumber);
+                            number = (int) (maxNumber * 1);
+                            etHand.setText(number + "");
+                        }
+                    }
+                }else {
+                    tvCnyPrice.setText("≈0 CNY");
+                    etHand.setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+        etJihuaPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0){
+                    float maxNumber = 0;
+                    int number = 0;
+                    if (rbNumber1.isChecked()){
+                        if (mSelectType.equals("1")) { //计划
+                            maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etJihuaPrice.getText().toString());
+                            LogUtilDebug.i("show", "计划委托maxNumber:" + maxNumber);
+                            number = (int) (maxNumber * 0.10f);
+                            etHand.setText(number + "");
+                        }
+                    }
+
+                    if (rbNumber2.isChecked()){
+                        if (mSelectType.equals("1")) { //计划
+                            maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etJihuaPrice.getText().toString());
+                            LogUtilDebug.i("show", "计划委托maxNumber:" + maxNumber);
+                            number = (int) (maxNumber * 0.20f);
+                            etHand.setText(number + "");
+                        }
+                    }
+
+                    if (rbNumber3.isChecked()){
+                        if (mSelectType.equals("1")) { //计划
+                            maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etJihuaPrice.getText().toString());
+                            LogUtilDebug.i("show", "计划委托maxNumber:" + maxNumber);
+                            number = (int) (maxNumber * 0.50f);
+                            etHand.setText(number + "");
+                        }
+                    }
+
+                    if (rbNumber4.isChecked()){
+                        if (mSelectType.equals("1")) { //计划
+                            maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etJihuaPrice.getText().toString());
+                            LogUtilDebug.i("show", "计划委托maxNumber:" + maxNumber);
+                            number = (int) (maxNumber * 1);
+                            etHand.setText(number + "");
+                        }
+                    }
+                }else {
+                    etHand.setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        seekBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                float maxNumber = 0;
+                int number = 0;
+                switch (checkedId){
+                    case R.id.rb_number1: //10
+                        switch (type) {
+                            case 0: //开多买入
+                                if (mSelectType.equals("0")) { //限价
+                                    if (UtilTools.empty(etPrice.getText().toString())) {
+                                        showToastMsg("请输入价格");
+                                        etHand.setText("");
+                                        return;
+                                    }
+                                    maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString());
+                                    LogUtilDebug.i("show", "限价maxNumber:" + maxNumber);
+                                    number = (int) (maxNumber * 0.10f);
+                                    etHand.setText(number + "");
+                                } else {
+                                    if (UtilTools.empty(etJihuaPrice.getText().toString())) {
+                                        showToastMsg("请输入价格");
+                                        etHand.setText("");
+                                        return;
+                                    }
+                                    maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etJihuaPrice.getText().toString());
+                                    LogUtilDebug.i("show", "计划委托maxNumber:" + maxNumber);
+                                    number = (int) (maxNumber * 0.10f);
+                                    etHand.setText(number + "");
+                                }
+
+                                break;
+
+                            case 1: //开出卖空   可用BTC 乘以 百分比率
+                                number = (int) (Float.parseFloat(BTC_Account) * 0.10f);
+                                etHand.setText(number + "");
+                                break;
+                        }
+                        break;
+                    case R.id.rb_number2: //20
+                        switch (type) {
+                            case 0: //开多买入
+                                if (mSelectType.equals("0")) { //限价
+                                    if (UtilTools.empty(etPrice.getText().toString())) {
+                                        showToastMsg("请输入价格");
+                                        etHand.setText("");
+                                        return;
+                                    }
+                                    maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString());
+                                    LogUtilDebug.i("show", "限价maxNumber:" + maxNumber);
+                                    number = (int) (maxNumber * 0.20f);
+                                    etHand.setText(number + "");
+                                } else {
+                                    if (UtilTools.empty(etJihuaPrice.getText().toString())) {
+                                        showToastMsg("请输入价格");
+                                        etHand.setText("");
+                                        return;
+                                    }
+                                    maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etJihuaPrice.getText().toString());
+                                    LogUtilDebug.i("show", "计划委托maxNumber:" + maxNumber);
+                                    number = (int) (maxNumber * 0.20f);
+                                    etHand.setText(number + "");
+                                }
+
+                                break;
+
+                            case 1: //开出卖空   可用BTC 乘以 百分比率
+                                number = (int) (Float.parseFloat(BTC_Account) * 0.20f);
+                                etHand.setText(number + "");
+                                break;
+                        }
+                        break;
+
+                    case R.id.rb_number3: //50
+                        switch (type) {
+                            case 0: //开多买入
+                                if (mSelectType.equals("0")) { //限价
+                                    if (UtilTools.empty(etPrice.getText().toString())) {
+                                        showToastMsg("请输入价格");
+                                        etHand.setText("");
+                                        return;
+                                    }
+                                    maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString());
+                                    LogUtilDebug.i("show", "限价maxNumber:" + maxNumber);
+                                    number = (int) (maxNumber * 0.50f);
+                                    etHand.setText(number + "");
+                                } else {
+                                    if ( UtilTools.empty(etJihuaPrice.getText().toString())) {
+                                        showToastMsg("请输入价格");
+                                        etHand.setText("");
+                                        return;
+                                    }
+                                    maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etJihuaPrice.getText().toString());
+                                    LogUtilDebug.i("show", "计划委托maxNumber:" + maxNumber);
+                                    number = (int) (maxNumber * 0.50f);
+                                    etHand.setText(number + "");
+                                }
+
+                                break;
+
+                            case 1: //开出卖空   可用BTC 乘以 百分比率
+                                number = (int) (Float.parseFloat(BTC_Account) * 0.50f);
+                                etHand.setText(number + "");
+                                break;
+                        }
+                        break;
+
+                    case R.id.rb_number4: //100
+                        switch (type) {
+                            case 0: //开多买入
+                                if (mSelectType.equals("0")) { //限价
+                                    if (UtilTools.empty(etPrice.getText().toString())) {
+                                        showToastMsg("请输入价格");
+                                        etHand.setText("");
+                                        return;
+                                    }
+                                    maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString());
+                                    LogUtilDebug.i("show", "限价maxNumber:" + maxNumber);
+                                    number = (int) (maxNumber * 1);
+                                    etHand.setText(number + "");
+                                } else {
+                                    if (UtilTools.empty(etJihuaPrice.getText().toString())) {
+                                        showToastMsg("请输入价格");
+                                        etHand.setText("");
+                                        return;
+                                    }
+                                    maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etJihuaPrice.getText().toString());
+                                    LogUtilDebug.i("show", "计划委托maxNumber:" + maxNumber);
+                                    number = (int) (maxNumber * 1);
+                                    etHand.setText(number + "");
+                                }
+
+                                break;
+
+                            case 1: //开出卖空   可用BTC 乘以 百分比率
+                                number = (int) (Float.parseFloat(BTC_Account) * 1);
+                                etHand.setText(number + "");
+                                break;
+                        }
+                        break;
+                }
+            }
+        });
+
+
 
 
         bundleSeekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
@@ -396,7 +658,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                     return;
                 }
                 if (progress > 0) {
-                    etHand.setHintTextColor(ContextCompat.getColor(getActivity(), R.color.colorBlack));
+                    //etHand.setHintTextColor(ContextCompat.getColor(getActivity(), R.color.colorBlack));
                     float maxNumber = 0;
                     int number = 0;
                     switch (type) {
@@ -427,8 +689,9 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         etHand.setEnabled(true);
                     }*/
                 } else {
-                    etHand.setHint(R.string.number);
-                    etHand.setHintTextColor(ContextCompat.getColor(getActivity(), R.color.colorGray));
+                    /*etHand.setHint(R.string.number);
+                    etHand.setHintTextColor(ContextCompat.getColor(getActivity(), R.color.colorGray));*/
+                    etHand.setText("");
                 }
             }
         });
@@ -597,7 +860,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             }
         });*/
 
-        etPrice.addTextChangedListener(new TextWatcher() {
+      /*  etPrice.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -637,8 +900,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 }
             }
         });
-
-        etJihuaPrice.addTextChangedListener(new TextWatcher() {
+*/
+       /* etJihuaPrice.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -668,7 +931,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             public void afterTextChanged(Editable s) {
 
             }
-        });
+        });*/
 
 
     }
@@ -1220,7 +1483,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         //mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);  //设置下拉刷新箭头
         //设置头部加载颜色
         mRecyclerView.setHeaderViewColor(R.color.colorAccent, R.color.red ,android.R.color.white);
-//设置底部加载颜色
+        //设置底部加载颜色
         mRecyclerView.setFooterViewColor(R.color.colorAccent, R.color.red ,android.R.color.white);*/
 
         mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
@@ -1268,8 +1531,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             mConditionDialog.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
 
             //设置background后在外点击才会消失
-            // mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(getActivity(),5)));
-            //mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
+            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(getActivity(),5)));
+            mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
             //自定义动画
             mConditionDialog.setAnimationStyle(R.style.PopupAnimation);
             //mConditionDialog.setAnimationStyle(android.R.style.Animation_Activity);//使用系统动画

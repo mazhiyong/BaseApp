@@ -28,6 +28,7 @@ import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
@@ -39,14 +40,12 @@ import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.DateSelectDialog;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle.activity.MainActivity;
 import com.lr.biyou.ui.moudle1.adapter.NoticeListAdapter;
 import com.lr.biyou.ui.temporary.adapter.TradeDialogAdapter;
 import com.lr.biyou.utils.tool.AnimUtil;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -315,7 +314,7 @@ public class NoticeListActivity extends BasicActivity implements RequestView,ReL
 
             //设置background后在外点击才会消失
             mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(NoticeListActivity.this,5)));
-            //mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
+            mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
             //自定义动画
             mConditionDialog.setAnimationStyle(R.style.PopupAnimation);
 //            mConditionDialog.setAnimationStyle(android.R.style.Animation_Activity);//使用系统动画

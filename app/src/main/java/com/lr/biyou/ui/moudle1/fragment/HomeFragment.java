@@ -3,6 +3,7 @@ package com.lr.biyou.ui.moudle1.fragment;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.flyco.dialog.utils.CornerUtils;
 import com.google.android.material.tabs.TabLayout;
 import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
@@ -603,8 +605,8 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
             mConditionDialog.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
 
             //设置background后在外点击才会消失
-            // mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(getActivity(),5)));
-            //mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
+            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(getActivity(),5)));
+            mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
             //自定义动画
             mConditionDialog.setAnimationStyle(R.style.PopupAnimation);
             //mConditionDialog.setAnimationStyle(android.R.style.Animation_Activity);//使用系统动画

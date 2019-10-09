@@ -7,22 +7,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.facebook.stetho.Stetho;
 import com.lr.biyou.BuildConfig;
-import com.lr.biyou.R;
 import com.lr.biyou.rongyun.common.ErrorCode;
 import com.lr.biyou.rongyun.contact.PhoneContactManager;
 import com.lr.biyou.rongyun.im.IMManager;
 import com.lr.biyou.rongyun.utils.SearchUtils;
 import com.lr.biyou.rongyun.wx.WXManager;
 import com.lr.biyou.utils.tool.AppContextUtil;
-import com.lr.biyou.utils.tool.UtilTools;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.SPCookieStore;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
@@ -341,11 +337,11 @@ public class BasicApplication extends MultiDexApplication {
 						public void onActivityStopped(Activity activity) {
 							// TODO Auto-generated method stub
 							appCount--;
-							if(appCount==0){
+							/*if(appCount==0){
 								Toast.makeText(getApplicationContext(),
 										getResources().getString(R.string.app_name_main)+"应用进入后台运行",
 										Toast.LENGTH_LONG).show();
-							}
+							}*/
 						}
 						@Override
 						public void onActivitySaveInstanceState(Activity activity, Bundle

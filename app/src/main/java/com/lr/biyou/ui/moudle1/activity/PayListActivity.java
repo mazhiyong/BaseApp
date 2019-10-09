@@ -3,7 +3,6 @@ package com.lr.biyou.ui.moudle1.activity;
 import android.animation.Animator;
 import android.content.Intent;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +21,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flyco.dialog.utils.CornerUtils;
-import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
-import com.github.jdsjlzx.interfaces.OnNetWorkErrorListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
@@ -40,17 +38,12 @@ import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.DateSelectDialog;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle.activity.MainActivity;
 import com.lr.biyou.ui.moudle1.adapter.PaywayListAdapter;
 import com.lr.biyou.ui.temporary.adapter.TradeDialogAdapter;
 import com.lr.biyou.utils.tool.AnimUtil;
-import com.lr.biyou.utils.tool.JSONUtil;
-import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
-import com.zhangke.websocket.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -488,7 +481,7 @@ public class PayListActivity extends BasicActivity implements RequestView,ReLoad
 
             //设置background后在外点击才会消失
             mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(PayListActivity.this,5)));
-            //mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
+            mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
             //自定义动画
             mConditionDialog.setAnimationStyle(R.style.PopupAnimation);
 //            mConditionDialog.setAnimationStyle(android.R.style.Animation_Activity);//使用系统动画

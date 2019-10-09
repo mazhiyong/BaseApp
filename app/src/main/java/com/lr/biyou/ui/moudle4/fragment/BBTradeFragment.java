@@ -3,8 +3,11 @@ package com.lr.biyou.ui.moudle4.fragment;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +30,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidkun.xtablayout.XTabLayout;
+import com.flyco.dialog.utils.CornerUtils;
 import com.github.jdsjlzx.ItemDecoration.DividerDecoration;
 import com.github.jdsjlzx.ItemDecoration.GridItemDecoration;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -63,6 +67,7 @@ import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.SelectDataUtil;
 import com.lr.biyou.utils.tool.UtilTools;
 import com.wanou.framelibrary.okgoutil.websocket.listener.WsStatusListener;
+import com.xw.repo.BubbleSeekBar;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -190,6 +195,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
+    @BindView(R.id.bundle_seekBar)
+    BubbleSeekBar bundleSeekBar;
 
 
     public LoadingWindow mLoadingWindow;
@@ -420,6 +427,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 switch (checkedId) {
                     case R.id.rbSell:
                         mKindType = "1";
+                        //bundleSeekBar.setProgress(0);
                         tvOperateCoin.setText("卖出 BTC");
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
                         rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house3);
@@ -441,6 +449,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         break;
                     case R.id.rbBuy:
                         mKindType = "0";
+                        //bundleSeekBar.setProgress(0);
                         tvOperateCoin.setText("买入 BTC");
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
                         rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
@@ -468,7 +477,78 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         });
 
 
+        etPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0){
+                    if (rbNumber1.isChecked()){
+                        if (mKindType.equals("0")){ //买入
+                            if (mSelectType.equals("0")){ //限价
+                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                int number = (int) (maxNumber*0.1f);
+                                etNumber.setText(number+"");
+                            }else { //市价
+                                etNumber.setText("10");
+                            }
+
+                        }
+                    }
+
+                    if (rbNumber2.isChecked()){
+                        if (mKindType.equals("0")){ //买入
+                            if (mSelectType.equals("0")){ //限价
+                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                int number = (int) (maxNumber*0.2f);
+                                etNumber.setText(number+"");
+                            }else { //市价
+                                etNumber.setText("20");
+                            }
+
+                        }
+                    }
+
+                    if (rbNumber3.isChecked()){
+                        if (mKindType.equals("0")){ //买入
+                            if (mSelectType.equals("0")){ //限价
+                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                int number = (int) (maxNumber*0.5f);
+                                etNumber.setText(number+"");
+                            }else { //市价
+                                etNumber.setText("50");
+                            }
+
+                        }
+                    }
+
+                    if (rbNumber4.isChecked()){
+                        if (mKindType.equals("0")){ //买入
+                            if (mSelectType.equals("0")){ //限价
+                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                int number = (int) (maxNumber*1);
+                                etNumber.setText(number+"");
+                            }else { //市价
+                                etNumber.setText("100");
+                            }
+
+                        }
+                    }
+
+
+                }else {
+                    etNumber.setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         coinCoinSeekBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -477,6 +557,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         if (mKindType.equals("0")){ //买入
                             if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString().replaceAll(",","").trim())){
                                 showToastMsg("请输入价格");
+                                etNumber.setText("");
                                 return;
                             }
                         }
@@ -541,7 +622,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                 int number = (int) (maxNumber*1.0f);
                                 etNumber.setText(number+"");
                             }else { //市价
-                                etNumber.setText("50");
+                                etNumber.setText("100");
                             }
 
                         }else { //卖出
@@ -553,6 +634,62 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             }
         });
 
+
+        bundleSeekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
+            @Override
+            public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
+
+            }
+
+            @Override
+            public void getProgressOnActionUp(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
+
+            }
+
+            @Override
+            public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
+                switch (mSelectType){
+                    case "0": //限价
+                        if (mKindType.equals("0")){ //买入
+                            if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString().replaceAll(",","").trim())){
+                                showToastMsg("请输入价格");
+                                return;
+                            }
+                        }
+                        break;
+
+                    case "1": //市价
+
+                        break;
+                }
+
+                if (progress > 0) {
+
+                    if (mKindType.equals("0")){ //买入
+                        if (mSelectType.equals("0")){ //限价
+                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                            int number = (int) (maxNumber*progress/100);
+                            etNumber.setText(number+"");
+                        }else { //市价
+                            etNumber.setText(progress+"");
+                        }
+
+                    }else { //卖出
+                        LogUtilDebug.i("show","BTC_Account:"+BTC_Account);
+                        int number = (int) (Float.parseFloat(BTC_Account)*progress/100);
+                        etNumber.setText(number+"");
+                    }
+
+                   /* if ( number > 0 ){
+                        etHand.setEnabled(false);
+                    }else {
+                        etHand.setEnabled(true);
+                    }*/
+                }else {
+                    etNumber.setText("0");
+                }
+            }
+        });
 
 
     }
@@ -789,8 +926,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             mConditionDialog.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
 
             //设置background后在外点击才会消失
-            // mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(getActivity(),5)));
-            //mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
+            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(getActivity(),5)));
+            mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
             //自定义动画
             mConditionDialog.setAnimationStyle(R.style.PopupAnimation);
             //mConditionDialog.setAnimationStyle(android.R.style.Animation_Activity);//使用系统动画
