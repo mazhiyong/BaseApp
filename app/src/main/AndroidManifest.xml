@@ -621,6 +621,7 @@
         </activity> <!-- html界面 还款协议 -->
         <activity
             android:name="com.lr.biyou.ui.moudle1.activity.HtmlActivity"
+            android:process=":RemoteProcess"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
