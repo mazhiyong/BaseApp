@@ -21,6 +21,7 @@
                 android:layout_height="wrap_content"
                 />
             <FrameLayout
+                android:paddingTop="@dimen/dp_10"
                 android:id="@+id/rong_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

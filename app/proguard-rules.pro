@@ -291,6 +291,42 @@ private *;
 }
 
 
+#融云
+-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+ public *;
+}
+
+-keepattributes Exceptions,InnerClasses
+
+-keep class io.rong.** {*;}
+
+-keep class * implements io.rong.imlib.model.MessageContent{*;}
+
+-keepattributes Signature
+
+-keepattributes *Annotation*
+
+-keep class sun.misc.Unsafe { *; }
+
+-keep class com.google.gson.examples.android.model.** { *; }
+
+-keepclassmembers class * extends com.sea_monster.dao.AbstractDao {
+ public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+-dontwarn org.eclipse.jdt.annotation.**
+
+-keep class com.ultrapower.** {*;}
 
 
+#EventBus
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+
+#KLineChartLib
+-keep class com.github.fujianlian.klinechart.entity.*
 

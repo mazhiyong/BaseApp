@@ -209,7 +209,7 @@ public class ConversationActivity extends BasicActivity {
         rightImg.setImageResource(R.drawable.icon2_gengduo);
 
         initView();
-        initViewModel();
+        //initViewModel();
 
         mAnimUtil = new AnimUtil();
 
