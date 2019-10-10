@@ -110,9 +110,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/dp_10"
-
-                android:background="@drawable/em_unread_dot"
-                android:visibility="gone" />
+                android:gravity="center"
+                android:textSize="@dimen/sp_7"
+                android:textColor="@color/white"
+                android:background="@drawable/em_unread_dot"/>
         </RelativeLayout>
 
 

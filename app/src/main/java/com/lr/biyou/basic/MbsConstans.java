@@ -101,7 +101,7 @@ public class MbsConstans {
 
 	public static final long SECOND_TIME_500 = 500;
 
-	public static final long SECOND_TIME_5000 = 5000;
+	public static final long SECOND_TIME_5000 = 5000000;
 	public static final long SECOND_TIME_30 = 30*1000;
 
 	public static boolean isNet = false;

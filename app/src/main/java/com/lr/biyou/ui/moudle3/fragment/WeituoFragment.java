@@ -3,10 +3,8 @@ package com.lr.biyou.ui.moudle3.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +14,6 @@ import com.github.jdsjlzx.interfaces.OnNetWorkErrorListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
-import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
@@ -33,6 +30,8 @@ import com.lr.biyou.ui.moudle3.adapter.ShouMoneyListAdapter;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,9 +39,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.AnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 /**
  * 委托
@@ -55,6 +51,11 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
+
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
 
     private int TYPE = 0;
     public LoadingWindow mLoadingWindow;
@@ -144,7 +145,29 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
         mPageView.setReLoadingData(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        mRefreshListView.setLayoutManager(linearLayoutManager);
+        //mRefreshListView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+        //下拉刷新
+        refreshLayout.setOnRefreshListener(new com.scwang.smartrefresh.layout.listener.OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshLayout) {
+                mPage = 1;
+                getWeituoListAction();
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
+                if (mDataList == null || mDataList.size() < 10) {
+                    //refreshLayout.finishLoadMore();
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                } else {
+                    getWeituoListAction();
+                }
+            }
+        });
+
 
         //刷新
         mRefreshListView.setOnRefreshListener(new OnRefreshListener() {
@@ -237,7 +260,9 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
                                     }
                                     mPageView.showContent();
                                     responseData1();
-                                    mRefreshListView.refreshComplete(10);
+                                    refreshLayout.finishRefresh();
+                                    refreshLayout.finishLoadMore();
+                                    //mRefreshListView.refreshComplete(10);
                                 } else {
                                     mPageView.showEmpty();
                                 }
@@ -348,7 +373,7 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
             shouMoneyListAdapter = new ShouMoneyListAdapter(getActivity());
             shouMoneyListAdapter.addAll(mDataList);
 
-            AnimationAdapter adapter1 = new ScaleInAnimationAdapter(shouMoneyListAdapter);
+           /* AnimationAdapter adapter1 = new ScaleInAnimationAdapter(shouMoneyListAdapter);
             adapter1.setFirstOnly(false);
             adapter1.setDuration(400);
             adapter1.setInterpolator(new OvershootInterpolator(0.8f));
@@ -373,7 +398,7 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
             mRefreshListView.setLoadMoreEnabled(true);
 
             mRefreshListView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-            mRefreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
+            mRefreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);*/
 
             //int spacing = getResources().getDimensionPixelSize(R.dimen.divide_hight);
             //mRefreshListView.addItemDecoration(SpacesItemDecoration.newInstance(spacing, spacing, gridLayoutManager.getSpanCount(), Color.GRAY));
@@ -398,19 +423,22 @@ public class WeituoFragment extends BasicFragment implements RequestView, ReLoad
             shouMoneyListAdapter.addAll(mDataList);
 
             shouMoneyListAdapter.notifyDataSetChanged();
-            mLRecyclerViewAdapter1.notifyDataSetChanged();
+            //mLRecyclerViewAdapter1.notifyDataSetChanged();
 
         }
 
-        mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-        mRefreshListView.refreshComplete(10);
+        //mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
+        //mRefreshListView.refreshComplete(10);
 
-        if (mDataList==null&&mDataList.size() < 10) {
+        if (mDataList==null  || mDataList.size() < 10) {
+            refreshLayout.finishLoadMoreWithNoMoreData();
         } else {
             if (mPage < maxPage ){
                 mPage++;
             }
         }
+
+        recyclerView.setAdapter(shouMoneyListAdapter);
 
         if (shouMoneyListAdapter.getDataList().size() <= 0) {
             mPageView.showEmpty();

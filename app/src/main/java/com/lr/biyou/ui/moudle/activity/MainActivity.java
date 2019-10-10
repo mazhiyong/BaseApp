@@ -59,6 +59,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.rong.imkit.manager.IUnReadMessageObserver;
+import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BasicActivity implements RequestView {
     @BindView(R.id.btn_cart)
@@ -79,7 +81,7 @@ public class MainActivity extends BasicActivity implements RequestView {
 
     private TextView unreadLabel;
     // textview for unread event message
-    private TextView unreadAddressLable;
+    private TextView unreadNewLable;
     private ImageView[] mTabs;
     private TextView[] mTextViews;
     private HomeFragment mHomeFrament;
@@ -108,6 +110,8 @@ public class MainActivity extends BasicActivity implements RequestView {
     private UserCache userCache;
     private IMManager imManager;
     public static final int REQUEST_START_GROUP = 1;
+
+    private Conversation.ConversationType[] conversationTypes;
 
     @Override
     public int getContentView() {
@@ -199,7 +203,34 @@ public class MainActivity extends BasicActivity implements RequestView {
             MbsConstans.COLOR_LOW = MbsConstans.COLOR_GREEN;
             MbsConstans.COLOR_TOP = MbsConstans.COLOR_RED;
         }
+
+        conversationTypes = new Conversation.ConversationType[]{
+                Conversation.ConversationType.PRIVATE,
+                Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
+                Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE
+        };
+
+        imManager.addUnReadMessageCountChangedObserver(observer, conversationTypes);
+
+
     }
+    IUnReadMessageObserver observer = new IUnReadMessageObserver() {
+        @Override
+        public void onCountChanged(int i) {
+            if (i == 0){
+                unreadNewLable.setVisibility(View.GONE);
+            }else {
+                unreadNewLable.setVisibility(View.VISIBLE);
+                if (i<100){
+                    unreadNewLable.setText(i+"");
+                }else {
+                    unreadNewLable.setText("99+");
+                }
+            }
+        }
+    };
+
+
 
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
@@ -216,7 +247,7 @@ public class MainActivity extends BasicActivity implements RequestView {
         mIndexBottomLay = findViewById(R.id.btn_container_index);
 
         unreadLabel = (TextView) findViewById(R.id.unread_msg_number);
-        unreadAddressLable = (TextView) findViewById(R.id.unread_address_number);
+        unreadNewLable = (TextView) findViewById(R.id.unread_address_number);
         mTabs = new ImageView[5];
         mTabs[0] = (ImageView) findViewById(R.id.btn_conversation);
         mTabs[1] = (ImageView) findViewById(R.id.btn_address_list);
@@ -703,6 +734,9 @@ public class MainActivity extends BasicActivity implements RequestView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (imManager != null && observer!= null){
+            imManager.removeUnReadMessageCountChangedObserver(observer);
+        }
         unregisterReceiver(mBroadcastReceiver);
         EventBus eventBus = EventBus.getDefault();
         if (eventBus.isRegistered(this)) {

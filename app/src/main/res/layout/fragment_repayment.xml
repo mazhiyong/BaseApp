@@ -484,7 +484,6 @@
                         android:id="@+id/clRight"
                         android:background="@color/white"
                         android:layout_width="@dimen/dp_0"
-
                         android:layout_height="wrap_content"
                         android:padding="@dimen/dp_5"
                         app:layout_constraintTop_toBottomOf="@+id/lay22"

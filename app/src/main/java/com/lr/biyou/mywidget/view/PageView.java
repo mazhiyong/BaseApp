@@ -17,6 +17,7 @@ public class PageView extends FrameLayout implements View.OnClickListener {
 	private View mNetworkError;
 
 	private View mEmpty;
+	private View mEmptyLayout;
 	private TextView mEmptyText;
 	private View mContent;
 	private View mOther;
@@ -38,7 +39,6 @@ public class PageView extends FrameLayout implements View.OnClickListener {
 	public PageView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		LayoutInflater.from(context).inflate(R.layout.page_view, this);
-
 		initView();
 	}
 
@@ -50,9 +50,12 @@ public class PageView extends FrameLayout implements View.OnClickListener {
 		aniDrawable.start();*/
 
 		mEmpty = findViewById(R.id.page_view_empty);
+		//mEmptyLayout = findViewById(R.id.page_view_empty_layout);
+		//mEmptyLayout.setOnClickListener(this);
+
 		mEmptyText = (TextView) findViewById(R.id.page_view_empty_text);
 		mNetworkError = findViewById(R.id.page_view_network_error);
-		mEmpty.setOnClickListener(this);
+		mEmptyText.setOnClickListener(this);
 		mNetworkError.setOnClickListener(this);
 
 		hideAll();

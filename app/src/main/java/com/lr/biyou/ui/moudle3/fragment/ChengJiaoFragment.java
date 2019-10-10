@@ -6,17 +6,14 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.jdsjlzx.ItemDecoration.GridItemDecoration;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
-import com.github.jdsjlzx.interfaces.OnNetWorkErrorListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
-import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
@@ -33,6 +30,7 @@ import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +53,7 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
     LinearLayout mContent;
     @BindView(R.id.page_view)
     PageView mPageView;
+
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     @BindView(R.id.refreshLayout)
@@ -152,16 +151,30 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
         mPageView.setReLoadingData(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        mRefreshListView.setLayoutManager(linearLayoutManager);
+        //mRefreshListView.setLayoutManager(linearLayoutManager);
 
-      /*  recyclerView.setLayoutManager(linearLayoutManager);
-        mRefreshListView.setOnRefreshListener(new OnRefreshListener() {
+        recyclerView.setLayoutManager(linearLayoutManager);
+        //下拉刷新
+        refreshLayout.setOnRefreshListener(new com.scwang.smartrefresh.layout.listener.OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                showToastMsg("下拉刷新");
+            public void onRefresh(RefreshLayout refreshLayout) {
+                mPage = 1;
+                getChengjiaoListAction();
             }
         });
-*/
+        refreshLayout.setOnLoadMoreListener(new com.scwang.smartrefresh.layout.listener.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshLayout) {
+                if (mDataList == null || mDataList.size() < 10) {
+                    //refreshLayout.finishLoadMore();
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                } else {
+                    getChengjiaoListAction();
+                }
+            }
+        });
+
+
         //刷新
         mRefreshListView.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -239,8 +252,15 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
                                         map.put("kind", "2");
                                     }
                                     mPageView.showContent();
+                                   /* if (shouMoneyListAdapter == null){
+                                        shouMoneyListAdapter = new ShouMoneyListAdapter(getActivity());
+                                    }
+                                    shouMoneyListAdapter.addAll(mDataList);
+                                    recyclerView.setAdapter(shouMoneyListAdapter);
+                                    refreshLayout.finishRefresh();*/
                                     responseData1();
-                                    mRefreshListView.refreshComplete(10);
+                                    refreshLayout.finishRefresh();
+                                    refreshLayout.finishLoadMore();
                                 } else {
                                     mPageView.showEmpty();
                                 }
@@ -314,7 +334,7 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
-        switch (mType) {
+       /* switch (mType) {
             case MethodUrl.borrowList:
                 if (shouMoneyListAdapter != null) {
                     if (shouMoneyListAdapter.getDataList().size() <= 0) {
@@ -334,7 +354,7 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
                 }
 
                 break;
-        }
+        }*/
 
 
         mLoadingWindow.cancleView();
@@ -375,7 +395,7 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
             mLRecyclerViewAdapter1 = new LRecyclerViewAdapter(adapter);
             //SampleHeader headerView = new SampleHeader(getActivity(), R.layout.fragment_home_head_view);
             //mLRecyclerViewAdapter1.addHeaderView(headerView);
-            mRefreshListView.setAdapter(mLRecyclerViewAdapter1);
+            /*mRefreshListView.setAdapter(mLRecyclerViewAdapter1);
             mRefreshListView.setItemAnimator(new DefaultItemAnimator());
             mRefreshListView.setHasFixedSize(true);
             mRefreshListView.setNestedScrollingEnabled(false);
@@ -385,7 +405,7 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
             mRefreshListView.setLoadMoreEnabled(true);
 
             mRefreshListView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-            mRefreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
+            mRefreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);*/
 
             //int spacing = getResources().getDimensionPixelSize(R.dimen.divide_hight);
             //mRefreshListView.addItemDecoration(SpacesItemDecoration.newInstance(spacing, spacing, gridLayoutManager.getSpanCount(), Color.GRAY));
@@ -408,17 +428,20 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
                 shouMoneyListAdapter.clear();
             }
             shouMoneyListAdapter.addAll(mDataList);
-
             shouMoneyListAdapter.notifyDataSetChanged();
-            mLRecyclerViewAdapter1.notifyDataSetChanged();
+            //mLRecyclerViewAdapter1.notifyDataSetChanged();
 
         }
 
-        mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-        mRefreshListView.refreshComplete(10);
+        recyclerView.setAdapter(shouMoneyListAdapter);
 
-        if (mDataList == null && mDataList.size() < 10) {
 
+        //mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
+        //mRefreshListView.refreshComplete(10);
+
+        if (mDataList == null || mDataList.size() < 10) {
+            //refreshLayout.finishLoadMore();
+            refreshLayout.finishLoadMoreWithNoMoreData();
         } else {
             if (mPage < maxPage) {
                 mPage++;
@@ -433,23 +456,11 @@ public class ChengJiaoFragment extends BasicFragment implements RequestView, ReL
             mPageView.showContent();
             LogUtilDebug.i("show", "******************** mPageView.showContent()");
         }
-     /*   if (mDataList.size() < 10) {
-            mRefreshListView.setNoMore(true);
-        } else {
-            mRefreshListView.setNoMore(false);
-        }
 
-        if (shouMoneyListAdapter.getDataList().size() <= 0) {
-            mPageView.showEmpty();
-        } else {
-            mPageView.showContent();
-        }*/
         shouMoneyListAdapter.setmCallBack(new OnChildClickListener() {
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
                 id = mParentMap.get("id") + "";
-
-
             }
         });
     }
