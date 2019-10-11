@@ -544,6 +544,11 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                                     noticeLayout.setVisibility(View.GONE);
                                 } else {
                                     noticeLayout.setVisibility(View.VISIBLE);
+                                    if ((mapData.get("apply")+"").equals("0")){
+                                        noticeNumberTv.setVisibility(View.GONE);
+                                    }else {
+                                        noticeNumberTv.setVisibility(View.VISIBLE);
+                                    }
                                     noticeNumberTv.setText(mapData.get("apply") + "");
                                 }
 
