@@ -125,6 +125,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     private boolean mIsback = false;
 
     private String mRequestTag = "";
+    private String isShow="-1";
 
     private List<Fragment> mFragments = new ArrayList<>();
 
@@ -166,6 +167,9 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         setBarTextColor();
         initView();
         mAnimUtil = new AnimUtil();
+
+        getMyFriendsAction();
+        getMyGroupsAction();
 
       /*  RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
             @Override
@@ -217,8 +221,9 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                 showProgress();
                 getMyGroupsAction();
                 break;
-
         }
+
+
     }
 
 
@@ -274,11 +279,13 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         mFragments.add(conListFragment);
 
 
+
         tabLayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(XTabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
+                        isShow ="0";
                         Title.setText("最近聊天");
                         //近期聊天
                         noticeLayout.setVisibility(View.GONE);
@@ -287,6 +294,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                         mPageView.setVisibility(View.GONE);
                         break;
                     case 1:
+                        isShow ="1";
                         Title.setText("好友列表");
                         fragmentContainer.setVisibility(View.GONE);
                         mPageView.setVisibility(View.VISIBLE);
@@ -296,6 +304,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                         break;
 
                     case 2:
+                        isShow ="2";
                         noticeLayout.setVisibility(View.GONE);
                         fragmentContainer.setVisibility(View.GONE);
                         mPageView.setVisibility(View.VISIBLE);
@@ -347,8 +356,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-
             }
 
             @Override
@@ -540,16 +547,18 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                         } else {
                             Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
                             if (!UtilTools.empty(mapData)) {
-                                if (UtilTools.empty(mapData.get("apply") + "")) {
-                                    noticeLayout.setVisibility(View.GONE);
-                                } else {
-                                    noticeLayout.setVisibility(View.VISIBLE);
-                                    if ((mapData.get("apply")+"").equals("0")){
-                                        noticeNumberTv.setVisibility(View.GONE);
-                                    }else {
-                                        noticeNumberTv.setVisibility(View.VISIBLE);
+                                if (isShow.equals("1")){
+                                    if (UtilTools.empty(mapData.get("apply") + "")) {
+                                        noticeLayout.setVisibility(View.GONE);
+                                    } else {
+                                        noticeLayout.setVisibility(View.VISIBLE);
+                                        if ((mapData.get("apply")+"").equals("0")){
+                                            noticeNumberTv.setVisibility(View.GONE);
+                                        }else {
+                                            noticeNumberTv.setVisibility(View.VISIBLE);
+                                        }
+                                        noticeNumberTv.setText(mapData.get("apply") + "");
                                     }
-                                    noticeNumberTv.setText(mapData.get("apply") + "");
                                 }
 
                                 if (UtilTools.empty(mapData.get("friend") + "")) {
@@ -559,6 +568,11 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                                     if (UtilTools.empty(mFriendList)) {
                                         mPageView.showEmpty();
                                     } else {
+                                        for (Map<String,Object> map :mFriendList){
+                                            //更新好友信息
+                                            IMManager.getInstance().updateUserInfoCache(map.get("rc_id") + "", map.get("name") + "", Uri.parse(map.get("portrait")+""));
+                                        }
+
                                         mPageView.showContent();
                                         responseData();
                                         mRefreshListView.refreshComplete(10);
@@ -599,6 +613,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                                 List<Map<String, Object>> normalList = new ArrayList<>();
                                 for (Map<String, Object> map : mRecentlyList) {
                                     map.put("account", "0");
+
                                     if ((map.get("top") + "").equals("1")) {
                                         topList.add(map);
                                     } else {
@@ -691,6 +706,8 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                             } else {
                                 for (Map<String, Object> map : mGroupList) {
                                     map.put("account", "0");
+                                    // 更新 IMKit 缓存群组数据
+                                    IMManager.getInstance().updateGroupInfoCache(map.get("id") + "", map.get("name") + "", Uri.parse(map.get("portrait")+""));
                                 }
                                 mPageView.showContent();
                                 responseData3();

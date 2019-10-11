@@ -36,6 +36,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -78,7 +79,7 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
     @BindView(R.id.divide_line)
     View divideLine;
     @BindView(R.id.head_iv)
-    ImageView headIv;
+    CircleImageView headIv;
     @BindView(R.id.et_money)
     EditText etMoney;
     @BindView(R.id.cny_tv)

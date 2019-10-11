@@ -632,7 +632,13 @@ public class ConversationActivity extends BasicActivity {
     }
 
 
-    public void sendMessageAction(String text) {
+    String conText;
+    String conId;
+    Conversation.ConversationType conType;
+    public void sendMessageAction(String text, String ConId, Conversation.ConversationType ConType) {
+        conText = text;
+        conId = ConId;
+        conType = ConType;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(ConversationActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
@@ -645,10 +651,6 @@ public class ConversationActivity extends BasicActivity {
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_SEND_NEWS, map);
     }
 
-
-    String conText;
-    String conId;
-    Conversation.ConversationType conType;
 
     public void sendGroupMessageAction(String text, String ConId, Conversation.ConversationType ConType) {
         conText = text;
@@ -680,8 +682,25 @@ public class ConversationActivity extends BasicActivity {
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         switch (mType) {
             case MethodUrl.CHAT_SEND_NEWS:
-                switch (tData.get("code") + "") {
+              /*  switch (tData.get("code") + "") {
                     case "0": //请求成功
+                        //发送消息(文本)
+                        if (!UtilTools.empty(tData.get("data"))){
+                            TextMessage textMessage = TextMessage.obtain(tData.get("data")+"");
+                            MentionedInfo mentionedInfo = RongMentionManager.getInstance().onSendButtonClick();
+
+                            if (mentionedInfo != null) {
+                                if (mentionedInfo.getMentionedUserIdList().contains("-1")) {
+                                    mentionedInfo.setType(MentionedInfo.MentionedType.ALL);
+                                } else {
+                                    mentionedInfo.setType(MentionedInfo.MentionedType.PART);
+                                }
+                                textMessage.setMentionedInfo(mentionedInfo);
+                            }
+
+                            io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(conId, conType, textMessage);
+                            RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
+                        }
 
                         break;
                     case "-1": //请求失败
@@ -694,24 +713,27 @@ public class ConversationActivity extends BasicActivity {
                         startActivity(intent);
                         break;
                 }
-                break;
+                break;*/
 
             case MethodUrl.CHAT_GROUP_SEND_NEWS:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
-                        TextMessage textMessage = TextMessage.obtain(conText);
-                        MentionedInfo mentionedInfo = RongMentionManager.getInstance().onSendButtonClick();
-                        if (mentionedInfo != null) {
-                            if (mentionedInfo.getMentionedUserIdList().contains("-1")) {
-                                mentionedInfo.setType(MentionedInfo.MentionedType.ALL);
-                            } else {
-                                mentionedInfo.setType(MentionedInfo.MentionedType.PART);
+                        if (!UtilTools.empty(tData.get("data"))){
+                            TextMessage textMessage = TextMessage.obtain(tData.get("data")+"");
+                            MentionedInfo mentionedInfo = RongMentionManager.getInstance().onSendButtonClick();
+                            if (mentionedInfo != null) {
+                                if (mentionedInfo.getMentionedUserIdList().contains("-1")) {
+                                    mentionedInfo.setType(MentionedInfo.MentionedType.ALL);
+                                } else {
+                                    mentionedInfo.setType(MentionedInfo.MentionedType.PART);
+                                }
+                                textMessage.setMentionedInfo(mentionedInfo);
                             }
-                            textMessage.setMentionedInfo(mentionedInfo);
+
+                            Message message = Message.obtain(conId, conType, textMessage);
+                            RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
                         }
 
-                        Message message = Message.obtain(conId, conType, textMessage);
-                        RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg") + "");

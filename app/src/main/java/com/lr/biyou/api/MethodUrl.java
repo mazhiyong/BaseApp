@@ -260,6 +260,8 @@ public class MethodUrl {
 
 
 
+
+
     public static final String AVIABLE_MONEY = "Contract/userContractInfo";//保证金动态收益信息
     public static final String CHICANG_LIST = "Contract/userDepot";//持仓列表
     public static final String WEITUO_LIST = "Contract/queryContractEntrust";//委托列表

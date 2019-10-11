@@ -122,6 +122,9 @@ public class MainMeFragment extends BaseFragment {
             case R.id.siv_feedback:
                 CSCustomServiceInfo.Builder builder = new CSCustomServiceInfo.Builder();
                 builder.province(getString(R.string.beijing));
+                builder.nickName("小美");
+                builder.name("XM");
+                builder.referrer("");// 渠道号
                 builder.city(getString(R.string.beijing));
                 RongIM.getInstance().startCustomerServiceChat(getActivity(), "KEFU146001495753714", getString(R.string.seal_main_mine_online_custom_service), builder.build());
 

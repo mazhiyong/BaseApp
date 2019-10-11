@@ -30,15 +30,10 @@ import java.util.List;
 import io.rong.common.RLog;
 import io.rong.contactcard.activities.ContactDetailActivity;
 import io.rong.imkit.RongExtension;
-import io.rong.imkit.RongIM;
 import io.rong.imkit.actions.IClickActions;
 import io.rong.imkit.fragment.ConversationFragment;
-import io.rong.imkit.mention.RongMentionManager;
 import io.rong.imkit.plugin.IPluginModule;
-import io.rong.imlib.IRongCallback;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.MentionedInfo;
-import io.rong.message.TextMessage;
 
 import static io.rong.contactcard.ContactCardPlugin.IS_FROM_CARD;
 
@@ -263,23 +258,7 @@ public class ConversationFragmentEx extends ConversationFragment {
         if (!UtilTools.empty(activity)){
             if (getConversationType() == Conversation.ConversationType.PRIVATE) {
                 //私聊发送消息
-                activity.sendMessageAction(text);
-                //发送消息(文本)
-                TextMessage textMessage = TextMessage.obtain(text);
-                MentionedInfo mentionedInfo = RongMentionManager.getInstance().onSendButtonClick();
-
-                if (mentionedInfo != null) {
-                    if (mentionedInfo.getMentionedUserIdList().contains("-1")) {
-                        mentionedInfo.setType(MentionedInfo.MentionedType.ALL);
-                    } else {
-                        mentionedInfo.setType(MentionedInfo.MentionedType.PART);
-                    }
-                    textMessage.setMentionedInfo(mentionedInfo);
-                }
-
-                io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(getTargetId(), getConversationType(), textMessage);
-                RongIM.getInstance().sendMessage(message, null, null, (IRongCallback.ISendMessageCallback) null);
-
+                activity.sendMessageAction(text,getTargetId(),getConversationType());
             } else if (getConversationType()== Conversation.ConversationType.GROUP) {
                 //群聊设置发送消息(文本)
                 activity.sendGroupMessageAction(text,getTargetId(),getConversationType());

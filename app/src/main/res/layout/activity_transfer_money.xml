@@ -10,7 +10,7 @@
         android:id="@+id/top_layout"
         layout="@layout/title_leftbut_bar"/>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/head_iv"
         android:src="@drawable/default_headimg"
         android:layout_width="@dimen/dp_70"
