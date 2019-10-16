@@ -159,6 +159,10 @@ public class MainActivity extends BasicActivity implements RequestView {
         // initPush();
         mInstance = this;
 
+        //启动SocketService
+        //Intent msgIntent=new Intent(this, SocketService.class);
+        //startService(msgIntent);
+
        // getAppVersion();
         getUserInfoAction();
        // getNameCodeInfo();

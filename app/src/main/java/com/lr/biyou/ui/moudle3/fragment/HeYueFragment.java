@@ -22,6 +22,7 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -49,6 +50,7 @@ import com.lr.biyou.listener.OnMyItemClickListener;
 import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
+import com.lr.biyou.mywidget.behavior.WeiboHeaderPagerBehavior;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
@@ -79,7 +81,7 @@ import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
 
-public class HeYueFragment extends BasicFragment implements RequestView, ReLoadingData, SelectBackListener {
+public class HeYueFragment extends BasicFragment implements RequestView, ReLoadingData, SelectBackListener,WeiboHeaderPagerBehavior.OnPagerStateListener {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.appbar_layout)
@@ -297,6 +299,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     private ChiCangFragment chiCangFragment;
     private WeituoFragment weituoFragment;
     private ChengJiaoFragment chengJiaoFragment;
+
+    private WeiboHeaderPagerBehavior mHeaderPagerBehavior;
 
     //HTTP请求  轮询
     private Runnable cnyRunnable = new Runnable() {
@@ -740,8 +744,16 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         });
 
 
-        /*CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) coordintaorLay.getLayoutParams();
-        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+       /* CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppbarLayout.getLayoutParams();
+        mHeaderPagerBehavior = (WeiboHeaderPagerBehavior) params.getBehavior();
+        if (mHeaderPagerBehavior != null){
+            mHeaderPagerBehavior.setPagerStateListener(this);
+            LogUtilDebug.i("show","mAppbarLayoutHeight:"+mAppbarLayout.getHeight());
+        }else {
+            LogUtilDebug.i("show","mheadpagerBehavior is null");
+        }*/
+
+       /* AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
         assert behavior != null;
         behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
             @Override
@@ -1713,5 +1725,15 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             setUserVisibleHint(true);
             LogUtilDebug.i("show", "onHiddenChanged()*******HeYueFragment可见");
         }
+    }
+
+    @Override
+    public void onPagerClosed() {
+        Toast.makeText(getActivity(), "关闭了", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPagerOpened() {
+        Toast.makeText(getActivity(), "打开了", Toast.LENGTH_SHORT).show();
     }
 }

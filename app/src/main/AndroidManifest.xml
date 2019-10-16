@@ -1,118 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.lr.biyou">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.lr.biyou">
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission
         android:name="android.permission.READ_LOGS"
-        tools:ignore="ProtectedPermissions">
-    </uses-permission>
-    <uses-permission android:name="android.permission.USE_FINGERPRINT"/> <!-- 支持iBeancon 需要蓝牙权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/> <!-- 支持个推3.0 电子围栏功能 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/> <!-- Required  一些系统要求的权限，如访问网络等 -->
-    <uses-permission android:name="com.shsk.shop.activity.permission.JPUSH_MESSAGE"/>
-    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/> <!-- Optional for location -->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/> <!-- 保存或读出图片还应该添加读写权限 -->
+        tools:ignore="ProtectedPermissions"></uses-permission>
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" /> <!-- 支持iBeancon 需要蓝牙权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 支持个推3.0 电子围栏功能 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Required  一些系统要求的权限，如访问网络等 -->
+    <uses-permission android:name="com.shsk.shop.activity.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- Optional for location -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 保存或读出图片还应该添加读写权限 -->
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.WRITE_CONTACTS"/> <!-- 添加程序访问网络的权限 -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
-
-    <uses-permission android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
-    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
-    <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
-    <uses-permission android:name="android.permission.ADD_VOICEMAIL"/>
-    <uses-permission android:name="android.permission.USE_SIP"/>
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/> <!-- 读取联系人权限 -->
-    <uses-permission android:name="android.permission.READ_CONTACTS"/> <!-- 拨打电话权限 -->
-    <uses-permission android:name="android.permission.CALL_PHONE"/> <!-- 读取短信权限 -->
-    <uses-permission android:name="android.permission.READ_SMS"/> <!-- 开机启动权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" /> <!-- 添加程序访问网络的权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+    <uses-permission android:name="android.permission.ADD_VOICEMAIL" />
+    <uses-permission android:name="android.permission.USE_SIP" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" /> <!-- 读取联系人权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- 拨打电话权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- 读取短信权限 -->
+    <uses-permission android:name="android.permission.READ_SMS" /> <!-- 开机启动权限 -->
     <!-- <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> -->
-    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
-    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-
-    <!-- 融云permission -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="MediaStore.Images.Media.INTERNAL_CONTENT_URI"/>
-    <uses-permission android:name="MediaStore.Images.Media.EXTERNAL_CONTENT_URI"/>
-
-    <!-- ⼩米 配置开始 < -->
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" /> <!-- 融云permission -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="MediaStore.Images.Media.INTERNAL_CONTENT_URI" />
+    <uses-permission android:name="MediaStore.Images.Media.EXTERNAL_CONTENT_URI" /> <!-- ⼩米 配置开始 < -->
     <permission
         android:name="permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="cn.rongcloud.im.permission.MIPUSH_RECEIVE" />
-    <!-- ⼩米 配置结束 < -->
+
+    <uses-permission android:name="cn.rongcloud.im.permission.MIPUSH_RECEIVE" /> <!-- ⼩米 配置结束 < -->
     <!-- GCM 配置开始 < -->
     <permission
         android:name="permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="cn.rongcloud.im.permission.C2D_MESSAGE" />
-    <!-- GCM 配置结束 < -->
+
+    <uses-permission android:name="cn.rongcloud.im.permission.C2D_MESSAGE" /> <!-- GCM 配置结束 < -->
     <!-- 华为 配置开始 < -->
-    <!--HMS-SDK引导升级HMS功能，访问OTA服务器需要网络权限-->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--HMS-SDK引导升级HMS功能，保存下载的升级包需要SD卡写权限-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--检测网络状态-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!--检测wifi状态-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--为了获取用户手机的IMEI，用来唯一的标识用户。-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <!--如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <!-- 华为 配置结束 < -->
-
+    <!-- HMS-SDK引导升级HMS功能，访问OTA服务器需要网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- HMS-SDK引导升级HMS功能，保存下载的升级包需要SD卡写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 检测网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 检测wifi状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 为了获取用户手机的IMEI，用来唯一的标识用户。 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- 华为 配置结束 < -->
     <!-- MeiZu 配置开始 < -->
-    <!-- 兼容 flyme5.0 以下版本，魅族内部集成 pushSDK 必填，不然无法收到 消息-->
+    <!-- 兼容 flyme5.0 以下版本，魅族内部集成 pushSDK 必填，不然无法收到 消息 -->
     <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
+
     <permission
         android:name="rongyun.push.permission.MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="cn.rongcloud.im.push.permission.MESSAGE" />
-    <!-- 兼容 flyme3.0 配置权限-->
-    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
-    <!-- MeiZu 配置结束 < -->
 
-    <!-- OPPPO 权限配置-->
-    <uses-permission android:name="com.coloros.mcs.permission.SEND_MCS_MESSAGE" />
-    <!-- OPPO 配置结束-->
-
+    <uses-permission android:name="cn.rongcloud.im.push.permission.MESSAGE" /> <!-- 兼容 flyme3.0 配置权限 -->
+    <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" /> <!-- MeiZu 配置结束 < -->
+    <!-- OPPPO 权限配置 -->
+    <uses-permission android:name="com.coloros.mcs.permission.SEND_MCS_MESSAGE" /> <!-- OPPO 配置结束 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
@@ -121,10 +106,10 @@
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
-        android:smallScreens="true"/>
+        android:smallScreens="true" />
 
     <application
-        android:name="com.lr.biyou.basic.BasicApplication"
+        android:name=".basic.BasicApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name_main"
@@ -134,12 +119,16 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:label,android:allowBackup,android:name,android:networkSecurityConfig">
 
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
-       <!-- <meta-data
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+        <!--
+ <meta-data
             tools:replace="android:value"
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="k51hidwqk4j8b" />-->
+            android:value="k51hidwqk4j8b" />
+        -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.lr.biyou.FileProvider"
@@ -147,26 +136,23 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/rc_file_path"/>
+                android:resource="@xml/rc_file_path" />
         </provider>
 
-
-
-
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.SplashActivity"
+            android:name=".ui.moudle.activity.SplashActivity"
             android:label="@string/app_name_main"
             android:theme="@style/SplashTheme">
-
             <intent-filter android:label="@string/app_name_main">
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data
                     android:host="www.example.com"
                     android:pathPrefix="/gizmos"
-                    android:scheme="http"/>
+                    android:scheme="http" />
                 <!-- note that the leading "/" is required for pathPrefix -->
                 <!--
                 Accepts URIs that begin with "example://gizmos”
@@ -175,1043 +161,796 @@
                 -->
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
-            android:theme="@android:style/Theme.Translucent"/>
+            android:theme="@android:style/Theme.Translucent" />
 
         <meta-data
             android:name="com.lr.biyou.utils.imageload.MyGlideAppModule"
-            android:value="MyGlideAppModule"/>
+            android:value="MyGlideAppModule" />
 
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.GuideViewPageActivity"
+            android:name=".ui.moudle.activity.GuideViewPageActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.MainActivity"
+            android:name=".ui.moudle.activity.MainActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.LoginActivity"
+            android:name=".ui.moudle.activity.LoginActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:theme="@style/AppTheme"/>
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.PerfectInfoActivity"
+            android:name=".ui.temporary.activity.PerfectInfoActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ChoosePhoneActivity"
+            android:name=".ui.temporary.activity.ChoosePhoneActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.NormalNameListActivity"
+            android:name=".ui.temporary.activity.NormalNameListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.FoodManagerActivity"
+            android:name=".ui.temporary.activity.FoodManagerActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity>
-        <activity android:name="com.lr.biyou.ui.temporary.activity.TellUsActivity">
-        </activity>
-
+            android:theme="@style/AppTheme.Transparent"/>
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.RegistActivity"
+            android:name=".ui.temporary.activity.TellUsActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-
-        </activity> <!-- 注册 -->
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.MoreSetActivity"
+            android:name=".ui.moudle.activity.RegistActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 登录手机号 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 注册 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.LoginPhoneInfoActivity"
+            android:name=".ui.temporary.activity.MoreSetActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 更改手机号 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 登录手机号 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ChangePhoneActivity"
+            android:name=".ui.temporary.activity.LoginPhoneInfoActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 短信验证码 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 更改手机号 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.CodeMsgActivity"
+            android:name=".ui.temporary.activity.ChangePhoneActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 短信验证码 -->
+        <activity
+            android:name=".ui.temporary.activity.CodeMsgActivity"
             android:configChanges="screenSize|orientation|keyboard|smallestScreenSize|screenLayout"
-            android:windowSoftInputMode="stateAlwaysVisible"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 修改登录密码 -->
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateAlwaysVisible"/> <!-- 修改登录密码 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ModifyLoginPassActivity"
+            android:name=".ui.temporary.activity.ModifyLoginPassActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 重置登录密码 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 重置登录密码 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.ResetLoginPassActivity"
+            android:name=".ui.moudle.activity.ResetLoginPassActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 重置登录密码 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 重置登录密码 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.ResetLoginPassButActivity"
+            android:name=".ui.moudle.activity.ResetLoginPassButActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 用户信息页面 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 用户信息页面 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle1.activity.UserInfoActivity"
+            android:name=".ui.moudle1.activity.UserInfoActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 用户信息页面 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 用户信息页面 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.MoreInfoManagerActivity"
+            android:name=".ui.temporary.activity.MoreInfoManagerActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 用户信息页面 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 用户信息页面 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.HangYeActivity"
+            android:name=".ui.temporary.activity.HangYeActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 我的额度 授信列表   授信详情  预授信详情 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 我的额度 授信列表   授信详情  预授信详情 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ShouxinPreDetailActivity"
+            android:name=".ui.temporary.activity.ShouxinPreDetailActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 还款计划界面 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 还款计划界面 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.PayPlanActivity"
+            android:name=".ui.temporary.activity.PayPlanActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 身份证实名认证 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 身份证实名认证 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.IdCardCheckActivity"
+            android:name=".ui.temporary.activity.IdCardCheckActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 身份证实名认证图片界面 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 身份证实名认证图片界面 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.IdCardPicActivity"
+            android:name=".ui.temporary.activity.IdCardPicActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 人脸认证 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 人脸认证 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.FaceCheckActivity"
+            android:name=".ui.temporary.activity.FaceCheckActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity>
-        <!-- 人工认证审核 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 人工认证审核 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.IdCardMyActivity"
+            android:name=".ui.temporary.activity.IdCardMyActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 审核等待界面 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 审核等待界面 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.CheckWatiActivity"
+            android:name=".ui.temporary.activity.CheckWatiActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 审核成功 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 审核成功 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.IdCardSuccessActivity"
+            android:name=".ui.temporary.activity.IdCardSuccessActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 银行卡绑定 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 银行卡绑定 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BankCardActivity"
+            android:name=".ui.temporary.activity.BankCardActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 银行卡绑定 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 银行卡绑定 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BankCardBindActivity"
+            android:name=".ui.temporary.activity.BankCardBindActivity"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="adjustResize|stateHidden">
-        </activity> <!-- 开户 -->
+            android:windowSoftInputMode="adjustResize|stateHidden"/> <!-- 开户 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BankOpenActivity"
+            android:name=".ui.temporary.activity.BankOpenActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
-        </activity> <!-- 开户协议 -->
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/> <!-- 开户协议 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BankOpenXieyiActivity"
+            android:name=".ui.temporary.activity.BankOpenXieyiActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity> <!-- 开户成功 -->
+            android:windowSoftInputMode="stateAlwaysHidden"/> <!-- 开户成功 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BankOpenSuccessActivity"
+            android:name=".ui.temporary.activity.BankOpenSuccessActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity> <!-- 网银签约 -->
+            android:windowSoftInputMode="stateAlwaysHidden"/> <!-- 网银签约 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BankQianyueActivity"
+            android:name=".ui.temporary.activity.BankQianyueActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 网银签约 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 网银签约 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BankBindSuccessActivity"
+            android:name=".ui.temporary.activity.BankBindSuccessActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 银行名称列表 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 银行名称列表 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BankNameListActivity"
+            android:name=".ui.temporary.activity.BankNameListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity> <!-- 选择银行 -->
+            android:windowSoftInputMode="stateAlwaysHidden"/> <!-- 选择银行 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.SelectBankListActivity"
+            android:name=".ui.temporary.activity.SelectBankListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity> <!-- 交易明细 -->
+            android:windowSoftInputMode="stateAlwaysHidden"/> <!-- 交易明细 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle5.activity.TradeListActivity"
+            android:name=".ui.moudle5.activity.TradeListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 交易明细 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 交易明细 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.TradeDetailActivity"
+            android:name=".ui.temporary.activity.TradeDetailActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 借款详情 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 借款详情 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BorrowDetailActivity"
+            android:name=".ui.temporary.activity.BorrowDetailActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 借款信息 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 借款信息 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.MyBorrowMoneyActivity"
+            android:name=".ui.temporary.activity.MyBorrowMoneyActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 我的借款 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 我的借款 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BorrowInfoActivity"
+            android:name=".ui.temporary.activity.BorrowInfoActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 附件信息 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 附件信息 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.FujianShowActivity"
+            android:name=".ui.temporary.activity.FujianShowActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 合同信息 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 合同信息 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.HeTongShowActivity"
+            android:name=".ui.temporary.activity.HeTongShowActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 上传贷款凭证 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 上传贷款凭证 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.UploadDkYongTActivity"
+            android:name=".ui.temporary.activity.UploadDkYongTActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 受托支付信息 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 受托支付信息 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.PayTheInfoActivity"
+            android:name=".ui.temporary.activity.PayTheInfoActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 还款记录 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 还款记录 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.PayHistoryActivity"
+            android:name=".ui.temporary.activity.PayHistoryActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 还款记录 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 还款记录 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.RepaymentInfoActivity"
+            android:name=".ui.temporary.activity.RepaymentInfoActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 工作信息 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 工作信息 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.WorkInfoActivity"
+            android:name=".ui.temporary.activity.WorkInfoActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity> <!-- 待办信息 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 待办信息 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ApplyAmountActivity"
+            android:name=".ui.temporary.activity.ApplyAmountActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 申请额度 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 申请额度 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ModifyFileActivity"
+            android:name=".ui.temporary.activity.ModifyFileActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/YourTheme"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 添加附件 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 添加附件 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.AddFileActivity"
+            android:name=".ui.temporary.activity.AddFileActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 添加附件 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 添加附件 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.ShowDetailPictrue"
+            android:name=".ui.moudle.activity.ShowDetailPictrue"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/YourTheme"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 申请成功界面 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 申请成功界面 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.SubmitResultActivity"
+            android:name=".ui.temporary.activity.SubmitResultActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 借款  还款  成功界面 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 借款  还款  成功界面 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ResultMoneyActivity"
+            android:name=".ui.temporary.activity.ResultMoneyActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 我的-  我的额度 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 我的-  我的额度 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.MyAmountActivity"
+            android:name=".ui.temporary.activity.MyAmountActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 授信详情页面 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 授信详情页面 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ShouxinDetailActivity"
+            android:name=".ui.temporary.activity.ShouxinDetailActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 授信详情页面 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 授信详情页面 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ShouxinJkListActivity"
+            android:name=".ui.temporary.activity.ShouxinJkListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 授信合同页面 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 授信合同页面 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.HeTongListActivity"
+            android:name=".ui.temporary.activity.HeTongListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 添加共同借款人 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 添加共同借款人 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.AddSamePeopleActivity"
+            android:name=".ui.temporary.activity.AddSamePeopleActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 共同借款人列表 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 共同借款人列表 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.SamePeopleListActivity"
+            android:name=".ui.temporary.activity.SamePeopleListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 我要借款 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 我要借款 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BorrowMoneyActivity"
+            android:name=".ui.temporary.activity.BorrowMoneyActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 添加收款人 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 添加收款人 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BorrowMoneySelectActivity"
+            android:name=".ui.temporary.activity.BorrowMoneySelectActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 我要借款  选择借款类型 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 我要借款  选择借款类型 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.AddSKPeopleActivity"
+            android:name=".ui.temporary.activity.AddSKPeopleActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity> <!-- 添加收款人 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 添加收款人 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.PeopleCheckActivity"
+            android:name=".ui.temporary.activity.PeopleCheckActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-        <!-- 银行网点选择 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 银行网点选择 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ChoseBankAddActivity"
+            android:name=".ui.temporary.activity.ChoseBankAddActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
-        <!-- 银行网点选择 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 银行网点选择 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BankWdActivity"
+            android:name=".ui.temporary.activity.BankWdActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
-        <!-- 收款人列表 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 收款人列表 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.SkPeopleListActivity"
+            android:name=".ui.temporary.activity.SkPeopleListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- 还款 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- 还款 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle4.activity.PayMoneyActivity"
+            android:name=".ui.moudle4.activity.PayMoneyActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- html界面 还款协议 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- html界面 还款协议 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle1.activity.HtmlActivity"
+            android:name=".ui.moudle1.activity.HtmlActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:process=":RemoteProcess"
-            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity> <!-- pdf界面 还款协议 -->
+            android:windowSoftInputMode="stateHidden"/> <!-- pdf界面 还款协议 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.PDFLookActivity"
+            android:name=".ui.temporary.activity.PDFLookActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:windowSoftInputMode="stateHidden"/>
 
-        <service android:name="com.lr.biyou.service.DownloadService">
-        </service>
-
+        <service android:name=".service.DownloadService"/>
         <service
-            android:name="com.lr.biyou.service.InitService"
-            android:exported="false" />
-
-
-        <!-- 总资产 -->
+            android:name=".service.InitService"
+            android:exported="false" /> <!-- 总资产 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.AllZiChanActivity"
+            android:name=".ui.temporary.activity.AllZiChanActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:windowSoftInputMode="stateHidden"/>
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.IdCardMyPicActivity"
+            android:name=".ui.temporary.activity.IdCardMyPicActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 修改交易密码 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 修改交易密码 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ModifyOrderPassActivity"
+            android:name=".ui.temporary.activity.ModifyOrderPassActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 修改交易密码  填写新的密码以及确认密码 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 修改交易密码  填写新的密码以及确认密码 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.NewOrderPassActivity"
+            android:name=".ui.temporary.activity.NewOrderPassActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 手动输入身份证号界面 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 手动输入身份证号界面 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.IdCardEditActivity"
+            android:name=".ui.moudle.activity.IdCardEditActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 发帖 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 发帖 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.UserIdeaActivity"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 待办事项列表 -->
+            android:name=".ui.temporary.activity.UserIdeaActivity"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 待办事项列表 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.WaitDoWorkActivity"
+            android:name=".ui.temporary.activity.WaitDoWorkActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 指纹登录 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 指纹登录 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.FingermentActivity"
+            android:name=".ui.temporary.activity.FingermentActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 指纹登录 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 指纹登录 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.FingerCheckActivity"
+            android:name=".ui.temporary.activity.FingerCheckActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 手势登录 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 手势登录 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.PatternActivity"
+            android:name=".ui.temporary.activity.PatternActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 手势的解锁或者绘制 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 手势的解锁或者绘制 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.DrawPatternActivity"
+            android:name=".ui.temporary.activity.DrawPatternActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 指纹识别 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 指纹识别 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.FingerRecognieActivity"
+            android:name=".ui.temporary.activity.FingerRecognieActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 关于我们 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 关于我们 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.SettingActivity"
+            android:name=".ui.moudle.activity.SettingActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 币友在线介绍 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 币友在线介绍 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle5.activity.ChongBiActivity"
+            android:name=".ui.moudle5.activity.ChongBiActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 合同签署 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 合同签署 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.SignLoanActivity"
+            android:name=".ui.temporary.activity.SignLoanActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 提现 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 提现 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.TiXianActivity"
+            android:name=".ui.temporary.activity.TiXianActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 充值校验 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 充值校验 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ChongzhiTestActivity"
+            android:name=".ui.temporary.activity.ChongzhiTestActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity>
-        <!-- 添加新的充值卡 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 添加新的充值卡 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ChongZhiCardAddActivity"
+            android:name=".ui.temporary.activity.ChongZhiCardAddActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:theme="@style/AppTheme.Transparent">
-        </activity>
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 提现校验 -->
+        <activity
+            android:name=".ui.temporary.activity.TiXianTestActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"/> <!-- 状态反馈 -->
         <!-- 提现校验 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.TiXianTestActivity"
+            android:name=".ui.temporary.activity.FuKuanFinishActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 状态反馈 -->
-        <!-- 提现校验 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 状态反馈 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.FuKuanFinishActivity"
+            android:name=".ui.temporary.activity.StateFeedbackActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity>
-        <!-- 状态反馈 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 开启服务提醒 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.StateFeedbackActivity"
+            android:name=".ui.temporary.activity.ServicesRemindActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 开启服务提醒 -->
+            android:theme="@style/AppTheme.Transparent"/>
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ServicesRemindActivity"
+            android:name=".ui.temporary.activity.ServicesRemindInfoActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity>
-        <activity android:name="com.lr.biyou.ui.temporary.activity.ServicesRemindInfoActivity">
-        </activity> <!-- 企业信息录入 认证 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业信息录入 认证 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.QiyeInfoActivity"
+            android:name=".ui.temporary.activity.QiyeInfoActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 企业信息展示 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业信息展示 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.QiyeInfoShowActivity"
+            android:name=".ui.temporary.activity.QiyeInfoShowActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 企业账号信息录入 认证 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业账号信息录入 认证 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.QiyeCardInfoActivity"
+            android:name=".ui.temporary.activity.QiyeCardInfoActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 企业打款认证 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业打款认证 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.QiyeDakuanCheckActivity"
+            android:name=".ui.temporary.activity.QiyeDakuanCheckActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 企业申请证书 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业申请证书 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.QiyeApplyCaActivity"
+            android:name=".ui.temporary.activity.QiyeApplyCaActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 企业申请证书 支付界面 -->
-
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业申请证书 支付界面 -->
         <!-- 企业申请证书 修改后的 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.QiyeCaPayActivity"
+            android:name=".ui.temporary.activity.QiyeCaPayActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 企业申请证书 支付界面 转账界面 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业申请证书 支付界面 转账界面 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.QiyeCaZhuanZhangActivity"
+            android:name=".ui.temporary.activity.QiyeCaZhuanZhangActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 企业申请证书 提交结果界面 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 企业申请证书 提交结果界面 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.QiyeCaActivity"
+            android:name=".ui.temporary.activity.QiyeCaActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 扫描注册二维码 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 扫描注册二维码 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.TestScanActivity"
+            android:name=".ui.moudle.activity.TestScanActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 扫描发票 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 扫描发票 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.InvoiceActivity"
+            android:name=".ui.temporary.activity.InvoiceActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 完善合同信息 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 完善合同信息 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.InvoiceListActivity"
+            android:name=".ui.temporary.activity.InvoiceListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 发票导入结果 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 发票导入结果 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.InvoiceAddActivity"
+            android:name=".ui.temporary.activity.InvoiceAddActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 手动录入发票 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 手动录入发票 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.InvoiceImportActivity"
+            android:name=".ui.temporary.activity.InvoiceImportActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 发票导入结果 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 发票导入结果 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.HeTongSelectActivity"
+            android:name=".ui.temporary.activity.HeTongSelectActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 完善合同信息 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 完善合同信息 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.HeTongAddActivity"
+            android:name=".ui.temporary.activity.HeTongAddActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 新增合同 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 新增合同 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.SelectFukuanFangActivity"
+            android:name=".ui.temporary.activity.SelectFukuanFangActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 选择付款方 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 选择付款方 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ShouldShouMoneyActivity"
+            android:name=".ui.temporary.activity.ShouldShouMoneyActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 选择应收账款 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 选择应收账款 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.SelectPingZhengActivity"
+            android:name=".ui.temporary.activity.SelectPingZhengActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 选择关联凭证 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 选择关联凭证 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.IntoChiActivity"
+            android:name=".ui.temporary.activity.IntoChiActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 申请入池 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 申请入池 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.IntoChiFinishActivity"
+            android:name=".ui.temporary.activity.IntoChiFinishActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 申请入池完成 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 申请入池完成 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.MyShouMoneyActivity"
+            android:name=".ui.temporary.activity.MyShouMoneyActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity> <!-- 我的应收账款 -->
+            android:theme="@style/AppTheme.Transparent"/> <!-- 我的应收账款 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.ShouMoneyItemActivity"
+            android:name=".ui.temporary.activity.ShouMoneyItemActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
-            android:theme="@style/AppTheme.Transparent">
-        </activity>
-
+            android:theme="@style/AppTheme.Transparent"/>
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.BankTiXianModifyActivity"
+            android:name=".ui.temporary.activity.BankTiXianModifyActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--   预付款列表   -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 预付款列表 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.AdvancePayListActivity"
+            android:name=".ui.temporary.activity.AdvancePayListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-        <!--   预付款合同添加   -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 预付款合同添加 -->
         <activity
-            android:name="com.lr.biyou.ui.temporary.activity.AdvanceHtAddActivity"
+            android:name=".ui.temporary.activity.AdvanceHtAddActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-        <!--   邀请好友   -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 邀请好友 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle1.activity.YaoQingActivity"
+            android:name=".ui.moudle1.activity.YaoQingActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-        <!--   折线走势图   -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 折线走势图 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle3.activity.CoinInfoDetailActivity"
+            android:name=".ui.moudle3.activity.CoinInfoDetailActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--   充币选择币种类型   -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 充币选择币种类型 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle5.activity.ChoseBiTypeActivity"
+            android:name=".ui.moudle5.activity.ChoseBiTypeActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--   提币   -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 提币 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle5.activity.TiBiActivity"
+            android:name=".ui.moudle5.activity.TiBiActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--   提币  地址管理  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 提币  地址管理 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle5.activity.TibiAddressActivity"
+            android:name=".ui.moudle5.activity.TibiAddressActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--   提币  添加地址 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 提币  添加地址 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle5.activity.AddAddressActivity"
+            android:name=".ui.moudle5.activity.AddAddressActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-
-        <!--  划转 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 划转 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle5.activity.HuaZhuanActivity"
+            android:name=".ui.moudle5.activity.HuaZhuanActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  划转记录 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 划转记录 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle5.activity.HuaZhuanListActivity"
+            android:name=".ui.moudle5.activity.HuaZhuanListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  订单历史 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 订单历史 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle4.activity.DingDanListActivity"
+            android:name=".ui.moudle4.activity.DingDanListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-        <!--  关于我们 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 关于我们 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.AboutActivity"
+            android:name=".ui.moudle.activity.AboutActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  联系客服 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 联系客服 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.ContactKefuActivity"
+            android:name=".ui.moudle.activity.ContactKefuActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  安全中心 -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 安全中心 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.SecurityActivity"
+            android:name=".ui.moudle.activity.SecurityActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  安全中心  二维码校验-->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 安全中心  二维码校验 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.SecurityCheckActivity"
+            android:name=".ui.moudle.activity.SecurityCheckActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  重置支付密码  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 重置支付密码 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle.activity.ResetPayPassButActivity"
+            android:name=".ui.moudle.activity.ResetPayPassButActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  收款方式  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 收款方式 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle1.activity.PayListActivity"
+            android:name=".ui.moudle1.activity.PayListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  添加支付方式  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 添加支付方式 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle1.activity.AddPayWayActivity"
+            android:name=".ui.moudle1.activity.AddPayWayActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  公告列表  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 公告列表 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle1.activity.NoticeListActivity"
+            android:name=".ui.moudle1.activity.NoticeListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-
-        <!--  公告详情  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 公告详情 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle1.activity.NoticeDetialActivity"
+            android:name=".ui.moudle1.activity.NoticeDetialActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  帮助列表  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 帮助列表 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle1.activity.HelpListActivity"
+            android:name=".ui.moudle1.activity.HelpListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-
-        <!--  帮助详情  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 帮助详情 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle1.activity.HelpDetialActivity"
+            android:name=".ui.moudle1.activity.HelpDetialActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  委托列表  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 委托列表 -->
         <activity
-            android:name="com.lr.biyou.ui.moudle4.activity.WeiTuoListActivity"
+            android:name=".ui.moudle4.activity.WeiTuoListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-
-        <!--  修改昵称  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 聊天界面 -->
+        <activity
+            android:name=".ui.moudle2.activity.ChatActivity"
+            android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
+            android:theme="@style/AppTheme.Transparent"
+            android:windowSoftInputMode="stateHidden|adjustPan"/><!-- 修改昵称 -->
         <activity
             android:name=".ui.moudle.activity.UpdateNichengActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-        <!--  添加好友  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 添加好友 -->
         <activity
             android:name=".ui.moudle2.activity.AddFriendActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  聊天消息通知列表  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 聊天消息通知列表 -->
         <activity
             android:name=".ui.moudle2.activity.ChatNoticeListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
-
-        <!--  选择联系人  -->
+            android:windowSoftInputMode="stateHidden|adjustResize"/> <!-- 选择联系人 -->
         <activity
             android:name=".ui.moudle2.activity.SelectContractListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  聊天详情  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 聊天详情 -->
         <activity
             android:name=".ui.moudle2.activity.ChatItemActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-
-        <!--  群聊聊天详情  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 群聊聊天详情 -->
         <activity
             android:name=".ui.moudle2.activity.GroupChatItemActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  投诉原因选择  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 投诉原因选择 -->
         <activity
             android:name=".ui.moudle2.activity.ChoseReasonTypeActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-
-        <!--  投诉原因选择  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 投诉原因选择 -->
         <activity
             android:name=".ui.moudle2.activity.TousuActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-
-        <!--  群二维码名片  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 群二维码名片 -->
         <activity
             android:name=".ui.moudle2.activity.GroupQrCodeActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  群管理  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 群管理 -->
         <activity
             android:name=".ui.moudle2.activity.GroupChatManagerActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  红包  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 红包 -->
         <activity
             android:name=".ui.moudle2.activity.RedMoneyActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-
-        <!--  红包领取界面  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 红包领取界面 -->
         <activity
             android:name=".ui.moudle2.activity.RedListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  红包记录界面  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 红包记录界面 -->
         <activity
             android:name=".ui.moudle2.activity.RedRecordListActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-        <!--  转账  -->
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 转账 -->
         <activity
             android:name=".ui.moudle2.activity.TransferMoneyActivity"
             android:configChanges="screenSize|orientation|keyboardHidden|smallestScreenSize|screenLayout|locale"
             android:theme="@style/AppTheme.Transparent"
-            android:windowSoftInputMode="stateHidden|adjustPan">
-        </activity>
-
-
-
-
-
-
-
-        <!--  融云Activity  -->
-
+            android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 融云Activity -->
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.LoginActivity"
+            android:name=".rongyun.ui.activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.SelectCountryActivity"
+            android:name=".rongyun.ui.activity.SelectCountryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.MainActivity"
+            android:name=".rongyun.ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.ConversationActivity"
+            android:name=".rongyun.ui.activity.ConversationActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
@@ -1219,255 +958,231 @@
                     android:pathPrefix="/conversation/"
                     android:scheme="rong" />
             </intent-filter>
-
-        </activity>
-
-        <!--聚合会话列表-->
+        </activity> <!-- 聚合会话列表 -->
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.SubConversationListActivity"
+            android:name=".rongyun.ui.activity.SubConversationListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.lr.biyou"
                     android:path="/subconversationlist"
                     android:scheme="rong" />
             </intent-filter>
-        </activity>
-        <!--聚合会话列表-->
+        </activity> <!-- 聚合会话列表 -->
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.NewFriendListActivity"
+            android:name=".rongyun.ui.activity.NewFriendListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.GroupNoticeListActivity"
+            android:name=".rongyun.ui.activity.GroupNoticeListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.SealSearchActivity"
+            android:name=".rongyun.ui.activity.SealSearchActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.SearchFriendActivity"
+            android:name=".rongyun.ui.activity.SearchFriendActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.SearchHistoryMessageActivity"
+            android:name=".rongyun.ui.activity.SearchHistoryMessageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.GroupListActivity"
+            android:name=".rongyun.ui.activity.GroupListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.PublicServiceActivity"
+            android:name=".rongyun.ui.activity.PublicServiceActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.PublicServiceSearchActivity"
+            android:name=".rongyun.ui.activity.PublicServiceSearchActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.PublicServiceInfoActivity"
+            android:name=".rongyun.ui.activity.PublicServiceInfoActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.lr.biyou"
                     android:pathPrefix="/publicServiceProfile"
                     android:scheme="rong" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="com.lr.biyou"
                     android:pathPrefix="/publicServiceInfo"
                     android:scheme="rong" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.AccountSettingActivity"
+            android:name=".rongyun.ui.activity.AccountSettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.ChangeLanguageActivity"
+            android:name=".rongyun.ui.activity.ChangeLanguageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.AboutSealTalkActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.WebViewActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.PrivateChatSettingActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.GroupDetailActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.GroupMemberListActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.GroupNoticeActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.UserDetailActivity"
+            android:name=".rongyun.ui.activity.AboutSealTalkActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.SelectSingleFriendActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.SelectGroupMemberActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.SelectFriendExcluedGroupActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.SelectForwardCreateChatActivity"
+            android:name=".rongyun.ui.activity.WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.SelectCreateGroupActivity"
-            android:windowSoftInputMode="stateHidden"
+            android:name=".rongyun.ui.activity.PrivateChatSettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.ForwardActivity"
+            android:name=".rongyun.ui.activity.GroupDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.GroupMemberListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.GroupNoticeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.UserDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.SelectSingleFriendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.SelectGroupMemberActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.SelectFriendExcluedGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.SelectForwardCreateChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.SelectCreateGroupActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.MyAccountActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.UpdateNameActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.UpdateStAccountActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.UpdateGenderActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.CreateGroupActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.EditAliasActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.PrivacyActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.UpdatePasswordActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.BlackListActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.NewMessageRemindActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.MessageDonotDisturbSettingActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.MemberMentionedExActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.QrCodeDisplayActivity"
-            android:screenOrientation="portrait" />
-
-        <activity android:name="com.lr.biyou.rongyun.ui.activity.QrCodeDisplayWindowActivity"
+            android:name=".rongyun.ui.activity.ForwardActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/TranslucentNoTitleActivity"
-            />
-
+            android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.SealPicturePagerActivity"
+            android:name=".rongyun.ui.activity.MyAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.UpdateNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.UpdateStAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.UpdateGenderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.CreateGroupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.EditAliasActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.PrivacyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.UpdatePasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.BlackListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.NewMessageRemindActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.MessageDonotDisturbSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.MemberMentionedExActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.QrCodeDisplayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.QrCodeDisplayWindowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentNoTitleActivity" />
+        <activity
+            android:name=".rongyun.ui.activity.SealPicturePagerActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.JoinGroupActivity"
+            android:name=".rongyun.ui.activity.JoinGroupActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.GroupManagerActivity"
+            android:name=".rongyun.ui.activity.GroupManagerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.GroupManagementsActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.GroupSetManagementsActivity"
+            android:name=".rongyun.ui.activity.GroupManagementsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.GroupSetNewGroupOwnerActivity"
+            android:name=".rongyun.ui.activity.GroupSetManagementsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.SelectForwardMoreContactActivity"
+            android:name=".rongyun.ui.activity.GroupSetNewGroupOwnerActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.lr.biyou.rongyun.ui.activity.ForwardSelectedDetailActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="com.lr.biyou.rongyun.ui.activity.ScanActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="com.lr.biyou.rongyun.ui.activity.AddFriendActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="com.lr.biyou.rongyun.ui.activity.AddFriendFromContactActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="com.lr.biyou.rongyun.ui.activity.InviteFriendFromContactActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="com.lr.biyou.rongyun.ui.activity.RequestContactPermissionActivity"
-            android:screenOrientation="portrait"
-            />
-
-        <!-- 请将CHANNAL改为app的发布渠道 < -->
+        <activity
+            android:name=".rongyun.ui.activity.SelectForwardMoreContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.ForwardSelectedDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.ScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.AddFriendActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.AddFriendFromContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.InviteFriendFromContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".rongyun.ui.activity.RequestContactPermissionActivity"
+            android:screenOrientation="portrait" /> <!-- 请将CHANNAL改为app的发布渠道 < -->
         <meta-data
             android:name="InstallChannel"
-            android:value="CHANNAL" />
-
-        <!-- 高德地图-->
+            android:value="CHANNAL" /> <!-- 高德地图 -->
         <!--
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="替换你申请的高德地图 ApiKey" />
         -->
-
         <!--
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="替换您申请的 UMeng AppKey" />
         -->
-
         <!--
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="替换您申请的 UMeng Channel" />
         -->
-
-        <!-- push start-->
+        <!-- push start -->
         <receiver
-            android:name="com.lr.biyou.rongyun.push.SealNotificationReceiver"
+            android:name=".rongyun.push.SealNotificationReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
                 <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
                 <action android:name="io.rong.push.intent.THIRD_PARTY_PUSH_STATE" />
             </intent-filter>
-        </receiver>
-
-
-        <!--第三方的推送 权限 广播 和服务-->
-
+        </receiver> <!-- 第三方的推送 权限 广播 和服务 -->
         <!-- 小米 配置开始 < -->
         <service
             android:name="com.xiaomi.push.service.XMPushService"
@@ -1478,21 +1193,18 @@
             android:exported="true" />
         <service
             android:name="com.xiaomi.mipush.sdk.MessageHandleService"
-            android:enabled="true" />
-        <!--注：此service必须在2.2.5版本以后（包括2.2.5版本）加入-->
-
+            android:enabled="true" /> <!-- 注：此service必须在2.2.5版本以后（包括2.2.5版本）加入 -->
         <service
             android:name="com.xiaomi.push.service.XMJobService"
             android:enabled="true"
             android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-        <!--注：此service必须在3.0.1版本以后（包括3.0.1版本）加入-->
-
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 注：此service必须在3.0.1版本以后（包括3.0.1版本）加入 -->
         <receiver
             android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
@@ -1515,18 +1227,16 @@
             <intent-filter>
                 <action android:name="com.xiaomi.mipush.ERROR" />
             </intent-filter>
-        </receiver>
-        <!-- 小米 配置结束 < -->
-
-        <!-- HMS 配置开始-->
+        </receiver> <!-- 小米 配置结束 < -->
+        <!-- HMS 配置开始 -->
         <!--
         <meta-data
             android:name="com.huawei.hms.client.appid"
             android:value="替换为您申请的华为推送 AppId" />
         -->
-
-        <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面-->
-        <!--<activity
+        <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面 -->
+        <!--
+<activity
             android:name="com.huawei.hms.activity.BridgeActivity"
             android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
             android:excludeFromRecents="true"
@@ -1536,9 +1246,9 @@
             <meta-data
                 android:name="hwc-theme"
                 android:value="androidhwext:style/Theme.Emui.Translucent" />
-        </activity>-->
-
-        <!-- 解决华为移动服务升级问题的透明界面（必须声明）-->
+        </activity>
+        -->
+        <!-- 解决华为移动服务升级问题的透明界面（必须声明） -->
         <activity
             android:name="io.rong.push.platform.hms.common.HMSAgentActivity"
             android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
@@ -1550,19 +1260,17 @@
                 android:name="hwc-theme"
                 android:value="androidhwext:style/Theme.Emui.Translucent" />
         </activity>
-
-        <!--  <provider
+        <!--
+  <provider
               android:name="com.huawei.hms.update.provider.UpdateProvider"
               android:authorities="hms.update.provider"
               android:exported="false"
-              android:grantUriPermissions="true"></provider>-->
-
-
+              android:grantUriPermissions="true"></provider>
+        -->
         <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
-
-
         <receiver android:name="io.rong.push.platform.hms.HMSReceiver">
             <intent-filter>
+
                 <!-- 必须,用于接收token -->
                 <action android:name="com.huawei.android.push.intent.REGISTRATION" />
                 <!-- 必须，用于接收消息 -->
@@ -1579,9 +1287,7 @@
                 <!-- 接收通道发来的通知栏消息，兼容老版本Push -->
                 <action android:name="com.huawei.intent.action.PUSH" />
             </intent-filter>
-        </receiver>
-        <!-- HMS 配置结束-->
-
+        </receiver> <!-- HMS 配置结束 -->
         <!-- [START firebase_service] -->
         <!--
         <service
@@ -1597,18 +1303,17 @@
         <meta-data
             android:name="firebase_analytics_collection_enabled"
             android:value="false" />
-         -->
+        -->
         <!-- [END firebase_service] -->
-
-
         <!-- MeiZu 配置开始 < -->
         <receiver android:name="io.rong.push.platform.meizu.MeiZuReceiver">
             <intent-filter>
+
                 <!-- 接收 push 消息 -->
                 <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
                 <!-- 接收 register 消息 -->
                 <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
-                <!-- 接收 unregister 消息-->
+                <!-- 接收 unregister 消息 -->
                 <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
 
                 <!-- 兼容低版本 Flyme3 推送服务配置 -->
@@ -1617,10 +1322,7 @@
 
                 <category android:name="com.lr.biyou" />
             </intent-filter>
-        </receiver>
-        <!-- MeiZu 配置结束 < -->
-
-
+        </receiver> <!-- MeiZu 配置结束 < -->
         <!-- vivo 推送配置 开始 -->
         <service
             android:name="com.vivo.push.sdk.service.CommandClientService"
@@ -1632,19 +1334,15 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name="com.lr.biyou.rongyun.ui.activity.GroupReadReceiptDetailActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 微信 接收微信的请求及返回值 -->
-        <activity android:name="com.lr.biyou.rongyun.wxapi.WXEntryActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:name=".rongyun.ui.activity.GroupReadReceiptDetailActivity"
+            android:screenOrientation="portrait" /> <!-- 微信 接收微信的请求及返回值 -->
+        <activity
+            android:name=".rongyun.wxapi.WXEntryActivity"
             android:exported="true"
-            android:taskAffinity="net.sourceforge.simcpux"
+            android:label="@string/app_name"
             android:launchMode="singleTask"
-            />
-
-        <!--推送配置项-->
+            android:taskAffinity="net.sourceforge.simcpux"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- 推送配置项 -->
         <!--
         <meta-data
             android:name="com.vivo.push.api_key"
@@ -1652,18 +1350,16 @@
         <meta-data
             android:name="com.vivo.push.app_id"
             android:value="您申请的 vivo 推送 AppId" />
-         -->
-
+        -->
         <!-- push 应用定义消息 receiver 声明 -->
         <receiver android:name="io.rong.push.platform.vivo.VivoPushMessageReceiver">
             <intent-filter>
+
                 <!-- 接收 push 消息 -->
                 <action android:name="com.vivo.pushclient.action.RECEIVE" />
             </intent-filter>
-        </receiver>
-        <!-- vivo 推送配置 结束 -->
-
-        <!-- OPPO push 配置开始-->
+        </receiver> <!-- vivo 推送配置 结束 -->
+        <!-- OPPO push 配置开始 -->
         <service
             android:name="com.coloros.mcssdk.PushService"
             android:permission="com.coloros.mcs.permission.SEND_MCS_MESSAGE">
@@ -1671,18 +1367,9 @@
                 <action android:name="com.coloros.mcs.action.RECEIVE_MCS_MESSAGE" />
             </intent-filter>
         </service>
-        <!-- OPPO push 配置结束-->
 
-        <!--第三方推送的权限 广播 服务 配置结束-->
-        <!-- push end -->
-
-        <!-- bugly 配置 APP ID -->
-        <!--
-        <meta-data
-            android:name="BUGLY_APPID"
-            android:value="您申请 BUGLY 的 AppId" />
-        -->
-
+        <!-- Socket后台服务-->
+        <service android:name=".service.SocketService"/>
     </application>
 
 </manifest>

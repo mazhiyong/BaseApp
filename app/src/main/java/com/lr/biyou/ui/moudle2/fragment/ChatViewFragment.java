@@ -53,6 +53,7 @@ import com.lr.biyou.rongyun.ui.fragment.MainConversationListFragment;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.TestScanActivity;
 import com.lr.biyou.ui.moudle2.activity.AddFriendActivity;
+import com.lr.biyou.ui.moudle2.activity.ChatActivity;
 import com.lr.biyou.ui.moudle2.activity.ChatNoticeListActivity;
 import com.lr.biyou.ui.moudle2.activity.SelectContractListActivity;
 import com.lr.biyou.ui.moudle2.adapter.MyFriendListAdapter;
@@ -805,9 +806,11 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             @Override
             public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
                 //启动聊天
-                if (RongIM.getInstance() != null) {
+               /* if (RongIM.getInstance() != null) {
                     RongIM.getInstance().startPrivateChat(getActivity(), mParentMap.get("rc_id") + "", mParentMap.get("name") + "");
-                }
+                }*/
+               Intent intent = new Intent(getActivity(), ChatActivity.class);
+               startActivity(intent);
             }
         });
     }

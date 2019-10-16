@@ -58,6 +58,8 @@
 
     <dimen name="adver_height">180dp</dimen>
 
+    <dimen name="weibo_header_height">400dp</dimen>
+    <dimen name="weibo_header_offset">-400dp</dimen>
 
 
 

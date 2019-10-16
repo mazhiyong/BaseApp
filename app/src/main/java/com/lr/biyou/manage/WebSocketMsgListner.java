@@ -1,14 +1,14 @@
 package com.lr.biyou.manage;
 
 import android.os.Looper;
-import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.WebListener;
 import com.lr.biyou.service.MessageService;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 
-import androidx.annotation.Nullable;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
@@ -97,6 +97,7 @@ public class WebSocketMsgListner extends WebSocketListener {
         LogUtilDebug.i("show","连接失败");
         this.mWebSocket=null;
         if(MbsConstans.USER_MAP!=null){
+            //连接失败重新连接
             MessageService.reConnect();
         }else {
             MessageService.cancelReconnect();
@@ -108,7 +109,7 @@ public class WebSocketMsgListner extends WebSocketListener {
         super.onClosing(webSocket, code, reason);
         LogUtilDebug.i("show","正在关闭"+"/"+code+"/"+reason);
         mWebSocket=null;
-        //用户没有退出登录，则继续重新连接
+        //用户没有退出登录，则继续重新连接   //连接关闭重新连接
         if(MbsConstans.USER_MAP!=null){
             MessageService.reConnect();
         }
@@ -119,6 +120,7 @@ public class WebSocketMsgListner extends WebSocketListener {
         super.onClosed(webSocket, code, reason);
         LogUtilDebug.i("show","连接已关闭"+"/"+code+"/"+reason);
         if(MbsConstans.USER_MAP!=null){
+            //连接关闭重新连接
             MessageService.reConnect();
         }else {
             MessageService.cancelReconnect();

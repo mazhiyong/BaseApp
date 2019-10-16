@@ -21,4 +21,7 @@
     <item type="id" name="webview" />
 
     <item name="glide_tag" type="id"/>
+
+    <item name="appbar_layout" type="id"/>
+    <item name="id_weibo_content" type="id"/>
 </resources>

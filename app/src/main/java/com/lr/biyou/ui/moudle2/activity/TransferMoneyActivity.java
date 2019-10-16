@@ -387,6 +387,9 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
         map.put("receiver_id",id);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_SEND_NEWS, map);
+
+
+
     }
 
 

@@ -12,6 +12,10 @@ public class MbsConstans {
 	 ******************************************* 参数设置信息开始 ******************************************
 	 */
 
+	public static  final String SOCKET_IP = "192.168.199.37";
+	public static  final int SOCKET_PORT = 8080;
+
+
 	public static final String SERVER_IP_PORT = "172.16.1.65:12170";
 	public static final String WEBSOCKET_URL = "ws://"+SERVER_IP_PORT+"/appsvr/";
 	public static final String XIEYI_URL = "http://ys.zhir.cn/";

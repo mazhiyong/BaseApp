@@ -708,7 +708,6 @@
     <string name="invoice_import">导入</string>
 
 
-
     <!-- 注册 -->
     <string name="zhanghao_zhuti">账号主体</string>
     <string name="qiye">企业</string>
@@ -1127,8 +1126,6 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
-
 
 
     <string name="app_name">SealTalk</string>
@@ -1607,4 +1604,8 @@
 
     <string name="seal_grant_permissions">您需要在设置中打开权限</string>
     <string name="seal_edit_text_no_emoji">不支持输入表情</string>
+
+    <string name="behavior_weibo_content">com.lr.biyou.mywidget.behavior.WeiboContentBehavior</string>
+    <string name="behavior_weibo_header">com.lr.biyou.mywidget.behavior.WeiboHeaderPagerBehavior</string>
+
 </resources>
