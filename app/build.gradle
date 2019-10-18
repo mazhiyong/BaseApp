@@ -13,7 +13,6 @@ bugly {
 android {
     compileSdkVersion rootProject.ext.versions['compileSdkVersion']
     buildToolsVersion rootProject.ext.versions['buildToolsVersion']
-
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
