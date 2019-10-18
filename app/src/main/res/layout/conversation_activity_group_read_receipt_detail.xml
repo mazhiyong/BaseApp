@@ -137,11 +137,11 @@
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
-            <com.lr.biyou.rongyun.ui.widget.ReadReceiptViewPager
+            <com.lr.biyou.chatry.ui.widget.ReadReceiptViewPager
                 android:id="@+id/conversation_vp_read_member_page"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
-            </com.lr.biyou.rongyun.ui.widget.ReadReceiptViewPager>
+            </com.lr.biyou.chatry.ui.widget.ReadReceiptViewPager>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -15,7 +15,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <com.lr.biyou.rongyun.ui.view.AnnouceView
+            <com.lr.biyou.chatry.ui.view.AnnouceView
                 android:visibility="gone"
                 android:id="@+id/view_annouce"
                 android:layout_width="match_parent"

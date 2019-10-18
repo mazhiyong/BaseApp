@@ -8,14 +8,14 @@
     android:orientation="horizontal"
     >
 
-    <com.lr.biyou.rongyun.ui.view.UserInfoItemView
+    <com.lr.biyou.chatry.ui.view.UserInfoItemView
         android:id="@+id/uiv_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:item_userinfo_divider="true"
         >
 
-    </com.lr.biyou.rongyun.ui.view.UserInfoItemView>
+    </com.lr.biyou.chatry.ui.view.UserInfoItemView>
 
 
     <TextView

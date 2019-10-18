@@ -10,7 +10,7 @@
         android:layout_height="64dp"
         android:orientation="horizontal"
         android:background="#ffffff">
-        <com.lr.biyou.rongyun.ui.widget.SelectableRoundedImageView
+        <com.lr.biyou.chatry.ui.widget.SelectableRoundedImageView
             android:id="@+id/item_iv_record_image"
             android:layout_width="48dp"
             android:layout_height="48dp"

@@ -22,7 +22,7 @@ import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.mywidget.dialog.TradePassDialog;
-import com.lr.biyou.rongyun.im.message.RongRedPacketMessage;
+import com.lr.biyou.chatry.im.message.RongRedPacketMessage;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.tool.LogUtilDebug;

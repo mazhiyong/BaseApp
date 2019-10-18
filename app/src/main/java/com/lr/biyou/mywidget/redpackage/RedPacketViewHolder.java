@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.lr.biyou.R;
-import com.lr.biyou.rongyun.im.message.RongRedPacketMessage;
+import com.lr.biyou.chatry.im.message.RongRedPacketMessage;
 import com.lr.biyou.ui.moudle2.activity.RedListActivity;
 
 import butterknife.BindView;

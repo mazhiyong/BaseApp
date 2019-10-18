@@ -14,13 +14,13 @@
         android:text="@string/seal_group_management_group_owner"
         />
 
-    <com.lr.biyou.rongyun.ui.view.UserInfoItemView
+    <com.lr.biyou.chatry.ui.view.UserInfoItemView
         android:id="@+id/uiv_group_owner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
 
-    </com.lr.biyou.rongyun.ui.view.UserInfoItemView>
+    </com.lr.biyou.chatry.ui.view.UserInfoItemView>
 
     <TextView
         android:id="@+id/tv_managements"

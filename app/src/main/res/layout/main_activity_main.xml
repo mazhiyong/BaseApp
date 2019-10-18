@@ -19,12 +19,12 @@
         android:layout_height="1dp"
         android:background="@color/common_divider"
         />
-    <com.lr.biyou.rongyun.ui.view.MainBottomTabGroupView
+    <com.lr.biyou.chatry.ui.view.MainBottomTabGroupView
         android:id="@+id/tg_bottom_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/color_main_tab"
-        ></com.lr.biyou.rongyun.ui.view.MainBottomTabGroupView>
+        ></com.lr.biyou.chatry.ui.view.MainBottomTabGroupView>
 
 </LinearLayout>

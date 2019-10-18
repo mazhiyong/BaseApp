@@ -15,7 +15,7 @@
             android:orientation="vertical"
             android:paddingBottom="30dp">
 
-            <com.lr.biyou.rongyun.ui.widget.WrapHeightGridView
+            <com.lr.biyou.chatry.ui.widget.WrapHeightGridView
                 android:id="@+id/profile_gv_group_member"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,24 +40,24 @@
                     android:background="#dfdfdd" />
             </LinearLayout>
 
-            <com.lr.biyou.rongyun.ui.view.SettingItemView
+            <com.lr.biyou.chatry.ui.view.SettingItemView
                 android:id="@+id/profile_siv_all_group_member"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:item_content="@string/profile_all_group_member">
 
-            </com.lr.biyou.rongyun.ui.view.SettingItemView>
+            </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-            <com.lr.biyou.rongyun.ui.view.SettingItemView
+            <com.lr.biyou.chatry.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_search_history_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/seal_profile_group_item_margin"
                 app:item_content="@string/profile_search_message">
 
-            </com.lr.biyou.rongyun.ui.view.SettingItemView>
+            </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-            <com.lr.biyou.rongyun.ui.view.UserInfoItemView
+            <com.lr.biyou.chatry.ui.view.UserInfoItemView
                 android:id="@+id/profile_uiv_group_portrait_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,18 +68,18 @@
                 app:item_userinfo_portrait_height="@dimen/seal_profile_group_item_protrait_value"
                 app:item_userinfo_portrait_width="@dimen/seal_profile_group_item_protrait_value">
 
-            </com.lr.biyou.rongyun.ui.view.UserInfoItemView>
+            </com.lr.biyou.chatry.ui.view.UserInfoItemView>
 
-            <com.lr.biyou.rongyun.ui.view.SettingItemView
+            <com.lr.biyou.chatry.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_name_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:item_content="@string/profile_group_name"
                 app:item_divider="true">
 
-            </com.lr.biyou.rongyun.ui.view.SettingItemView>
+            </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-            <com.lr.biyou.rongyun.ui.view.SettingItemView
+            <com.lr.biyou.chatry.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_qrcode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -87,28 +87,28 @@
                 app:item_divider="true"
                 app:item_right_image="@drawable/profile_ic_qrcode">
 
-            </com.lr.biyou.rongyun.ui.view.SettingItemView>
+            </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-            <com.lr.biyou.rongyun.ui.view.SettingItemView
+            <com.lr.biyou.chatry.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_notice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:item_content="@string/profile_group_notice"
                 app:item_divider="true">
 
-            </com.lr.biyou.rongyun.ui.view.SettingItemView>
+            </com.lr.biyou.chatry.ui.view.SettingItemView>
 
 
-            <com.lr.biyou.rongyun.ui.view.SettingItemView
+            <com.lr.biyou.chatry.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:item_content="@string/profile_group_manager">
 
-            </com.lr.biyou.rongyun.ui.view.SettingItemView>
+            </com.lr.biyou.chatry.ui.view.SettingItemView>
 
 
-            <com.lr.biyou.rongyun.ui.view.SettingItemView
+            <com.lr.biyou.chatry.ui.view.SettingItemView
                 android:id="@+id/profile_siv_message_notice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -117,9 +117,9 @@
                 app:item_divider="true"
                 app:item_switch="true">
 
-            </com.lr.biyou.rongyun.ui.view.SettingItemView>
+            </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-            <com.lr.biyou.rongyun.ui.view.SettingItemView
+            <com.lr.biyou.chatry.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_on_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,9 +127,9 @@
                 app:item_divider="true"
                 app:item_switch="true">
 
-            </com.lr.biyou.rongyun.ui.view.SettingItemView>
+            </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-            <com.lr.biyou.rongyun.ui.view.SettingItemView
+            <com.lr.biyou.chatry.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_save_to_contact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -137,9 +137,9 @@
                 app:item_divider="true"
                 app:item_switch="true">
 
-            </com.lr.biyou.rongyun.ui.view.SettingItemView>
+            </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-            <com.lr.biyou.rongyun.ui.view.SettingItemView
+            <com.lr.biyou.chatry.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_screen_shot_notification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                 android:textSize="@dimen/seal_group_detail_clean_tips_size" />
 
 
-            <com.lr.biyou.rongyun.ui.view.SettingItemView
+            <com.lr.biyou.chatry.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_clean_timming"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -181,14 +181,14 @@
                 android:text="@string/profile_clean_timing_tips"
                 android:textSize="@dimen/seal_group_detail_clean_tips_size" />
 
-            <com.lr.biyou.rongyun.ui.view.SettingItemView
+            <com.lr.biyou.chatry.ui.view.SettingItemView
                 android:id="@+id/profile_siv_group_clean_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:item_content="@string/profile_clean_message"
                 app:item_divider="true">
 
-            </com.lr.biyou.rongyun.ui.view.SettingItemView>
+            </com.lr.biyou.chatry.ui.view.SettingItemView>
 
             <Button
                 android:id="@+id/profile_btn_group_quit"

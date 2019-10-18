@@ -20,7 +20,7 @@
         android:visibility="gone" />
 
 
-    <com.lr.biyou.rongyun.ui.view.UserInfoItemView
+    <com.lr.biyou.chatry.ui.view.UserInfoItemView
         android:id="@+id/uiv_userinfo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,7 +29,7 @@
         android:layout_toRightOf="@id/cb_select"
         >
 
-    </com.lr.biyou.rongyun.ui.view.UserInfoItemView>
+    </com.lr.biyou.chatry.ui.view.UserInfoItemView>
     <View style="@style/ac_search_list_view_divider"
         android:layout_alignParentBottom="true"
         />

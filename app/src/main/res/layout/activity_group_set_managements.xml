@@ -11,7 +11,7 @@
 
     </ListView>
 
-    <com.lr.biyou.rongyun.ui.widget.SideBar
+    <com.lr.biyou.chatry.ui.widget.SideBar
         android:id="@+id/sb_sidrbar"
         android:layout_width="@dimen/seal_login_select_country_sidebar_width"
         android:layout_height="@dimen/seal_login_select_country_sidebar_height"

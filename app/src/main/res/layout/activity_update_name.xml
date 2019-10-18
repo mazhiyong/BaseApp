@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.lr.biyou.rongyun.ui.widget.ClearWriteEditText
+    <com.lr.biyou.chatry.ui.widget.ClearWriteEditText
         android:id="@+id/cet_update_name"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_update_name_edit_height"

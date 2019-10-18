@@ -9,7 +9,7 @@
     android:padding="16dp"
     android:background="@drawable/loading_dialog_bg"
     >
-    <com.lr.biyou.rongyun.ui.widget.ProgressWheel
+    <com.lr.biyou.chatry.ui.widget.ProgressWheel
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_centerHorizontal="true"

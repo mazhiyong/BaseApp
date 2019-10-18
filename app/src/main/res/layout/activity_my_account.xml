@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     >
 
-    <com.lr.biyou.rongyun.ui.view.UserInfoItemView
+    <com.lr.biyou.chatry.ui.view.UserInfoItemView
         android:id="@+id/uiv_userinfo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_userfino_item_height"
@@ -18,10 +18,10 @@
         app:item_userinfo_divider="true"
         >
 
-    </com.lr.biyou.rongyun.ui.view.UserInfoItemView>
+    </com.lr.biyou.chatry.ui.view.UserInfoItemView>
 
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_nickname"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_my_account_item_height"
@@ -29,9 +29,9 @@
         app:item_divider="true"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_saccount"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_my_account_item_height"
@@ -39,18 +39,18 @@
         app:item_divider="true"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_phonenumber"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_my_account_item_height"
         app:item_content="@string/seal_mine_my_account_phone_number"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_gender"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/dp_5"
@@ -58,5 +58,5 @@
         app:item_content="@string/seal_mine_my_account_gender"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 </LinearLayout>

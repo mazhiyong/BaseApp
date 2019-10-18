@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:orientation="horizontal">
 
-    <com.lr.biyou.rongyun.ui.widget.SelectableRoundedImageView
+    <com.lr.biyou.chatry.ui.widget.SelectableRoundedImageView
         android:id="@+id/iv_new_header"
         android:layout_width="@dimen/seal_new_friend_header_width"
         android:layout_height="@dimen/seal_new_friend_header_height"

@@ -13,11 +13,11 @@ import androidx.multidex.MultiDexApplication;
 
 import com.facebook.stetho.Stetho;
 import com.lr.biyou.BuildConfig;
-import com.lr.biyou.rongyun.common.ErrorCode;
-import com.lr.biyou.rongyun.contact.PhoneContactManager;
-import com.lr.biyou.rongyun.im.IMManager;
-import com.lr.biyou.rongyun.utils.SearchUtils;
-import com.lr.biyou.rongyun.wx.WXManager;
+import com.lr.biyou.chatry.common.ErrorCode;
+import com.lr.biyou.chatry.contact.PhoneContactManager;
+import com.lr.biyou.chatry.im.IMManager;
+import com.lr.biyou.chatry.utils.SearchUtils;
+import com.lr.biyou.chatry.wx.WXManager;
 import com.lr.biyou.utils.tool.AppContextUtil;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.SPCookieStore;

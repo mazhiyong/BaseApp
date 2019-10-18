@@ -6,7 +6,7 @@
     android:background="@drawable/seal_bg_list_item"
     android:orientation="horizontal">
 
-    <com.lr.biyou.rongyun.ui.widget.SelectableRoundedImageView
+    <com.lr.biyou.chatry.ui.widget.SelectableRoundedImageView
         android:id="@+id/iv_left_header"
         app:sriv_left_bottom_corner_radius="@dimen/seal_userinfo_item_header_radius"
         app:sriv_left_top_corner_radius="@dimen/seal_userinfo_item_header_radius"
@@ -32,7 +32,7 @@
         android:layout_toRightOf="@+id/iv_left_header"
         android:textSize="@dimen/seal_userinfo_item_name_text_size" />
 
-    <com.lr.biyou.rongyun.ui.widget.SelectableRoundedImageView
+    <com.lr.biyou.chatry.ui.widget.SelectableRoundedImageView
         android:id="@+id/iv_right_header"
         app:sriv_left_bottom_corner_radius="@dimen/seal_userinfo_item_header_radius"
         app:sriv_left_top_corner_radius="@dimen/seal_userinfo_item_header_radius"

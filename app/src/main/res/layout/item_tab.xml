@@ -51,7 +51,7 @@
             android:background="@drawable/seal_main_tab_red"
             android:visibility="gone" />
 
-        <com.lr.biyou.rongyun.ui.widget.DragPointView
+        <com.lr.biyou.chatry.ui.widget.DragPointView
             android:id="@+id/dpv_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

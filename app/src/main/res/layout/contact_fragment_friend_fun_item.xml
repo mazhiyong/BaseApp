@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:paddingRight="@dimen/seal_contact_friend_item_padding">
 
-        <com.lr.biyou.rongyun.ui.widget.SelectableRoundedImageView
+        <com.lr.biyou.chatry.ui.widget.SelectableRoundedImageView
             android:id="@+id/iv_portrait"
             android:layout_width="@dimen/seal_contact_friend_item_portrait_width"
             android:layout_height="@dimen/seal_contact_friend_item_portrait_height"

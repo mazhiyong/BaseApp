@@ -40,7 +40,7 @@
             android:textSize="30.0dip"
             android:visibility="invisible" />
 
-        <com.lr.biyou.rongyun.ui.widget.SideBar
+        <com.lr.biyou.chatry.ui.widget.SideBar
             android:id="@+id/sb_sidebar"
             android:layout_width="20.0dip"
             android:layout_height="match_parent"

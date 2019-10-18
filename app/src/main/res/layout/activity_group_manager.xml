@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_set_group_manager"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_group_manager_item_height"
@@ -13,18 +13,18 @@
         app:item_content="@string/seal_group_manager_set_manager"
         app:item_divider="true">
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_transfer"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_group_manager_item_height"
         app:item_content="@string/seal_group_manager_transfer"
         app:item_divider="true">
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_mute_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
         android:text="@string/seal_mute_all_tips"
         android:textSize="@dimen/seal_group_detail_clean_tips_size" />
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_add_certification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

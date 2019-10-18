@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.lr.biyou.rongyun.ui.view.UserInfoItemView
+        <com.lr.biyou.chatry.ui.view.UserInfoItemView
             android:id="@+id/uiv_userinfo"
             android:layout_width="match_parent"
             android:layout_height="@dimen/seal_mine_userfino_item_height"
@@ -19,9 +19,9 @@
             app:item_userinfo_portrait_height="@dimen/seal_mine_userfino_item_protrait"
             app:item_userinfo_portrait_width="@dimen/seal_mine_userfino_item_protrait">
 
-        </com.lr.biyou.rongyun.ui.view.UserInfoItemView>
+        </com.lr.biyou.chatry.ui.view.UserInfoItemView>
 
-        <com.lr.biyou.rongyun.ui.view.SettingItemView
+        <com.lr.biyou.chatry.ui.view.SettingItemView
             android:id="@+id/siv_setting_qrcode"
             android:layout_width="match_parent"
             android:layout_height="@dimen/seal_mine_setting_item_height"
@@ -29,7 +29,7 @@
             app:item_content="@string/seal_main_mine_qrcode"
             app:item_image="@drawable/seal_ic_mine_qrcode" />
 
-        <com.lr.biyou.rongyun.ui.view.SettingItemView
+        <com.lr.biyou.chatry.ui.view.SettingItemView
             android:id="@+id/siv_setting_account"
             android:layout_width="match_parent"
             android:layout_height="@dimen/seal_mine_setting_item_height"
@@ -37,9 +37,9 @@
             app:item_content="@string/seal_main_mine_set_account"
             app:item_image="@drawable/seal_ic_mine_set">
 
-        </com.lr.biyou.rongyun.ui.view.SettingItemView>
+        </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-        <com.lr.biyou.rongyun.ui.view.SettingItemView
+        <com.lr.biyou.chatry.ui.view.SettingItemView
             android:id="@+id/siv_language"
             android:layout_width="match_parent"
             android:layout_height="@dimen/seal_mine_setting_item_height"
@@ -48,9 +48,9 @@
             app:item_image="@drawable/seal_ic_mine_language"
             app:item_value="@string/lang_chs">
 
-        </com.lr.biyou.rongyun.ui.view.SettingItemView>
+        </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-        <com.lr.biyou.rongyun.ui.view.SettingItemView
+        <com.lr.biyou.chatry.ui.view.SettingItemView
             android:id="@+id/siv_my_wallet"
             android:layout_width="match_parent"
             android:layout_height="@dimen/seal_mine_setting_item_height"
@@ -58,9 +58,9 @@
             app:item_content="@string/seal_main_mine_my_wallet"
             app:item_image="@drawable/seal_ic_mine_wallet">
 
-        </com.lr.biyou.rongyun.ui.view.SettingItemView>
+        </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-        <com.lr.biyou.rongyun.ui.view.SettingItemView
+        <com.lr.biyou.chatry.ui.view.SettingItemView
             android:id="@+id/siv_feedback"
             android:layout_width="match_parent"
             android:layout_height="@dimen/seal_mine_setting_item_height"
@@ -69,10 +69,10 @@
             app:item_divider="true"
             app:item_image="@drawable/seal_ic_mine_service">
 
-        </com.lr.biyou.rongyun.ui.view.SettingItemView>
+        </com.lr.biyou.chatry.ui.view.SettingItemView>
 
 
-        <com.lr.biyou.rongyun.ui.view.SettingItemView
+        <com.lr.biyou.chatry.ui.view.SettingItemView
             android:id="@+id/siv_xiaoneng"
             android:layout_width="match_parent"
             android:layout_height="@dimen/seal_mine_setting_item_height"
@@ -81,9 +81,9 @@
             app:item_divider="true"
             app:item_image="@drawable/seal_ic_mine_service">
 
-        </com.lr.biyou.rongyun.ui.view.SettingItemView>
+        </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-        <com.lr.biyou.rongyun.ui.view.SettingItemView
+        <com.lr.biyou.chatry.ui.view.SettingItemView
             android:id="@+id/siv_about"
             android:layout_width="match_parent"
             android:layout_height="@dimen/seal_mine_setting_item_height"
@@ -93,7 +93,7 @@
             app:item_tag_image_height="@dimen/seal_mine_setting_item_tag_height"
             app:item_tag_image_width="@dimen/seal_mine_setting_item_tag_width">
 
-        </com.lr.biyou.rongyun.ui.view.SettingItemView>
+        </com.lr.biyou.chatry.ui.view.SettingItemView>
 
 
     </LinearLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_remind"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_new_message_remind_item_height"
@@ -15,12 +15,12 @@
         app:item_content="@string/seal_new_message_remind_new_message"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_notice"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_new_message_remind_item_height"
         app:item_content="@string/seal_new_message_remind_message_show_details"
         >
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 </LinearLayout>

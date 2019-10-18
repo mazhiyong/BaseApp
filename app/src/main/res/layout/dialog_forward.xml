@@ -37,14 +37,14 @@
                 android:paddingRight="@dimen/seal_dialog_forward_item_scroll_padding" />
         </HorizontalScrollView>
 
-        <com.lr.biyou.rongyun.ui.view.UserInfoItemView
+        <com.lr.biyou.chatry.ui.view.UserInfoItemView
             android:id="@+id/uiv_selected_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
             >
 
-        </com.lr.biyou.rongyun.ui.view.UserInfoItemView>
+        </com.lr.biyou.chatry.ui.view.UserInfoItemView>
 
     </FrameLayout>
 

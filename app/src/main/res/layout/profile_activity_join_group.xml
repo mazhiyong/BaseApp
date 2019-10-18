@@ -13,7 +13,7 @@
         android:background="@color/white"
         >
 
-        <com.lr.biyou.rongyun.ui.widget.SelectableRoundedImageView
+        <com.lr.biyou.chatry.ui.widget.SelectableRoundedImageView
             android:id="@+id/profile_iv_join_group_portrait"
             android:layout_width="70dp"
             android:layout_height="70dp"

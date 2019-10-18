@@ -7,7 +7,7 @@
     android:gravity="center"
     >
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_web"
         android:layout_width="@dimen/seal_dialog_download_item_width"
         android:layout_height="@dimen/seal_dialog_download_item_height"
@@ -15,13 +15,13 @@
         app:item_divider="true"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_local"
         android:layout_width="@dimen/seal_dialog_download_item_width"
         android:layout_height="@dimen/seal_dialog_download_item_height"
         app:item_content="@string/seal_download_app_local_download"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 </LinearLayout>

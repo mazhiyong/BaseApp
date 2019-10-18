@@ -25,7 +25,7 @@
             android:button="@drawable/seal_checkbox_selector"
             android:visibility="gone" />
 
-        <com.lr.biyou.rongyun.ui.widget.SelectableRoundedImageView
+        <com.lr.biyou.chatry.ui.widget.SelectableRoundedImageView
             android:id="@+id/iv_portrait"
             android:layout_width="@dimen/seal_search_item_portrait_height"
             android:layout_height="@dimen/seal_search_item_portrait_width"

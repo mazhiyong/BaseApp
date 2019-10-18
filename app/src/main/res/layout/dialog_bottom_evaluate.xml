@@ -112,7 +112,7 @@
                 android:textSize="@dimen/seal_dialog_evaluate_star_title_text_size" />
 
 
-            <com.lr.biyou.rongyun.ui.view.StarsView
+            <com.lr.biyou.chatry.ui.view.StarsView
                 android:id="@+id/sv_stars"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -138,14 +138,14 @@
                     android:textColor="@color/seal_evaluate_text_color"
                     android:textSize="@dimen/seal_dialog_evaluate_problems_title_text_size" />
 
-                <com.lr.biyou.rongyun.ui.widget.AntGridView
+                <com.lr.biyou.chatry.ui.widget.AntGridView
                     android:id="@+id/gv_problem_tables"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/seal_dialog_evaluate_problems_lable_margin_left"
                     android:layout_marginRight="@dimen/seal_dialog_evaluate_problems_lable_margin_right"
                     android:layout_marginTop="@dimen/seal_dialog_evaluate_problems_lable_margin_top">
-                </com.lr.biyou.rongyun.ui.widget.AntGridView>
+                </com.lr.biyou.chatry.ui.widget.AntGridView>
 
             </LinearLayout>
 

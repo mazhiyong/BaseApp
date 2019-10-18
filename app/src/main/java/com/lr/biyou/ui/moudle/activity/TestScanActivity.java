@@ -23,7 +23,7 @@ import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.db.FaPiaoData;
-import com.lr.biyou.rongyun.common.IntentExtra;
+import com.lr.biyou.chatry.common.IntentExtra;
 import com.lr.biyou.ui.moudle2.activity.AddFriendActivity;
 import com.lr.biyou.ui.moudle1.activity.HtmlActivity;
 import com.lr.biyou.ui.temporary.activity.InvoiceListActivity;

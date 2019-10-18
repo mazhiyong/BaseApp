@@ -18,7 +18,7 @@ import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
-import com.lr.biyou.rongyun.utils.qrcode.QRCodeUtils;
+import com.lr.biyou.chatry.utils.qrcode.QRCodeUtils;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.tool.JSONUtil;

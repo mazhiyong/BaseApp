@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     >
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_gender_man"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/dp_5"
@@ -15,7 +15,7 @@
         app:item_right_image="@drawable/seal_cb_select_friend_pic_btn_selected"
         app:item_divider="true"
         />
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_gender_female"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_my_account_item_height"

@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
-    <com.lr.biyou.rongyun.ui.view.UserInfoItemView
+    <com.lr.biyou.chatry.ui.view.UserInfoItemView
         android:id="@+id/uiv_userinfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </com.lr.biyou.rongyun.ui.view.UserInfoItemView>
+    </com.lr.biyou.chatry.ui.view.UserInfoItemView>
     <ImageView
         android:id="@+id/iv_del"
         android:layout_width="wrap_content"

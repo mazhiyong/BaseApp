@@ -3,12 +3,12 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.lr.biyou.rongyun.utils.qrcode.barcodescanner.BarcodeView
+    <com.lr.biyou.chatry.utils.qrcode.barcodescanner.BarcodeView
         android:id="@+id/zxing_barcode_surface"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.lr.biyou.rongyun.utils.qrcode.barcodescanner.NewViewfinderView
+    <com.lr.biyou.chatry.utils.qrcode.barcodescanner.NewViewfinderView
         android:id="@+id/zxing_viewfinder_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

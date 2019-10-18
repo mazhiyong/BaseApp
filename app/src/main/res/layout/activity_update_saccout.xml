@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.lr.biyou.rongyun.ui.view.UserInfoItemView
+    <com.lr.biyou.chatry.ui.view.UserInfoItemView
         android:id="@+id/uiv_userinfo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_userfino_item_height"
@@ -13,7 +13,7 @@
         app:item_userinfo_portrait_height="@dimen/seal_mine_userfino_item_protrait"
         app:item_userinfo_portrait_width="@dimen/seal_mine_userfino_item_protrait">
 
-    </com.lr.biyou.rongyun.ui.view.UserInfoItemView>
+    </com.lr.biyou.chatry.ui.view.UserInfoItemView>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:textColor="@color/text_black"
             android:textSize="@dimen/seal_update_staccount_name_size" />
 
-        <com.lr.biyou.rongyun.ui.widget.ClearWriteEditText
+        <com.lr.biyou.chatry.ui.widget.ClearWriteEditText
             android:id="@+id/cet_update_staccount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

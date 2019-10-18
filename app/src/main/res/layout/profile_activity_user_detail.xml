@@ -13,7 +13,7 @@
         android:background="@color/white"
         android:orientation="horizontal">
 
-        <com.lr.biyou.rongyun.ui.widget.SelectableRoundedImageView
+        <com.lr.biyou.chatry.ui.widget.SelectableRoundedImageView
             android:id="@+id/profile_iv_detail_user_portrait"
             android:layout_width="@dimen/seal_user_detail_userinfo_portrait_value"
             android:layout_height="@dimen/seal_user_detail_userinfo_portrait_value"
@@ -80,7 +80,7 @@
         tools:visibility="visible"
         >
 
-        <com.lr.biyou.rongyun.ui.view.SettingItemView
+        <com.lr.biyou.chatry.ui.view.SettingItemView
             android:id="@+id/profile_siv_detail_alias"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,9 +88,9 @@
             android:layout_marginTop="@dimen/seal_user_detail_item_margin"
             >
 
-        </com.lr.biyou.rongyun.ui.view.SettingItemView>
+        </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-        <com.lr.biyou.rongyun.ui.view.SettingItemView
+        <com.lr.biyou.chatry.ui.view.SettingItemView
             android:id="@+id/profile_siv_detail_blacklist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,16 +99,16 @@
             android:layout_marginTop="@dimen/seal_user_detail_item_margin"
             >
 
-        </com.lr.biyou.rongyun.ui.view.SettingItemView>
+        </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-        <com.lr.biyou.rongyun.ui.view.SettingItemView
+        <com.lr.biyou.chatry.ui.view.SettingItemView
             android:id="@+id/profile_siv_detail_delete_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:item_content="@string/profile_delete_from_contact"
             >
 
-        </com.lr.biyou.rongyun.ui.view.SettingItemView>
+        </com.lr.biyou.chatry.ui.view.SettingItemView>
 
     </LinearLayout>
 

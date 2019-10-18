@@ -933,18 +933,18 @@
             android:theme="@style/AppTheme.Transparent"
             android:windowSoftInputMode="stateHidden|adjustPan"/> <!-- 融云Activity -->
         <activity
-            android:name=".rongyun.ui.activity.LoginActivity"
+            android:name=".chatry.ui.activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".rongyun.ui.activity.SelectCountryActivity"
+            android:name=".chatry.ui.activity.SelectCountryActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.MainActivity"
+            android:name=".chatry.ui.activity.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.ConversationActivity"
+            android:name=".chatry.ui.activity.ConversationActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -960,7 +960,7 @@
             </intent-filter>
         </activity> <!-- 聚合会话列表 -->
         <activity
-            android:name=".rongyun.ui.activity.SubConversationListActivity"
+            android:name=".chatry.ui.activity.SubConversationListActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -976,33 +976,33 @@
             </intent-filter>
         </activity> <!-- 聚合会话列表 -->
         <activity
-            android:name=".rongyun.ui.activity.NewFriendListActivity"
+            android:name=".chatry.ui.activity.NewFriendListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".rongyun.ui.activity.GroupNoticeListActivity"
+            android:name=".chatry.ui.activity.GroupNoticeListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".rongyun.ui.activity.SealSearchActivity"
+            android:name=".chatry.ui.activity.SealSearchActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.SearchFriendActivity"
+            android:name=".chatry.ui.activity.SearchFriendActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.SearchHistoryMessageActivity"
+            android:name=".chatry.ui.activity.SearchHistoryMessageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.GroupListActivity"
+            android:name=".chatry.ui.activity.GroupListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.PublicServiceActivity"
+            android:name=".chatry.ui.activity.PublicServiceActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.PublicServiceSearchActivity"
+            android:name=".chatry.ui.activity.PublicServiceSearchActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.PublicServiceInfoActivity"
+            android:name=".chatry.ui.activity.PublicServiceInfoActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -1026,134 +1026,134 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".rongyun.ui.activity.AccountSettingActivity"
+            android:name=".chatry.ui.activity.AccountSettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.ChangeLanguageActivity"
+            android:name=".chatry.ui.activity.ChangeLanguageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.AboutSealTalkActivity"
+            android:name=".chatry.ui.activity.AboutSealTalkActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.WebViewActivity"
+            android:name=".chatry.ui.activity.WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.PrivateChatSettingActivity"
+            android:name=".chatry.ui.activity.PrivateChatSettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.GroupDetailActivity"
+            android:name=".chatry.ui.activity.GroupDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.GroupMemberListActivity"
+            android:name=".chatry.ui.activity.GroupMemberListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.GroupNoticeActivity"
+            android:name=".chatry.ui.activity.GroupNoticeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.UserDetailActivity"
+            android:name=".chatry.ui.activity.UserDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.SelectSingleFriendActivity"
+            android:name=".chatry.ui.activity.SelectSingleFriendActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.SelectGroupMemberActivity"
+            android:name=".chatry.ui.activity.SelectGroupMemberActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.SelectFriendExcluedGroupActivity"
+            android:name=".chatry.ui.activity.SelectFriendExcluedGroupActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.SelectForwardCreateChatActivity"
+            android:name=".chatry.ui.activity.SelectForwardCreateChatActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.SelectCreateGroupActivity"
+            android:name=".chatry.ui.activity.SelectCreateGroupActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".rongyun.ui.activity.ForwardActivity"
+            android:name=".chatry.ui.activity.ForwardActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".rongyun.ui.activity.MyAccountActivity"
+            android:name=".chatry.ui.activity.MyAccountActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.UpdateNameActivity"
+            android:name=".chatry.ui.activity.UpdateNameActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.UpdateStAccountActivity"
+            android:name=".chatry.ui.activity.UpdateStAccountActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.UpdateGenderActivity"
+            android:name=".chatry.ui.activity.UpdateGenderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.CreateGroupActivity"
+            android:name=".chatry.ui.activity.CreateGroupActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.EditAliasActivity"
+            android:name=".chatry.ui.activity.EditAliasActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.PrivacyActivity"
+            android:name=".chatry.ui.activity.PrivacyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.UpdatePasswordActivity"
+            android:name=".chatry.ui.activity.UpdatePasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.BlackListActivity"
+            android:name=".chatry.ui.activity.BlackListActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.NewMessageRemindActivity"
+            android:name=".chatry.ui.activity.NewMessageRemindActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.MessageDonotDisturbSettingActivity"
+            android:name=".chatry.ui.activity.MessageDonotDisturbSettingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.MemberMentionedExActivity"
+            android:name=".chatry.ui.activity.MemberMentionedExActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.QrCodeDisplayActivity"
+            android:name=".chatry.ui.activity.QrCodeDisplayActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.QrCodeDisplayWindowActivity"
+            android:name=".chatry.ui.activity.QrCodeDisplayWindowActivity"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentNoTitleActivity" />
         <activity
-            android:name=".rongyun.ui.activity.SealPicturePagerActivity"
+            android:name=".chatry.ui.activity.SealPicturePagerActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".rongyun.ui.activity.JoinGroupActivity"
+            android:name=".chatry.ui.activity.JoinGroupActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.GroupManagerActivity"
+            android:name=".chatry.ui.activity.GroupManagerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.GroupManagementsActivity"
+            android:name=".chatry.ui.activity.GroupManagementsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.GroupSetManagementsActivity"
+            android:name=".chatry.ui.activity.GroupSetManagementsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.GroupSetNewGroupOwnerActivity"
+            android:name=".chatry.ui.activity.GroupSetNewGroupOwnerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.SelectForwardMoreContactActivity"
+            android:name=".chatry.ui.activity.SelectForwardMoreContactActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.ForwardSelectedDetailActivity"
+            android:name=".chatry.ui.activity.ForwardSelectedDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.ScanActivity"
+            android:name=".chatry.ui.activity.ScanActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.AddFriendActivity"
+            android:name=".chatry.ui.activity.AddFriendActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.AddFriendFromContactActivity"
+            android:name=".chatry.ui.activity.AddFriendFromContactActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.InviteFriendFromContactActivity"
+            android:name=".chatry.ui.activity.InviteFriendFromContactActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".rongyun.ui.activity.RequestContactPermissionActivity"
+            android:name=".chatry.ui.activity.RequestContactPermissionActivity"
             android:screenOrientation="portrait" /> <!-- 请将CHANNAL改为app的发布渠道 < -->
         <meta-data
             android:name="InstallChannel"
@@ -1175,7 +1175,7 @@
         -->
         <!-- push start -->
         <receiver
-            android:name=".rongyun.push.SealNotificationReceiver"
+            android:name=".chatry.push.SealNotificationReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
@@ -1334,10 +1334,10 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
-            android:name=".rongyun.ui.activity.GroupReadReceiptDetailActivity"
+            android:name=".chatry.ui.activity.GroupReadReceiptDetailActivity"
             android:screenOrientation="portrait" /> <!-- 微信 接收微信的请求及返回值 -->
         <activity
-            android:name=".rongyun.wxapi.WXEntryActivity"
+            android:name=".chatry.wxapi.WXEntryActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTask"

@@ -102,7 +102,7 @@
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
                 android:textColor="@color/seal_dialog_select_picture_btn_text" />
 
-            <com.lr.biyou.rongyun.ui.widget.ClearWriteEditText
+            <com.lr.biyou.chatry.ui.widget.ClearWriteEditText
                 android:id="@+id/search_phone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

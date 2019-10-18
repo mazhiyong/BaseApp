@@ -32,7 +32,7 @@ import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.ShowImageDialog;
 import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
-import com.lr.biyou.rongyun.utils.qrcode.QRCodeUtils;
+import com.lr.biyou.chatry.utils.qrcode.QRCodeUtils;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.UpdateNichengActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;

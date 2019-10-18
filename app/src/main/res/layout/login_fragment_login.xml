@@ -62,7 +62,7 @@
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse" />
 
 
-        <com.lr.biyou.rongyun.ui.widget.ClearWriteEditText
+        <com.lr.biyou.chatry.ui.widget.ClearWriteEditText
             android:id="@+id/cet_login_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
 
     </LinearLayout>
 
-    <com.lr.biyou.rongyun.ui.widget.ClearWriteEditText
+    <com.lr.biyou.chatry.ui.widget.ClearWriteEditText
         android:id="@+id/cet_login_password"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

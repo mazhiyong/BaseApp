@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:padding="20dp">
 
-                <com.lr.biyou.rongyun.ui.widget.SelectableRoundedImageView
+                <com.lr.biyou.chatry.ui.widget.SelectableRoundedImageView
                     android:id="@+id/profile_iv_card_info_portrait"
                     android:layout_width="50dp"
                     android:layout_height="50dp"

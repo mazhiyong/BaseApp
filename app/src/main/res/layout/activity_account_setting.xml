@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_reset_password"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_account_setting_item_height"
@@ -14,9 +14,9 @@
         app:item_divider="true"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_privacy"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_account_setting_item_height"
@@ -24,18 +24,18 @@
         app:item_divider="true"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_show_new_msg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_account_setting_item_height"
         app:item_content="@string/seal_mine_set_account_new_message_show"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_clear_cache"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_account_setting_item_height"
@@ -43,9 +43,9 @@
         app:item_content="@string/seal_mine_set_account_clear_cache"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_push_language"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_account_setting_item_height"
@@ -56,9 +56,9 @@
         android:visibility="gone"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_push_content"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_account_setting_item_height"
@@ -68,9 +68,9 @@
         android:visibility="gone"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_receive_push_msg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_account_setting_item_height"
@@ -79,7 +79,7 @@
         android:visibility="gone"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
     <Button
         android:id="@+id/btn_logout"

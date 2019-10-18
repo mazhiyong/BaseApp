@@ -44,7 +44,7 @@
         android:layout_centerVertical="true"
         />
 
-    <com.lr.biyou.rongyun.ui.widget.switchbutton.SwitchButton
+    <com.lr.biyou.chatry.ui.widget.switchbutton.SwitchButton
         android:id="@+id/sb_switch"
         android:layout_marginRight="@dimen/seal_setting_item_margin"
         android:layout_width="wrap_content"

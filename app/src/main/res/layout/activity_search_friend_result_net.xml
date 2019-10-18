@@ -10,7 +10,7 @@
     android:background="#fff"
     android:orientation="horizontal">
 
-    <com.lr.biyou.rongyun.ui.widget.SelectableRoundedImageView
+    <com.lr.biyou.chatry.ui.widget.SelectableRoundedImageView
         android:id="@+id/search_header"
         android:layout_width="60dp"
         android:layout_height="60dp"

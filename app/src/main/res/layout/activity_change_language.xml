@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     >
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_chinese"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_change_language_item_height"
@@ -16,9 +16,9 @@
         app:item_selected_image="@drawable/seal_ic_selected"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
-    <com.lr.biyou.rongyun.ui.view.SettingItemView
+    <com.lr.biyou.chatry.ui.view.SettingItemView
         android:id="@+id/siv_english"
         android:layout_width="match_parent"
         android:layout_height="@dimen/seal_mine_change_language_item_height"
@@ -27,6 +27,6 @@
         app:item_selected_image="@drawable/seal_ic_selected"
         >
 
-    </com.lr.biyou.rongyun.ui.view.SettingItemView>
+    </com.lr.biyou.chatry.ui.view.SettingItemView>
 
 </LinearLayout>
