@@ -11,8 +11,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
@@ -26,14 +30,20 @@ import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.wildfire.chat.kit.common.OperateResult;
+import cn.wildfire.chat.kit.user.UserViewModel;
+import cn.wildfirechat.model.ModifyMyInfoEntry;
+
+import static cn.wildfirechat.model.ModifyMyInfoType.Modify_DisplayName;
 
 /**
- * 安全中心  二维码校验 界面
+ * 修改用户名
  */
 public class UpdateNichengActivity extends BasicActivity implements RequestView, SelectBackListener {
     @BindView(R.id.back_img)
@@ -55,19 +65,14 @@ public class UpdateNichengActivity extends BasicActivity implements RequestView,
     @BindView(R.id.bt_next)
     Button btNext;
 
-
-    private String mRequestTag = "";
-    private String mTempToken = "";
-    private String mAuthCode = "";
-    private String mSmsToken = "";
-
-
     private Map<String, Object> mShareMap;
 
     private KindSelectDialog mDialog;
     private  String type = "";
 
     private TimeCount mTimeCount;
+
+    private UserViewModel userViewModel;
 
     @Override
     public int getContentView() {
@@ -78,7 +83,7 @@ public class UpdateNichengActivity extends BasicActivity implements RequestView,
     public void init() {
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
-
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         mTimeCount = new TimeCount(1 * 60 * 1000, 1000);
 
@@ -144,7 +149,6 @@ public class UpdateNichengActivity extends BasicActivity implements RequestView,
 
     private void registAction() {
 
-        mRequestTag = MethodUrl.USER_NAME;
         Map<String,Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(UpdateNichengActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
@@ -158,7 +162,6 @@ public class UpdateNichengActivity extends BasicActivity implements RequestView,
 
 
     private void getMsgcodeAction() {
-        mRequestTag = MethodUrl.REGIST_SMSCODE;
         Map<String, Object> map = new HashMap<>();
         map.put("account",etPhoneEmail.getText().toString());
         Map<String, String> mHeaderMap = new HashMap<>();
@@ -169,7 +172,6 @@ public class UpdateNichengActivity extends BasicActivity implements RequestView,
      * 获取用户信息
      */
     private void getUserInfoAction() {
-        mRequestTag = MethodUrl.USER_INFO;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(UpdateNichengActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
@@ -202,9 +204,22 @@ public class UpdateNichengActivity extends BasicActivity implements RequestView,
             case MethodUrl.USER_NAME:
                 switch (tData.get("code")+""){
                     case "0": //请求成功
-                        showToastMsg("修改成功");
-                        //MbsConstans.USER_MAP = (Map<String, Object>) tData.get("data");
-                        getUserInfoAction();
+                        ModifyMyInfoEntry entry = new ModifyMyInfoEntry(Modify_DisplayName, etPhoneEmail.getText().toString());
+                        userViewModel.modifyMyInfo(Collections.singletonList(entry)).observe(this, new Observer<OperateResult<Boolean>>() {
+                            @Override
+                            public void onChanged(@Nullable OperateResult<Boolean> booleanOperateResult) {
+                                if (booleanOperateResult.isSuccess()) {
+                                    Toast.makeText(UpdateNichengActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(UpdateNichengActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                                }
+                                showToastMsg("修改成功");
+                                //MbsConstans.USER_MAP = (Map<String, Object>) tData.get("data");
+                                getUserInfoAction();
+                            }
+                        });
+
+
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg")+"");

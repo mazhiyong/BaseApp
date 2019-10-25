@@ -420,7 +420,8 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
                 }
                 break;
             case  MethodUrl.CHAT_SEARCH_FRIEND:
-                switch (tData.get("code") + "") {
+                String code = tData.get("code") + "";
+                switch (code) {
                     case "0": //请求成功
                         if (!UtilTools.empty(tData.get("data")+"")){
                             Map<String,Object> map = (Map<String, Object>) tData.get("data");
@@ -475,6 +476,7 @@ public class AddFriendActivity extends BasicActivity implements RequestView, Sel
                         /*if((tData.get("msg") + "").equals("他已经是你的好友了")){
                             getFriendInfoAction();
                         }*/
+                        addTv.setEnabled(true);
                         break;
                     case "1": //token过期
                         closeAllActivity();

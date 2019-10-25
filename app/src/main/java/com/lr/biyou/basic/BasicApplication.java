@@ -8,16 +8,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 
-import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.facebook.stetho.Stetho;
 import com.lr.biyou.BuildConfig;
+import com.lr.biyou.api.Config;
 import com.lr.biyou.chatry.common.ErrorCode;
 import com.lr.biyou.chatry.contact.PhoneContactManager;
-import com.lr.biyou.chatry.im.IMManager;
 import com.lr.biyou.chatry.utils.SearchUtils;
-import com.lr.biyou.chatry.wx.WXManager;
 import com.lr.biyou.utils.tool.AppContextUtil;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.SPCookieStore;
@@ -26,12 +24,14 @@ import com.tencent.bugly.Bugly;
 import com.wanou.framelibrary.okgoutil.websocket.WsManager;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
+import cn.wildfire.chat.kit.WfcUIKit;
 import io.rong.imlib.ipc.RongExceptionHandler;
 import okhttp3.OkHttpClient;
 
@@ -40,6 +40,8 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 public class BasicApplication extends MultiDexApplication {
 	int appCount=0;
+
+	private WfcUIKit wfcUIKit;
 
 	private static Context mContext;
 	public static Typeface typeFace;
@@ -81,19 +83,15 @@ public class BasicApplication extends MultiDexApplication {
 		return wsManager3;
 	}
 
-	@Override
-	protected void attachBaseContext(Context base) {
-		super.attachBaseContext(base);
-		MultiDex.install(this) ;
-		// 安装tinker
-		//Beta.installTinker();
+	private static long mMainThreadId;//主线程id
+	private static Handler mHandler;//主线程Handler
 
-	}
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		ErrorCode.init(this);
-
+		mMainThreadId = android.os.Process.myTid();
+		mHandler = new Handler();
 		/*
 		 * 以上部分在所有进程中会执行
 		 */
@@ -103,8 +101,19 @@ public class BasicApplication extends MultiDexApplication {
 		/*
 		 * 以下部分仅在主进程中进行执行
 		 */
+
+		// 只在主进程初始化
+		if (getCurProcessName(this).equals(BuildConfig.APPLICATION_ID)) {
+			wfcUIKit = new WfcUIKit();
+			wfcUIKit.init(this);
+			//注册推送服务
+			//PushService.init(this, BuildConfig.APPLICATION_ID);
+			//注册位置信息
+			//MessageViewHolderManager.getInstance().registerMessageViewHolder(LocationMessageContentViewHolder.class);
+			setupWFCDirs();
+		}
 		// 初始化融云IM SDK，初始化 SDK 仅需要在主进程中初始化一次
-		IMManager.getInstance().init(this);
+		//IMManager.getInstance().init(this);
 
 		Stetho.initializeWithDefaults(this);
 
@@ -113,7 +122,7 @@ public class BasicApplication extends MultiDexApplication {
 		Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
 
 		// 微信分享初始化
-		WXManager.getInstance().init(this);
+		//WXManager.getInstance().init(this);
 
 		PhoneContactManager.getInstance().init(this);
 
@@ -355,5 +364,32 @@ public class BasicApplication extends MultiDexApplication {
 					}
 			);
 		}
+	}
+
+	private void setupWFCDirs() {
+		File file = new File(Config.VIDEO_SAVE_DIR);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		file = new File(Config.AUDIO_SAVE_DIR);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		file = new File(Config.FILE_SAVE_DIR);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		file = new File(Config.PHOTO_SAVE_DIR);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+	}
+
+	public static long getMainThreadId() {
+		return mMainThreadId;
+	}
+
+	public static Handler getMainHandler() {
+		return mHandler;
 	}
 }

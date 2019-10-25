@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -26,15 +27,13 @@ import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.bean.MessageEvent;
+import com.lr.biyou.chatry.common.IntentExtra;
+import com.lr.biyou.chatry.im.IMManager;
+import com.lr.biyou.chatry.sp.UserCache;
+import com.lr.biyou.chatry.ui.activity.CreateGroupActivity;
 import com.lr.biyou.db.IndexData;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.UpdateDialog;
-import com.lr.biyou.chatry.common.IntentExtra;
-import com.lr.biyou.chatry.common.ResultCallback;
-import com.lr.biyou.chatry.im.IMManager;
-import com.lr.biyou.chatry.model.UserCacheInfo;
-import com.lr.biyou.chatry.sp.UserCache;
-import com.lr.biyou.chatry.ui.activity.CreateGroupActivity;
 import com.lr.biyou.service.DownloadService;
 import com.lr.biyou.ui.moudle1.fragment.HomeFragment;
 import com.lr.biyou.ui.moudle2.fragment.ChatViewFragment;
@@ -54,12 +53,15 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.rong.imkit.manager.IUnReadMessageObserver;
+import cn.wildfire.chat.kit.contact.ContactViewModel;
+import cn.wildfire.chat.kit.conversationlist.ConversationListViewModel;
+import cn.wildfire.chat.kit.conversationlist.ConversationListViewModelFactory;
 import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BasicActivity implements RequestView {
@@ -172,7 +174,7 @@ public class MainActivity extends BasicActivity implements RequestView {
         userCache = new UserCache(getApplicationContext());
         imManager = IMManager.getInstance();
 
-        //连接融云
+       /* //连接融云
         if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {
             String s = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
             MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
@@ -195,7 +197,7 @@ public class MainActivity extends BasicActivity implements RequestView {
                                 LogUtilDebug.i("show","链接rong融云失败");
                             }
                         });
-
+*/
 
 
         //0 红跌绿涨   1红涨绿跌
@@ -214,25 +216,43 @@ public class MainActivity extends BasicActivity implements RequestView {
                 Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE
         };
 
-        imManager.addUnReadMessageCountChangedObserver(observer, conversationTypes);
 
+        //会话列表ViewModel
+        ConversationListViewModel conversationListViewModel = ViewModelProviders
+                .of(this, new ConversationListViewModelFactory(Arrays.asList(cn.wildfirechat.model.Conversation.ConversationType.Single, cn.wildfirechat.model.Conversation.ConversationType.Group, cn.wildfirechat.model.Conversation.ConversationType.Channel), Arrays.asList(0)))
+                .get(ConversationListViewModel.class);
+        conversationListViewModel.unreadCountLiveData().observe(this, unreadCount -> {
 
-    }
-    IUnReadMessageObserver observer = new IUnReadMessageObserver() {
-        @Override
-        public void onCountChanged(int i) {
-            if (i == 0){
+            if (unreadCount == null || unreadCount.unread < 1) {
                 unreadNewLable.setVisibility(View.GONE);
-            }else {
+            } else {
                 unreadNewLable.setVisibility(View.VISIBLE);
-                if (i<100){
-                    unreadNewLable.setText(i+"");
+                if (unreadCount.unread <100){
+                    unreadNewLable.setText(unreadCount.unread+"");
                 }else {
                     unreadNewLable.setText("99+");
                 }
             }
-        }
-    };
+        });
+        //联系人ViewModel
+        ContactViewModel contactViewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
+        contactViewModel.friendRequestUpdatedLiveData().observe(this, count -> {
+            if (count == null || count == 0) {
+                unreadNewLable.setVisibility(View.GONE);
+            } else {
+                unreadNewLable.setVisibility(View.VISIBLE);
+                if (count<100){
+                    unreadNewLable.setText(count+"");
+                }else {
+                    unreadNewLable.setText("99+");
+                }
+            }
+        });
+
+    }
+
+
+
 
 
 
@@ -738,9 +758,7 @@ public class MainActivity extends BasicActivity implements RequestView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (imManager != null && observer!= null){
-            imManager.removeUnReadMessageCountChangedObserver(observer);
-        }
+
         unregisterReceiver(mBroadcastReceiver);
         EventBus eventBus = EventBus.getDefault();
         if (eventBus.isRegistered(this)) {

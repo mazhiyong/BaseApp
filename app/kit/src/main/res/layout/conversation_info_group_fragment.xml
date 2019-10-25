@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_background"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="@dimen/dp_45"
+        android:layout_height="@dimen/dp_45" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/contentNestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--群成员头像列表（5列）-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/memberRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/dp_7"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_7"
+                android:paddingBottom="@dimen/dp_5"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="5" />
+
+            <Button
+                android:id="@+id/showAllMemberButton"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:background="@drawable/selector_common_item"
+                android:gravity="center"
+                android:text="查看全部成员"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/groupLinearLayout_0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <cn.wildfire.chat.kit.widget.OptionItemView
+                    android:id="@+id/groupNameOptionItemView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_45"
+                    android:background="@drawable/selector_option_item"
+                    app:desc="@string/untitled"
+                    app:title="@string/group_name" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divide_hight"
+                    android:background="@color/divide_line"/>
+
+                <cn.wildfire.chat.kit.widget.OptionItemView
+                    android:id="@+id/groupQRCodeOptionItemView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_45"
+                    android:background="@drawable/selector_option_item"
+                    app:title="二维码" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divide_hight"
+                    android:background="@color/divide_line"/>
+                <cn.wildfire.chat.kit.widget.OptionItemView
+                    android:id="@+id/groupManageOptionItemView"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_height="@dimen/dp_45"
+                    android:background="@drawable/selector_option_item"
+                    app:title="群管理" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divide_hight"
+                    android:background="@color/divide_line"/>
+
+                <LinearLayout
+                    android:id="@+id/groupNoticeLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_16"
+                        android:layout_weight="1"
+                        android:text="@string/group_announcement"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:textColor="@color/black22"
+                        android:textSize="@dimen/sp_14" />
+
+
+                    <TextView
+                        android:id="@+id/groupNoticeTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_25"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginRight="@dimen/dp_25"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:text=""
+                        android:textColor="@color/gray2"
+                        android:textSize="14sp"
+                        android:visibility="visible"
+                        tools:text="群公告"
+                        tools:visibility="visible" />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+            <cn.wildfire.chat.kit.widget.OptionItemView
+                android:id="@+id/searchMessageOptionItemView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@drawable/selector_option_item"
+                app:title="查找聊天记录" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_45"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_weight="1"
+                        android:text="@string/message_free"
+                        android:textColor="@color/black22"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.kyleduo.switchbutton.SwitchButton
+                        android:id="@+id/silentSwitchButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp_20"
+                        app:kswBackDrawable="@drawable/ios_back_drawable"
+                        app:kswBackMeasureRatio="1.8"
+                        app:kswThumbDrawable="@drawable/ios_thumb_selector"
+                        app:kswThumbMarginBottom="-4dp"
+                        app:kswThumbMarginLeft="-2dp"
+                        app:kswThumbMarginRight="-2dp"
+                        app:kswThumbMarginTop="-0dp"
+                        app:kswThumbWidth="@dimen/dp_20" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divide_hight"
+                    android:background="@color/divide_line"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_45"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_weight="1"
+                        android:text="@string/set_conversation_to_top"
+                        android:textColor="@color/black22"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.kyleduo.switchbutton.SwitchButton
+                        android:id="@+id/stickTopSwitchButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp_20"
+                        app:kswBackDrawable="@drawable/ios_back_drawable"
+                        app:kswBackMeasureRatio="1.8"
+                        app:kswThumbDrawable="@drawable/ios_thumb_selector"
+                        app:kswThumbMarginBottom="-4dp"
+                        app:kswThumbMarginLeft="-2dp"
+                        app:kswThumbMarginRight="-2dp"
+                        app:kswThumbMarginTop="-0dp"
+                        app:kswThumbWidth="@dimen/dp_20" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divide_hight"
+                    android:background="@color/divide_line"/>
+
+                <LinearLayout
+                    android:id="@+id/markGroupLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_45"
+                    android:gravity="center_vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_weight="1"
+                        android:text="保存到通讯录"
+                        android:textColor="@color/black22"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.kyleduo.switchbutton.SwitchButton
+                        android:id="@+id/markGroupSwitchButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp_20"
+                        app:kswBackDrawable="@drawable/ios_back_drawable"
+                        app:kswBackMeasureRatio="1.8"
+                        app:kswThumbDrawable="@drawable/ios_thumb_selector"
+                        app:kswThumbMarginBottom="-4dp"
+                        app:kswThumbMarginLeft="-2dp"
+                        app:kswThumbMarginRight="-2dp"
+                        app:kswThumbMarginTop="-0dp"
+                        app:kswThumbWidth="@dimen/dp_20" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/groupLinearLayout_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <cn.wildfire.chat.kit.widget.OptionItemView
+                    android:id="@+id/myGroupNickNameOptionItemView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_45"
+                    android:background="@drawable/selector_option_item"
+                    app:title="@string/my_nickname_in_this_group" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divide_hight"
+                    android:background="@color/divide_line"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_45"
+                    android:background="@drawable/selector_option_item"
+                    android:gravity="center_vertical"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_weight="1"
+                        android:text="@string/show_group_member_name"
+                        android:textColor="@color/black22"
+                        android:textSize="@dimen/sp_14" />
+
+                    <com.kyleduo.switchbutton.SwitchButton
+                        android:id="@+id/showGroupMemberAliasSwitchButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:clickable="true"
+                        app:kswBackDrawable="@drawable/ios_back_drawable"
+                        app:kswBackMeasureRatio="1.8"
+                        app:kswThumbDrawable="@drawable/ios_thumb_selector"
+                        app:kswThumbMarginBottom="-4dp"
+                        app:kswThumbMarginLeft="-2dp"
+                        app:kswThumbMarginRight="-2dp"
+                        app:kswThumbMarginTop="-0dp"
+                        app:kswThumbWidth="@dimen/dp_20" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <cn.wildfire.chat.kit.widget.OptionItemView
+                android:id="@+id/clearMessagesOptionItemView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@drawable/selector_option_item"
+                app:title="@string/clear_chat_log" />
+            <cn.wildfire.chat.kit.widget.OptionItemView
+                android:id="@+id/tousuMessageOptionItemView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_45"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@drawable/selector_option_item"
+                app:title="投诉" />
+
+            <Button
+                android:id="@+id/quitButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="@dimen/option_item_margin_left"
+                android:layout_marginTop="@dimen/option_item_margin_top"
+                android:layout_marginRight="@dimen/option_item_margin_right"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/shape_btn_delete"
+                android:text="@string/delete_and_exit"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

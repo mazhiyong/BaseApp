@@ -44,6 +44,7 @@ public class ChatActivity extends BasicActivity implements RequestView {
 
     @Override
     public int getContentView() {
+
         return R.layout.activity_chat;
     }
 

@@ -190,7 +190,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
         return R.layout.pay_money_layout;
     }
 
-    @Override
+       @Override
     public void setBarTextColor() {
         /*if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             StatusBarUtil.setDarkMode(this);

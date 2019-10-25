@@ -1,1 +1,1 @@
-include ':app', ':IDCardLib', ':livenesslib', ':websocketlib', ':KLineChartLib', ':framelibrary',  ':contactcard', ':pushpermission', ':recognizer'
+include ':app', ':IDCardLib', ':livenesslib', ':websocketlib', ':KLineChartLib', ':framelibrary', ':contactcard', ':pushpermission', ':recognizer', ':mars-core-release', ':client', ':emojilibrary', ':imagepicker', ':avenginekit', ':push'

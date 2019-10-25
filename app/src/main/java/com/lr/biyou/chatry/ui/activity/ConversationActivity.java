@@ -993,8 +993,6 @@ public class ConversationActivity extends BasicActivity {
 
     private void initPopupWindow() {
 
-        int nH = UtilTools.getNavigationBarHeight(ConversationActivity.this);
-        LinearLayout mNagView;
         if (mConditionDialog == null) {
             popView = LayoutInflater.from(ConversationActivity.this).inflate(R.layout.item_head_news, null);
             mConditionDialog = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

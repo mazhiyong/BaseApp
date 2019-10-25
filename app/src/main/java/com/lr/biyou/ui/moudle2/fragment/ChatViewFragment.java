@@ -2,62 +2,57 @@ package com.lr.biyou.ui.moudle2.fragment;
 
 import android.animation.Animator;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.androidkun.xtablayout.XTabLayout;
 import com.flyco.dialog.utils.CornerUtils;
-import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
-import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
-import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.jaeger.library.StatusBarUtil;
+import com.king.zxing.Intents;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicFragment;
 import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.chatry.task.UserTask;
 import com.lr.biyou.listener.CallBackTotal;
-import com.lr.biyou.listener.OnChildClickListener;
 import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.mvp.view.RequestView;
-import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
-import com.lr.biyou.chatry.db.model.UserInfo;
-import com.lr.biyou.chatry.im.IMManager;
-import com.lr.biyou.chatry.model.Resource;
-import com.lr.biyou.chatry.task.UserTask;
-import com.lr.biyou.chatry.ui.fragment.MainConversationListFragment;
-import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.ui.moudle.activity.TestScanActivity;
-import com.lr.biyou.ui.moudle2.activity.AddFriendActivity;
-import com.lr.biyou.ui.moudle2.activity.ChatActivity;
 import com.lr.biyou.ui.moudle2.activity.ChatNoticeListActivity;
-import com.lr.biyou.ui.moudle2.activity.SelectContractListActivity;
 import com.lr.biyou.ui.moudle2.adapter.MyFriendListAdapter;
 import com.lr.biyou.ui.moudle2.adapter.MyRecentChatListAdapter;
+import com.lr.biyou.ui.moudle4.adapter.MyViewPagerAdapter;
 import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;
 import com.lr.biyou.utils.tool.AnimUtil;
@@ -65,22 +60,39 @@ import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.yanzhenjie.permission.Permission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
-import io.rong.imkit.fragment.ConversationListFragment;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
+import cn.wildfire.chat.kit.ChatManagerHolder;
+import cn.wildfire.chat.kit.IMConnectionStatusViewModel;
+import cn.wildfire.chat.kit.IMServiceStatusViewModel;
+import cn.wildfire.chat.kit.WfcScheme;
+import cn.wildfire.chat.kit.contact.ContactListFragment;
+import cn.wildfire.chat.kit.contact.ContactViewModel;
+import cn.wildfire.chat.kit.contact.newfriend.SearchUserActivity;
+import cn.wildfire.chat.kit.conversation.CreateConversationActivity;
+import cn.wildfire.chat.kit.conversationlist.ConversationListFragment;
+import cn.wildfire.chat.kit.conversationlist.ConversationListViewModel;
+import cn.wildfire.chat.kit.group.GroupInfoActivity;
+import cn.wildfire.chat.kit.group.GroupListFragment;
+import cn.wildfire.chat.kit.qrcode.ScanQRCodeActivity;
+import cn.wildfire.chat.kit.user.ChangeMyNameActivity;
+import cn.wildfire.chat.kit.user.UserInfoActivity;
+import cn.wildfire.chat.kit.user.UserViewModel;
+import cn.wildfirechat.client.ConnectionStatus;
+import cn.wildfirechat.remote.ChatManager;
+import q.rorbin.badgeview.QBadgeView;
+
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 
 @SuppressLint("ValidFragment")
-public class ChatViewFragment extends BasicFragment implements RequestView, ReLoadingData {
+public class ChatViewFragment extends BasicFragment implements RequestView, ReLoadingData,ViewPager.OnPageChangeListener {
 
 
     @BindView(R.id.title_text)
@@ -121,14 +133,20 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
     @BindView(R.id.activity_main)
     LinearLayout activityMain;
-    @BindView(R.id.fragment_container)
-    FrameLayout fragmentContainer;
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
     private boolean mIsback = false;
 
     private String mRequestTag = "";
     private String isShow="-1";
 
     private List<Fragment> mFragments = new ArrayList<>();
+    //会话界面
+    private ConversationListFragment conversationListFragment ;
+    //联系人界面
+    private ContactListFragment contactListFragment;
+    //群组界面
+    private GroupListFragment groupListFragment;
 
     private AnimUtil mAnimUtil;
     private LRecyclerViewAdapter mLRecyclerViewAdapter1 = null;
@@ -145,12 +163,32 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     private List<Map<String, Object>> mGroupList;
 
     private int mPage = 1;
-    private MainConversationListFragment conversationListFragment ;
 
 
-    private LoadingWindow mLoadingWindow;
     private UserTask userTask;
     private String friendName;
+
+
+
+    //未读消息
+    private QBadgeView unreadMessageUnreadBadgeView;
+    //好友申请消息
+    private QBadgeView unreadFriendRequestBadgeView;
+
+    private static final int REQUEST_CODE_SCAN_QR_CODE = 100;
+    private static final int REQUEST_IGNORE_BATTERY_CODE = 101;
+
+    private boolean isInitialized = false;
+
+    private ContactViewModel contactViewModel;
+    private ConversationListViewModel conversationListViewModel;
+
+    private Observer<Boolean> imStatusLiveDataObserver = status -> {
+        if (status && !isInitialized) {
+            init();
+            isInitialized = true;
+        }
+    };
 
     public ChatViewFragment() {
         // Required empty public constructor
@@ -169,152 +207,63 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         initView();
         mAnimUtil = new AnimUtil();
 
-        getMyFriendsAction();
-        getMyGroupsAction();
-
-      /*  RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
-            @Override
-            public void onSuccess(List<Conversation> conversations) {
-                Log.i("show","获取会话列表成功");
-                if (conversations != null && conversations.size() > 0) {
-                    Log.i("show","获取会话列表数:"+conversations.size());
-                    for (Conversation c : conversations) {
-                        Log.i("show","获取会话列表Title:"+c.getConversationTitle());
-                        Log.i("show","获取会话列表:id"+c.getTargetId());
-                        Log.i("show","获取会话列表:message"+c.getLatestMessage().toString());
-                        Log.i("show","获取会话列表:url"+c.getPortraitUrl());
-
-
-
-                        //RongIM.getInstance().clearMessagesUnreadStatus(c.getConversationType(), c.getTargetId(), null);
-                    }
-                }
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode e) {
-                Log.i("show","获取会话列表失败");
-            }
-        });
-*/
-        conversationListFragment = new MainConversationListFragment();
-        getChildFragmentManager().beginTransaction().add(R.id.fragment_container, conversationListFragment)
-                .show(conversationListFragment)
-                .commitAllowingStateLoss();
-
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        LogUtilDebug.i("show", "chatFragment 可见");
-        switch (mRequestTag) {
-            case MethodUrl.CHAT_RECENTLY_LIST:
-                showProgress();
-                getRecentChatAction();
-                break;
-            case MethodUrl.CHAT_MY_FRIENDS:
-                showProgress();
-                getMyFriendsAction();
-                break;
-            case MethodUrl.CHAT_MY_GROUPS:
-                showProgress();
-                getMyGroupsAction();
-                break;
+        isConnncted();
+        if (contactViewModel != null) {
+            contactViewModel.reloadFriendRequestStatus();
+            conversationListViewModel.reloadConversationUnreadStatus();
         }
-
 
     }
 
+    private void isConnncted() {
+        IMServiceStatusViewModel imServiceStatusViewModel = ViewModelProviders.of(this).get(IMServiceStatusViewModel.class);
+        imServiceStatusViewModel.imServiceStatusLiveData().observe(this, imStatusLiveDataObserver);
+        IMConnectionStatusViewModel connectionStatusViewModel = ViewModelProviders.of(this).get(IMConnectionStatusViewModel.class);
+        connectionStatusViewModel.connectionStatusLiveData().observe(this, status -> {
+            if (status == ConnectionStatus.ConnectionStatusTokenIncorrect || status == ConnectionStatus.ConnectionStatusSecretKeyMismatch || status == ConnectionStatus.ConnectionStatusRejected || status == ConnectionStatus.ConnectionStatusLogout) {
+                LogUtilDebug.i("show","重新连接聊天服务器");
+                ChatManager.Instance().disconnect(true);
+                //重新连接登录
+                if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {
+                    String s = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
+                    MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
+                    ChatManagerHolder.gChatManager.connect(MbsConstans.RONGYUN_MAP.get("id")+"", MbsConstans.RONGYUN_MAP.get("token")+"");
+                }
+            }else {
+                LogUtilDebug.i("show","已经连接聊天服务器");
+            }
+        });
+    }
 
     private void initView() {
 
-        mPageView.setContentView(mContent);
-        mPageView.setReLoadingData(this);
-        mPageView.showLoading();
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
-        manager.setOrientation(RecyclerView.VERTICAL);
-        mRefreshListView.setLayoutManager(manager);
-
-        mRefreshListView.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                switch (mRequestTag) {
-                   /* case MethodUrl.CHAT_RECENTLY_LIST:
-                        //showProgress();
-                        //getRecentChatAction();
-                        fragmentContainer.setVisibility(View.VISIBLE);
-                        mPageView.setVisibility(View.GONE);
-                        break;*/
-                    case MethodUrl.CHAT_MY_FRIENDS:
-                        showProgress();
-                        getMyFriendsAction();
-                        fragmentContainer.setVisibility(View.GONE);
-                        mPageView.setVisibility(View.VISIBLE);
-                        break;
-
-                    case MethodUrl.CHAT_MY_GROUPS:
-                        showProgress();
-                        getMyGroupsAction();
-                        fragmentContainer.setVisibility(View.GONE);
-                        mPageView.setVisibility(View.VISIBLE);
-                        break;
-
-                }
-            }
-        });
-
-        mRefreshListView.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-
-            }
-        });
-
+        tabLayout.removeAllTabs();
         tabLayout.addTab(tabLayout.newTab().setText("近期聊天"));
         tabLayout.addTab(tabLayout.newTab().setText("我的好友"));
         tabLayout.addTab(tabLayout.newTab().setText("我的群组"));
 
-        ConversationListFragment conListFragment = new ConversationListFragment();
-        mFragments.add(conListFragment);
+        conversationListFragment = new ConversationListFragment();
+        contactListFragment = new ContactListFragment();
+        groupListFragment = new GroupListFragment();
 
+        mFragments.add(conversationListFragment);
+        mFragments.add(contactListFragment);
+        mFragments.add(groupListFragment);
 
+        viewPager.setAdapter(new MyViewPagerAdapter(getChildFragmentManager(), mFragments));
+
+        viewPager.addOnPageChangeListener(new XTabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.addOnTabSelectedListener(new XTabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(XTabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        isShow ="0";
-                        Title.setText("最近聊天");
-                        //近期聊天
-                        noticeLayout.setVisibility(View.GONE);
-                        //getRecentChatAction();
-                        fragmentContainer.setVisibility(View.VISIBLE);
-                        mPageView.setVisibility(View.GONE);
-                        break;
-                    case 1:
-                        isShow ="1";
-                        Title.setText("好友列表");
-                        fragmentContainer.setVisibility(View.GONE);
-                        mPageView.setVisibility(View.VISIBLE);
-                        noticeLayout.setVisibility(View.VISIBLE);
-                        //好友列表
-                        getMyFriendsAction();
-                        break;
-
-                    case 2:
-                        isShow ="2";
-                        noticeLayout.setVisibility(View.GONE);
-                        fragmentContainer.setVisibility(View.GONE);
-                        mPageView.setVisibility(View.VISIBLE);
-                        Title.setText("我加入的群组");
-                        //我的群组
-                        getMyGroupsAction();
-                        break;
-
-                }
+                viewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
@@ -327,31 +276,9 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
             }
         });
-        mLoadingWindow = new LoadingWindow(getActivity(), R.style.Dialog);
-        mLoadingWindow.showView();
-
-        Title.setText("最近聊天");
-        //近期聊天
-        noticeLayout.setVisibility(View.GONE);
-        mRequestTag = MethodUrl.CHAT_RECENTLY_LIST;
-        //getRecentChatAction();
 
 
-        userTask = new UserTask(getActivity());
 
-        //融云Democode 获取用户信息
-        if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {
-            String s = SPUtils.get(getActivity(), MbsConstans.SharedInfoConstans.RONGYUN_DATA, "").toString();
-            MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
-        }
-        userTask.getUserInfo(MbsConstans.RONGYUN_MAP.get("id") + "").observe(this, new Observer<Resource<UserInfo>>() {
-            @Override
-            public void onChanged(Resource<UserInfo> resource) {
-                if (resource.data != null) {
-                    UserInfo info = resource.data;
-                }
-            }
-        });
 
 
         etSearch.addTextChangedListener(new TextWatcher() {
@@ -369,7 +296,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                                 mListAdapter2.setBackTotal(new CallBackTotal() {
                                     @Override
                                     public void setTotal(int size) {
-                                        Log.i("show", "size:" + size);
                                         if (size == 0) {
                                             mPageView.showEmpty();
                                         } else {
@@ -412,25 +338,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                             break;
 
                     }
-                } else {
-                    switch (mRequestTag) {
-                        case MethodUrl.CHAT_RECENTLY_LIST:
-                            if (mRecentlyList != null && mRecentlyList.size() > 0) {
-                                responseData2();
-                            }
-                            break;
-                        case MethodUrl.CHAT_MY_FRIENDS:
-                            if (mFriendList != null && mFriendList.size() > 0) {
-                                responseData();
-                            }
-                            break;
-                        case MethodUrl.CHAT_MY_GROUPS:
-                            if (mGroupList != null && mGroupList.size() > 0) {
-                                responseData3();
-                            }
-                            break;
-
-                    }
                 }
 
             }
@@ -441,51 +348,99 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             }
         });
 
+        if (checkDisplayName()) {
+            ignoreBatteryOption();
+        }
 
+    }
+
+
+
+    private boolean checkDisplayName() {
+        UserViewModel userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        SharedPreferences sp = getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
+        cn.wildfirechat.model.UserInfo userInfo = userViewModel.getUserInfo(userViewModel.getUserId(), false);
+        if (userInfo != null && TextUtils.equals(userInfo.displayName, userInfo.mobile)) {
+            if (!sp.getBoolean("updatedDisplayName", false)) {
+                sp.edit().putBoolean("updatedDisplayName", true).apply();
+                updateDisplayName();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void updateDisplayName() {
+        MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
+                .content("修改个人昵称？")
+                .positiveText("修改")
+                .negativeText("取消")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Intent intent = new Intent(getActivity(), ChangeMyNameActivity.class);
+                        startActivity(intent);
+                    }
+                }).build();
+        dialog.show();
+    }
+
+    private void ignoreBatteryOption() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                Intent intent = new Intent();
+                String packageName = getActivity().getPackageName();
+                PowerManager pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+                if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+                    intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+                    intent.setData(Uri.parse("package:" + packageName));
+                    startActivityForResult(intent, REQUEST_IGNORE_BATTERY_CODE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void showUnreadMessageBadgeView(int count) {
+       /* if (unreadMessageUnreadBadgeView == null) {
+            BottomNavigationMenuView bottomNavigationMenuView = ((BottomNavigationMenuView) bottomNavigationView.getChildAt(0));
+            View view = bottomNavigationMenuView.getChildAt(0);
+            unreadMessageUnreadBadgeView = new QBadgeView(getActivity());
+            unreadMessageUnreadBadgeView.bindTarget(view);
+        }
+        unreadMessageUnreadBadgeView.setBadgeNumber(count);*/
+    }
+
+    private void hideUnreadMessageBadgeView() {
+        if (unreadMessageUnreadBadgeView != null) {
+            unreadMessageUnreadBadgeView.hide(true);
+            unreadFriendRequestBadgeView = null;
+        }
+    }
+
+
+    private void showUnreadFriendRequestBadgeView(int count) {
+       /* if (unreadFriendRequestBadgeView == null) {
+            BottomNavigationMenuView bottomNavigationMenuView = ((BottomNavigationMenuView) bottomNavigationView.getChildAt(0));
+            View view = bottomNavigationMenuView.getChildAt(1);
+            unreadFriendRequestBadgeView = new QBadgeView(getActivity());
+            unreadFriendRequestBadgeView.bindTarget(view);
+        }
+        unreadFriendRequestBadgeView.setBadgeNumber(count);*/
+    }
+
+    public void hideUnreadFriendRequestBadgeView() {
+        if (unreadFriendRequestBadgeView != null) {
+            unreadFriendRequestBadgeView.hide(true);
+            unreadFriendRequestBadgeView = null;
+        }
     }
 
     public void setBarTextColor() {
         StatusBarUtil.setLightMode(getActivity());
     }
 
-
-    private void getRecentChatAction() {
-
-        mRequestTag = MethodUrl.CHAT_RECENTLY_LIST;
-        Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
-        }
-        map.put("token", MbsConstans.ACCESS_TOKEN);
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_RECENTLY_LIST, map);
-    }
-
-
-    private void getMyFriendsAction() {
-
-        mRequestTag = MethodUrl.CHAT_MY_FRIENDS;
-        Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
-        }
-        map.put("token", MbsConstans.ACCESS_TOKEN);
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_MY_FRIENDS, map);
-    }
-
-
-    private void getMyGroupsAction() {
-
-        mRequestTag = MethodUrl.CHAT_MY_GROUPS;
-        Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
-        }
-        map.put("token", MbsConstans.ACCESS_TOKEN);
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_MY_GROUPS, map);
-    }
 
 
     @OnClick({R.id.right_img, R.id.right_lay, R.id.notice_layout})
@@ -505,6 +460,31 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     }
 
     @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        LogUtilDebug.i("show","onPageScrollStateChanged()....");
+        if (state != ViewPager.SCROLL_STATE_IDLE) {
+            //滚动过程中隐藏快速导航条
+            contactListFragment.showQuickIndexBar(false);
+        } else {
+            contactListFragment.showQuickIndexBar(true);
+        }
+    }
+
+
+
+
+
+    @Override
     public void showProgress() {
         //mLoadingWindow.show();
     }
@@ -516,469 +496,15 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
-        mLoadingWindow.cancleView();
-        Intent intent;
-        switch (mType) {
-            case MethodUrl.CHAT_QUERY_RCID:
-                switch (tData.get("code") + "") {
-                    case "0": //请求成功
-                        //启动聊天
-                        if (RongIM.getInstance() != null) {
-                            RongIM.getInstance().startPrivateChat(getActivity(), tData.get("data") + "", friendName);
-                        }
-                        break;
-                    case "-1": //请求失败
-                        showToastMsg(tData.get("msg") + "");
-                        break;
 
-                    case "1": //token过期
-                        if (getActivity() != null) {
-                            getActivity().finish();
-                        }
-                        intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                        break;
-                }
-                break;
-            case MethodUrl.CHAT_MY_FRIENDS:
-                switch (tData.get("code") + "") {
-                    case "0": //请求成功
-                        if (UtilTools.empty(tData.get("data") + "")) {
-                            mPageView.showEmpty();
-                        } else {
-                            Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
-                            if (!UtilTools.empty(mapData)) {
-                                if (isShow.equals("1")){
-                                    if (UtilTools.empty(mapData.get("apply") + "")) {
-                                        noticeLayout.setVisibility(View.GONE);
-                                    } else {
-                                        noticeLayout.setVisibility(View.VISIBLE);
-                                        if ((mapData.get("apply")+"").equals("0")){
-                                            noticeNumberTv.setVisibility(View.GONE);
-                                        }else {
-                                            noticeNumberTv.setVisibility(View.VISIBLE);
-                                        }
-                                        noticeNumberTv.setText(mapData.get("apply") + "");
-                                    }
-                                }
-
-                                if (UtilTools.empty(mapData.get("friend") + "")) {
-                                    mPageView.showEmpty();
-                                } else {
-                                    mFriendList = (List<Map<String, Object>>) mapData.get("friend");
-                                    if (UtilTools.empty(mFriendList)) {
-                                        mPageView.showEmpty();
-                                    } else {
-                                        for (Map<String,Object> map :mFriendList){
-                                            //更新好友信息
-                                            IMManager.getInstance().updateUserInfoCache(map.get("rc_id") + "", map.get("name") + "", Uri.parse(map.get("portrait")+""));
-                                        }
-
-                                        mPageView.showContent();
-                                        responseData();
-                                        mRefreshListView.refreshComplete(10);
-                                    }
-                                }
-
-                            } else {
-                                mPageView.showEmpty();
-                            }
-                        }
-                        break;
-                    case "-1": //请求失败
-                        showToastMsg(tData.get("msg") + "");
-                        mPageView.showNetworkError();
-                        break;
-
-                    case "1": //token过期
-                        if (getActivity() != null) {
-                            getActivity().finish();
-                        }
-                        intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                        break;
-                }
-                break;
-
-            case MethodUrl.CHAT_RECENTLY_LIST:
-                switch (tData.get("code") + "") {
-                    case "0": //请求成功
-                        if (UtilTools.empty(tData.get("data") + "")) {
-                            mPageView.showEmpty();
-                        } else {
-                            mRecentlyList = (List<Map<String, Object>>) tData.get("data");
-                            if (UtilTools.empty(mRecentlyList)) {
-                                mPageView.showEmpty();
-                            } else {
-                                List<Map<String, Object>> topList = new ArrayList<>();
-                                List<Map<String, Object>> normalList = new ArrayList<>();
-                                for (Map<String, Object> map : mRecentlyList) {
-                                    map.put("account", "0");
-
-                                    if ((map.get("top") + "").equals("1")) {
-                                        topList.add(map);
-                                    } else {
-                                        normalList.add(map);
-                                    }
-                                    if ((map.get("type") + "").equals("1")) {
-                                        RongIM.getInstance().getUnreadCount(Conversation.ConversationType.PRIVATE, map.get("rc_id") + "", new RongIMClient.ResultCallback<Integer>() {
-                                            @Override
-                                            public void onSuccess(Integer integer) {
-                                                if (integer > 99) {
-                                                    map.put("account", "99+");
-                                                } else {
-                                                    map.put("account", integer + "");
-                                                }
-
-                                                getActivity().runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        mListAdapter2.notifyDataSetChanged();
-                                                    }
-                                                });
-                                            }
-
-                                            @Override
-                                            public void onError(RongIMClient.ErrorCode errorCode) {
-
-                                            }
-                                        });
-                                    } else {
-                                        //异步回调
-                                        RongIM.getInstance().getUnreadCount(Conversation.ConversationType.GROUP, map.get("id") + "", new RongIMClient.ResultCallback<Integer>() {
-                                            @Override
-                                            public void onSuccess(Integer integer) {
-                                                if (integer > 99) {
-                                                    map.put("account", "99+");
-                                                } else {
-                                                    map.put("account", integer + "");
-                                                }
-
-                                                getActivity().runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        mListAdapter2.notifyDataSetChanged();
-                                                    }
-                                                });
-                                            }
-
-                                            @Override
-                                            public void onError(RongIMClient.ErrorCode errorCode) {
-
-                                            }
-                                        });
-                                    }
-                                }
-                                mRecentlyList.clear();
-                                mRecentlyList.addAll(topList);
-                                mRecentlyList.addAll(normalList);
-
-                                mPageView.showContent();
-                                responseData2();
-                                mRefreshListView.refreshComplete(10);
-                            }
-                        }
-
-                        break;
-                    case "-1": //请求失败
-                        showToastMsg(tData.get("msg") + "");
-                        break;
-
-                    case "1": //token过期
-                        if (getActivity() != null) {
-                            getActivity().finish();
-                        }
-                        intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                        break;
-                }
-                break;
-
-
-            case MethodUrl.CHAT_MY_GROUPS:
-                switch (tData.get("code") + "") {
-                    case "0": //请求成功
-                        if (UtilTools.empty(tData.get("data") + "")) {
-                            mPageView.showEmpty();
-                        } else {
-                            mGroupList = (List<Map<String, Object>>) tData.get("data");
-                            if (UtilTools.empty(mGroupList)) {
-                                mPageView.showEmpty();
-                            } else {
-                                for (Map<String, Object> map : mGroupList) {
-                                    map.put("account", "0");
-                                    // 更新 IMKit 缓存群组数据
-                                    IMManager.getInstance().updateGroupInfoCache(map.get("id") + "", map.get("name") + "", Uri.parse(map.get("portrait")+""));
-                                }
-                                mPageView.showContent();
-                                responseData3();
-                                mRefreshListView.refreshComplete(10);
-                            }
-                        }
-
-                        break;
-                    case "-1": //请求失败
-                        showToastMsg(tData.get("msg") + "");
-                        break;
-
-                    case "1": //token过期
-                        if (getActivity() != null) {
-                            getActivity().finish();
-                        }
-                        intent = new Intent(getActivity(), LoginActivity.class);
-                        startActivity(intent);
-                        break;
-                }
-                break;
-        }
     }
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
-        mLoadingWindow.cancleView();
         dealFailInfo(map, mType);
     }
 
 
-    //朋友列表
-    private void responseData() {
-        if (mListAdapter == null) {
-            mListAdapter = new MyFriendListAdapter(getActivity());
-            mListAdapter.addAll(mFriendList);
-
-            /*AnimationAdapter adapter = new ScaleInAnimationAdapter(mDataAdapter);
-            adapter.setFirstOnly(false);
-            adapter.setDuration(500);
-            adapter.setInterpolator(new OvershootInterpolator(.5f));*/
-
-            mLRecyclerViewAdapter1 = new LRecyclerViewAdapter(mListAdapter);
-
-//            SampleHeader headerView = new SampleHeader(BankCardActivity.this, R.layout.item_bank_bind);
-//            mLRecyclerViewAdapter.addHeaderView(headerView);
-
-            mRefreshListView.setAdapter(mLRecyclerViewAdapter1);
-            mRefreshListView.setItemAnimator(new DefaultItemAnimator());
-            mRefreshListView.setHasFixedSize(true);
-            mRefreshListView.setNestedScrollingEnabled(false);
-
-            mRefreshListView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-            mRefreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
-
-            mRefreshListView.setPullRefreshEnabled(true);
-            mRefreshListView.setLoadMoreEnabled(true);
-
-
-        } else {
-            mListAdapter.clear();
-            mListAdapter.addAll(mFriendList);
-            mRefreshListView.setAdapter(mLRecyclerViewAdapter1);
-        }
-     /*   //设置底部加载颜色
-        mRecyclerView.setFooterViewColor(R.color.colorAccent, R.color.black, android.R.color.white);
-
-        mRecyclerView.setRefreshProgressStyle(ProgressStyle.LineScalePulseOut); //设置下拉刷新Progress的样式
-        //mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);  //设置下拉刷新箭头
-        //设置头部加载颜色
-        mRecyclerView.setHeaderViewColor(R.color.colorAccent, R.color.red ,android.R.color.white);
-//设置底部加载颜色
-        mRecyclerView.setFooterViewColor(R.color.colorAccent, R.color.red ,android.R.color.white);*/
-
-        mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-        if (mFriendList.size() < 10) {
-            mRefreshListView.setNoMore(true);
-        } else {
-            mRefreshListView.setNoMore(false);
-            mPage++;
-        }
-
-        mRefreshListView.refreshComplete(10);
-        mListAdapter.notifyDataSetChanged();
-        if (mListAdapter.getDataList().size() <= 0) {
-            mPageView.showEmpty();
-        } else {
-            mPageView.showContent();
-        }
-
-
-        mListAdapter.setSourceList(mListAdapter.getDataList());
-
-        mListAdapter.setmListener(new OnChildClickListener() {
-            @Override
-            public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-                //启动聊天
-               /* if (RongIM.getInstance() != null) {
-                    RongIM.getInstance().startPrivateChat(getActivity(), mParentMap.get("rc_id") + "", mParentMap.get("name") + "");
-                }*/
-               Intent intent = new Intent(getActivity(), ChatActivity.class);
-               startActivity(intent);
-            }
-        });
-    }
-
-
-    //最近聊天
-    private void responseData2() {
-        if (mListAdapter2 == null) {
-            mListAdapter2 = new MyRecentChatListAdapter(getActivity());
-            mListAdapter2.addAll(mRecentlyList);
-
-            /*AnimationAdapter adapter = new ScaleInAnimationAdapter(mDataAdapter);
-            adapter.setFirstOnly(false);
-            adapter.setDuration(500);
-            adapter.setInterpolator(new OvershootInterpolator(.5f));*/
-
-            mLRecyclerViewAdapter2 = new LRecyclerViewAdapter(mListAdapter2);
-
-//            SampleHeader headerView = new SampleHeader(BankCardActivity.this, R.layout.item_bank_bind);
-//            mLRecyclerViewAdapter.addHeaderView(headerView);
-
-            mRefreshListView.setAdapter(mLRecyclerViewAdapter2);
-            mRefreshListView.setItemAnimator(new DefaultItemAnimator());
-            mRefreshListView.setHasFixedSize(true);
-            mRefreshListView.setNestedScrollingEnabled(false);
-
-            mRefreshListView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-            mRefreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
-
-            mRefreshListView.setPullRefreshEnabled(true);
-            mRefreshListView.setLoadMoreEnabled(true);
-
-
-        } else {
-            mListAdapter2.clear();
-            mListAdapter2.addAll(mRecentlyList);
-            mRefreshListView.setAdapter(mLRecyclerViewAdapter2);
-        }
-     /*   //设置底部加载颜色
-        mRecyclerView.setFooterViewColor(R.color.colorAccent, R.color.black, android.R.color.white);
-
-        mRecyclerView.setRefreshProgressStyle(ProgressStyle.LineScalePulseOut); //设置下拉刷新Progress的样式
-        //mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);  //设置下拉刷新箭头
-        //设置头部加载颜色
-        mRecyclerView.setHeaderViewColor(R.color.colorAccent, R.color.red ,android.R.color.white);
-//设置底部加载颜色
-        mRecyclerView.setFooterViewColor(R.color.colorAccent, R.color.red ,android.R.color.white);*/
-
-        mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-        if (mRecentlyList.size() < 10) {
-            mRefreshListView.setNoMore(true);
-        } else {
-            mRefreshListView.setNoMore(false);
-            mPage++;
-        }
-
-        mRefreshListView.refreshComplete(10);
-        mListAdapter2.notifyDataSetChanged();
-        if (mListAdapter2.getDataList().size() <= 0) {
-            mPageView.showEmpty();
-        } else {
-            mPageView.showContent();
-        }
-
-        mListAdapter2.setSourceList(mListAdapter2.getDataList());
-
-        mListAdapter2.setmListener(new OnChildClickListener() {
-            @Override
-            public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-                if ((mParentMap.get("type") + "").equals("1")) {
-                    //根据用户id获取rcid
-                    friendName = mParentMap.get("name") + "";
-                    //getRcIdAccordingIdAction(mParentMap.get("id")+"");
-                    //启动聊天
-                    RongIM.getInstance().startPrivateChat(getActivity(), mParentMap.get("rc_id") + "", friendName);
-                } else {
-                    RongIM.getInstance().startGroupChat(getActivity(), mParentMap.get("id") + "", mParentMap.get("name") + "");
-                }
-            }
-        });
-    }
-
-    private void getRcIdAccordingIdAction(String id) {
-        mRequestTag = MethodUrl.CHAT_QUERY_RCID;
-        Map<String, Object> map = new HashMap<>();
-        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
-        }
-        map.put("token", MbsConstans.ACCESS_TOKEN);
-        map.put("id", id);
-        Map<String, String> mHeaderMap = new HashMap<String, String>();
-        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_QUERY_RCID, map);
-
-    }
-
-
-    private void responseData3() {
-        if (mListAdapter3 == null) {
-            mListAdapter3 = new MyRecentChatListAdapter(getActivity());
-            mListAdapter3.addAll(mGroupList);
-
-            /*AnimationAdapter adapter = new ScaleInAnimationAdapter(mDataAdapter);
-            adapter.setFirstOnly(false);
-            adapter.setDuration(500);
-            adapter.setInterpolator(new OvershootInterpolator(.5f));*/
-
-            mLRecyclerViewAdapter3 = new LRecyclerViewAdapter(mListAdapter3);
-
-//            SampleHeader headerView = new SampleHeader(BankCardActivity.this, R.layout.item_bank_bind);
-//            mLRecyclerViewAdapter.addHeaderView(headerView);
-
-            mRefreshListView.setAdapter(mLRecyclerViewAdapter3);
-            mRefreshListView.setItemAnimator(new DefaultItemAnimator());
-            mRefreshListView.setHasFixedSize(true);
-            mRefreshListView.setNestedScrollingEnabled(false);
-
-            mRefreshListView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-            mRefreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
-
-            mRefreshListView.setPullRefreshEnabled(true);
-            mRefreshListView.setLoadMoreEnabled(true);
-
-
-        } else {
-            mListAdapter3.clear();
-            mListAdapter3.addAll(mGroupList);
-            mRefreshListView.setAdapter(mLRecyclerViewAdapter3);
-        }
-     /*   //设置底部加载颜色
-        mRecyclerView.setFooterViewColor(R.color.colorAccent, R.color.black, android.R.color.white);
-
-        mRecyclerView.setRefreshProgressStyle(ProgressStyle.LineScalePulseOut); //设置下拉刷新Progress的样式
-        //mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);  //设置下拉刷新箭头
-        //设置头部加载颜色
-        mRecyclerView.setHeaderViewColor(R.color.colorAccent, R.color.red ,android.R.color.white);
-//设置底部加载颜色
-        mRecyclerView.setFooterViewColor(R.color.colorAccent, R.color.red ,android.R.color.white);*/
-
-        mRefreshListView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-        if (mGroupList.size() < 10) {
-            mRefreshListView.setNoMore(true);
-        } else {
-            mRefreshListView.setNoMore(false);
-            mPage++;
-        }
-
-        mRefreshListView.refreshComplete(10);
-        mListAdapter3.notifyDataSetChanged();
-        if (mListAdapter3.getDataList().size() <= 0) {
-            mPageView.showEmpty();
-        } else {
-            mPageView.showContent();
-        }
-
-        mListAdapter3.setSourceList(mListAdapter3.getDataList());
-
-        mListAdapter3.setmListener(new OnChildClickListener() {
-            @Override
-            public void onChildClickListener(View view, int position, Map<String, Object> mParentMap) {
-
-                //RongIM.getInstance().startGroupChat(getActivity(), mParentMap.get("id") + "", mParentMap.get("name") + "");
-
-                // 更新 IMKit 缓存群组数据
-                IMManager.getInstance().updateGroupInfoCache(mParentMap.get("id") + "", mParentMap.get("name") + "", Uri.parse(mParentMap.get("portrait")+""));
-                RongIM.getInstance().startConversation(getActivity(), Conversation.ConversationType.GROUP, mParentMap.get("id") + "", mParentMap.get("name") + "");
-            }
-        });
-    }
 
 
     private View popView;
@@ -1076,27 +602,22 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             public void onClick(View v) {
                 Intent intent;
                 switch (v.getId()) {
-                    case R.id.group_chat_lay:
+                    case R.id.group_chat_lay: //创建群聊
                         mConditionDialog.dismiss();
-                        /*intent = new Intent(getActivity(), SelectCreateGroupActivity.class);
-                        startActivityForResult(intent, REQUEST_START_GROUP);*/
-                        intent = new Intent(getActivity(), SelectContractListActivity.class);
-                        intent.putExtra("TYPE", "0");
+                        intent = new Intent(getActivity(), CreateConversationActivity.class);
                         startActivity(intent);
                         break;
-                    case R.id.add_friend_lay:
+                    case R.id.add_friend_lay://添加好友
                         mConditionDialog.dismiss();
-                        intent = new Intent(getActivity(), AddFriendActivity.class);
+                        intent = new Intent(getActivity(), SearchUserActivity.class);
                         startActivity(intent);
                         break;
-                    case R.id.scan_lay:
+                    case R.id.scan_lay://扫一扫
                         mConditionDialog.dismiss();
                         PermissionsUtils.requsetRunPermission(getActivity(), new RePermissionResultBack() {
                             @Override
                             public void requestSuccess() {
-                                Intent intent = new Intent(getActivity(), TestScanActivity.class);
-                                intent.putExtra("type", "0");
-                                startActivity(intent);
+                                startActivityForResult(new Intent(getActivity(), ScanQRCodeActivity.class), REQUEST_CODE_SCAN_QR_CODE);
                             }
 
                             @Override
@@ -1104,8 +625,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                                 Toast.makeText(getActivity(), "相机权限授权失败", Toast.LENGTH_LONG).show();
                             }
                         }, Permission.Group.STORAGE, Permission.Group.CAMERA);
-                        /*intent = new Intent(getActivity(), ScanActivity.class);
-                        startActivity(intent);*/
+
                         break;
                 }
             }
@@ -1118,22 +638,71 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
 
     @Override
-    public void reLoadingData() {
-        switch (mRequestTag) {
-          /*  case MethodUrl.CHAT_RECENTLY_LIST:
-                showProgress();
-                getRecentChatAction();
-                break;*/
-            case MethodUrl.CHAT_MY_FRIENDS:
-                showProgress();
-                getMyFriendsAction();
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_SCAN_QR_CODE:
+                if (resultCode == RESULT_OK) {
+                    String result = data.getStringExtra(Intents.Scan.RESULT);
+                    onScanPcQrCode(result);
+                }
                 break;
-            case MethodUrl.CHAT_MY_GROUPS:
-                showProgress();
-                getMyGroupsAction();
-                break;
+            case REQUEST_IGNORE_BATTERY_CODE:
+                if (resultCode == RESULT_CANCELED) {
 
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+                break;
         }
+    }
+
+    private void onScanPcQrCode(String qrcode) {
+        String prefix = qrcode.substring(0, qrcode.lastIndexOf('/') + 1);
+        String value = qrcode.substring(qrcode.lastIndexOf("/") + 1);
+        switch (prefix) {
+            case WfcScheme.QR_CODE_PREFIX_PC_SESSION:
+                // pcLogin(value); //pc登录
+                break;
+            case WfcScheme.QR_CODE_PREFIX_USER: //扫码加好友
+                showUser(value);
+                break;
+            case WfcScheme.QR_CODE_PREFIX_GROUP: //扫码入群
+                joinGroup(value);
+                break;
+            case WfcScheme.QR_CODE_PREFIX_CHANNEL://扫码加入频道
+                //subscribeChannel(value);
+                break;
+            default:
+
+                break;
+        }
+    }
+
+    private void showUser(String uid) {
+
+        UserViewModel userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        cn.wildfirechat.model.UserInfo userInfo = userViewModel.getUserInfo(uid, true);
+        if (userInfo == null) {
+            return;
+        }
+        Intent intent = new Intent(getActivity(), UserInfoActivity.class);
+        intent.putExtra("userInfo", userInfo);
+        startActivity(intent);
+    }
+
+    private void joinGroup(String groupId) {
+        Intent intent = new Intent(getActivity(), GroupInfoActivity.class);
+        intent.putExtra("groupId", groupId);
+        startActivity(intent);
+    }
+
+
+
+    @Override
+    public void reLoadingData() {
+
+
     }
 
 

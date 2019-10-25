@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +47,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.wildfire.chat.kit.ChatManagerHolder;
 
 
 public class LoginActivity extends BasicActivity implements CompoundButton.OnCheckedChangeListener {
@@ -310,6 +312,12 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
         Map<String, Object> map = new HashMap<>();
         map.put("account", mAccount);
         map.put("password", mPassWord);
+        try {
+            Log.i("show","clientId:"+ChatManagerHolder.gChatManager.getClientId());
+            map.put("clientId",ChatManagerHolder.gChatManager.getClientId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //String ss = AESHelper.decrypt(pass,AESHelper.password);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -451,6 +459,16 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
                         if (!UtilTools.empty(tData.get("ry_data")+"")){
                             MbsConstans.RONGYUN_MAP = (Map<String, Object>) tData.get("ry_data");
                             SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA, JSONUtil.getInstance().objectToJson(MbsConstans.RONGYUN_MAP));
+                            //连接聊天服务器
+
+                            LogUtilDebug.i("show",MbsConstans.RONGYUN_MAP.get("id")+" /  "+MbsConstans.RONGYUN_MAP.get("token"));
+                            ChatManagerHolder.gChatManager.connect(MbsConstans.RONGYUN_MAP.get("id")+"", MbsConstans.RONGYUN_MAP.get("token")+"");
+                            SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
+                            sp.edit().putString("id", MbsConstans.RONGYUN_MAP.get("id")+"")
+                                    .putString("token",MbsConstans.RONGYUN_MAP.get("token")+"")
+                                    .apply();
+                            //ChatManagerHolder.gChatManager.connect("y1yAyAcc", "tI+XxGlBv4wttm+azuhINtNWmbqtXX7m5SVeUMwbWfTHf9/2dARCkGh0I/YGZNVq355Gid3TvPqQInyAdp28Y41YC/qejcC1XkawsDgCqfyIHegVhYz/A8DwttTIAslIkrwoHeayf/YpBvOU+S5t/0sQTtogIvaPcx90usm7tbM=");
+
                         }
 
 

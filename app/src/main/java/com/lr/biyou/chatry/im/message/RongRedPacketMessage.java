@@ -158,6 +158,7 @@ public class RongRedPacketMessage extends MessageContent {
             Log.e("JSONException", e.getMessage());
         }
 
+
         try {
             return jsonObj.toString().getBytes("UTF-8");
         } catch (UnsupportedEncodingException e) {

@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -17,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
@@ -28,7 +28,6 @@ import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
-import com.jaeger.library.StatusBarUtil;
 
 import java.io.File;
 import java.util.Map;
@@ -109,7 +108,14 @@ public class SplashActivity extends BasicActivity {
         //loadImage();
         //imageTask();
 
+
+
+
+
     }
+
+
+
 
 
     private void setupView() {
@@ -155,7 +161,8 @@ public class SplashActivity extends BasicActivity {
 
                     String code = SPUtils.get(SplashActivity.this, MbsConstans.SharedInfoConstans.IS_FIRST_START, "") + "";
                     Intent intent;
-                    if (code.equals(MbsConstans.UpdateAppConstans.VERSION_APP_CODE + "")) {
+                    //去掉引导页
+                   // if (code.equals(MbsConstans.UpdateAppConstans.VERSION_APP_CODE + "")) {
                         if (bb) {
                             intent = new Intent(SplashActivity.this, LoginActivity.class);
                             SplashActivity.this.startActivity(intent);
@@ -177,12 +184,12 @@ public class SplashActivity extends BasicActivity {
                                 finish();
                             }
                         }
-                    } else {
+                    /*} else {
                         intent = new Intent(SplashActivity.this, GuideViewPageActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.splash_fade_in, R.anim.splash_fade_out);
                         finish();
-                    }
+                    }*/
                 } else {
                     count--;
                     textView.setText(count + "");

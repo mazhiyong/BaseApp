@@ -17,14 +17,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.request.target.CustomViewTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.flyco.dialog.listener.OnOperItemClickL;
 import com.flyco.dialog.widget.ActionSheetDialog;
 import com.jaeger.library.StatusBarUtil;
+import com.king.zxing.util.CodeUtils;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
@@ -32,9 +39,9 @@ import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.ShowImageDialog;
 import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
-import com.lr.biyou.chatry.utils.qrcode.QRCodeUtils;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.UpdateNichengActivity;
+import com.lr.biyou.utils.imageload.GlideApp;
 import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;
@@ -56,6 +63,10 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.wildfire.chat.kit.WfcScheme;
+import cn.wildfire.chat.kit.common.OperateResult;
+import cn.wildfire.chat.kit.user.UserViewModel;
+import cn.wildfirechat.model.UserInfo;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -93,10 +104,16 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
     CardView mErcodeLay;
     @BindView(R.id.exit_tv)
     TextView exitTv;
+    @BindView(R.id.iv_code)
+    ImageView ivCode;
 
     private String mRequestTag = "";
 
     private Map<String, Object> mHeadPath;
+
+    private UserViewModel userViewModel;
+    private UserInfo userInfo;
+
 
     @Override
     public int getContentView() {
@@ -110,6 +127,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
         mTitleText.setCompoundDrawables(null, null, null, null);
 
         // GlideUtils.loadImage(UserInfoActivity.this,"http://tupian.qqjay.com/u/2017/1201/2_161641_2.jpg",mHeadImageView);
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
     }
 
     @Override
@@ -156,7 +174,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
     }
 
 
-    @OnClick({R.id.exit_tv,R.id.head_img_lay, R.id.back_img, R.id.busines_name_lay, R.id.ercode_lay, R.id.left_back_lay})
+    @OnClick({R.id.exit_tv, R.id.head_img_lay, R.id.back_img, R.id.busines_name_lay, R.id.ercode_lay, R.id.left_back_lay})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -184,8 +202,39 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                     MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
                 }
                 String qrCodeContent = MbsConstans.QRCODE_SERVER_URL + "key=sealtalk://user/info?u=" + MbsConstans.RONGYUN_MAP.get("id");
-                Bitmap bitmap = QRCodeUtils.generateImage(qrCodeContent, screenWidth, screenWidth, null);
-                new ShowImageDialog(UserInfoActivity.this, bitmap, "扫一扫,加我为好友").show();
+
+                //Bitmap bitmap = QRCodeUtils.generateImage(qrCodeContent, screenWidth, screenWidth, null);
+                UserInfo userInfo = userViewModel.getUserInfo(userViewModel.getUserId(), false);
+                String qrCodeValue = WfcScheme.QR_CODE_PREFIX_USER + userInfo.uid;
+
+                GlideApp.with(this)
+                        .asBitmap()
+                        .load(userInfo.portrait)
+                        .placeholder(R.mipmap.ic_launcher)
+                        .into(new CustomViewTarget<ImageView, Bitmap>(ivCode) {
+                            @Override
+                            public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                                // the errorDrawable will always be bitmapDrawable here
+                                if (errorDrawable instanceof BitmapDrawable) {
+                                    Bitmap bitmap = ((BitmapDrawable) errorDrawable).getBitmap();
+                                    Bitmap qrBitmap = CodeUtils.createQRCode(qrCodeValue, 400, bitmap);
+                                    new ShowImageDialog(UserInfoActivity.this, qrBitmap, "二维码加载失败").show();
+                                }
+                            }
+
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition transition) {
+                                Bitmap bitmap = CodeUtils.createQRCode(qrCodeValue, 400, resource);
+                                new ShowImageDialog(UserInfoActivity.this, bitmap, "扫一扫,加我为好友").show();
+                            }
+
+                            @Override
+                            protected void onResourceCleared(@Nullable Drawable placeholder) {
+
+                            }
+                        });
+
+
 
 
 
@@ -208,14 +257,14 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                                 sureOrNoDialog.dismiss();
                                 break;
                             case R.id.confirm:
-                               // sureOrNoDialog.dismiss();
+                                // sureOrNoDialog.dismiss();
                                 closeAllActivity();
                                 MbsConstans.USER_MAP = null;
                                 MbsConstans.RONGYUN_MAP = null;
                                 MbsConstans.ACCESS_TOKEN = "";
                                 SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.LOGIN_OUT, true);
                                 SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "");
-                                SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0");
+                                SPUtils.put(UserInfoActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE, "0");
                                 Intent intent = new Intent(UserInfoActivity.this, LoginActivity.class);
                                 startActivity(intent);
 
@@ -594,8 +643,15 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
             case MethodUrl.USER_HEAD_IMAGE:
                 switch (tData.get("code") + "") {
                     case "0": //请求成功
-                        showToastMsg("上传头像成功");
-                        //MbsConstans.USER_MAP = (Map<String, Object>) tData.get("data");
+                        MutableLiveData<OperateResult<Boolean>> result = userViewModel.updateUserPortrait(mHeadImgPath);
+                        result.observe(this, booleanOperateResult -> {
+                            if (booleanOperateResult.isSuccess()) {
+                                Toast.makeText(UserInfoActivity.this, "更新头像成功", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(UserInfoActivity.this, "更新头像失败: " + booleanOperateResult.getErrorCode(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                         getUserInfoAction();
                         break;
                     case "-1": //请求失败
@@ -642,6 +698,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
         dealFailInfo(map, mType);
 
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

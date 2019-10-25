@@ -95,6 +95,7 @@ android {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/rxjava.properties'
+        exclude 'assets/infowindow_bg.9.png'
         /* exclude 'lib/x86/libsqlite.so'
          exclude 'lib/arm64-v8a/libsqlite.so'
          exclude 'lib/armeabi-v7a/libsqlite.so'
@@ -114,6 +115,12 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
+            // wfc kit start
+            jniLibs.srcDirs += ['libs', 'kit/libs']
+            res.srcDirs += ['kit/src/main/res', 'kit/src/main/res-av']
+            assets.srcDirs += ['kit/src/main/assets']
+            java.srcDirs += ['kit/src/main/java']
+            // wfc kit end
         }
     }
 }
@@ -122,7 +129,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
+    implementation fileTree(include: ['*.jar'], dir: 'kit/libs')
+    implementation files('libs/TencentLocationSDK_v4.9.7.12_r247861_161205_1104.jar')
+    implementation files('libs/TencentMapSDK_Raster_v_1.2.7_51ae0e7.jar')
+    implementation files('libs/TencentSearch1.1.3.jar')
 
     //基础包
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
@@ -151,6 +161,9 @@ dependencies {
     //多功能RecycleView
     implementation 'com.github.jdsjlzx:LRecyclerView:1.5.4.3'
 
+    //万能适配器Adapter
+    implementation 'com.lqr.adapter:library:1.0.2'
+
     //Glide
     implementation('com.github.bumptech.glide:glide:4.9.0') {
         exclude group: "com.android.support"
@@ -175,6 +188,11 @@ dependencies {
     //Rxjava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+    //OkHttp
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.squareup.okio:okio:2.2.2'
+
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
@@ -188,17 +206,32 @@ dependencies {
     //图片选择
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 
+    //仿微信拍照录制视频
+    implementation 'cjt.library.wheel:camera:1.1.9'
+
+    //SwithchButton按钮
+    implementation 'com.kyleduo.switchbutton:library:2.0.0'
+
     //圆形ImageView
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
     //结合Glide 图片转换
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
 
+    //图片详情查看缩放
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
+
     //RecyclerView 动画
     implementation 'jp.wasabeef:recyclerview-animators:2.2.6'
 
     //ViewPager轮播
     implementation 'com.github.why168:LoopViewPagerLayout:2.1.5'
+
+    //material-dialogs
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
+    //实现小圆点显示未读功能
+    implementation 'q.rorbin:badgeview:1.1.3'
 
     //页面滑动
     implementation 'com.komi.slider:slider:0.4.0'
@@ -226,6 +259,9 @@ dependencies {
     //二维码
     implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.3.6'
 
+    //二维码扫一扫
+    implementation 'com.king.zxing:zxing-lite:1.1.1'
+
     //拼音工具
     implementation 'com.belerweb:pinyin4j:2.5.1'
 
@@ -245,6 +281,9 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.5.1'
 
+    //刷新
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+
     //XtabLayout
     implementation 'com.androidkun:XTabLayout:1.1.4'
 
@@ -259,22 +298,31 @@ dependencies {
     //如果您需要使用 OkSocketServer 功能在客户端或者Java程序,您还需要依赖下面的Server插件包和上面的一起依赖.
     implementation 'com.tonystark.android:socket-server:4.1.0'
 
+    //WebRTC，网页实时通信
+    implementation 'org.webrtc:google-webrtc:1.0.24465'
 
+    implementation project(':client')
+    implementation project(':avenginekit')
+    implementation project(':emojilibrary')
+    implementation project(':imagepicker')
+    //implementation project(':push')
 
     //融云相关
     implementation project(path: ':recognizer')
+    implementation project(':avenginekit')
     implementation project(path: ':pushpermission')
     implementation project(path: ':contactcard')
 
-    implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0-alpha01'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0-alpha01'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.2.0-beta01'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0-beta01'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-beta01'
 
-    implementation 'androidx.room:room-runtime:2.1.0-rc01'
-    implementation 'androidx.exifinterface:exifinterface:1.1.0-beta01'
-    annotationProcessor 'androidx.room:room-compiler:2.1.0-rc01'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'
-    implementation 'androidx.exifinterface:exifinterface:1.1.0-beta01'
+    implementation 'androidx.room:room-runtime:2.2.0'
+    implementation 'androidx.exifinterface:exifinterface:1.1.0-rc01'
+    annotationProcessor 'androidx.room:room-compiler:2.2.0'
+    //内存泄漏检测工具
+    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'
+    implementation 'androidx.exifinterface:exifinterface:1.1.0-rc01'
 
     api 'com.huawei.android.hms:push:2.6.1.301'
     api 'com.meizu.flyme.internet:push-internal:3.6.+@aar'

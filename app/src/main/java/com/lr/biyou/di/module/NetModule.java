@@ -10,14 +10,10 @@ import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import com.lr.biyou.api.ApiManagerService;
 import com.lr.biyou.api.TrustAllCerts;
-import com.lr.biyou.basic.BasicApplication;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.manage.ActivityManager;
-import com.lr.biyou.utils.imageload.MyGlideAppModule;
 import com.lr.biyou.utils.tool.NetUtil;
 import com.lzy.okgo.cookie.CookieJarImpl;
-import com.lzy.okgo.cookie.store.CookieStore;
-import com.lzy.okgo.cookie.store.MemoryCookieStore;
 import com.lzy.okgo.cookie.store.SPCookieStore;
 
 import java.io.IOException;
