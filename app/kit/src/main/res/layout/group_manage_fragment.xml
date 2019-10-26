@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="5dp">
+    android:paddingTop="@dimen/dp_5">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,28 +15,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/gray5"
-            android:paddingLeft="@dimen/option_item_margin_left"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_5"
+            android:textSize="@dimen/sp_14"
+            android:paddingBottom="@dimen/dp_5"
             android:text="成员管理" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divide_hight"
+            android:background="@color/divide_line" />
         <cn.wildfire.chat.kit.widget.OptionItemView
             android:id="@+id/managerOptionItemView"
-            style="@style/OptionItem"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
             android:background="@drawable/selector_common_item"
             app:divider_align_to_title="true"
             app:title="管理员" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divide_hight"
+            android:background="@color/divide_line" />
         <cn.wildfire.chat.kit.widget.OptionItemView
             android:id="@+id/muteOptionItemView"
-            style="@style/OptionItem"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
             android:background="@drawable/selector_common_item"
             app:divider_align_to_title="true"
             app:title="设置禁言" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divide_hight"
+            android:background="@color/divide_line" />
         <cn.wildfire.chat.kit.widget.OptionItemView
             android:id="@+id/permissionOptionItemView"
-            style="@style/OptionItem"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
             android:background="@drawable/selector_common_item"
             app:title="成员权限" />
     </LinearLayout>
@@ -44,29 +57,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/option_item_margin_top"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/gray5"
-            android:paddingLeft="@dimen/option_item_margin_left"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingTop="@dimen/dp_5"
+            android:textSize="@dimen/sp_14"
+            android:paddingBottom="@dimen/dp_5"
             android:text="加群设置" />
 
         <cn.wildfire.chat.kit.widget.OptionItemView
             android:id="@+id/joinOptionItemView"
-            style="@style/OptionItem"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
             android:background="@drawable/selector_common_item"
             app:desc="不限制加入"
             app:divider_align_to_title="true"
             app:title="加群方式" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divide_hight"
+            android:background="@color/divide_line" />
         <cn.wildfire.chat.kit.widget.OptionItemView
             android:id="@+id/searchOptionItemView"
-            style="@style/OptionItem"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
             android:background="@drawable/selector_common_item"
             app:desc="不允许查找"
             app:title="查找方式" />

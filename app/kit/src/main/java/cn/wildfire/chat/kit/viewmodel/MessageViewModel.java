@@ -14,15 +14,16 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import cn.wildfire.chat.kit.audio.AudioPlayManager;
 import cn.wildfire.chat.kit.audio.IAudioPlayListener;
 import cn.wildfire.chat.kit.conversation.message.model.UiMessage;
 import cn.wildfire.chat.kit.conversation.message.viewholder.AudioMessageContentViewHolder;
+import cn.wildfire.chat.kit.location.data.LocationData;
 import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfire.chat.kit.utils.DownloadManager;
 import cn.wildfirechat.message.FileMessageContent;
 import cn.wildfirechat.message.ImageMessageContent;
+import cn.wildfirechat.message.LocationMessageContent;
 import cn.wildfirechat.message.MediaMessageContent;
 import cn.wildfirechat.message.Message;
 import cn.wildfirechat.message.MessageContent;
@@ -255,7 +256,7 @@ public class MessageViewModel extends ViewModel implements OnReceiveMessageListe
     }
 
     //发送位置
-   /* public void sendLocationMessage(Conversation conversation, LocationData locationData) {
+    public void sendLocationMessage(Conversation conversation, LocationData locationData) {
         LocationMessageContent locCont = new LocationMessageContent();
         locCont.setTitle(locationData.getPoi());
         locCont.getLocation().setLatitude(locationData.getLat());
@@ -263,9 +264,9 @@ public class MessageViewModel extends ViewModel implements OnReceiveMessageListe
         locCont.setThumbnail(locationData.getThumbnail());
 
         sendMessage(conversation, locCont);
-    }*/
+    }
     //发送红包
-    public void sendRedMessage(Conversation conversation,RedPacketMessageContent messageContent) {
+    public void sendRedMessage(Conversation conversation, RedPacketMessageContent messageContent) {
         sendMessage(conversation, messageContent);
     }
 

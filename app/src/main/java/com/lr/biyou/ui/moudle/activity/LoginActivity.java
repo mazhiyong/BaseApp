@@ -10,7 +10,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -313,7 +312,6 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
         map.put("account", mAccount);
         map.put("password", mPassWord);
         try {
-            Log.i("show","clientId:"+ChatManagerHolder.gChatManager.getClientId());
             map.put("clientId",ChatManagerHolder.gChatManager.getClientId());
         } catch (Exception e) {
             e.printStackTrace();
@@ -451,6 +449,9 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
             case MethodUrl.LOGIN_ACTION://登录操作返回结果
                 switch (tData.get("code")+""){
                     case "0":
+                        if (ChatManagerHolder.gChatManager != null && ChatManagerHolder.gChatManager.isIMServiceConnected()){
+                            ChatManagerHolder.gChatManager.disconnect(true);
+                        }
                         MbsConstans.ACCESS_TOKEN = tData.get("data") + "";
                         //LogUtilDebug.i("show","token:"+tData.get("access_token"));
                       /*  if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
@@ -460,7 +461,6 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
                             MbsConstans.RONGYUN_MAP = (Map<String, Object>) tData.get("ry_data");
                             SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA, JSONUtil.getInstance().objectToJson(MbsConstans.RONGYUN_MAP));
                             //连接聊天服务器
-
                             LogUtilDebug.i("show",MbsConstans.RONGYUN_MAP.get("id")+" /  "+MbsConstans.RONGYUN_MAP.get("token"));
                             ChatManagerHolder.gChatManager.connect(MbsConstans.RONGYUN_MAP.get("id")+"", MbsConstans.RONGYUN_MAP.get("token")+"");
                             SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);

@@ -3,6 +3,7 @@ package cn.wildfire.chat.kit.user;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -31,13 +32,17 @@ public class ChangeMyNameActivity extends WfcBaseActivity {
     private MenuItem confirmMenuItem;
     @BindView(R.id.nameEditText)
     EditText nameEditText;
-
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private UserViewModel userViewModel;
     private UserInfo userInfo;
+
+
 
     @Override
     protected void afterViews() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
+        tvTitle.setText("修改昵称");
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
 
         userInfo = userViewModel.getUserInfo(userViewModel.getUserId(), false);

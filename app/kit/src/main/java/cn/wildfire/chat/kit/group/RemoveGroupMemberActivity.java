@@ -3,6 +3,7 @@ package cn.wildfire.chat.kit.group;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProviders;
 
@@ -13,12 +14,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
 import cn.wildfire.chat.kit.contact.model.UIUserInfo;
 import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfirechat.model.GroupMember;
 import cn.wildfirechat.remote.ChatManager;
 
 public class RemoveGroupMemberActivity extends BasePickGroupMemberActivity {
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+
     private MenuItem menuItem;
     public static final int RESULT_REMOVE_SUCCESS = 2;
     public static final int RESULT_REMOVE_FAIL = 3;
@@ -40,6 +45,7 @@ public class RemoveGroupMemberActivity extends BasePickGroupMemberActivity {
     @Override
     protected void afterViews() {
         super.afterViews();
+        tvTitle.setText("删除群成员");
         groupViewModel = ViewModelProviders.of(this).get(GroupViewModel.class);
         GroupMember groupMember = groupViewModel.getGroupMember(groupInfo.target, ChatManager.Instance().getUserId());
         if (groupMember.type == GroupMember.GroupMemberType.Manager) {

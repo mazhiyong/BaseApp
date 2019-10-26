@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.appbar.AppBarLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appBarLayout"
     android:layout_width="match_parent"
@@ -12,16 +13,16 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/colorPrimary">
+            android:layout_height="@dimen/dp_45"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/backImageView"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:src="@mipmap/ic_back" />
+                android:layout_marginLeft="@dimen/dp_10"
+                android:src="@drawable/back_arrow" />
 
             <View
                 android:id="@+id/backDividerView"
@@ -34,18 +35,17 @@
             <LinearLayout
                 android:id="@+id/titleLinearLayout"
                 android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/backDividerView"
-                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/titleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    android:textColor="@color/white"
+                    android:text="请选择位置"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/black"
                     android:textSize="17sp"
                     android:visibility="visible" />
 
@@ -53,8 +53,9 @@
                     android:id="@+id/subTitleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="13sp"
+                    android:layout_gravity="center_horizontal"
                     android:visibility="gone"
                     tools:text="sub title"
                     tools:visibility="visible" />
@@ -67,7 +68,7 @@
                 android:layout_height="20dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/item_margin_left_and_right"
+                android:layout_marginRight="@dimen/dp_15"
                 android:background="@null"
                 android:src="@mipmap/ic_add"
                 android:visibility="gone"
@@ -144,7 +145,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/item_margin_left_and_right"
+                android:layout_marginRight="@dimen/dp_15"
                 android:layout_toLeftOf="@id/ibAddMenu"
                 android:background="@null"
                 android:src="@mipmap/ic_search"
@@ -158,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_margin="10dp"
-                android:background="@drawable/selector_login_btn"
+                android:background="@drawable/btn_next"
                 android:text="@string/send"
                 android:textColor="@color/white"
                 android:visibility="gone"

@@ -205,6 +205,7 @@ public class UpdateNichengActivity extends BasicActivity implements RequestView,
                 switch (tData.get("code")+""){
                     case "0": //请求成功
                         ModifyMyInfoEntry entry = new ModifyMyInfoEntry(Modify_DisplayName, etPhoneEmail.getText().toString());
+
                         userViewModel.modifyMyInfo(Collections.singletonList(entry)).observe(this, new Observer<OperateResult<Boolean>>() {
                             @Override
                             public void onChanged(@Nullable OperateResult<Boolean> booleanOperateResult) {

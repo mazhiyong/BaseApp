@@ -13,8 +13,8 @@
         android:background="@drawable/selector_common_item"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/item_margin_left_and_right"
-        android:paddingRight="@dimen/item_margin_left_and_right">
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingRight="@dimen/dp_15">
 
         <RelativeLayout
             android:layout_width="46dp"

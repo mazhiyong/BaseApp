@@ -39,7 +39,6 @@ import cn.wildfire.chat.kit.third.utils.ImageUtils;
 import cn.wildfire.chat.kit.widget.OptionItemView;
 import cn.wildfirechat.model.Conversation;
 import cn.wildfirechat.model.UserInfo;
-import cn.wildfirechat.remote.ChatManager;
 
 public class UserInfoFragment extends Fragment {
     @BindView(R.id.portraitImageView)
@@ -105,7 +104,7 @@ public class UserInfoFragment extends Fragment {
         } else if (contactViewModel.isFriend(userInfo.uid)) {
             // friend
             chatButton.setVisibility(View.VISIBLE);
-            voipChatButton.setVisibility(View.VISIBLE);
+            voipChatButton.setVisibility(View.GONE);
             inviteButton.setVisibility(View.GONE);
         } else {
             // stranger
@@ -130,13 +129,13 @@ public class UserInfoFragment extends Fragment {
 
     private void setUserInfo(UserInfo userInfo) {
         Glide.with(this).load(userInfo.portrait).apply(new RequestOptions().placeholder(R.mipmap.avatar_def).centerCrop()).into(portraitImageView);
-        nameTextView.setText(userInfo.name);
-        nameTextView.setVisibility(View.GONE);
-        nickyNameTextView.setText(userViewModel.getUserDisplayName(userInfo));
-        if (ChatManager.Instance().isMyFriend(userInfo.uid)) {
+        nameTextView.setText("账号:"+userInfo.name);
+       nickyNameTextView.setText("备注:"+userViewModel.getUserDisplayName(userInfo));
+
+        /* if (ChatManager.Instance().isMyFriend(userInfo.uid)) {
             mobileTextView.setText("电话:" + userInfo.mobile);
             mobileTextView.setVisibility(View.VISIBLE);
-        }
+        }*/
     }
 
     @OnClick(R.id.chatButton)

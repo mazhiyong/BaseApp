@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/body_bg"
     android:orientation="vertical">
-
     <include layout="@layout/toolbar" />
 
     <FrameLayout
@@ -14,18 +14,23 @@
             android:id="@+id/containerFrameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="50dp" />
+            android:paddingTop="@dimen/dp_45" />
 
         <EditText
+            android:layout_marginTop="@dimen/dp_5"
             android:id="@+id/searchEditText"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="#80ffffff"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_15"
+            android:background="@drawable/background_search"
             android:drawableLeft="@mipmap/ic_search1"
-            android:drawablePadding="10dp"
+            android:drawablePadding="@dimen/dp_10"
             android:hint="@string/search"
-            android:paddingLeft="10dp"
+            android:paddingLeft="@dimen/dp_10"
             android:textColorHint="@color/gray2"
-            android:textSize="14sp" />
+            android:textSize="@dimen/sp_14" />
     </FrameLayout>
 </LinearLayout>

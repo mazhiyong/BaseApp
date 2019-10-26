@@ -1,11 +1,13 @@
 package cn.wildfire.chat.kit.conversation.mention;
 
 import android.view.Menu;
+import android.widget.TextView;
 
 import com.lr.biyou.R;
 
 import java.util.List;
 
+import butterknife.BindView;
 import cn.wildfire.chat.kit.search.SearchActivity;
 import cn.wildfire.chat.kit.search.SearchableModule;
 import cn.wildfirechat.model.GroupInfo;
@@ -13,6 +15,8 @@ import cn.wildfirechat.model.GroupInfo;
 public class MentionGroupMemberActivity extends SearchActivity {
     private GroupInfo groupInfo;
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     @Override
     protected void beforeViews() {
         super.beforeViews();
@@ -22,6 +26,7 @@ public class MentionGroupMemberActivity extends SearchActivity {
     @Override
     protected void afterViews() {
         super.afterViews();
+        tvTitle.setText("选择群成员");
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.mentionGroupMemberContainer, MentionGroupMemberFragment.newInstance(groupInfo))
                 .commit();

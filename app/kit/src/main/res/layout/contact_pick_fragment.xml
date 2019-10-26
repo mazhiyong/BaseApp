@@ -3,7 +3,7 @@
     android:id="@+id/rootFrameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray5">
+    android:background="@color/body_bg">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,27 +14,27 @@
             android:id="@+id/usersRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="70dp" />
+            android:paddingTop="@dimen/dp_65" />
 
         <cn.wildfire.chat.kit.widget.QuickIndexBar
             android:id="@+id/quickIndexBar"
-            android:layout_width="20dp"
+            android:layout_width="@dimen/dp_20"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginTop="@dimen/dp_60"
+            android:layout_marginBottom="@dimen/dp_20" />
 
         <!--字母对话框-->
         <TextView
             android:id="@+id/indexLetterTextView"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="@dimen/dp_65"
+            android:layout_height="@dimen/dp_65"
             android:layout_centerInParent="true"
             android:background="@drawable/shape_contact_letter_bg"
             android:gravity="center"
             android:text="A"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="@dimen/sp_18"
             android:visibility="gone" />
     </RelativeLayout>
 
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="10dp"
+        android:paddingTop="@dimen/dp_10"
         android:visibility="visible">
 
 
@@ -51,31 +51,34 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#80ffffff"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingBottom="@dimen/dp_5"
             android:visibility="visible">
 
             <!--被选中的联系人头像列表-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/pickedUserRecyclerView"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="@dimen/dp_35"
                 android:visibility="gone" />
 
             <EditText
                 android:id="@+id/searchEditText"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginRight="@dimen/dp_10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#80ffffff"
+                android:background="@drawable/background_search"
                 android:drawableLeft="@mipmap/ic_search1"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/dp_10"
                 android:hint="@string/search"
-                android:paddingLeft="10dp"
+                android:paddingTop="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_5"
+                android:paddingLeft="@dimen/dp_10"
                 android:textColorHint="@color/gray2"
-                android:textSize="14sp" />
+                android:textSize="@dimen/sp_14" />
 
         </LinearLayout>
 

@@ -9,30 +9,30 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_20"
         android:text="@string/alias"
         android:textColor="@color/gray2"
-        android:textSize="14sp" />
+        android:textSize="@dimen/sp_14" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="@dimen/dp_20">
 
         <EditText
             android:id="@+id/aliasEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_15"
             android:background="@null"
             android:drawableBottom="@drawable/selector_edit_focus"
-            android:drawablePadding="10dp"
+            android:drawablePadding="@dimen/dp_10"
             android:gravity="bottom"
             android:hint=""
             android:textColorHint="@color/gray3"
-            android:textSize="14sp"
+            android:textSize="@dimen/sp_14"
             android:visibility="visible" />
 
         <ImageButton
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="@dimen/dp_20"
             android:background="@null"
             android:src="@mipmap/ic_delete"
             android:visibility="gone" />

@@ -3,6 +3,7 @@ package cn.wildfire.chat.kit.group;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -17,6 +18,7 @@ import com.lr.biyou.basic.MbsConstans;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import cn.wildfire.chat.kit.WfcBaseActivity;
 import cn.wildfire.chat.kit.contact.model.UIUserInfo;
 import cn.wildfire.chat.kit.contact.pick.PickUserViewModel;
@@ -24,6 +26,10 @@ import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfirechat.model.GroupInfo;
 
 public class AddGroupMemberActivity extends WfcBaseActivity {
+
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+
     private MenuItem menuItem;
 
     private GroupInfo groupInfo;
@@ -54,6 +60,7 @@ public class AddGroupMemberActivity extends WfcBaseActivity {
     @Override
     protected void afterViews() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
+        tvTitle.setText("添加新成员");
         groupInfo = getIntent().getParcelableExtra("groupInfo");
         if (groupInfo == null) {
             finish();

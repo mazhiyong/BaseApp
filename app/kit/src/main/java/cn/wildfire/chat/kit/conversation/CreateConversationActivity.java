@@ -1,6 +1,7 @@
 package cn.wildfire.chat.kit.conversation;
 
 import android.content.Intent;
+import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
@@ -13,6 +14,7 @@ import com.lr.biyou.basic.MbsConstans;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import cn.wildfire.chat.kit.contact.model.UIUserInfo;
 import cn.wildfire.chat.kit.contact.pick.PickConversationTargetActivity;
 import cn.wildfire.chat.kit.group.GroupViewModel;
@@ -22,10 +24,12 @@ import cn.wildfirechat.model.GroupInfo;
 
 public class CreateConversationActivity extends PickConversationTargetActivity {
     private GroupViewModel groupViewModel;
-
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     @Override
     protected void afterViews() {
         super.afterViews();
+        tvTitle.setText("创建会话");
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
         groupViewModel = ViewModelProviders.of(this).get(GroupViewModel.class);
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -27,6 +28,8 @@ public class SetGroupNameActivity extends WfcBaseActivity {
     @BindView(R.id.nameEditText)
     EditText nameEditText;
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private MenuItem confirmMenuItem;
     private GroupInfo groupInfo;
     private GroupViewModel groupViewModel;
@@ -41,6 +44,8 @@ public class SetGroupNameActivity extends WfcBaseActivity {
     @Override
     protected void afterViews() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
+
+        tvTitle.setText("修改群名称");
         groupInfo = getIntent().getParcelableExtra("groupInfo");
         if (groupInfo == null) {
             finish();

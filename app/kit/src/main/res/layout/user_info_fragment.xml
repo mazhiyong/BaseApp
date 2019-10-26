@@ -15,15 +15,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/dp_15"
             android:background="@drawable/selector_common_item"
-            android:padding="10dp">
+            android:padding="@dimen/dp_10">
 
             <ImageView
                 android:id="@+id/portraitImageView"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="5dp"
+                android:layout_width="@dimen/dp_45"
+                android:layout_height="@dimen/dp_45"
+                android:layout_marginLeft="@dimen/dp_5"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/default_header" />
 
@@ -31,26 +31,26 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="3dp"
+                    android:layout_marginBottom="@dimen/dp_3"
                     android:gravity="center_vertical">
 
                     <TextView
                         android:id="@+id/nameTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="@dimen/dp_10"
                         android:gravity="center"
                         android:singleLine="true"
                         android:text="wfc"
                         android:textColor="@color/gray0"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/sp_16" />
 
                     <ImageView
                         android:id="@+id/genderImageView"
@@ -87,10 +87,11 @@
 
         <cn.wildfire.chat.kit.widget.OptionItemView
             android:id="@+id/aliasOptionItemView"
-            style="@style/OptionItem"
-            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_45"
+            android:layout_marginTop="@dimen/dp_20"
             android:background="@drawable/selector_common_item"
-            app:title="设置昵称或别名" />
+            app:title="修改备注" />
 
         <cn.wildfire.chat.kit.widget.OptionItemView
             android:id="@+id/qrCodeOptionItemView"
@@ -106,15 +107,15 @@
             android:id="@+id/chatButton"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/shape_user_info_send_msg"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@drawable/btn_next"
             android:text="@string/send_message"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="@dimen/sp_16" />
 
         <Button
             android:id="@+id/voipChatButton"
@@ -129,22 +130,21 @@
             android:text="视频聊天"
             android:textColor="@color/gray0"
             android:textSize="16sp"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/inviteButton"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/shape_user_info_add_to_contact"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginBottom="@dimen/dp_20"
+            android:background="@drawable/btn_next"
             android:text="@string/add_to_contact"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="@dimen/sp_16"
             android:visibility="gone"
             tools:visibility="visible" />
     </LinearLayout>

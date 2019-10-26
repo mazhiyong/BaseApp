@@ -15,7 +15,17 @@
             android:id="@+id/toolbar"
             style="@style/title_bar_style"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:theme="@style/AppTheme.Appbar" />
+            app:theme="@style/AppTheme.Appbar">
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:lines="1"
+                android:textSize="@dimen/sp_17"
+                android:textColor="@color/black"
+                android:ellipsize="end" />
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
     <View
         android:id="@+id/divide_line"

@@ -13,16 +13,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/dp_10"
         android:background="@drawable/shape_notification_bg"
         android:gravity="center"
-        android:paddingLeft="5dp"
-        android:paddingTop="2dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="2dp"
+        android:paddingLeft="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_2"
+        android:paddingRight="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_2"
         android:text="下午 5点"
         android:textColor="#fff"
-        android:textSize="12sp" />
+        android:textSize="@dimen/sp_12" />
 
     <ViewStub
         android:id="@+id/contentViewStub"

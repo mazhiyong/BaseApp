@@ -9,24 +9,26 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_5"
         android:text="@string/group_name"
         android:textColor="@color/gray1"
-        android:textSize="12sp" />
+        android:textSize="@dimen/sp_14" />
 
     <EditText
         android:id="@+id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_15"
         android:background="@null"
         android:drawableBottom="@drawable/shape_bottom_green"
         android:gravity="bottom"
+        android:hint="请输入群聊名称"
         android:textColorHint="@color/gray3"
-        android:textSize="14sp" />
+        android:textSize="@dimen/sp_14" />
 
 </LinearLayout>

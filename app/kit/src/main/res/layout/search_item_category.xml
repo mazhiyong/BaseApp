@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center_vertical"
-        android:paddingLeft="@dimen/item_margin_left_and_right"
+        android:paddingLeft="@dimen/dp_15"
         android:text="category"
         android:textColor="#989898"
         android:textSize="13sp"
@@ -20,8 +20,8 @@
     <View
         android:id="@+id/dividerLine"
         style="@style/Line"
-        android:layout_marginLeft="@dimen/item_margin_left_and_right"
-        android:layout_marginRight="@dimen/item_margin_left_and_right"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_15"
         android:visibility="visible" />
 
 </LinearLayout>

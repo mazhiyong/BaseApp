@@ -11,6 +11,9 @@ import com.lr.biyou.R;
 import cn.wildfire.chat.kit.WfcBaseActivity;
 import cn.wildfire.chat.kit.annotation.ExtContextMenuItem;
 import cn.wildfire.chat.kit.conversation.ext.core.ConversationExt;
+import cn.wildfire.chat.kit.location.data.LocationData;
+import cn.wildfire.chat.kit.location.ui.activity.MyLocationActivity;
+import cn.wildfirechat.message.TypingMessageContent;
 import cn.wildfirechat.model.Conversation;
 
 import static android.app.Activity.RESULT_OK;
@@ -35,11 +38,10 @@ public class LocationExt extends ConversationExt {
             }
         }
 
-        //定位
-//        Intent intent = new Intent(activity, MyLocationActivity.class);
-//        startActivityForResult(intent, 100);
-//        TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_LOCATION);
-//        messageViewModel.sendMessage(conversation, content);
+        Intent intent = new Intent(activity, MyLocationActivity.class);
+        startActivityForResult(intent, 100);
+        TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_LOCATION);
+        messageViewModel.sendMessage(conversation, content);
 
 
 
@@ -48,9 +50,8 @@ public class LocationExt extends ConversationExt {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            //定位
-            /*LocationData locationData = (LocationData) data.getSerializableExtra("location");
-            messageViewModel.sendLocationMessage(conversation, locationData);*/
+            LocationData locationData = (LocationData) data.getSerializableExtra("location");
+            messageViewModel.sendLocationMessage(conversation, locationData);
         }
 
     }

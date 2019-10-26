@@ -127,8 +127,6 @@ public class ConversationFragment extends Fragment implements
                 return;
             }
             MessageContent content = uiMessage.message.content;
-            Log.i("show","uiMessage Class:"+uiMessage.message.content.getClass());
-            Log.i("show","uiMessage Type:"+uiMessage.message.content.getType());
             if (isDisplayableMessage(uiMessage)) {
                 // 消息定位时，如果收到新消息、或者发送消息，需要重新加载消息列表
                 if (shouldContinueLoadNewMessage) {
@@ -499,9 +497,10 @@ public class ConversationFragment extends Fragment implements
     }
 
     private void setActivityTitle(String title) {
-        Activity activity = getActivity();
+        ConversationActivity activity = (ConversationActivity) getActivity();
         if (activity != null) {
-            activity.setTitle(title);
+            activity.setTitle("");
+            activity.tvTitle.setText(title);
         }
     }
 

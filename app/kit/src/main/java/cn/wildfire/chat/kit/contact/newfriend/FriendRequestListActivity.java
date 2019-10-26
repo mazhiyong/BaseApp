@@ -2,6 +2,7 @@ package cn.wildfire.chat.kit.contact.newfriend;
 
 import android.content.Intent;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
@@ -9,16 +10,21 @@ import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.basic.MbsConstans;
 
+import butterknife.BindView;
 import cn.wildfire.chat.kit.WfcBaseActivity;
 import cn.wildfire.chat.kit.third.utils.UIUtils;
 
 
 public class FriendRequestListActivity extends WfcBaseActivity {
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+
 
     @Override
     protected void afterViews() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
         setTitle(UIUtils.getString(R.string.new_friend));
+        tvTitle.setText("好友请求");
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.containerFrameLayout, new FriendRequestListFragment())
                 .commit();

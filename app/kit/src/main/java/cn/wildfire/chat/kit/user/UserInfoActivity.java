@@ -3,6 +3,7 @@ package cn.wildfire.chat.kit.user;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
@@ -13,12 +14,16 @@ import com.lr.biyou.R;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.ui.moudle.activity.MainActivity;
 
+import butterknife.BindView;
 import cn.wildfire.chat.kit.WfcBaseActivity;
 import cn.wildfire.chat.kit.contact.ContactViewModel;
 import cn.wildfirechat.model.UserInfo;
 
 public class UserInfoActivity extends WfcBaseActivity {
     private UserInfo userInfo;
+
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     @Override
     protected int contentLayout() {
@@ -28,6 +33,7 @@ public class UserInfoActivity extends WfcBaseActivity {
     @Override
     protected void afterViews() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
+        tvTitle.setText("用户详情");
         userInfo = getIntent().getParcelableExtra("userInfo");
         if (userInfo == null) {
             finish();

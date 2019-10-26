@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
@@ -22,17 +23,21 @@ import cn.wildfire.chat.kit.contact.ContactViewModel;
 import cn.wildfire.chat.kit.third.utils.UIUtils;
 
 
-
 public class SetAliasActivity extends WfcBaseActivity {
+
+
 
     private String userId;
 //    private Friend mFriend;
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     @BindView(R.id.aliasEditText)
     EditText aliasEditText;
 
     private MenuItem menuItem;
     private ContactViewModel contactViewModel;
+
 
     @Override
     protected int contentLayout() {
@@ -42,6 +47,7 @@ public class SetAliasActivity extends WfcBaseActivity {
     @Override
     protected void afterViews() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
+        tvTitle.setText("设置用户备注");
         userId = getIntent().getStringExtra("userId");
         if (TextUtils.isEmpty(userId)) {
             finish();
@@ -61,6 +67,7 @@ public class SetAliasActivity extends WfcBaseActivity {
 
     @Override
     protected void afterMenus(Menu menu) {
+
         menuItem = menu.findItem(R.id.save);
         menuItem.setEnabled(false);
     }
@@ -97,4 +104,6 @@ public class SetAliasActivity extends WfcBaseActivity {
             }
         });
     }
+
+
 }

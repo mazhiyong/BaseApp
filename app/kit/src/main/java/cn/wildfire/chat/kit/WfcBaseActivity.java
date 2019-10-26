@@ -54,6 +54,7 @@ public abstract class WfcBaseActivity extends AppCompatActivity implements BGASw
         if (showHomeMenuItem()) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        getSupportActionBar().setTitle("");
 
         activityManager = ActivityManager.getInstance();
         //压入当前Activity

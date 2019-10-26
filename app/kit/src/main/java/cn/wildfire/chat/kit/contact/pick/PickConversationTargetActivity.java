@@ -20,6 +20,8 @@ import cn.wildfire.chat.kit.contact.model.UIUserInfo;
 
 
 public abstract class PickConversationTargetActivity extends WfcBaseActivity implements PickConversationTargetFragment.OnGroupPickListener {
+
+
     public static final String CURRENT_PARTICIPANTS = "currentParticipants";
 
     private boolean pickGroupForResult = true;
@@ -53,6 +55,7 @@ public abstract class PickConversationTargetActivity extends WfcBaseActivity imp
     @Override
     protected void afterViews() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
+
         Intent intent = getIntent();
         List<String> initialParticipantsIds = intent.getStringArrayListExtra(CURRENT_PARTICIPANTS);
 

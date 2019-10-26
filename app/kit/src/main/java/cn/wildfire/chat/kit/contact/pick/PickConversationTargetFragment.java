@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wildfire.chat.kit.contact.ContactViewModel;
-import cn.wildfire.chat.kit.contact.model.GroupValue;
-import cn.wildfire.chat.kit.contact.pick.viewholder.PickGroupViewHolder;
 import cn.wildfire.chat.kit.group.GroupListActivity;
 import cn.wildfirechat.model.GroupInfo;
 
@@ -63,7 +61,7 @@ public class PickConversationTargetFragment extends PickUserFragment {
     @Override
     public void initHeaderViewHolders() {
         // 选择一个群
-        addHeaderViewHolder(PickGroupViewHolder.class, new GroupValue());
+        //addHeaderViewHolder(PickGroupViewHolder.class, new GroupValue());
     }
 
     @Override

@@ -15,16 +15,16 @@ android:layout_height="wrap_content">
         android:id="@+id/imageView"
         android:visibility="gone"
         android:src="@drawable/hongbao"
-        android:layout_width="25dp"
+        android:layout_width="@dimen/dp_25"
         android:layout_gravity="left"
-        android:layout_height="25dp" />
+        android:layout_height="@dimen/dp_25" />
     <TextView
         android:id="@+id/contentTextView"
         android:layout_width="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:text="嗯嗯嗯嗯嗯嗯"
-        android:textSize="16sp" />
+        android:textSize="@dimen/sp_16" />
 </LinearLayout>
 
 <TextView
@@ -34,7 +34,7 @@ android:layout_height="wrap_content">
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
-    android:layout_marginLeft="15dp"
+    android:layout_marginLeft="@dimen/dp_15"
     android:gravity="left|center"
     android:text="币友红包"
     android:textColor="#999999" />

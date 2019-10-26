@@ -4,13 +4,11 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.wildfire.chat.kit.conversation.ext.TransinfoExt;
-import cn.wildfire.chat.kit.conversation.ext.CardExt;
 import cn.wildfire.chat.kit.conversation.ext.FileExt;
 import cn.wildfire.chat.kit.conversation.ext.ImageExt;
 import cn.wildfire.chat.kit.conversation.ext.LocationExt;
 import cn.wildfire.chat.kit.conversation.ext.RedExt;
-import cn.wildfire.chat.kit.conversation.ext.VoipExt;
+import cn.wildfire.chat.kit.conversation.ext.TransinfoExt;
 import cn.wildfirechat.model.Conversation;
 
 public class ConversationExtManager {
@@ -30,14 +28,14 @@ public class ConversationExtManager {
     }
 
     private void init() {
-        registerExt(VoipExt.class);
+        //registerExt(VoipExt.class);
         registerExt(ImageExt.class);
-        registerExt(FileExt.class);
        // registerExt(ShootExt.class);
         registerExt(LocationExt.class);
         registerExt(RedExt.class);
         registerExt(TransinfoExt.class);
-        registerExt(CardExt.class);
+        registerExt(FileExt.class);
+        //registerExt(CardExt.class);
         //registerExt(ExampleAudioInputExt.class);
     }
 

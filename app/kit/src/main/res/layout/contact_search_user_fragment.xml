@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/noUserRelativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="@dimen/dp_60"
         android:visibility="gone"
         tools:visibility="visible">
 
@@ -20,11 +20,11 @@
             android:layout_centerInParent="true"
             android:text="@string/user_no_found"
             android:textColor="@color/gray1"
-            android:textSize="12sp" />
+            android:textSize="@dimen/sp_14" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="@dimen/dp_10"
             android:layout_alignParentBottom="true"
             android:background="@color/primary_background" />
     </RelativeLayout>
@@ -40,20 +40,20 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="@dimen/dp_50"
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:paddingLeft="@dimen/dp_15"
+            android:paddingRight="@dimen/dp_15">
 
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="@dimen/dp_30"
+                android:layout_height="@dimen/dp_30"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/ic_search3" />
+                android:src="@mipmap/ic_search1" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -64,21 +64,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="@dimen/dp_15"
                     android:singleLine="true"
                     android:text="@string/search"
                     android:textColor="@color/gray0"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/sp_14"
                     android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/keywordTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:singleLine="true"
-                    android:textColor="@color/green1"
-                    android:textSize="14sp"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/sp_14"
                     tools:text="test" />
             </LinearLayout>
         </LinearLayout>

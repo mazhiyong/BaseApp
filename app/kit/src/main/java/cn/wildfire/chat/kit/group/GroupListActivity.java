@@ -1,6 +1,7 @@
 package cn.wildfire.chat.kit.group;
 
 import android.content.Intent;
+import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
@@ -10,12 +11,17 @@ import com.lr.biyou.basic.MbsConstans;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import cn.wildfire.chat.kit.WfcBaseActivity;
 import cn.wildfirechat.model.GroupInfo;
 
 public class GroupListActivity extends WfcBaseActivity {
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+
     private boolean forResult;
+
     /**
      * intent里面置为{@code true}时，返回groupInfo，不直接打开群会话界面
      */
@@ -42,6 +48,7 @@ public class GroupListActivity extends WfcBaseActivity {
     @Override
     protected void afterViews() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
+        tvTitle.setText("群组列表");
         forResult = getIntent().getBooleanExtra(INTENT_FOR_RESULT, false);
         GroupListFragment fragment = new GroupListFragment();
         if (forResult) {

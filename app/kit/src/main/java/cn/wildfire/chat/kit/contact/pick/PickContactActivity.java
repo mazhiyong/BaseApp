@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
@@ -17,6 +18,7 @@ import com.lr.biyou.basic.MbsConstans;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import cn.wildfire.chat.kit.WfcBaseActivity;
 import cn.wildfire.chat.kit.contact.model.UIUserInfo;
 import cn.wildfirechat.model.UserInfo;
@@ -27,6 +29,8 @@ public class PickContactActivity extends WfcBaseActivity {
     public static final String PARA_UNCHECKABLE_IDS = "uncheckableIds";
     public static final String RESULT_PICKED_USERS = "pickedUsers";
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private MenuItem menuItem;
 
     private PickUserViewModel pickUserViewModel;
@@ -56,6 +60,7 @@ public class PickContactActivity extends WfcBaseActivity {
     @Override
     protected void afterViews() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
+        tvTitle.setText("选择联系人");
         pickUserViewModel = ViewModelProviders.of(this).get(PickUserViewModel.class);
         pickUserViewModel.userCheckStatusUpdateLiveData().observeForever(contactCheckStatusUpdateLiveDataObserver);
         Intent intent = getIntent();

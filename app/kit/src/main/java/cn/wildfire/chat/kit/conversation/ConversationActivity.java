@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
@@ -29,6 +30,9 @@ import cn.wildfirechat.remote.ChatManager;
 import io.rong.callkit.util.SPUtils;
 
 public class ConversationActivity extends WfcBaseActivity implements RequestView {
+
+    public TextView tvTitle;
+
     private boolean isInitialized = false;
     private ConversationFragment conversationFragment;
     private Conversation conversation;
@@ -85,6 +89,8 @@ public class ConversationActivity extends WfcBaseActivity implements RequestView
 
     @Override
     protected void afterViews() {
+        tvTitle = findViewById(R.id.tv_title);
+
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
 
         IMServiceStatusViewModel imServiceStatusViewModel = ViewModelProviders.of(this).get(IMServiceStatusViewModel.class);
@@ -153,6 +159,7 @@ public class ConversationActivity extends WfcBaseActivity implements RequestView
         if (conversation == null) {
             finish();
         }
+
         conversationFragment.setupConversation(conversation, conversationTitle, initialFocusedMessageId, null);
     }
 

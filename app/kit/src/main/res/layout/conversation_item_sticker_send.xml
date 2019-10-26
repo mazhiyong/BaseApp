@@ -3,8 +3,8 @@
     android:id="@+id/stickerImageView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingRight="8dp"
+    android:paddingRight="@dimen/dp_8"
     android:adjustViewBounds="true"
-    android:maxWidth="150dp"
-    android:maxHeight="150dp"
+    android:maxWidth="@dimen/dp_150"
+    android:maxHeight="@dimen/dp_150"
     android:scaleType="centerCrop" />

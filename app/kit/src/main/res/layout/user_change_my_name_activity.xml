@@ -10,18 +10,18 @@
         android:id="@+id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_25"
+        android:layout_marginRight="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_10"
         android:background="@null"
         android:drawableBottom="@drawable/shape_bottom_green"
-        android:drawablePadding="5dp"
+        android:drawablePadding="@dimen/dp_5"
         android:gravity="bottom"
-        android:maxLength="255"
-        android:padding="5dp"
+        android:maxLength="50"
+        android:padding="@dimen/dp_5"
         android:singleLine="true"
-        android:textSize="16sp"
+        android:textSize="@dimen/sp_16"
         android:visibility="visible" />
 
     <TextView
@@ -30,6 +30,6 @@
         android:layout_marginLeft="15dp"
         android:text="@string/change_my_name_tip"
         android:textColor="@color/gray1"
-        android:textSize="14sp" />
+        android:textSize="@dimen/sp_14" />
 
 </LinearLayout>

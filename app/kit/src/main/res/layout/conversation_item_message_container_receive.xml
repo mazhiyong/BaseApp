@@ -13,26 +13,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/dp_10"
         android:background="@drawable/shape_notification_bg"
         android:gravity="center"
-        android:paddingLeft="5dp"
-        android:paddingTop="2dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="2dp"
+        android:paddingLeft="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_2"
+        android:paddingRight="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_2"
         android:text="下午 5点"
         android:textColor="#fff"
-        android:textSize="12sp" />
+        android:textSize="@dimen/sp_12" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:orientation="horizontal"
-        android:paddingLeft="5dp"
-        android:paddingTop="10dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="20dp">
+        android:paddingLeft="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_5"
+        android:paddingBottom="@dimen/dp_20">
 
         <!-- 人物头像 -->
         <include layout="@layout/include_avatar" />
@@ -48,13 +48,13 @@
                 android:id="@+id/nameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:ellipsize="end"
                 android:maxLength="20"
                 android:singleLine="true"
                 android:text="imndx"
                 android:textColor="#666666"
-                android:textSize="12sp"
+                android:textSize="@dimen/sp_12"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
@@ -79,10 +79,10 @@
                 <ProgressBar
                     android:id="@+id/progressBar"
                     style="?android:attr/progressBarStyleSmall"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="@dimen/dp_20"
+                    android:layout_height="@dimen/dp_20"
                     android:layout_gravity="center"
-                    android:layout_margin="5dp"
+                    android:layout_margin="@dimen/dp_5"
                     android:visibility="gone"
                     tools:visibility="visible" />
 
@@ -119,8 +119,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="@dimen/item_margin_left_and_right"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_15"
             android:clickable="false"
             android:visibility="gone" />
     </LinearLayout>

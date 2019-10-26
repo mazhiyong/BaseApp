@@ -42,12 +42,16 @@ public class GroupInfoActivity extends WfcBaseActivity {
     @BindView(R.id.actionButton)
     Button actionButton;
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+
     private MaterialDialog dialog;
     private int actionCount = 0;
 
     @Override
     protected void afterViews() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
+        tvTitle.setText("群组详情");
         Intent intent = getIntent();
         groupId = intent.getStringExtra("groupId");
         groupViewModel = ViewModelProviders.of(this).get(GroupViewModel.class);

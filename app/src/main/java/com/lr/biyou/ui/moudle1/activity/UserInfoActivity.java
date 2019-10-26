@@ -61,7 +61,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.wildfire.chat.kit.WfcScheme;
 import cn.wildfire.chat.kit.common.OperateResult;
@@ -217,14 +216,14 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                                 // the errorDrawable will always be bitmapDrawable here
                                 if (errorDrawable instanceof BitmapDrawable) {
                                     Bitmap bitmap = ((BitmapDrawable) errorDrawable).getBitmap();
-                                    Bitmap qrBitmap = CodeUtils.createQRCode(qrCodeValue, 400, bitmap);
+                                    Bitmap qrBitmap = CodeUtils.createQRCode(qrCodeValue, screenWidth, bitmap);
                                     new ShowImageDialog(UserInfoActivity.this, qrBitmap, "二维码加载失败").show();
                                 }
                             }
 
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition transition) {
-                                Bitmap bitmap = CodeUtils.createQRCode(qrCodeValue, 400, resource);
+                                Bitmap bitmap = CodeUtils.createQRCode(qrCodeValue, screenWidth, resource);
                                 new ShowImageDialog(UserInfoActivity.this, bitmap, "扫一扫,加我为好友").show();
                             }
 
@@ -258,6 +257,10 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                                 break;
                             case R.id.confirm:
                                 // sureOrNoDialog.dismiss();
+
+                                /*ChatManagerHolder.gChatManager.disconnect(true);
+                                SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
+                                sp.edit().clear().apply();*/
                                 closeAllActivity();
                                 MbsConstans.USER_MAP = null;
                                 MbsConstans.RONGYUN_MAP = null;
@@ -700,10 +703,5 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
     }
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }

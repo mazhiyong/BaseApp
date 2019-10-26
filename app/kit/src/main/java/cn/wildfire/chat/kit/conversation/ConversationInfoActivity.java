@@ -1,5 +1,6 @@
 package cn.wildfire.chat.kit.conversation;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
@@ -9,11 +10,13 @@ import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.basic.MbsConstans;
 
+import butterknife.BindView;
 import cn.wildfire.chat.kit.WfcBaseActivity;
 import cn.wildfirechat.model.ConversationInfo;
 
 public class ConversationInfoActivity extends WfcBaseActivity {
-
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
     private ConversationInfo conversationInfo;
 
     @Override
@@ -24,6 +27,7 @@ public class ConversationInfoActivity extends WfcBaseActivity {
     @Override
     protected void afterViews() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
+        tvTitle.setText("会话详情");
         conversationInfo = getIntent().getParcelableExtra("conversationInfo");
         Fragment fragment = null;
         switch (conversationInfo.conversation.type) {

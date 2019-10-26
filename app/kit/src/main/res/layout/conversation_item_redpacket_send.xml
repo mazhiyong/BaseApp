@@ -15,16 +15,16 @@
             android:id="@+id/imageView"
             android:visibility="gone"
             android:src="@drawable/hongbao"
-            android:layout_width="25dp"
+            android:layout_width="@dimen/dp_25"
             android:layout_gravity="left"
-            android:layout_height="25dp" />
+            android:layout_height="@dimen/dp_25" />
         <TextView
             android:id="@+id/contentTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="嗯嗯嗯嗯嗯嗯"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
     </LinearLayout>
 
     <TextView

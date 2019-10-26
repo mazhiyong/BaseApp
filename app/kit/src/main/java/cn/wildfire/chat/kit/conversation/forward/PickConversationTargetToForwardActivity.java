@@ -1,6 +1,7 @@
 package cn.wildfire.chat.kit.conversation.forward;
 
 import android.content.Intent;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -8,9 +9,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.lr.biyou.R;
 
 import java.util.List;
 
+import butterknife.BindView;
 import cn.wildfire.chat.kit.common.OperateResult;
 import cn.wildfire.chat.kit.contact.model.UIUserInfo;
 import cn.wildfire.chat.kit.contact.pick.PickConversationTargetActivity;
@@ -21,6 +24,15 @@ public class PickConversationTargetToForwardActivity extends PickConversationTar
     // TODO 多选，单选
     // 先支持单选
     private boolean singleMode = true;
+
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+
+    @Override
+    protected void afterViews() {
+        super.afterViews();
+        tvTitle.setText("选择会话");
+    }
 
     @Override
     protected void onContactPicked(List<UIUserInfo> newlyCheckedUserInfos) {

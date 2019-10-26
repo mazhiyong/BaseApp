@@ -32,6 +32,8 @@ import java.util.logging.Level;
 
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import cn.wildfire.chat.kit.WfcUIKit;
+import cn.wildfire.chat.kit.conversation.message.viewholder.MessageViewHolderManager;
+import cn.wildfire.chat.kit.location.viewholder.LocationMessageContentViewHolder;
 import io.rong.imlib.ipc.RongExceptionHandler;
 import okhttp3.OkHttpClient;
 
@@ -109,7 +111,7 @@ public class BasicApplication extends MultiDexApplication {
 			//注册推送服务
 			//PushService.init(this, BuildConfig.APPLICATION_ID);
 			//注册位置信息
-			//MessageViewHolderManager.getInstance().registerMessageViewHolder(LocationMessageContentViewHolder.class);
+			MessageViewHolderManager.getInstance().registerMessageViewHolder(LocationMessageContentViewHolder.class);
 			setupWFCDirs();
 		}
 		// 初始化融云IM SDK，初始化 SDK 仅需要在主进程中初始化一次

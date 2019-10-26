@@ -24,12 +24,16 @@ public class InviteFriendActivity extends WfcBaseActivity {
     @BindView(R.id.introTextView)
     TextView introTextView;
 
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+
     private UserInfo userInfo;
 
     @Override
     protected void afterViews() {
         super.afterViews();
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
+        tvTitle.setText("邀请好友");
         userInfo = getIntent().getParcelableExtra("userInfo");
         if (userInfo == null) {
             finish();

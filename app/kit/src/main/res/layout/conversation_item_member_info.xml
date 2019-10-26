@@ -9,25 +9,25 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="7.5dp">
+        android:padding="@dimen/dp_5">
 
         <ImageView
             android:id="@+id/portraitImageView"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
             android:layout_centerVertical="true"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_add_team_member" />
 
         <TextView
             android:id="@+id/nameTextView"
-            android:layout_width="48dp"
+            android:layout_width="@dimen/dp_40"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="@dimen/dp_5"
             android:gravity="center"
             android:singleLine="true"
             android:text="1231"
             android:textColor="@color/gray1"
-            android:textSize="12sp" />
+            android:textSize="@dimen/sp_12" />
     </LinearLayout>
 </FrameLayout>

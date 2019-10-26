@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -54,12 +55,13 @@ public class ForwardActivity extends WfcBaseActivity {
 
     @BindView(R.id.searchEditText)
     EditText editText;
-
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     @Override
     protected void afterViews() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
-
+        tvTitle.setText("转发");
         message = getIntent().getParcelableExtra("message");
         getSupportFragmentManager()
                 .beginTransaction()
