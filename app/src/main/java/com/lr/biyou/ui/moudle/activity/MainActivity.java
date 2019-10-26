@@ -115,6 +115,9 @@ public class MainActivity extends BasicActivity implements RequestView {
 
     private Conversation.ConversationType[] conversationTypes;
 
+    private int newsUnReadCount = 0;
+    private int requestUnReadCount = 0;
+
     @Override
     public int getContentView() {
         return R.layout.activity_main;
@@ -223,29 +226,64 @@ public class MainActivity extends BasicActivity implements RequestView {
                 .get(ConversationListViewModel.class);
         conversationListViewModel.unreadCountLiveData().observe(this, unreadCount -> {
 
-            if (unreadCount == null || unreadCount.unread < 1) {
-                unreadNewLable.setVisibility(View.GONE);
-            } else {
-                unreadNewLable.setVisibility(View.VISIBLE);
-                if (unreadCount.unread <100){
-                    unreadNewLable.setText(unreadCount.unread+"");
+            if (unreadCount == null) {
+                if (requestUnReadCount == 0){
+                    unreadNewLable.setVisibility(View.GONE);
                 }else {
-                    unreadNewLable.setText("99+");
+                    unreadNewLable.setVisibility(View.VISIBLE);
+                    if (requestUnReadCount < 99){
+                        unreadNewLable.setText(requestUnReadCount+"");
+                    }else {
+                        unreadNewLable.setText("99+");
+                    }
                 }
+
+            } else {
+                newsUnReadCount = unreadCount.unread;
+                if (newsUnReadCount ==0 && requestUnReadCount ==0){
+                    unreadNewLable.setVisibility(View.GONE);
+                }else {
+                    unreadNewLable.setVisibility(View.VISIBLE);
+                    if ((newsUnReadCount+requestUnReadCount ) < 100){
+                        unreadNewLable.setText(newsUnReadCount+requestUnReadCount+"");
+                    }else {
+                        unreadNewLable.setText("99+");
+                    }
+                }
+
+
             }
         });
         //联系人ViewModel
         ContactViewModel contactViewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
         contactViewModel.friendRequestUpdatedLiveData().observe(this, count -> {
-            if (count == null || count == 0) {
+            if (count == null) {
                 unreadNewLable.setVisibility(View.GONE);
-            } else {
-                unreadNewLable.setVisibility(View.VISIBLE);
-                if (count<100){
-                    unreadNewLable.setText(count+"");
+                if (newsUnReadCount == 0){
+                    unreadNewLable.setVisibility(View.GONE);
                 }else {
-                    unreadNewLable.setText("99+");
+                    unreadNewLable.setVisibility(View.VISIBLE);
+                    if (newsUnReadCount < 99){
+                        unreadNewLable.setText(newsUnReadCount+"");
+                    }else {
+                        unreadNewLable.setText("99+");
+                    }
                 }
+
+            } else {
+                if (newsUnReadCount == 0 && requestUnReadCount ==0){
+                    unreadNewLable.setVisibility(View.GONE);
+                }else {
+                    requestUnReadCount = count;
+                    unreadNewLable.setVisibility(View.VISIBLE);
+                    if ((newsUnReadCount+requestUnReadCount) < 100){
+                        unreadNewLable.setText(newsUnReadCount+requestUnReadCount+"");
+                    }else {
+                        unreadNewLable.setText("99+");
+                    }
+                }
+
+
             }
         });
 

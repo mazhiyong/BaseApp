@@ -10,10 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.SystemClock;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -21,23 +17,25 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
-import com.lr.biyou.di.component.DaggerPersenerComponent;
-import com.lr.biyou.di.module.PersenerModule;
-import com.lr.biyou.manage.ActivityManager;
-import com.lr.biyou.mvp.view.RequestView;
-import com.lr.biyou.ui.temporary.activity.ChoosePhoneActivity;
-import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.api.ErrorHandler;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.api.RxApiManager;
-import com.lr.biyou.mywidget.dialog.TipMsgDialog;
+import com.lr.biyou.di.component.DaggerPersenerComponent;
+import com.lr.biyou.di.module.PersenerModule;
+import com.lr.biyou.manage.ActivityManager;
 import com.lr.biyou.mvp.presenter.RequestPresenterImp;
+import com.lr.biyou.mvp.view.RequestView;
+import com.lr.biyou.mywidget.dialog.TipMsgDialog;
 import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.TipsToast;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.ui.temporary.activity.ChoosePhoneActivity;
 import com.lr.biyou.utils.tool.LogUtilDebug;
-import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -403,8 +401,6 @@ public abstract class BasicActivity extends AppCompatActivity implements BGASwip
             if (isShouldHideKeyboard(v, ev)) {
                 hideKeyboard(v.getWindowToken());
             }
-
-
         }
         try{
             return super.dispatchTouchEvent(ev);

@@ -91,7 +91,7 @@ public class FriendRequestViewHolder extends RecyclerView.ViewHolder {
         }
 
         if (userInfo != null) {
-            Glide.with(fragment).load(userInfo.portrait).apply(new RequestOptions().placeholder(R.mipmap.avatar_def).centerCrop()).into(portraitImageView);
+            Glide.with(fragment).load(userInfo.portrait).apply(new RequestOptions().centerCrop().placeholder(R.mipmap.avatar_def).centerCrop()).into(portraitImageView);
         }
     }
 

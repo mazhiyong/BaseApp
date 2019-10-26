@@ -128,7 +128,7 @@ public class UserInfoFragment extends Fragment {
     }
 
     private void setUserInfo(UserInfo userInfo) {
-        Glide.with(this).load(userInfo.portrait).apply(new RequestOptions().placeholder(R.mipmap.avatar_def).centerCrop()).into(portraitImageView);
+        Glide.with(this).load(userInfo.portrait).apply(new RequestOptions().centerCrop().placeholder(R.mipmap.avatar_def).centerCrop()).into(portraitImageView);
         nameTextView.setText("账号:"+userInfo.name);
        nickyNameTextView.setText("备注:"+userViewModel.getUserDisplayName(userInfo));
 

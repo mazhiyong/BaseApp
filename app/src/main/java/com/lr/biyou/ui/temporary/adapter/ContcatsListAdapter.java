@@ -1,13 +1,14 @@
 package com.lr.biyou.ui.temporary.adapter;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -39,7 +40,7 @@ public class ContcatsListAdapter extends RecyclerView.Adapter<ContcatsListAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.mTextView.setText("");
-        Glide.with(mContext).load("").apply(new RequestOptions().placeholder(R.drawable.tip_orange).error(R.drawable.tip_orange)).into(holder.mImageView);
+        Glide.with(mContext).load("").apply(new RequestOptions().centerCrop().placeholder(R.drawable.tip_orange).error(R.drawable.tip_orange)).into(holder.mImageView);
 
     }
 

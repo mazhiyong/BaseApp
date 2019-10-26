@@ -1,7 +1,6 @@
 package com.lr.biyou.ui.moudle1.fragment;
 
 import android.animation.Animator;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -655,9 +654,12 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
     }
 
     private void bgAlpha(float alpha) {
-        WindowManager.LayoutParams lp = ((Activity) getActivity()).getWindow().getAttributes();
-        lp.alpha = alpha;// 0.0-1.0
-        getActivity().getWindow().setAttributes(lp);
+        if (getActivity() != null && getActivity().getWindow() != null){
+            WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+            lp.alpha = alpha;// 0.0-1.0
+            getActivity().getWindow().setAttributes(lp);
+        }
+
     }
 
     private void initConditionDialog(View view) {
@@ -781,6 +783,13 @@ public class HomeFragment extends BasicFragment implements RequestView, ReLoadin
         getBiInfoAction();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mConditionDialog != null && mConditionDialog.isShowing()){
+            mConditionDialog.dismiss();
+        }
+    }
 
     @Override
     public void onPause() {

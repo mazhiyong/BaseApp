@@ -40,7 +40,7 @@
             android:layout_marginBottom="@dimen/dp_5"
             android:text="@string/new_friend"
             android:textColor="@color/gray1"
-            android:textSize="@dimen/sp_12" />
+            android:textSize="@dimen/sp_14" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/friendRequestListRecyclerView"

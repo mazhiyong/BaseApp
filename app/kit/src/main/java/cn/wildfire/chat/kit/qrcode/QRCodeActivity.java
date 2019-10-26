@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,9 @@ public class QRCodeActivity extends WfcBaseActivity {
 
     @BindView(R.id.qrCodeImageView)
     ImageView qrCodeImageView;
+
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
 
     public static Intent buildQRCodeIntent(Context context, String title, String logoUrl, String qrCodeValue) {
         Intent intent = new Intent(context, QRCodeActivity.class);
@@ -57,6 +61,7 @@ public class QRCodeActivity extends WfcBaseActivity {
     protected void afterViews() {
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
         setTitle(title);
+        tvTitle.setText("二维码");
         genQRCode();
     }
 

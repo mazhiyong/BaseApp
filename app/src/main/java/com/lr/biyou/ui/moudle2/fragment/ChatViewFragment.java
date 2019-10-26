@@ -41,11 +41,9 @@ import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.jaeger.library.StatusBarUtil;
 import com.king.zxing.Intents;
 import com.lr.biyou.R;
-import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicFragment;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.chatry.task.UserTask;
-import com.lr.biyou.listener.CallBackTotal;
 import com.lr.biyou.listener.ReLoadingData;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.view.PageView;
@@ -252,6 +250,8 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         contactListFragment = new ContactListFragment();
         groupListFragment = new GroupListFragment();
 
+
+        mFragments.clear();
         mFragments.add(conversationListFragment);
         mFragments.add(contactListFragment);
         mFragments.add(groupListFragment);
@@ -278,9 +278,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         });
 
 
-
-
-
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -289,59 +286,10 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             @Override
             public void onTextChanged(CharSequence sequence, int start, int before, int count) {
                 if (sequence.toString().length() > 0) {
-                    switch (mRequestTag) {
-                        case MethodUrl.CHAT_RECENTLY_LIST:
-                            if (mListAdapter2 != null) {
-                                mListAdapter2.getFilter().filter(sequence.toString());
-                                mListAdapter2.setBackTotal(new CallBackTotal() {
-                                    @Override
-                                    public void setTotal(int size) {
-                                        if (size == 0) {
-                                            mPageView.showEmpty();
-                                        } else {
-                                            mPageView.showContent();
-                                        }
-                                    }
-                                });
-                            }
-                            break;
-                        case MethodUrl.CHAT_MY_FRIENDS:
-                            if (mListAdapter != null) {
-                                mListAdapter.getFilter().filter(sequence.toString());
-                                mListAdapter.setBackTotal(new CallBackTotal() {
-                                    @Override
-                                    public void setTotal(int size) {
-                                        if (size == 0) {
-                                            mPageView.showEmpty();
-                                        } else {
-                                            mPageView.showContent();
-                                        }
-                                    }
-                                });
-                            }
-                            break;
-                        case MethodUrl.CHAT_MY_GROUPS:
-                            if (mListAdapter3 != null) {
-                                mListAdapter3.getFilter().filter(sequence.toString());
-                                mListAdapter3.setBackTotal(new CallBackTotal() {
-                                    @Override
-                                    public void setTotal(int size) {
-                                        if (size == 0) {
-                                            mPageView.showEmpty();
-                                        } else {
-                                            mPageView.showContent();
-                                        }
-                                    }
-                                });
 
-                            }
-                            break;
-
-                    }
                 }
 
             }
-
             @Override
             public void afterTextChanged(Editable s) {
 

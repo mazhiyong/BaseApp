@@ -113,6 +113,8 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
     private UserViewModel userViewModel;
     private UserInfo userInfo;
 
+    private SureOrNoDialog sureOrNoDialog;
+
 
     @Override
     public int getContentView() {
@@ -246,7 +248,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                 break;
             case R.id.exit_tv:
 
-                SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(UserInfoActivity.this, true);
+                sureOrNoDialog = new SureOrNoDialog(UserInfoActivity.this, true);
                 sureOrNoDialog.initValue("提示", "确定要退出登录吗？");
                 sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -256,11 +258,11 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                                 sureOrNoDialog.dismiss();
                                 break;
                             case R.id.confirm:
-                                // sureOrNoDialog.dismiss();
-
                                 /*ChatManagerHolder.gChatManager.disconnect(true);
                                 SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
                                 sp.edit().clear().apply();*/
+
+
                                 closeAllActivity();
                                 MbsConstans.USER_MAP = null;
                                 MbsConstans.RONGYUN_MAP = null;
@@ -702,6 +704,11 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
 
     }
 
-
-
+    @Override
+    protected void onDestroy() {
+//        if (sureOrNoDialog != null){
+//            sureOrNoDialog.dismiss();
+//        }
+        super.onDestroy();
+    }
 }

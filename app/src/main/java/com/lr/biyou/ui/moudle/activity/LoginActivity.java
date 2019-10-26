@@ -237,6 +237,13 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
 
         mTogglePwd.setOnCheckedChangeListener(this);
 
+        if (ChatManagerHolder.gChatManager != null && ChatManagerHolder.gChatManager.isIMServiceConnected()){
+            ChatManagerHolder.gChatManager.disconnect(true);
+            LogUtilDebug.i("show","断开聊天服务器");
+        }else {
+            LogUtilDebug.i("show","聊天服务器已断开");
+        }
+
     }
 
 
@@ -449,9 +456,6 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
             case MethodUrl.LOGIN_ACTION://登录操作返回结果
                 switch (tData.get("code")+""){
                     case "0":
-                        if (ChatManagerHolder.gChatManager != null && ChatManagerHolder.gChatManager.isIMServiceConnected()){
-                            ChatManagerHolder.gChatManager.disconnect(true);
-                        }
                         MbsConstans.ACCESS_TOKEN = tData.get("data") + "";
                         //LogUtilDebug.i("show","token:"+tData.get("access_token"));
                       /*  if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
