@@ -66,16 +66,47 @@
                     app:desc="@string/untitled"
                     app:title="@string/group_name" />
 
+
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/divide_hight"
                     android:background="@color/divide_line"/>
 
+                <LinearLayout
+                    android:id="@+id/head_lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_45"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_weight="1"
+                        android:text="群头像"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@color/black22"
+                        android:textSize="@dimen/sp_14" />
+                    <ImageView
+                        android:id="@id/head_iv"
+                        android:layout_width="@dimen/dp_30"
+                        android:src="@drawable/head"
+                        android:layout_gravity="center_vertical"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="@dimen/dp_30" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divide_hight"
+                    android:background="@color/divide_line"/>
                 <cn.wildfire.chat.kit.widget.OptionItemView
                     android:id="@+id/groupQRCodeOptionItemView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_45"
                     android:background="@drawable/selector_option_item"
+                    app:end_src="@drawable/profile_ic_qrcode"
                     app:title="群二维码" />
 
                 <View
@@ -320,6 +351,7 @@
             <cn.wildfire.chat.kit.widget.OptionItemView
                 android:id="@+id/tousuMessageOptionItemView"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginTop="@dimen/dp_20"
                 android:background="@drawable/selector_option_item"

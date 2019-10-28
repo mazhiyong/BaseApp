@@ -33,7 +33,7 @@ public class InviteFriendActivity extends WfcBaseActivity {
     protected void afterViews() {
         super.afterViews();
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
-        tvTitle.setText("邀请好友");
+        tvTitle.setText("好友申请");
         userInfo = getIntent().getParcelableExtra("userInfo");
         if (userInfo == null) {
             finish();

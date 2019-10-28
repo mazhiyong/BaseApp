@@ -30,13 +30,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.androidkun.xtablayout.XTabLayout;
 import com.flyco.dialog.utils.CornerUtils;
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.jaeger.library.StatusBarUtil;
 import com.king.zxing.Intents;
@@ -79,6 +80,13 @@ import cn.wildfire.chat.kit.conversationlist.ConversationListViewModel;
 import cn.wildfire.chat.kit.group.GroupInfoActivity;
 import cn.wildfire.chat.kit.group.GroupListFragment;
 import cn.wildfire.chat.kit.qrcode.ScanQRCodeActivity;
+import cn.wildfire.chat.kit.search.SearchResult;
+import cn.wildfire.chat.kit.search.SearchResultAdapter;
+import cn.wildfire.chat.kit.search.SearchViewModel;
+import cn.wildfire.chat.kit.search.SearchableModule;
+import cn.wildfire.chat.kit.search.module.ContactSearchModule;
+import cn.wildfire.chat.kit.search.module.ConversationSearchModule;
+import cn.wildfire.chat.kit.search.module.GroupSearchViewModule;
 import cn.wildfire.chat.kit.user.ChangeMyNameActivity;
 import cn.wildfire.chat.kit.user.UserInfoActivity;
 import cn.wildfire.chat.kit.user.UserViewModel;
@@ -120,7 +128,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     @BindView(R.id.notice_layout)
     LinearLayout noticeLayout;
     @BindView(R.id.refresh_list_view)
-    LRecyclerView mRefreshListView;
+    RecyclerView mRefreshListView;
     @BindView(R.id.content)
     LinearLayout mContent;
     @BindView(R.id.page_view)
@@ -166,6 +174,12 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     private UserTask userTask;
     private String friendName;
 
+    //检索
+    private  List<SearchableModule> modules = new ArrayList<>();
+    private SearchResultAdapter adapter;
+    private SearchViewModel searchViewModel;
+    private Observer<SearchResult> searchResultObserver = this::onSearchResult;
+
 
 
     //未读消息
@@ -183,7 +197,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
     private Observer<Boolean> imStatusLiveDataObserver = status -> {
         if (status && !isInitialized) {
-            init();
+            //init();
             isInitialized = true;
         }
     };
@@ -205,7 +219,20 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         initView();
         mAnimUtil = new AnimUtil();
 
+        searchViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
+        searchViewModel.getResultLiveData().observeForever(searchResultObserver);
 
+        //搜索联系人Module
+        SearchableModule module = new ContactSearchModule();
+        modules.add(module);
+
+        //搜索群组Module
+        module = new GroupSearchViewModule();
+        modules.add(module);
+
+        //搜索会话列表Module
+        module = new ConversationSearchModule();
+        modules.add(module);
     }
 
     @Override
@@ -241,7 +268,10 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
     private void initView() {
 
-        tabLayout.removeAllTabs();
+        mPageView.setContentView(mContent);
+        mPageView.showContent();
+
+        //tabLayout.removeAllTabs();
         tabLayout.addTab(tabLayout.newTab().setText("近期聊天"));
         tabLayout.addTab(tabLayout.newTab().setText("我的好友"));
         tabLayout.addTab(tabLayout.newTab().setText("我的群组"));
@@ -251,7 +281,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
         groupListFragment = new GroupListFragment();
 
 
-        mFragments.clear();
+        //mFragments.clear();
         mFragments.add(conversationListFragment);
         mFragments.add(contactListFragment);
         mFragments.add(groupListFragment);
@@ -285,8 +315,16 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
             @Override
             public void onTextChanged(CharSequence sequence, int start, int before, int count) {
-                if (sequence.toString().length() > 0) {
-
+                //输入检索内容
+                if (sequence.length() > 0) {
+                    if (adapter != null) {
+                        adapter.reset();
+                    }
+                    searchViewModel.search(sequence.toString(), modules);
+                }else {
+                    mPageView.setVisibility(View.GONE);
+                    viewPager.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.VISIBLE);
                 }
 
             }
@@ -298,6 +336,28 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
         if (checkDisplayName()) {
             ignoreBatteryOption();
+        }
+
+
+
+    }
+
+
+    private void onSearchResult(SearchResult result) {
+        if (result == null) {
+            mPageView.setVisibility(View.GONE);
+            tabLayout.setVisibility(View.VISIBLE);
+            viewPager.setVisibility(View.VISIBLE);
+        } else {
+            mPageView.setVisibility(View.VISIBLE);
+            tabLayout.setVisibility(View.GONE);
+            viewPager.setVisibility(View.GONE);
+            if (adapter == null) {
+                adapter = new SearchResultAdapter(this);
+                mRefreshListView.setAdapter(adapter);
+                mRefreshListView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            }
+            adapter.submitSearResult(result);
         }
 
     }
@@ -653,5 +713,10 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
     }
 
+    @Override
+    public void onDestroy() {
+        searchViewModel.getResultLiveData().removeObserver(searchResultObserver);
+        super.onDestroy();
+    }
 
 }

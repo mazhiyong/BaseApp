@@ -10,7 +10,7 @@ public enum MessageContentMediaType {
     VOICE(2),
     VIDEO(3),
     FILE(4),
-    PORTRAIT(5),
+    PORTRAIT(5), //头像
     FAVORITE(6);
 
     private int value;

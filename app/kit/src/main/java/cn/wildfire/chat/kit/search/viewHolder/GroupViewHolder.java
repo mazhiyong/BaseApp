@@ -7,6 +7,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.lr.biyou.R;
 
 import butterknife.BindView;
@@ -30,7 +32,7 @@ public class GroupViewHolder extends ResultItemViewHolder<GroupSearchResult> {
     @Override
     public void onBind(String keyword, GroupSearchResult groupSearchResult) {
         nameTextView.setText(groupSearchResult.groupInfo.name);
-        Glide.with(fragment).load(groupSearchResult.groupInfo.portrait).into(portraitImageView);
+        Glide.with(fragment).load(groupSearchResult.groupInfo.portrait).placeholder(R.mipmap.avatar_def).transforms(new CenterCrop(), new RoundedCorners(10)).into(portraitImageView);
 
         String desc = "";
         switch (groupSearchResult.marchedType) {

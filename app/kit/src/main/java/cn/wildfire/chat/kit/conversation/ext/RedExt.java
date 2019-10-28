@@ -2,9 +2,12 @@ package cn.wildfire.chat.kit.conversation.ext;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import com.lr.biyou.R;
+import com.lr.biyou.ui.moudle2.activity.RedMoneyActivity;
+import com.lr.biyou.utils.tool.UtilTools;
 
 import cn.wildfire.chat.kit.annotation.ExtContextMenuItem;
 import cn.wildfire.chat.kit.conversation.ext.core.ConversationExt;
@@ -32,28 +35,32 @@ public class RedExt extends ConversationExt {
         TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_RED);
         messageViewModel.sendMessage(conversation, content);
 
-
-        RedPacketMessageContent messageContent = new RedPacketMessageContent();
-        messageContent.setContent("大吉大利,恭喜发财");
-        messageContent.cid = "A0002";
-        messageContent.redPackType = "1";
-     /*   JSONObject jsonObj = new JSONObject();
-        try {
-            jsonObj.put("cid","XGIABGA");
-            jsonObj.put("redPackType", "1");
-        } catch (JSONException e) {
-            Log.e("JSONException", e.getMessage());
-        }
-        messageContent.extra = jsonObj.toString();
-        Log.i("show","jsonObj:"+jsonObj.toString());
-*/
-        messageViewModel.sendRedMessage(conversation,messageContent);
+        Intent intent = new Intent(activity, RedMoneyActivity.class);
+        intent.putExtra("id",conversation.target);
+        intent.putExtra("type","1");
+        startActivityForResult(intent, 101);
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            if (bundle != null){
+                String cid = bundle.get("red_id")+"";
+                String content ;
+                if (UtilTools.empty(bundle.get("text"))){
+                    content = "大吉大利,恭喜发财";
+                }else {
+                    content = bundle.get("text")+"";
+                }
+
+                RedPacketMessageContent messageContent = new RedPacketMessageContent();
+                messageContent.setContent(content);
+                messageContent.cid = cid;
+                messageContent.redPackType = "1";
+                messageViewModel.sendRedMessage(conversation,messageContent);
+            }
 
 
         }

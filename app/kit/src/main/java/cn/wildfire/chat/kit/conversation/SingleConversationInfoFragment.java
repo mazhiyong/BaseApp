@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kyleduo.switchbutton.SwitchButton;
 import com.lr.biyou.R;
+import com.lr.biyou.ui.moudle2.activity.ChoseReasonTypeActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +33,7 @@ import cn.wildfire.chat.kit.conversationlist.ConversationListViewModelFactory;
 import cn.wildfire.chat.kit.search.SearchMessageActivity;
 import cn.wildfire.chat.kit.user.UserInfoActivity;
 import cn.wildfire.chat.kit.user.UserViewModel;
+import cn.wildfire.chat.kit.widget.OptionItemView;
 import cn.wildfirechat.model.Conversation;
 import cn.wildfirechat.model.ConversationInfo;
 import cn.wildfirechat.model.UserInfo;
@@ -45,6 +47,8 @@ public class SingleConversationInfoFragment extends Fragment implements Conversa
     SwitchButton stickTopSwitchButton;
     @BindView(R.id.silentSwitchButton)
     SwitchButton silentSwitchButton;
+    @BindView(R.id.tousuOptionItemView)
+    OptionItemView tousuOptionItemView;
 
     private ConversationInfo conversationInfo;
     private ConversationMemberAdapter conversationMemberAdapter;
@@ -93,6 +97,16 @@ public class SingleConversationInfoFragment extends Fragment implements Conversa
         silentSwitchButton.setChecked(conversationInfo.isSilent);
         stickTopSwitchButton.setOnCheckedChangeListener(this);
         silentSwitchButton.setOnCheckedChangeListener(this);
+    }
+
+
+    //投诉
+    @OnClick(R.id.tousuOptionItemView)
+    public void onViewClicked() {
+        Intent intent = new Intent(getActivity(), ChoseReasonTypeActivity.class);
+        intent.putExtra("id", conversationInfo.conversation.target);
+        intent.putExtra("type","1");
+        startActivity(intent);
     }
 
     @OnClick(R.id.clearMessagesOptionItemView)
@@ -153,4 +167,6 @@ public class SingleConversationInfoFragment extends Fragment implements Conversa
         }
 
     }
+
+
 }

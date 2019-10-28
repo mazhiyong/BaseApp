@@ -55,7 +55,7 @@ public abstract class SearchActivity extends WfcBaseActivity {
 
     private void initSearchView() {
         searchView.onActionViewExpanded();
-        searchView.setQueryHint("Search");
+        searchView.setQueryHint("输入检索内容");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

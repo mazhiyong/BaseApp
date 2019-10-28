@@ -234,7 +234,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (type != VIEW_TYPE_CATEGORY && type != VIEW_TYPE_EXPAND && type != -1) {
             preModule = viewTypeToSearchModule.get(type);
             if (preModule != null && preModule != module) {
-                throw new RuntimeException("duplicate search module view type");
+                //throw new RuntimeException("duplicate search module view type");
+
             }
             viewTypeToSearchModule.put(type, module);
         }

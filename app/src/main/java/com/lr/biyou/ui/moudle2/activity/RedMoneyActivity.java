@@ -22,9 +22,7 @@ import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.mywidget.dialog.TradePassDialog;
-import com.lr.biyou.chatry.im.message.RongRedPacketMessage;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
-import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
@@ -35,9 +33,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 
 /**
  * 红包
@@ -90,7 +85,7 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
         return R.layout.activity_red_money;
     }
 
-    private String tarid = "";
+    //private String tarid = "";
     private String type = "";
     private String id = "";
 
@@ -100,7 +95,7 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            tarid = bundle.getString("tarid");
+            //tarid = bundle.getString("tarid");
             type = bundle.getString("type");
             id = bundle.getString("id");
         }
@@ -234,11 +229,12 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
             map.put("remake", beizhuEt.getText() + "");
         }
 
-        if (type.equals("1")) {
+        map.put("id", id);
+        /*if (type.equals("1")) {
             map.put("id", id);
         } else {
             map.put("id", tarid);
-        }
+        }*/
         map.put("type", type);
         map.put("payment_password", pass);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -264,8 +260,13 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                     case "0": //请求成功
                         mTradePassDialog.dismiss();
                         String red_id = tData.get("data") + "";
+                        intent = new Intent();
+                        intent.putExtra("red_id",red_id);
+                        intent.putExtra("text",beizhuEt.getText() + "");
+                        setResult(RESULT_OK,intent);
+
                         finish();
-                        if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+                        /*if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
                             LogUtilDebug.i("show", "备注信息:" + beizhuEt.getText() + "");
                             RongRedPacketMessage rongRedPacketMessage = RongRedPacketMessage.obtain("1", red_id, beizhuEt.getText() + "");
                             if (type.equals("1")) {
@@ -295,7 +296,7 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                                 });
                             }
 
-                        }
+                        }*/
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg") + "");

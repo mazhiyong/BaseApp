@@ -67,6 +67,7 @@ public abstract class BasicFragment extends Fragment implements RequestView {
 		DaggerPersenerComponent.builder().persenerModule(new PersenerModule(this,getActivity())).build().injectTo(this);
 
 		init();
+
 		return mRootView;
 	}
 	/*@Override

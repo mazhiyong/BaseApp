@@ -29,7 +29,6 @@ import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
-import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.ShowDetailPictrue;
 import com.lr.biyou.utils.permission.PermissionsUtils;
@@ -82,12 +81,8 @@ public class TousuActivity extends BasicActivity implements RequestView, SelectB
     TextView addTv;
 
 
-    private String mRequestTag = "";
-
-    private KindSelectDialog mDialog;
     private Map<String, Object> mapData;
-
-    private String friendId ="";
+    private String type;
 
     private List<Map<String, Object>> mImageList = new ArrayList<>();
 
@@ -107,6 +102,7 @@ public class TousuActivity extends BasicActivity implements RequestView, SelectB
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 mapData = (Map<String, Object>) bundle.getSerializable("DATA");
+                type = bundle.getString("type");
             }
         }
 
@@ -150,7 +146,6 @@ public class TousuActivity extends BasicActivity implements RequestView, SelectB
 
 
     private void uploadPicAction() {
-        mRequestTag = MethodUrl.UPLOAD_FILE;
         Map<String, Object> signMap = new HashMap<>();
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
@@ -166,14 +161,13 @@ public class TousuActivity extends BasicActivity implements RequestView, SelectB
 
     private void sumbitTousuAction() {
 
-        mRequestTag = MethodUrl.CHAT_REASON_DEAL;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
             MbsConstans.ACCESS_TOKEN = SPUtils.get(TousuActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("id", mapData.get("userid")+"");
-        map.put("type", mapData.get("title")+"");
+        map.put("type", type);
         map.put("img",imgUrl);
         map.put("complaint_id",mapData.get("id")+"");
         Map<String, String> mHeaderMap = new HashMap<String, String>();

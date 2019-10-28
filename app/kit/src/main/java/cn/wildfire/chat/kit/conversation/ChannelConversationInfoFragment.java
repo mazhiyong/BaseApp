@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.lr.biyou.R;
 
@@ -108,7 +110,8 @@ public class ChannelConversationInfoFragment extends Fragment implements Compoun
     private void initChannel(ChannelInfo channelInfo) {
         channelNameOptionItemView.setDesc(channelInfo.name);
         channelDescOptionItemView.setDesc(channelInfo.desc);
-        Glide.with(this).load(channelInfo.portrait).into(portraitImageView);
+        Glide.with(this).load(channelInfo.portrait).placeholder(R.mipmap.avatar_def).transforms(new CenterCrop(), new RoundedCorners(10)).into(portraitImageView);
+
     }
 
     @OnClick(R.id.clearMessagesOptionItemView)

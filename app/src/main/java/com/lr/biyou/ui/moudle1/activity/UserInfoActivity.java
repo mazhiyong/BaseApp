@@ -47,6 +47,7 @@ import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;
 import com.lr.biyou.utils.tool.AppUtil;
 import com.lr.biyou.utils.tool.JSONUtil;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 import com.yanzhenjie.permission.Permission;
@@ -56,6 +57,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +67,12 @@ import butterknife.OnClick;
 import cn.wildfire.chat.kit.WfcScheme;
 import cn.wildfire.chat.kit.common.OperateResult;
 import cn.wildfire.chat.kit.user.UserViewModel;
+import cn.wildfirechat.message.MessageContentMediaType;
+import cn.wildfirechat.model.ModifyGroupInfoType;
 import cn.wildfirechat.model.UserInfo;
+import cn.wildfirechat.remote.ChatManager;
+import cn.wildfirechat.remote.GeneralCallback;
+import cn.wildfirechat.remote.UploadMediaCallback;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -656,6 +663,7 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                                 Toast.makeText(UserInfoActivity.this, "更新头像失败: " + booleanOperateResult.getErrorCode(), Toast.LENGTH_SHORT).show();
                             }
                         });
+
 
                         getUserInfoAction();
                         break;

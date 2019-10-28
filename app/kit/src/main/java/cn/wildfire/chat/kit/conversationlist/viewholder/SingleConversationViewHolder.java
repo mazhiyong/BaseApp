@@ -33,11 +33,7 @@ public class SingleConversationViewHolder extends ConversationViewHolder {
         String name = userViewModel.getUserDisplayName(userInfo);
         String portrait;
         portrait = userInfo.portrait;
-        Glide
-                .with(fragment)
-                .load(portrait)
-                .placeholder(R.mipmap.avatar_def)
-                .transforms(new CenterCrop(), new RoundedCorners(10))
+        Glide.with(fragment).load(portrait).placeholder(R.mipmap.avatar_def).transforms(new CenterCrop(), new RoundedCorners(10))
                 .into(portraitImageView);
         nameTextView.setText(name);
     }

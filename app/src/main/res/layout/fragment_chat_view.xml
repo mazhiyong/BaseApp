@@ -166,12 +166,20 @@
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center_horizontal"
             android:orientation="vertical" >
-            <com.github.jdsjlzx.recyclerview.LRecyclerView
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="符合检索条件数据"
+                android:gravity="center_vertical"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/sp_14"
+                android:layout_height="@dimen/dp_30"/>
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/refresh_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            </com.github.jdsjlzx.recyclerview.LRecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </com.lr.biyou.mywidget.view.PageView>
 

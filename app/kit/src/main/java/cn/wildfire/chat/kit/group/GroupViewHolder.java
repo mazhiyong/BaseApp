@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.lr.biyou.R;
 
 import butterknife.BindView;
@@ -40,7 +42,8 @@ public class GroupViewHolder extends RecyclerView.ViewHolder {
         this.groupInfo = groupInfo;
         categoryTextView.setVisibility(View.GONE);
         nameTextView.setText(this.groupInfo.name);
-        Glide.with(fragment).load(this.groupInfo.portrait).error(R.mipmap.ic_group_cheat).into(portraitImageView);
+        Glide.with(fragment).load(this.groupInfo.portrait).error(R.mipmap.ic_group_cheat).placeholder(R.mipmap.avatar_def).transforms(new CenterCrop(), new RoundedCorners(10)).into(portraitImageView);
+
     }
 
     public GroupInfo getGroupInfo() {

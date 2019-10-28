@@ -2777,6 +2777,7 @@ public class ChatManager {
         }
 
         try {
+
             mClient.createGroup(groupId, groupName, groupPortrait, groupType.value(), memberIds, inlines, content2Payload(notifyMsg), new cn.wildfirechat.client.IGeneralCallback2.Stub() {
                 @Override
                 public void onSuccess(final String result) throws RemoteException {
@@ -2997,6 +2998,9 @@ public class ChatManager {
                 callback.onFail(ErrorCode.SERVICE_EXCEPTION);
         }
     }
+
+
+
 
     public void modifyGroupInfo(String groupId, ModifyGroupInfoType modifyType, String newValue, List<Integer> lines, MessageContent notifyMsg, final GeneralCallback callback) {
         if (!checkRemoteService()) {

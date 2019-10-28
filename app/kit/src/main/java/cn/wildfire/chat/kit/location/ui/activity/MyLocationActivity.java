@@ -195,8 +195,6 @@ public class MyLocationActivity extends BaseActivity<IMyLocationAtView, MyLocati
             search(latLng);
             //取消定位
             mLocationManager.removeUpdates(MyLocationActivity.this);
-        } else {
-
         }
     }
 

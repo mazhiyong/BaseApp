@@ -84,6 +84,7 @@ public class ChoseReasonTypeActivity extends BasicActivity implements RequestVie
     private List<Map<String, Object>> mSelectList = new ArrayList<>();
     private int RESULT_CODE=1;
     private String id;
+    private String type;
     @Override
     public int getContentView() {
         return R.layout.activity_chose_reason_type;
@@ -98,6 +99,7 @@ public class ChoseReasonTypeActivity extends BasicActivity implements RequestVie
         Bundle bundle = getIntent().getExtras();
         if (bundle != null){
             id = bundle.getString("id");
+            type = bundle.getString("type");
         }
 
 
@@ -227,6 +229,7 @@ public class ChoseReasonTypeActivity extends BasicActivity implements RequestVie
                                 mSelectList.add(mSelectObject);
                                 Intent mIntent = new Intent(ChoseReasonTypeActivity.this,TousuActivity.class);
                                 mIntent.putExtra("DATA",(Serializable) mSelectObject);
+                                mIntent.putExtra("type",type);
                                 startActivity(mIntent);
                                 finish();
                             }

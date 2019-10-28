@@ -2,7 +2,7 @@ package cn.wildfire.chat.kit.search;
 
 import java.util.List;
 
-class SearchResult {
+public class SearchResult {
     SearchableModule module;
     List<Object> result;
 

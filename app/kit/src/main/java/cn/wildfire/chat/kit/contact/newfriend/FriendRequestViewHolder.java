@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.lr.biyou.R;
 
@@ -91,7 +93,8 @@ public class FriendRequestViewHolder extends RecyclerView.ViewHolder {
         }
 
         if (userInfo != null) {
-            Glide.with(fragment).load(userInfo.portrait).apply(new RequestOptions().centerCrop().placeholder(R.mipmap.avatar_def).centerCrop()).into(portraitImageView);
+            Glide.with(fragment).load(userInfo.portrait).apply(new RequestOptions().centerCrop().placeholder(R.mipmap.avatar_def).transforms(new CenterCrop(), new RoundedCorners(10)).centerCrop()).into(portraitImageView);
+
         }
     }
 
