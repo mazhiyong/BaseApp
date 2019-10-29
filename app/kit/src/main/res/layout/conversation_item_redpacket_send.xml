@@ -13,7 +13,6 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/imageView"
-            android:visibility="gone"
             android:src="@drawable/hongbao"
             android:layout_width="@dimen/dp_25"
             android:layout_gravity="left"
@@ -29,7 +28,6 @@
 
     <TextView
         android:id="@+id/red_tv"
-        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

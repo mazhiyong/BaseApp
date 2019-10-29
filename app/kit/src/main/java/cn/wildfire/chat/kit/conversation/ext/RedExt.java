@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.lr.biyou.R;
 import com.lr.biyou.ui.moudle2.activity.RedMoneyActivity;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.UtilTools;
 
 import cn.wildfire.chat.kit.annotation.ExtContextMenuItem;
@@ -31,36 +32,47 @@ public class RedExt extends ConversationExt {
 //        TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_FILE);
 //        messageViewModel.sendMessage(conversation, content);
 
-
+        LogUtilDebug.i("show","会话类型:"+conversation.type);
         TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_RED);
         messageViewModel.sendMessage(conversation, content);
 
         Intent intent = new Intent(activity, RedMoneyActivity.class);
         intent.putExtra("id",conversation.target);
-        intent.putExtra("type","1");
+        if (conversation.type == Conversation.ConversationType.Single){
+            intent.putExtra("type","1");
+        }else {
+            intent.putExtra("type","2");
+        }
+
+
         startActivityForResult(intent, 101);
+
+
+
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            Bundle bundle = data.getExtras();
-            if (bundle != null){
-                String cid = bundle.get("red_id")+"";
-                String content ;
-                if (UtilTools.empty(bundle.get("text"))){
-                    content = "大吉大利,恭喜发财";
-                }else {
-                    content = bundle.get("text")+"";
-                }
 
-                RedPacketMessageContent messageContent = new RedPacketMessageContent();
-                messageContent.setContent(content);
-                messageContent.cid = cid;
-                messageContent.redPackType = "1";
-                messageViewModel.sendRedMessage(conversation,messageContent);
-            }
+                    Bundle bundle = data.getExtras();
+                    if (bundle != null){
+                        String cid = bundle.get("red_id")+"";
+                        String content ;
+                        if (UtilTools.empty(bundle.get("text"))){
+                            content = "大吉大利,恭喜发财";
+                        }else {
+                            content = bundle.get("text")+"";
+                        }
+
+                        RedPacketMessageContent messageContent = new RedPacketMessageContent();
+                        messageContent.setContent(content);
+                        messageContent.cid = cid;
+                        messageContent.redPackType = "1";
+                        messageViewModel.sendRedMessage(conversation,messageContent);
+                    }
+
 
 
         }

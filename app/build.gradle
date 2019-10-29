@@ -323,7 +323,6 @@ dependencies {
     //内存泄漏检测工具
     //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-2'
     implementation 'androidx.exifinterface:exifinterface:1.1.0-rc01'
-
     api 'com.huawei.android.hms:push:2.6.1.301'
     api 'com.meizu.flyme.internet:push-internal:3.6.+@aar'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'

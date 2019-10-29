@@ -1,15 +1,18 @@
 package cn.wildfire.chat.kit.conversation.message.viewholder;
 
+import android.content.Intent;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lqr.emoji.MoonUtils;
 import com.lr.biyou.R;
+import com.lr.biyou.ui.moudle2.activity.RedListActivity;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,36 +29,50 @@ import cn.wildfirechat.message.RedPacketMessageContent;
 @ReceiveLayoutRes(resId = R.layout.conversation_item_redpacket_receive)
 @EnableContextMenu
 public class RedPacketMessageContentViewHolder extends NormalMessageContentViewHolder {
+    @NonNull
+    protected ConversationFragment fragment;
+
     @BindView(R.id.contentTextView)
     TextView contentTextView;
+    @BindView(R.id.imageView)
+    ImageView imageView;
+    @BindView(R.id.red_tv)
+    TextView redTv;
+
+    String redId;
+    String redPackType;
 
     public RedPacketMessageContentViewHolder(ConversationFragment fragment, RecyclerView.Adapter adapter, View itemView) {
         super(fragment, adapter, itemView);
+        this.fragment = fragment;
     }
 
     @Override
     public void onBind(UiMessage message) {
         MoonUtils.identifyFaceExpression(fragment.getContext(), contentTextView, ((RedPacketMessageContent) message.message.content).getContent(), ImageSpan.ALIGN_BOTTOM);
+        redId = ((RedPacketMessageContent) message.message.content).cid;
+        redPackType = ((RedPacketMessageContent) message.message.content).redPackType;
+        if (redPackType.equals("1")){
+            redTv.setText("币友红包");
+            imageView.setVisibility(View.VISIBLE);
+        }else {
+            redTv.setText("币友转账");
+            imageView.setVisibility(View.GONE);
+        }
 
 
-        String cid =((RedPacketMessageContent) message.message.content).cid;
-        String redPackType =((RedPacketMessageContent) message.message.content).redPackType;
+        LogUtilDebug.i("show", "cid***:" + redId);
+        LogUtilDebug.i("show", "redPackType***:" + redPackType);
 
-        Log.i("show","cid***:"+cid);
-        Log.i("show","redPackType***:"+redPackType);
-
-     /*   contentTextView.setMovementMethod(new LinkTextViewMovementMethod(new LinkClickListener() {
-            @Override
-            public boolean onLinkClick(String link) {
-                WfcWebViewActivity.loadUrl(fragment.getContext(), "", link);
-                return true;
-            }
-        }));*/
     }
 
     @OnClick(R.id.contentTextView)
     public void onClickTest(View view) {
-        Toast.makeText(fragment.getContext(), "onTextMessage click: " + ((RedPacketMessageContent) message.message.content).getContent(), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(fragment.getContext(), RedListActivity.class);
+        intent.putExtra("id",redId);
+        intent.putExtra("type",redPackType);
+        fragment.getContext().startActivity(intent);
+
     }
 
 

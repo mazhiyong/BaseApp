@@ -22,6 +22,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
 import com.lr.biyou.R;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 
 import java.util.ArrayList;
 
@@ -128,6 +129,7 @@ public class UserInfoFragment extends Fragment {
     }
 
     private void setUserInfo(UserInfo userInfo) {
+        LogUtilDebug.i("show","头像url:"+userInfo.portrait);
         Glide.with(this).load(userInfo.portrait).apply(new RequestOptions().centerCrop().placeholder(R.mipmap.avatar_def).centerCrop()).into(portraitImageView);
         nameTextView.setText("账号:"+userInfo.name);
        nickyNameTextView.setText("备注:"+userViewModel.getUserDisplayName(userInfo));
