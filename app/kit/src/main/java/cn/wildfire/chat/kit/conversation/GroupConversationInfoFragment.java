@@ -39,6 +39,7 @@ import com.kyleduo.switchbutton.SwitchButton;
 import com.lr.biyou.R;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.chatry.utils.ToastUtils;
+import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.ui.moudle.activity.MainActivity;
 import com.lr.biyou.ui.moudle2.activity.ChoseReasonTypeActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
@@ -410,30 +411,74 @@ public class GroupConversationInfoFragment extends Fragment implements Conversat
 
     @OnClick(R.id.quitButton)
     void quitGroup() {
+
+        SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(getActivity(), true);
         if (groupInfo != null && userViewModel.getUserId().equals(groupInfo.owner)) {
-            groupViewModel.dismissGroup(conversationInfo.conversation.target, Collections.singletonList(0)).observe(this, aBoolean -> {
-                if (aBoolean != null && aBoolean) {
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getActivity(), "退出群组失败", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            groupViewModel.quitGroup(conversationInfo.conversation.target, Collections.singletonList(0)).observe(this, aBoolean -> {
-                if (aBoolean != null && aBoolean) {
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getActivity(), "退出群组失败", Toast.LENGTH_SHORT).show();
-                }
-            });
+            sureOrNoDialog.initValue("提示", "是否解散当前群聊？");
+        }else {
+            sureOrNoDialog.initValue("提示", "是否确定退出当前群聊？");
         }
+        sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.cancel:
+                        sureOrNoDialog.dismiss();
+                        break;
+                    case R.id.confirm:
+                        sureOrNoDialog.dismiss();
+                        if (groupInfo != null && userViewModel.getUserId().equals(groupInfo.owner)) {
+                            groupViewModel.dismissGroup(conversationInfo.conversation.target, Collections.singletonList(0)).observe(getActivity(), aBoolean -> {
+                                if (aBoolean != null && aBoolean) {
+                                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(getActivity(), "退出群组失败", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            groupViewModel.quitGroup(conversationInfo.conversation.target, Collections.singletonList(0)).observe(getActivity(), aBoolean -> {
+                                if (aBoolean != null && aBoolean) {
+                                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(getActivity(), "退出群组失败", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                        break;
+                }
+            }
+        });
+        sureOrNoDialog.show();
+        sureOrNoDialog.setCanceledOnTouchOutside(false);
+        sureOrNoDialog.setCancelable(true);
+
     }
 
     @OnClick(R.id.clearMessagesOptionItemView)
     void clearMessage() {
-        conversationViewModel.clearConversationMessage(conversationInfo.conversation);
+        SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(getActivity(), true);
+        sureOrNoDialog.initValue("提示", "是否清空聊天记录？");
+        sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.cancel:
+                        sureOrNoDialog.dismiss();
+                        break;
+                    case R.id.confirm:
+                        sureOrNoDialog.dismiss();
+                        conversationViewModel.clearConversationMessage(conversationInfo.conversation);
+                        break;
+                }
+            }
+        });
+        sureOrNoDialog.show();
+        sureOrNoDialog.setCanceledOnTouchOutside(false);
+        sureOrNoDialog.setCancelable(true);
+
     }
 
     @OnClick(R.id.groupQRCodeOptionItemView)

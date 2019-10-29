@@ -101,7 +101,8 @@ public class UserInfoFragment extends Fragment {
             voipChatButton.setVisibility(View.GONE);
             inviteButton.setVisibility(View.GONE);
             qrCodeOptionItemView.setVisibility(View.VISIBLE);
-            aliasOptionItemView.setVisibility(View.VISIBLE);
+            aliasOptionItemView.setVisibility(View.GONE);
+            aliasOptionItemView.setTitle("修改昵称");
         } else if (contactViewModel.isFriend(userInfo.uid)) {
             // friend
             chatButton.setVisibility(View.VISIBLE);
@@ -132,7 +133,14 @@ public class UserInfoFragment extends Fragment {
         LogUtilDebug.i("show","头像url:"+userInfo.portrait);
         Glide.with(this).load(userInfo.portrait).apply(new RequestOptions().centerCrop().placeholder(R.mipmap.avatar_def).centerCrop()).into(portraitImageView);
         nameTextView.setText("账号:"+userInfo.name);
-       nickyNameTextView.setText("备注:"+userViewModel.getUserDisplayName(userInfo));
+        String selfUid = userViewModel.getUserId();
+        if (selfUid.equals(userInfo.uid)) {
+            // self
+            nickyNameTextView.setText("昵称:"+userViewModel.getUserDisplayName(userInfo));
+        }else {
+            nickyNameTextView.setText("备注:"+userViewModel.getUserDisplayName(userInfo));
+        }
+
 
         /* if (ChatManager.Instance().isMyFriend(userInfo.uid)) {
             mobileTextView.setText("电话:" + userInfo.mobile);
@@ -172,7 +180,7 @@ public class UserInfoFragment extends Fragment {
     @OnClick(R.id.portraitImageView)
     void portrait() {
         if (userInfo.uid.equals(userViewModel.getUserId())) {
-            updatePortrait();
+            //updatePortrait();
         } else {
             // TODO show big portrait
         }
@@ -212,6 +220,6 @@ public class UserInfoFragment extends Fragment {
     void showMyQRCode() {
         UserInfo userInfo = userViewModel.getUserInfo(userViewModel.getUserId(), false);
         String qrCodeValue = WfcScheme.QR_CODE_PREFIX_USER + userInfo.uid;
-        startActivity(QRCodeActivity.buildQRCodeIntent(getActivity(), "二维码", userInfo.portrait, qrCodeValue));
+        startActivity(QRCodeActivity.buildQRCodeIntent(getActivity(), "我的二维码", userInfo.portrait, qrCodeValue));
     }
 }

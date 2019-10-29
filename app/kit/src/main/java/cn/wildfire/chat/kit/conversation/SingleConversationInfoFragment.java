@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kyleduo.switchbutton.SwitchButton;
 import com.lr.biyou.R;
+import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.ui.moudle2.activity.ChoseReasonTypeActivity;
 
 import java.util.ArrayList;
@@ -111,7 +112,26 @@ public class SingleConversationInfoFragment extends Fragment implements Conversa
 
     @OnClick(R.id.clearMessagesOptionItemView)
     void clearMessage() {
-        conversationViewModel.clearConversationMessage(conversationInfo.conversation);
+        SureOrNoDialog sureOrNoDialog = new SureOrNoDialog(getActivity(), true);
+        sureOrNoDialog.initValue("提示", "是否清空聊天记录？");
+        sureOrNoDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.cancel:
+                        sureOrNoDialog.dismiss();
+                        break;
+                    case R.id.confirm:
+                        sureOrNoDialog.dismiss();
+                        conversationViewModel.clearConversationMessage(conversationInfo.conversation);
+                        break;
+                }
+            }
+        });
+        sureOrNoDialog.show();
+        sureOrNoDialog.setCanceledOnTouchOutside(false);
+        sureOrNoDialog.setCancelable(true);
+
     }
 
     @OnClick(R.id.searchMessageOptionItemView)
