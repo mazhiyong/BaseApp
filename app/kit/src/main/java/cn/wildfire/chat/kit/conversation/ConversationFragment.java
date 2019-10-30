@@ -134,7 +134,7 @@ public class ConversationFragment extends Fragment implements
                     reloadMessage();
                     return;
                 }
-                Log.i("show","adapter.addNewMessage(uiMessage)");
+
                 adapter.addNewMessage(uiMessage);
                 if (moveToBottom || uiMessage.message.sender.equals(ChatManager.Instance().getUserId())) {
                     UIUtils.postTaskDelay(() -> {
@@ -475,7 +475,8 @@ public class ConversationFragment extends Fragment implements
             conversationTitle = userViewModel.getUserDisplayName(userInfo);
         } else if (conversation.type == Conversation.ConversationType.Group) {
             if (groupInfo != null) {
-                conversationTitle = groupInfo.name + "(" + groupInfo.memberCount + "人)";
+
+                conversationTitle = groupInfo.name ;
             }
         } else if (conversation.type == Conversation.ConversationType.Channel) {
             ChannelViewModel channelViewModel = ViewModelProviders.of(this).get(ChannelViewModel.class);
@@ -674,7 +675,7 @@ public class ConversationFragment extends Fragment implements
                 typingDesc = "对方正在发送位置";
                 break;
             default:
-                typingDesc = "unknown";
+                typingDesc = "对方正在输入";
                 break;
         }
         setActivityTitle(typingDesc);

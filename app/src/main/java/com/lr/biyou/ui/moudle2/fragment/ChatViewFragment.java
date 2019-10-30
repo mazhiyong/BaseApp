@@ -4,14 +4,12 @@ import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -244,6 +242,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             conversationListViewModel.reloadConversationUnreadStatus();
         }
 
+
     }
 
     private void isConnncted() {
@@ -365,7 +364,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
 
     private boolean checkDisplayName() {
-        UserViewModel userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+       /* UserViewModel userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         SharedPreferences sp = getActivity().getSharedPreferences("config", Context.MODE_PRIVATE);
         cn.wildfirechat.model.UserInfo userInfo = userViewModel.getUserInfo(userViewModel.getUserId(), false);
         if (userInfo != null && TextUtils.equals(userInfo.displayName, userInfo.mobile)) {
@@ -374,7 +373,7 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                 updateDisplayName();
                 return false;
             }
-        }
+        }*/
         return true;
     }
 

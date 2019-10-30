@@ -22,10 +22,9 @@ import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.mywidget.dialog.TradePassDialog;
-import com.lr.biyou.chatry.im.message.RongRedPacketMessage;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.ui.moudle.activity.ResetPayPassButActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
-import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
@@ -37,9 +36,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 
 /**
  * 转账
@@ -91,7 +87,7 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
 
     private String fromStr;
     private String toStr;
-    private String tarid ="";
+   // private String tarid ="";
     private String type = "";
     private String id = "";
 
@@ -110,7 +106,7 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            tarid = bundle.getString("tarid");
+            //tarid = bundle.getString("tarid");
             type = bundle.getString("type");
             id = bundle.getString("id");
         }
@@ -133,8 +129,16 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                     showToastMsg("请选择币种");
                 }else {
                     if (s.toString().length()>0){
-                        total = Float.parseFloat(rate)*Integer.parseInt(s.toString())+"";
-                        cnyTv.setText("≈ "+total+"CNY");
+                        if (s.toString().contains(".")){
+                            if (s.toString().length() > 3){
+                                total = Float.parseFloat(rate)*Float.parseFloat(s.toString())+"";
+                                cnyTv.setText("≈ "+total+"CNY");
+                            }
+                        }else {
+                            total = Float.parseFloat(rate)*Float.parseFloat(s.toString())+"";
+                            cnyTv.setText("≈ "+total+"CNY");
+                        }
+
                     }else {
                         cnyTv.setText("≈ 0.00CNY");
                     }
@@ -222,7 +226,9 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
             mTradePassDialog.mForgetPassTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //getMsgCodeAction();
+                    Intent intent = new Intent(TransferMoneyActivity.this, ResetPayPassButActivity.class);
+                    startActivity(intent);
+
                 }
             });
 
@@ -267,10 +273,16 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                     case "0": //请求成功
                         mTradePassDialog.dismiss();
                         String red_id = tData.get("data")+"";
+                        intent = new Intent();
+                        intent.putExtra("red_id",red_id);
+                        intent.putExtra("text","转账"+etMoney.getText()+"USDT,请查收");
+                        setResult(RESULT_OK,intent);
+
                         finish();
+                      /*
                         if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
                             RongRedPacketMessage rongRedPacketMessage = RongRedPacketMessage.obtain("2",red_id, "转账"+etMoney.getText()+"USDT,请查收");
-                            RongIM.getInstance().getRongIMClient().sendMessage(Conversation.ConversationType.PRIVATE, tarid, rongRedPacketMessage, null, null, new RongIMClient.SendMessageCallback() {
+                            RongIM.getInstance().getRongIMClient().sendMessage(Conversation.ConversationType.PRIVATE, id, rongRedPacketMessage, null, null, new RongIMClient.SendMessageCallback() {
                                 @Override
                                 public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
                                     LogUtilDebug.i("show", "-----onError--" + errorCode);
@@ -282,7 +294,7 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                                     sendMessageAction();
                                 }
                             });
-                        }
+                        }*/
                         break;
                     case "-1": //请求失败
                         showToastMsg(tData.get("msg") + "");

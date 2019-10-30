@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,6 @@ import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;
 import com.lr.biyou.utils.tool.AppUtil;
-import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.yanzhenjie.permission.Permission;
 
 import java.io.ByteArrayOutputStream;
@@ -193,15 +193,12 @@ public class GroupConversationInfoFragment extends Fragment implements Conversat
         progressBar.setVisibility(View.VISIBLE);
 
         groupViewModel = ViewModelProviders.of(this).get(GroupViewModel.class);
-        LogUtilDebug.i("show", "群id>>>>>:" + conversationInfo.conversation.target);
-
         groupInfo = groupViewModel.getGroupInfo(conversationInfo.conversation.target, false);
 
-        LogUtilDebug.i("show", "群id2>>>>>:" + conversationInfo.conversation.target);
-
-        GlideUtils.loadImage(getActivity(), groupInfo.portrait, headIv);
         if (groupInfo != null) {
+            GlideUtils.loadImage(getActivity(), groupInfo.portrait, headIv);
             groupMember = ChatManager.Instance().getGroupMember(groupInfo.target, ChatManager.Instance().getUserId());
+            Log.i("show","群成员数量:"+groupInfo.memberCount);
         }
 
         if (groupMember == null || groupMember.type == GroupMember.GroupMemberType.Removed) {
@@ -209,14 +206,34 @@ public class GroupConversationInfoFragment extends Fragment implements Conversat
             getActivity().finish();
             return;
         }
+        //加载群成员
         loadAndShowGroupMembers(true);
 
         userViewModel.userInfoLiveData().observe(this, userInfos -> loadAndShowGroupMembers(false));
-
-
+        //是否保存到通讯录更新
         observerFavGroupsUpdate();
+        //群信息数据更新
         observerGroupInfoUpdate();
+        //群成员数据更新
         observerGroupMembersUpdate();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        groupInfo = groupViewModel.getGroupInfo(conversationInfo.conversation.target, false);
+        if (groupInfo != null) {
+            groupMember = ChatManager.Instance().getGroupMember(groupInfo.target, ChatManager.Instance().getUserId());
+            GlideUtils.loadImage(getActivity(), groupInfo.portrait, headIv);
+        }
+        if (groupMember == null || groupMember.type == GroupMember.GroupMemberType.Removed) {
+            Toast.makeText(getActivity(), "你不在群组或发生错误, 请稍后再试", Toast.LENGTH_SHORT).show();
+            getActivity().finish();
+            return;
+        }
+        //加载群成员
+        loadAndShowGroupMembers(true);
     }
 
     private void observerFavGroupsUpdate() {
@@ -235,8 +252,13 @@ public class GroupConversationInfoFragment extends Fragment implements Conversat
 
 
 
+
+
+
+
     private void observerGroupMembersUpdate() {
         groupViewModel.groupMembersUpdateLiveData().observe(this, groupMembers -> {
+
             loadAndShowGroupMembers(false);
         });
     }
@@ -427,25 +449,30 @@ public class GroupConversationInfoFragment extends Fragment implements Conversat
                         break;
                     case R.id.confirm:
                         sureOrNoDialog.dismiss();
+                        groupViewModel.setFavGroup(groupInfo.target, false);
                         if (groupInfo != null && userViewModel.getUserId().equals(groupInfo.owner)) {
-                            groupViewModel.dismissGroup(conversationInfo.conversation.target, Collections.singletonList(0)).observe(getActivity(), aBoolean -> {
-                                if (aBoolean != null && aBoolean) {
-                                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                                    startActivity(intent);
-                                } else {
-                                    Toast.makeText(getActivity(), "退出群组失败", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        } else {
-                            groupViewModel.quitGroup(conversationInfo.conversation.target, Collections.singletonList(0)).observe(getActivity(), aBoolean -> {
-                                if (aBoolean != null && aBoolean) {
-                                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                                    startActivity(intent);
-                                } else {
-                                    Toast.makeText(getActivity(), "退出群组失败", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
+                                groupViewModel.dismissGroup(conversationInfo.conversation.target, Collections.singletonList(0)).observe(getActivity(), aBoolean -> {
+                                    if (aBoolean != null && aBoolean) {
+                                        groupViewModel.setFavGroup(groupInfo.target, false);
+                                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                                        startActivity(intent);
+                                    } else {
+                                        groupViewModel.setFavGroup(groupInfo.target, true);
+                                        Toast.makeText(getActivity(), "退出群组失败", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                groupViewModel.quitGroup(conversationInfo.conversation.target, Collections.singletonList(0)).observe(getActivity(), aBoolean -> {
+                                    if (aBoolean != null && aBoolean) {
+                                        groupViewModel.setFavGroup(groupInfo.target, false);
+                                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                                        startActivity(intent);
+                                    } else {
+                                        groupViewModel.setFavGroup(groupInfo.target, true);
+                                        Toast.makeText(getActivity(), "退出群组失败,请稍后再试", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
 
                         break;
                 }

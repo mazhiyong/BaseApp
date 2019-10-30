@@ -2,6 +2,7 @@ package cn.wildfire.chat.kit.conversation.ext;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
@@ -11,8 +12,11 @@ import com.lr.biyou.utils.tool.LogUtilDebug;
 
 import cn.wildfire.chat.kit.annotation.ExtContextMenuItem;
 import cn.wildfire.chat.kit.conversation.ext.core.ConversationExt;
+import cn.wildfirechat.message.RedPacketMessageContent;
 import cn.wildfirechat.message.TypingMessageContent;
 import cn.wildfirechat.model.Conversation;
+
+import static android.app.Activity.RESULT_OK;
 
 public class TransinfoExt extends ConversationExt {
     /**
@@ -44,7 +48,23 @@ public class TransinfoExt extends ConversationExt {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
 
+            Bundle bundle = data.getExtras();
+            if (bundle != null){
+                String cid = bundle.get("red_id")+"";
+                String content = bundle.get("text")+"";
+
+                RedPacketMessageContent messageContent = new RedPacketMessageContent();
+                messageContent.setContent(content);
+                messageContent.cid = cid;
+                messageContent.redPackType = "2";
+                messageViewModel.sendRedMessage(conversation,messageContent);
+            }
+
+
+
+        }
     }
 
     @Override

@@ -161,7 +161,9 @@ public class ContactViewModel extends ViewModel implements OnFriendUpdateListene
         ChatManager.Instance().deleteFriend(userId, new GeneralCallback() {
             @Override
             public void onSuccess() {
+                //删除好友成功,同时删除当前好友的会话
                 ChatManager.Instance().removeConversation(new Conversation(Conversation.ConversationType.Single, userId, 0), true);
+
                 result.postValue(new OperateResult<>(0));
             }
 

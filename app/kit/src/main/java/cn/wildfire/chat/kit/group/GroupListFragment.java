@@ -41,6 +41,31 @@ public class GroupListFragment extends Fragment implements OnGroupItemClickListe
         this.onGroupItemClickListener = onGroupItemClickListener;
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ChatManager.Instance().getMyGroups(new GetGroupsCallback() {
+            @Override
+            public void onSuccess(List<GroupInfo> groupInfos) {
+                if (groupInfos == null || groupInfos.isEmpty()) {
+                    groupsLinearLayout.setVisibility(View.GONE);
+                    tipTextView.setVisibility(View.VISIBLE);
+                    return;
+                }
+                groupListAdapter.setGroupInfos(groupInfos);
+                groupListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFail(int errorCode) {
+                groupsLinearLayout.setVisibility(View.GONE);
+                tipTextView.setVisibility(View.VISIBLE);
+                tipTextView.setText("请求错误: " + errorCode);
+            }
+        });
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

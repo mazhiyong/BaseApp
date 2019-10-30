@@ -10,6 +10,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,8 @@ public class CreateConversationActivity extends PickConversationTargetActivity {
                 dialog.dismiss();
                 if (result.isSuccess()) {
                     UIUtils.showToast(UIUtils.getString(R.string.create_group_success));
+                    LogUtilDebug.i("show","创建群聊成功:"+result.getResult());
+                    groupViewModel.setFavGroup(result.getResult(), true);
                     Intent intent = new Intent(CreateConversationActivity.this, ConversationActivity.class);
                     Conversation conversation = new Conversation(Conversation.ConversationType.Group, result.getResult(), 0);
                     intent.putExtra("conversation", conversation);

@@ -23,6 +23,7 @@ import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.mywidget.dialog.TradePassDialog;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.ui.moudle.activity.ResetPayPassButActivity;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
@@ -98,6 +99,12 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
             //tarid = bundle.getString("tarid");
             type = bundle.getString("type");
             id = bundle.getString("id");
+        }
+        if (type.equals("1")){
+            etnumber.setText("1");
+            etnumber.setEnabled(false);
+        }else {
+            etnumber.setEnabled(true);
         }
 
         mTitleText.setText("发红包");
@@ -202,7 +209,9 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
             mTradePassDialog.mForgetPassTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //getMsgCodeAction();
+                    Intent intent = new Intent(RedMoneyActivity.this, ResetPayPassButActivity.class);
+                    startActivity(intent);
+
                 }
             });
 

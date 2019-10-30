@@ -43,7 +43,7 @@
         android:id="@+id/forget_trade_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="忘记密码?"
+        android:text="忘记密码?重置"
         android:textSize="@dimen/sp_14"
         android:textColor="@color/blue"
         android:gravity="center"

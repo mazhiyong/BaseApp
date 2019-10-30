@@ -242,6 +242,7 @@
         <EditText
             android:id="@+id/et_money"
             android:hint="0"
+            android:inputType="numberDecimal"
             android:gravity="right"
             android:background="@null"
             android:layout_gravity="center_vertical"

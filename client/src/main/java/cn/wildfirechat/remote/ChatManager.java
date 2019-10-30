@@ -1240,7 +1240,6 @@ public class ChatManager {
      * @param callback 发送消息状态回调
      */
     public void sendMessage(final Message msg, final SendMessageCallback callback) {
-        Log.i("show","红包00005");
         sendMessage(msg, 0, callback);
     }
 
@@ -1289,13 +1288,9 @@ public class ChatManager {
             }
         }
         try {
-            Log.i("show","msg:"+msg.getClass());
-            Log.i("show","msg2:"+msg.content.getType());
-            Log.i("show","msg3:"+msg.content.getPersistFlag());
             mClient.send(msg, new cn.wildfirechat.client.ISendMessageCallback.Stub() {
                 @Override
                 public void onSuccess(final long messageUid, final long timestamp) throws RemoteException {
-                    Log.i("show","发送成功");
                     msg.messageUid = messageUid;
                     msg.serverTime = timestamp;
                     msg.status = MessageStatus.Sent;
@@ -1331,7 +1326,6 @@ public class ChatManager {
 
                 @Override
                 public void onPrepared(final long messageId, final long savedTime) throws RemoteException {
-                    Log.i("show","准备发送");
                     msg.messageId = messageId;
                     msg.serverTime = savedTime;
                     mainHandler.post(() -> {
@@ -1347,7 +1341,6 @@ public class ChatManager {
                 @Override
                 public void onProgress(final long uploaded, final long total) throws RemoteException {
 
-                    Log.i("show","发送进度");
                     if (callback != null) {
                         mainHandler.post(() -> callback.onProgress(uploaded, total));
                     }
@@ -2648,7 +2641,7 @@ public class ChatManager {
                         });
                     }
 
-                    UserInfo userInfo = getUserInfo(userId, false);
+                    UserInfo userInfo = getUserInfo(userId, true);
                     onUserInfoUpdate(Collections.singletonList(userInfo));
                 }
 

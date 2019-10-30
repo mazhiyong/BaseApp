@@ -23,6 +23,7 @@ import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.TradePassDialog;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.ui.moudle.activity.ResetPayPassButActivity;
 import com.lr.biyou.ui.moudle.activity.TestScanActivity;
 import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;
@@ -207,7 +208,9 @@ public class TiBiActivity extends BasicActivity implements RequestView ,TradePas
             mTradePassDialog.mForgetPassTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //getMsgCodeAction();
+                    Intent intent = new Intent(TiBiActivity.this, ResetPayPassButActivity.class);
+                    startActivity(intent);
+
                 }
             });
 

@@ -19,8 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import java.util.Locale;
-
 import com.lr.biyou.R;
 import com.lr.biyou.chatry.common.IntentExtra;
 import com.lr.biyou.chatry.db.model.FriendStatus;
@@ -34,9 +32,12 @@ import com.lr.biyou.chatry.ui.view.SettingItemView;
 import com.lr.biyou.chatry.ui.widget.SelectableRoundedImageView;
 import com.lr.biyou.chatry.utils.ImageLoaderUtils;
 import com.lr.biyou.chatry.utils.ToastUtils;
+import com.lr.biyou.chatry.utils.log.SLog;
 import com.lr.biyou.chatry.viewmodel.UserDetailViewModel;
 import com.lr.biyou.chatry.viewmodel.UserInfoViewModel;
-import com.lr.biyou.chatry.utils.log.SLog;
+
+import java.util.Locale;
+
 import io.rong.callkit.RongCallAction;
 import io.rong.callkit.RongVoIPIntent;
 import io.rong.calllib.RongCallClient;

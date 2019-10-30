@@ -190,7 +190,6 @@ public class MessageViewModel extends ViewModel implements OnReceiveMessageListe
     }
 
     public void sendMessage(Conversation conversation, MessageContent content) {
-        Log.i("show","红包00003");
         Message msg = new Message();
         msg.conversation = conversation;
         msg.content = content;
@@ -198,7 +197,6 @@ public class MessageViewModel extends ViewModel implements OnReceiveMessageListe
     }
 
     public void sendMessage(Message message) {
-        Log.i("show","红包00004");
         // the call back would be called on the ui thread
         message.sender = ChatManager.Instance().getUserId();
         ChatManager.Instance().sendMessage(message, null);

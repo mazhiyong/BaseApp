@@ -351,6 +351,7 @@ public class ConversationInputPanel extends FrameLayout implements IEmotionSelec
             return;
         }
 
+        //群聊发送消息
         TextMessageContent txtContent = new TextMessageContent(content.toString().trim());
         if (conversation.type == Conversation.ConversationType.Group) {
             MentionSpan[] mentions = content.getSpans(0, content.length(), MentionSpan.class);

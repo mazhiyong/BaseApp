@@ -47,6 +47,7 @@ import com.lr.biyou.mywidget.dialog.TradePassDialog;
 import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
+import com.lr.biyou.ui.moudle.activity.ResetPayPassButActivity;
 import com.lr.biyou.ui.moudle4.activity.DingDanListActivity;
 import com.lr.biyou.ui.moudle4.activity.PayMoneyActivity;
 import com.lr.biyou.ui.moudle4.adapter.DingDanListAdapter;
@@ -1746,7 +1747,9 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
             mTradePassDialog.mForgetPassTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //getMsgCodeAction();
+                    Intent intent = new Intent(getParentFragment().getActivity(), ResetPayPassButActivity.class);
+                    startActivity(intent);
+
                 }
             });
 

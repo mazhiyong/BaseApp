@@ -84,7 +84,7 @@ public class UserInfoActivity extends WfcBaseActivity {
                                             Intent intent = new Intent(UserInfoActivity.this, MainActivity.class);
                                             startActivity(intent);
                                         } else {
-                                            Toast.makeText(UserInfoActivity.this, "delete friend error " + booleanOperateResult.getErrorCode(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(UserInfoActivity.this, "删除好友失败 " + booleanOperateResult.getErrorCode(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                             );
