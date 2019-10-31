@@ -227,8 +227,8 @@ public class ChatManager {
 
         INST.checkRemoteService();
 
-        SharedPreferences sp = gContext.getSharedPreferences("wildfirechat.config", Context.MODE_PRIVATE);
-        INST.userId = sp.getString("userId", null);
+        SharedPreferences sp = gContext.getSharedPreferences("config", Context.MODE_PRIVATE);
+        INST.userId = sp.getString("id", null);
         INST.token = sp.getString("token", null);
     }
 
@@ -1169,7 +1169,6 @@ public class ChatManager {
      * @return 是否是新用户。新用户需要同步信息，耗时较长，可以增加等待提示。
      */
     public boolean connect(String userId, String token) {
-        Log.i("show","开始连接到聊天服务器!!!");
         if (TextUtils.isEmpty(userId) || TextUtils.isEmpty(token)) {
             throw new IllegalArgumentException("userId and token must be empty!");
         }
@@ -1180,10 +1179,8 @@ public class ChatManager {
 
         if (mClient != null) {
             try {
-                SharedPreferences sp = gContext.getSharedPreferences("wildfirechat.config", Context.MODE_PRIVATE);
-                sp.edit().putString("userId", userId)
-                        .putString("token", token)
-                        .commit();
+                SharedPreferences sp = gContext.getSharedPreferences("config", Context.MODE_PRIVATE);
+                sp.edit().putString("id", userId).putString("token", token).apply();
                 if (mClient.connect(this.userId,this.token)){
                     Log.i("show","连接到聊天服务器成功!!!");
                 }else {
@@ -1203,13 +1200,17 @@ public class ChatManager {
      * @param cleanSession 是否清除会话session，清除之后，所有之前的会话信息会被删除
      */
     public void disconnect(boolean cleanSession) {
+        Log.i("show","断开聊天服务器000");
         if (mClient != null) {
+            Log.i("show","断开聊天服务器001");
             try {
+                Log.i("show","断开聊天服务器002");
                 mClient.disconnect(cleanSession);
-                SharedPreferences sp = gContext.getSharedPreferences("wildfirechat.config", Context.MODE_PRIVATE);
-                sp.edit().clear().commit();
+                SharedPreferences sp = gContext.getSharedPreferences("config", Context.MODE_PRIVATE);
+                sp.edit().clear().apply();
             } catch (RemoteException e) {
                 e.printStackTrace();
+                Log.i("show","断开聊天服务器003");
             }
             this.userId = null;
             this.token = null;
@@ -3374,6 +3375,7 @@ public class ChatManager {
      * @return
      */
     public boolean isIMServiceConnected() {
+
         return mClient != null;
     }
 

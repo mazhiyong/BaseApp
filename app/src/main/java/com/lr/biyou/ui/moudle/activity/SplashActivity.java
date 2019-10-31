@@ -73,7 +73,7 @@ public class SplashActivity extends BasicActivity {
 
     private DataBaseHelper dataBaseHelper;
     // 声明控件对象
-    private int count = 3;
+    private int count = 2;
     private Animation animation;
     private boolean isJump = false;
     private boolean isClick = false;
@@ -108,10 +108,6 @@ public class SplashActivity extends BasicActivity {
         //loadImage();
         //imageTask();
 
-
-
-
-
     }
 
 
@@ -130,7 +126,7 @@ public class SplashActivity extends BasicActivity {
         mNameView.setVisibility(View.GONE);
         textView.setText(count + "");
 
-        mCountdownProgressView.setTimeMillis(3000);
+        mCountdownProgressView.setTimeMillis(2000);
         mCountdownProgressView.start();
         mCountdownProgressView.setProgressListener(new CountDownProgressView.OnProgressListener() {
             @Override
@@ -150,7 +146,7 @@ public class SplashActivity extends BasicActivity {
 
     private void initView() {
         initSqlit();
-        initAnimation();
+       // initAnimation();
        // HandlerUtil.init(this).postMessage(null, null, 500, count);
 
         HandlerUtil.doMessage(new HandlerUtil.MessageCallBack() {

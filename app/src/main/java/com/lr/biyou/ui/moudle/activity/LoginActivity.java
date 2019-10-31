@@ -29,9 +29,7 @@ import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
-import com.lr.biyou.chatry.common.ResultCallback;
 import com.lr.biyou.chatry.im.IMManager;
-import com.lr.biyou.chatry.model.UserCacheInfo;
 import com.lr.biyou.chatry.sp.UserCache;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
@@ -47,6 +45,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.wildfire.chat.kit.ChatManagerHolder;
+import cn.wildfirechat.client.ConnectionStatus;
 
 
 public class LoginActivity extends BasicActivity implements CompoundButton.OnCheckedChangeListener {
@@ -237,8 +236,8 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
 
         mTogglePwd.setOnCheckedChangeListener(this);
 
-        if (ChatManagerHolder.gChatManager != null && ChatManagerHolder.gChatManager.isIMServiceConnected()){
-            ChatManagerHolder.gChatManager.disconnect(true);
+        if (ChatManagerHolder.gChatManager != null && ChatManagerHolder.gChatManager.getConnectionStatus() == ConnectionStatus.ConnectionStatusConnected){
+            ChatManagerHolder.gChatManager .disconnect(true);
             LogUtilDebug.i("show","断开聊天服务器");
         }else {
             LogUtilDebug.i("show","聊天服务器已断开");
@@ -442,7 +441,7 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
 
     @Override
     public void disimissProgress() {
-        dismissProgressDialog();
+        //dismissProgressDialog();
     }
 
     @Override
@@ -457,31 +456,18 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
                 switch (tData.get("code")+""){
                     case "0":
                         MbsConstans.ACCESS_TOKEN = tData.get("data") + "";
-                        //LogUtilDebug.i("show","token:"+tData.get("access_token"));
                       /*  if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)){
                             MbsConstans.ACCESS_TOKEN = "";
                         }*/
                         if (!UtilTools.empty(tData.get("ry_data")+"")){
                             MbsConstans.RONGYUN_MAP = (Map<String, Object>) tData.get("ry_data");
                             SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA, JSONUtil.getInstance().objectToJson(MbsConstans.RONGYUN_MAP));
-                            //连接聊天服务器
-                            LogUtilDebug.i("show",MbsConstans.RONGYUN_MAP.get("id")+" /  "+MbsConstans.RONGYUN_MAP.get("token"));
-                            ChatManagerHolder.gChatManager.connect(MbsConstans.RONGYUN_MAP.get("id")+"", MbsConstans.RONGYUN_MAP.get("token")+"");
-                            SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
-                            sp.edit().putString("id", MbsConstans.RONGYUN_MAP.get("id")+"")
-                                    .putString("token",MbsConstans.RONGYUN_MAP.get("token")+"")
-                                    .apply();
-                            //ChatManagerHolder.gChatManager.connect("y1yAyAcc", "tI+XxGlBv4wttm+azuhINtNWmbqtXX7m5SVeUMwbWfTHf9/2dARCkGh0I/YGZNVq355Gid3TvPqQInyAdp28Y41YC/qejcC1XkawsDgCqfyIHegVhYz/A8DwttTIAslIkrwoHeayf/YpBvOU+S5t/0sQTtogIvaPcx90usm7tbM=");
-
                         }
-
-
                         SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, MbsConstans.ACCESS_TOKEN);
                         SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.LOGIN_ACCOUNT, mAccount+"");
                         SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.LOGIN_PASSWORD,mPassWord+"");
 
-                        LogUtilDebug.i("show","***********");
-                        imManager.connectIM(MbsConstans.RONGYUN_MAP.get("token")+"", true, new ResultCallback<String>() {
+                     /*   imManager.connectIM(MbsConstans.RONGYUN_MAP.get("token")+"", true, new ResultCallback<String>() {
                             @Override
                             public void onSuccess(String s) {
                                 // 存储当前登录成功的用户信息
@@ -496,23 +482,19 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
                             public void onFail(int errorCode) {
                                 LogUtilDebug.i("show","链接rong融云失败");
                             }
-                        });
-
+                        });*/
 
                         intent = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(intent);
                         break;
-
                     case "1":
-                        showToastMsg(tData.get("msg")+"");
-                        break;
-
                     case "-1":
+                        mBtnLogin.setEnabled(true);
                         showToastMsg(tData.get("msg")+"");
                         break;
                 }
 
-                mBtnLogin.setEnabled(true);
+                dismissProgressDialog();
                 break;
             case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
                 MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
@@ -524,6 +506,7 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
 
     @Override
     public void loadDataError(Map<String, Object> map, String mType) {
+        dismissProgressDialog();
         mBtnLogin.setEnabled(true);
         String msg = map.get("errmsg") + "";
         showToastMsg(msg);

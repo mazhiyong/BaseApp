@@ -87,10 +87,6 @@ public class LoadingWindow extends Dialog  implements DialogInterface.OnKeyListe
 				.apply(options)
 				.into(mImageView);
 
-		/*Glide.with(mContext)
-				.asGif()
-				.load(R.drawable.loding)
-				.into(mImageView);*/
 
 
 

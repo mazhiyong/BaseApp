@@ -4,10 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Process;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -59,9 +61,12 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.wildfire.chat.kit.ChatManagerHolder;
 import cn.wildfire.chat.kit.contact.ContactViewModel;
 import cn.wildfire.chat.kit.conversationlist.ConversationListViewModel;
 import cn.wildfire.chat.kit.conversationlist.ConversationListViewModelFactory;
+import cn.wildfirechat.client.ConnectionStatus;
+import cn.wildfirechat.remote.OnConnectionStatusChangeListener;
 import io.rong.imlib.model.Conversation;
 
 public class MainActivity extends BasicActivity implements RequestView {
@@ -176,6 +181,39 @@ public class MainActivity extends BasicActivity implements RequestView {
         //mAutoScrollTextView.setSelected(true);
         userCache = new UserCache(getApplicationContext());
         imManager = IMManager.getInstance();
+
+
+        SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
+        String id = sp.getString("id", null);
+        String token = sp.getString("token", null);
+        if (TextUtils.isEmpty(id) || TextUtils.isEmpty(token)) {
+            if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {
+                String s = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
+                MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
+            }
+            ChatManagerHolder.gChatManager.connect(MbsConstans.RONGYUN_MAP.get("id")+"", MbsConstans.RONGYUN_MAP.get("token")+"");
+            sp.edit().putString("id", MbsConstans.RONGYUN_MAP.get("id")+"")
+                    .putString("token",MbsConstans.RONGYUN_MAP.get("token")+"")
+                    .apply();
+        }
+
+        ChatManagerHolder.gChatManager.addConnectionChangeListener(new OnConnectionStatusChangeListener() {
+            @Override
+            public void onConnectionStatusChange(int status) {
+                switch (status){
+                    case  ConnectionStatus.ConnectionStatusTokenIncorrect:
+                    case  ConnectionStatus.ConnectionStatusLogout:
+                    case  ConnectionStatus.ConnectionStatusUnconnected:
+                        Intent intent1 = new Intent(MainActivity.this,LoginActivity.class);
+                        startActivity(intent1);
+                        finish();
+                        break;
+                }
+
+            }
+        });
+
+
 
        /* //连接融云
         if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {

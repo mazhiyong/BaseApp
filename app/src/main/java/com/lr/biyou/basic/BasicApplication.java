@@ -118,7 +118,6 @@ public class BasicApplication extends MultiDexApplication {
 		//IMManager.getInstance().init(this);
 
 		Stetho.initializeWithDefaults(this);
-
 		SearchUtils.init(this);
 
 		Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
