@@ -351,7 +351,6 @@
             <cn.wildfire.chat.kit.widget.OptionItemView
                 android:id="@+id/tousuMessageOptionItemView"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="@dimen/dp_45"
                 android:layout_marginTop="@dimen/dp_20"
                 android:background="@drawable/selector_option_item"
