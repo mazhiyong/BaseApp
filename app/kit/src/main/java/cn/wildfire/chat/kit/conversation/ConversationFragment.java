@@ -4,17 +4,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +35,10 @@ import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.flyco.dialog.utils.CornerUtils;
 import com.lr.biyou.R;
+import com.lr.biyou.utils.imageload.GlideUtils;
+import com.lr.biyou.utils.tool.UtilTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +66,7 @@ import cn.wildfire.chat.kit.viewmodel.SettingViewModel;
 import cn.wildfire.chat.kit.widget.InputAwareLayout;
 import cn.wildfire.chat.kit.widget.KeyboardAwareLinearLayout;
 import cn.wildfirechat.message.MessageContent;
+import cn.wildfirechat.message.TextMessageContent;
 import cn.wildfirechat.message.TypingMessageContent;
 import cn.wildfirechat.message.core.MessageDirection;
 import cn.wildfirechat.message.core.PersistFlag;
@@ -124,6 +133,15 @@ public class ConversationFragment extends Fragment implements
         @Override
         public void onChanged(@Nullable UiMessage uiMessage) {
             if (!isMessageInCurrentConversation(uiMessage)) {
+                //不是当前聊天的消息,弹窗
+                if (uiMessage.message.content.getType() == 91){
+                    //正在输入
+                    return;
+                }else {
+                    initPopupWindow(uiMessage);
+                }
+
+
                 return;
             }
             MessageContent content = uiMessage.message.content;
@@ -311,11 +329,13 @@ public class ConversationFragment extends Fragment implements
             conversationViewModel = WfcUIKit.getAppScopeViewModel(ConversationViewModel.class);
             conversationViewModel.clearConversationMessageLiveData().observeForever(clearConversationMessageObserver);
             messageViewModel = ViewModelProviders.of(this).get(MessageViewModel.class);
-
             messageViewModel.messageLiveData().observeForever(messageLiveDataObserver);
             messageViewModel.messageUpdateLiveData().observeForever(messageUpdateLiveDatObserver);
             messageViewModel.messageRemovedLiveData().observeForever(messageRemovedLiveDataObserver);
             messageViewModel.mediaUpdateLiveData().observeForever(mediaUploadedLiveDataObserver);
+
+
+
 
             userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
             userViewModel.userInfoLiveData().observeForever(userInfoUpdateLiveDataObserver);
@@ -768,4 +788,172 @@ public class ConversationFragment extends Fragment implements
             view.setEnabled(enable);
         }
     }
+
+
+
+
+    private View popView;
+    private PopupWindow mConditionDialog;
+    private boolean bright = false;
+
+    private void initPopupWindow(UiMessage uiMessage) {
+
+        if (mConditionDialog == null) {
+            popView = LayoutInflater.from(getActivity()).inflate(R.layout.item_head_news, null);
+            mConditionDialog = new PopupWindow(popView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            mConditionDialog.setClippingEnabled(false);
+            initConditionDialog(popView);
+            int screenWidth = UtilTools.getScreenWidth(getActivity());
+            //int screenHeight=UtilTools.getScreenHeight(getActivity());
+            mConditionDialog.setWidth((int) (0.8f * screenWidth));
+            mConditionDialog.setHeight(UtilTools.dip2px(getActivity(), 55));
+
+            //设置background后在外点击才会消失
+            mConditionDialog.setBackgroundDrawable(CornerUtils.cornerDrawable(Color.parseColor("#ffffff"), UtilTools.dip2px(getActivity(), 5)));
+            //mConditionDialog.setOutsideTouchable(true);// 设置可允许在外点击消失
+            //自定义动画
+            mConditionDialog.setAnimationStyle(R.style.popWindowStyle);
+            //mConditionDialog.setAnimationStyle(android.R.style.Animation_Activity);//使用系统动画
+            mConditionDialog.update();
+            mConditionDialog.setTouchable(true);
+            mConditionDialog.setFocusable(true);
+            //popView.requestFocus();//pop设置不setBackgroundDrawable情况，把焦点给popView，添加popView.setOnKeyListener。可实现点击外部不消失，点击反键才消失
+            //			mConditionDialog.showAtLocation(mCityTv, Gravity.TOP|Gravity.RIGHT, 0, 0); //设置layout在PopupWindow中显示的位置
+            //mConditionDialog.showAtLocation(getActivity().getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
+            int offX = (UtilTools.getScreenWidth(getActivity()) - mConditionDialog.getWidth()) / 2;
+            mConditionDialog.showAsDropDown(recyclerView, offX, UtilTools.dip2px(getActivity(), 60), Gravity.LEFT);
+            //toggleBright();
+            mConditionDialog.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    //toggleBright();
+                }
+            });
+        } else {
+
+            //mConditionDialog.showAtLocation(getActivity().getWindow().getDecorView(),  Gravity.TOP|Gravity.RIGHT, 0, 0);
+            int offX = (UtilTools.getScreenWidth(getActivity()) - mConditionDialog.getWidth()) / 2;
+            mConditionDialog.showAsDropDown(recyclerView, offX, UtilTools.dip2px(getActivity(), 60), Gravity.LEFT);
+            //toggleBright();
+        }
+        updata(uiMessage);
+    }
+
+    TextView seeTV;
+    TextView nameTV;
+    TextView contentTV;
+    ImageView headIv;
+
+    private void initConditionDialog(View view) {
+        seeTV = view.findViewById(R.id.see_tv);
+        nameTV = view.findViewById(R.id.name_tv);
+        contentTV = view.findViewById(R.id.content_tv);
+        headIv = view.findViewById(R.id.head_iv);
+
+       /* final View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                switch (v.getId()) {
+                    case R.id.see_tv:
+                        mConditionDialog.dismiss();
+                        showToastMsg("查看详情");
+
+                        RongIM.getInstance().startPrivateChat(ConversationActivity.this,targetId2,"弹窗");
+                        break;
+
+                }
+            }
+        };*/
+
+
+        //seeTV.setOnClickListener(onClickListener);
+    }
+
+
+
+    private CountTimer countTimer;
+
+    private void updata(UiMessage message) {
+        UserInfo userInfo= userViewModel.getUserInfo(message.message.sender,false);
+        GlideUtils.loadCircleImage(getActivity(),userInfo.portrait, headIv);
+        nameTV.setText(userInfo.displayName);
+      /*  int ContentType_Unknown = 0;
+        int ContentType_Text = 1;
+        int ContentType_Voice = 2;
+        int ContentType_Image = 3;
+        int ContentType_Location = 4;
+        int ContentType_File = 5;
+        int ContentType_Video = 6;
+        int ContentType_Sticker = 7;
+        int ContentType_ImageText = 8;
+        //自定义消息红包
+        int getContentType_ImageRed = 2000;*/
+        switch (message.message.content.getType()) {
+
+
+            case 1: //text
+                TextMessageContent messageContent = (TextMessageContent) message.message.content;
+                contentTV.setText(messageContent.getContent());
+                break;
+            case 2: //语音
+                contentTV.setText("向您发送了一条语音消息");
+                break;
+            case 3: //图片
+                contentTV.setText("向您发送了一条图片消息");
+                break;
+            case 4: //位置
+                contentTV.setText("向您发送了一条位置消息");
+                break;
+            case 5: //文件
+                contentTV.setText("向您发送了一条文件消息");
+                break;
+            case 8: //图文
+                contentTV.setText("向您发送了一条图文消息");
+                break;
+            case 2000: //红包
+                contentTV.setText("向您发送了一条红包消息");
+                break;
+
+            default:
+                contentTV.setText("向您发送了一条新消息");
+                break;
+
+
+        }
+        cancelTimer();
+        countTimer = new CountTimer(2000, 1500);
+        countTimer.start();
+
+    }
+
+    private class CountTimer extends CountDownTimer {
+        public CountTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish() {
+            cancel();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            if (millisUntilFinished < 1000 && mConditionDialog.isShowing()) {
+                mConditionDialog.dismiss();
+            }
+        }
+    }
+
+
+    public void cancelTimer() {
+        if (countTimer != null) {
+            countTimer.cancel();
+            countTimer = null;
+        }
+       /* if (mConditionDialog != null && mConditionDialog.isShowing()) {
+            mConditionDialog.dismiss();
+        }*/
+    }
+
 }

@@ -14,6 +14,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import cn.wildfire.chat.kit.audio.AudioPlayManager;
 import cn.wildfire.chat.kit.audio.IAudioPlayListener;
 import cn.wildfire.chat.kit.conversation.message.model.UiMessage;
@@ -209,6 +210,7 @@ public class MessageViewModel extends ViewModel implements OnReceiveMessageListe
         ChatManager.Instance().setConversationDraft(conversation, null);
     }
 
+    //设置草稿
     public void saveDraft(Conversation conversation, String draftString) {
         ChatManager.Instance().setConversationDraft(conversation, draftString);
     }

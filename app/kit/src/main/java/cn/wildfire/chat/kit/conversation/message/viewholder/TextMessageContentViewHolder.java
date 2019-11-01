@@ -6,7 +6,6 @@ import android.content.Context;
 import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,14 +34,6 @@ import cn.wildfirechat.message.TextMessageContent;
 public class TextMessageContentViewHolder extends NormalMessageContentViewHolder {
     @BindView(R.id.contentTextView)
     TextView contentTextView;
-   /* @BindView(R.id.bac_lay)
-    LinearLayout bacLay;
-    @BindView(R.id.red_tv)
-    TextView redTv;
-    @BindView(R.id.imageView)
-    ImageView redIv;*/
-
-
 
     public TextMessageContentViewHolder(ConversationFragment fragment, RecyclerView.Adapter adapter, View itemView) {
         super(fragment, adapter, itemView);
@@ -54,27 +45,6 @@ public class TextMessageContentViewHolder extends NormalMessageContentViewHolder
     public void onBind(UiMessage message) {
         MoonUtils.identifyFaceExpression(fragment.getContext(), contentTextView, ((TextMessageContent) message.message.content).getContent(), ImageSpan.ALIGN_BOTTOM);
         //拓展消息 001红包  002转账 003名片
-      /*  if (message.message.direction.equals(MessageDirection.Send)){
-            if (message.message.content.extra.equals("1")){
-                bacLay.setBackgroundResource(R.drawable.de_ic_bubble_right);
-                redTv.setVisibility(View.VISIBLE);
-                redTv.setText("币友红包");
-                redIv.setVisibility(View.VISIBLE);
-                contentTextView.setTextColor(Color.WHITE);
-            }
-        }else {
-            if (message.message.content.extra.equals("1")){
-                bacLay.setBackgroundResource(R.drawable.de_ic_bubble_left);
-                redTv.setVisibility(View.VISIBLE);
-                redTv.setText("币友红包");
-                redIv.setVisibility(View.VISIBLE);
-                contentTextView.setTextColor(Color.WHITE);
-            }
-        }
-*/
-
-
-
 
         contentTextView.setMovementMethod(new LinkTextViewMovementMethod(new LinkClickListener() {
             @Override
@@ -87,7 +57,7 @@ public class TextMessageContentViewHolder extends NormalMessageContentViewHolder
 
     @OnClick(R.id.contentTextView)
     public void onClickTest(View view) {
-        Toast.makeText(fragment.getContext(), "onTextMessage click: " + ((TextMessageContent) message.message.content).getContent(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(fragment.getContext(), "onTextMessage click: " + ((TextMessageContent) message.message.content).getContent(), Toast.LENGTH_SHORT).show();
     }
 
 

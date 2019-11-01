@@ -41,6 +41,31 @@ public class GroupListFragment extends Fragment implements OnGroupItemClickListe
         this.onGroupItemClickListener = onGroupItemClickListener;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        ChatManager.Instance().getMyGroups(new GetGroupsCallback() {
+            @Override
+            public void onSuccess(List<GroupInfo> groupInfos) {
+                if (groupInfos == null || groupInfos.isEmpty()) {
+                    groupsLinearLayout.setVisibility(View.GONE);
+                    tipTextView.setVisibility(View.VISIBLE);
+                    return;
+                }
+                groupListAdapter.setGroupInfos(groupInfos);
+                groupListAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFail(int errorCode) {
+                groupsLinearLayout.setVisibility(View.GONE);
+                tipTextView.setVisibility(View.VISIBLE);
+                tipTextView.setText("error: " + errorCode);
+            }
+        });
+    }
+
 
     @Override
     public void onResume() {
@@ -81,25 +106,6 @@ public class GroupListFragment extends Fragment implements OnGroupItemClickListe
         recyclerView.setAdapter(groupListAdapter);
         groupListAdapter.setOnGroupItemClickListener(this);
 
-        ChatManager.Instance().getMyGroups(new GetGroupsCallback() {
-            @Override
-            public void onSuccess(List<GroupInfo> groupInfos) {
-                if (groupInfos == null || groupInfos.isEmpty()) {
-                    groupsLinearLayout.setVisibility(View.GONE);
-                    tipTextView.setVisibility(View.VISIBLE);
-                    return;
-                }
-                groupListAdapter.setGroupInfos(groupInfos);
-                groupListAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFail(int errorCode) {
-                groupsLinearLayout.setVisibility(View.GONE);
-                tipTextView.setVisibility(View.VISIBLE);
-                tipTextView.setText("error: " + errorCode);
-            }
-        });
     }
 
     @Override

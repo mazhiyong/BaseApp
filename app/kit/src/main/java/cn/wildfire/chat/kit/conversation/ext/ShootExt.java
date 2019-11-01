@@ -17,7 +17,6 @@ import cn.wildfire.chat.kit.annotation.ExtContextMenuItem;
 import cn.wildfire.chat.kit.conversation.ext.core.ConversationExt;
 import cn.wildfire.chat.kit.mm.TakePhotoActivity;
 import cn.wildfire.chat.kit.third.utils.ImageUtils;
-import cn.wildfirechat.message.TypingMessageContent;
 import cn.wildfirechat.model.Conversation;
 
 import static android.app.Activity.RESULT_OK;
@@ -39,8 +38,8 @@ public class ShootExt extends ConversationExt {
         }
         Intent intent = new Intent(activity, TakePhotoActivity.class);
         startActivityForResult(intent, 100);
-        TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_CAMERA);
-        messageViewModel.sendMessage(conversation, content);
+       /* TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_CAMERA);
+        messageViewModel.sendMessage(conversation, content);*/
     }
 
     @Override

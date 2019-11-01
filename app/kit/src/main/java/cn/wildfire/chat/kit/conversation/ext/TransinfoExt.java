@@ -13,7 +13,6 @@ import com.lr.biyou.utils.tool.LogUtilDebug;
 import cn.wildfire.chat.kit.annotation.ExtContextMenuItem;
 import cn.wildfire.chat.kit.conversation.ext.core.ConversationExt;
 import cn.wildfirechat.message.RedPacketMessageContent;
-import cn.wildfirechat.message.TypingMessageContent;
 import cn.wildfirechat.model.Conversation;
 
 import static android.app.Activity.RESULT_OK;
@@ -27,9 +26,9 @@ public class TransinfoExt extends ConversationExt {
     public void transInfo(View containerView, Conversation conversation) {
         LogUtilDebug.i("show","会话类型:"+conversation.type);
 
-
+/*
         TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_RED);
-        messageViewModel.sendMessage(conversation, content);
+        messageViewModel.sendMessage(conversation, content);*/
 
 
         Intent intent = new Intent(activity, TransferMoneyActivity.class);

@@ -14,8 +14,6 @@ import com.facebook.stetho.Stetho;
 import com.lr.biyou.BuildConfig;
 import com.lr.biyou.api.Config;
 import com.lr.biyou.chatry.common.ErrorCode;
-import com.lr.biyou.chatry.contact.PhoneContactManager;
-import com.lr.biyou.chatry.utils.SearchUtils;
 import com.lr.biyou.utils.tool.AppContextUtil;
 import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.SPCookieStore;
@@ -34,7 +32,6 @@ import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
 import cn.wildfire.chat.kit.WfcUIKit;
 import cn.wildfire.chat.kit.conversation.message.viewholder.MessageViewHolderManager;
 import cn.wildfire.chat.kit.location.viewholder.LocationMessageContentViewHolder;
-import io.rong.imlib.ipc.RongExceptionHandler;
 import okhttp3.OkHttpClient;
 
 import static com.wanou.framelibrary.okgoutil.OkGoUtils.TIMEOUT_SECOND;
@@ -116,16 +113,14 @@ public class BasicApplication extends MultiDexApplication {
 		}
 		// 初始化融云IM SDK，初始化 SDK 仅需要在主进程中初始化一次
 		//IMManager.getInstance().init(this);
-
 		Stetho.initializeWithDefaults(this);
-		SearchUtils.init(this);
-
-		Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
+		//SearchUtils.init(this);
+		//Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
 
 		// 微信分享初始化
 		//WXManager.getInstance().init(this);
 
-		PhoneContactManager.getInstance().init(this);
+		//PhoneContactManager.getInstance().init(this);
 
 		registerActivityListener();
 		//setTypeface();

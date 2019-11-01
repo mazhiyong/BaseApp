@@ -16,7 +16,6 @@ import cn.wildfire.chat.kit.annotation.ExtContextMenuItem;
 import cn.wildfire.chat.kit.conversation.ext.core.ConversationExt;
 import cn.wildfire.chat.kit.third.utils.ImageUtils;
 import cn.wildfire.chat.kit.utils.FileUtils;
-import cn.wildfirechat.message.TypingMessageContent;
 import cn.wildfirechat.model.Conversation;
 
 public class FileExt extends ConversationExt {
@@ -31,8 +30,8 @@ public class FileExt extends ConversationExt {
         intent.setType("*/*");//无类型限制
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(intent, 100);
-        TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_FILE);
-        messageViewModel.sendMessage(conversation, content);
+       /* TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_FILE);
+        messageViewModel.sendMessage(conversation, content);*/
     }
 
     @Override

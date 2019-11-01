@@ -13,7 +13,6 @@ import cn.wildfire.chat.kit.annotation.ExtContextMenuItem;
 import cn.wildfire.chat.kit.conversation.ext.core.ConversationExt;
 import cn.wildfire.chat.kit.location.data.LocationData;
 import cn.wildfire.chat.kit.location.ui.activity.MyLocationActivity;
-import cn.wildfirechat.message.TypingMessageContent;
 import cn.wildfirechat.model.Conversation;
 
 import static android.app.Activity.RESULT_OK;
@@ -40,8 +39,8 @@ public class LocationExt extends ConversationExt {
 
         Intent intent = new Intent(activity, MyLocationActivity.class);
         startActivityForResult(intent, 100);
-        TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_LOCATION);
-        messageViewModel.sendMessage(conversation, content);
+       /* TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_LOCATION);
+        messageViewModel.sendMessage(conversation, content);*/
 
 
 

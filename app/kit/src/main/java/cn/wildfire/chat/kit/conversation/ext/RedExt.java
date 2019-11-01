@@ -13,7 +13,6 @@ import com.lr.biyou.utils.tool.UtilTools;
 import cn.wildfire.chat.kit.annotation.ExtContextMenuItem;
 import cn.wildfire.chat.kit.conversation.ext.core.ConversationExt;
 import cn.wildfirechat.message.RedPacketMessageContent;
-import cn.wildfirechat.message.TypingMessageContent;
 import cn.wildfirechat.model.Conversation;
 
 import static android.app.Activity.RESULT_OK;
@@ -33,8 +32,8 @@ public class RedExt extends ConversationExt {
 //        messageViewModel.sendMessage(conversation, content);
 
         LogUtilDebug.i("show","会话类型:"+conversation.type);
-        TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_RED);
-        messageViewModel.sendMessage(conversation, content);
+       /* TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_RED);
+        messageViewModel.sendMessage(conversation, content);*/
 
         Intent intent = new Intent(activity, RedMoneyActivity.class);
         intent.putExtra("id",conversation.target);
