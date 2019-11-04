@@ -183,7 +183,9 @@ public class MessageViewModel extends ViewModel implements OnReceiveMessageListe
     }
 
     public void stopPlayAudio() {
-        AudioPlayManager.getInstance().stopPlay();
+        if (AudioPlayManager.getInstance() != null){
+            AudioPlayManager.getInstance().stopPlay();
+        }
     }
 
     public void sendMessage(Conversation conversation, List<String> toUsers, MessageContent content) {

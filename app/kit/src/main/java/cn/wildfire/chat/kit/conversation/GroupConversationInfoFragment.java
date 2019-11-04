@@ -239,12 +239,15 @@ public class GroupConversationInfoFragment extends Fragment implements Conversat
     private void observerFavGroupsUpdate() {
         groupViewModel.getMyGroups().observe(this, listOperateResult -> {
             if (listOperateResult.isSuccess()) {
-                for (GroupInfo info : listOperateResult.getResult()) {
-                    if (groupInfo.target.equals(info.target)) {
-                        markGroupSwitchButton.setChecked(true);
-                        break;
+                if (listOperateResult.getResult() != null && listOperateResult.getResult().size()> 0){
+                    for (GroupInfo info : listOperateResult.getResult()) {
+                        if (groupInfo != null && groupInfo.target.equals(info.target)) {
+                            markGroupSwitchButton.setChecked(true);
+                            break;
+                        }
                     }
                 }
+
             }
         });
     }

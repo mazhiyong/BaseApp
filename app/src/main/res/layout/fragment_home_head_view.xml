@@ -109,7 +109,6 @@
                 android:layout_height="126dp"
                 android:layout_weight="1"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_launcher"
                 />
 
             <ImageView
@@ -120,7 +119,7 @@
                 android:layout_marginRight="@dimen/dp_10"
                 android:layout_weight="1"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_launcher"
+
                 />
 
             <ImageView
@@ -129,7 +128,6 @@
                 android:layout_height="126dp"
                 android:layout_weight="1"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_launcher"
                 />
 
         </LinearLayout>

@@ -58,6 +58,7 @@ import cn.wildfire.chat.kit.conversation.message.model.UiMessage;
 import cn.wildfire.chat.kit.conversation.multimsg.MultiMessageAction;
 import cn.wildfire.chat.kit.conversation.multimsg.MultiMessageActionManager;
 import cn.wildfire.chat.kit.group.GroupViewModel;
+import cn.wildfire.chat.kit.third.utils.TimeUtils;
 import cn.wildfire.chat.kit.third.utils.UIUtils;
 import cn.wildfire.chat.kit.user.UserInfoActivity;
 import cn.wildfire.chat.kit.user.UserViewModel;
@@ -839,6 +840,7 @@ public class ConversationFragment extends Fragment implements
         updata(uiMessage);
     }
 
+    TextView timeTv;
     TextView seeTV;
     TextView nameTV;
     TextView contentTV;
@@ -849,6 +851,7 @@ public class ConversationFragment extends Fragment implements
         nameTV = view.findViewById(R.id.name_tv);
         contentTV = view.findViewById(R.id.content_tv);
         headIv = view.findViewById(R.id.head_iv);
+        timeTv = view.findViewById(R.id.time_tv);
 
        /* final View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
@@ -878,6 +881,7 @@ public class ConversationFragment extends Fragment implements
         UserInfo userInfo= userViewModel.getUserInfo(message.message.sender,false);
         GlideUtils.loadCircleImage(getActivity(),userInfo.portrait, headIv);
         nameTV.setText(userInfo.displayName);
+        timeTv.setText(TimeUtils.getMsgFormatTime(message.message.serverTime));
       /*  int ContentType_Unknown = 0;
         int ContentType_Text = 1;
         int ContentType_Voice = 2;
@@ -890,8 +894,6 @@ public class ConversationFragment extends Fragment implements
         //自定义消息红包
         int getContentType_ImageRed = 2000;*/
         switch (message.message.content.getType()) {
-
-
             case 1: //text
                 TextMessageContent messageContent = (TextMessageContent) message.message.content;
                 contentTV.setText(messageContent.getContent());

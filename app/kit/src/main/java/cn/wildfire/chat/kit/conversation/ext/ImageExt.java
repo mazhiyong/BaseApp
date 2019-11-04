@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import cn.wildfire.chat.kit.annotation.ExtContextMenuItem;
 import cn.wildfire.chat.kit.conversation.ext.core.ConversationExt;
 import cn.wildfire.chat.kit.third.utils.ImageUtils;
+import cn.wildfirechat.message.TypingMessageContent;
 import cn.wildfirechat.model.Conversation;
 
 public class ImageExt extends ConversationExt {
@@ -27,8 +28,8 @@ public class ImageExt extends ConversationExt {
     public void pickImage(View containerView, Conversation conversation) {
         Intent intent = ImagePicker.picker().showCamera(true).enableMultiMode(9).buildPickIntent(activity);
         startActivityForResult(intent, 100);
-        /*TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_CAMERA);
-        messageViewModel.sendMessage(conversation, content);*/
+        TypingMessageContent content = new TypingMessageContent(TypingMessageContent.TYPING_CAMERA);
+        messageViewModel.sendMessage(conversation, content);
     }
 
     @Override

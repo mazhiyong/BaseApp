@@ -68,6 +68,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="MediaStore.Images.Media.INTERNAL_CONTENT_URI" />
     <uses-permission android:name="MediaStore.Images.Media.EXTERNAL_CONTENT_URI" /> <!-- ⼩米 配置开始 < -->
+
     <permission
         android:name="permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature"
@@ -1564,6 +1565,8 @@
 
         <!-- Socket后台服务-->
         <service android:name=".service.SocketService"/>
+
+        <service android:name="com.lzf.easyfloat.service.FloatService" />
     </application>
 
 </manifest>

@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+                xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/splash_view"
@@ -19,7 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_120"
-        android:background="@drawable/ic_launcher"
         android:visibility="invisible" />
 
     <RelativeLayout
@@ -36,7 +34,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_15"
-            android:src="@drawable/ic_launcher"
             android:textColor="@color/white" 
             />
     </RelativeLayout>

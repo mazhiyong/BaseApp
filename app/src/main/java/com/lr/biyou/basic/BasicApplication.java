@@ -7,11 +7,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import androidx.multidex.MultiDexApplication;
 
 import com.facebook.stetho.Stetho;
 import com.lr.biyou.BuildConfig;
+import com.lr.biyou.R;
 import com.lr.biyou.api.Config;
 import com.lr.biyou.chatry.common.ErrorCode;
 import com.lr.biyou.utils.tool.AppContextUtil;
@@ -38,7 +40,7 @@ import static com.wanou.framelibrary.okgoutil.OkGoUtils.TIMEOUT_SECOND;
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 public class BasicApplication extends MultiDexApplication {
-	int appCount=0;
+	public  int appCount=0;
 
 	private WfcUIKit wfcUIKit;
 
@@ -88,6 +90,7 @@ public class BasicApplication extends MultiDexApplication {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
 		ErrorCode.init(this);
 		mMainThreadId = android.os.Process.myTid();
 		mHandler = new Handler();
@@ -342,11 +345,11 @@ public class BasicApplication extends MultiDexApplication {
 						public void onActivityStopped(Activity activity) {
 							// TODO Auto-generated method stub
 							appCount--;
-							/*if(appCount==0){
+							if(appCount==0){
 								Toast.makeText(getApplicationContext(),
 										getResources().getString(R.string.app_name_main)+"应用进入后台运行",
 										Toast.LENGTH_LONG).show();
-							}*/
+							}
 						}
 						@Override
 						public void onActivitySaveInstanceState(Activity activity, Bundle

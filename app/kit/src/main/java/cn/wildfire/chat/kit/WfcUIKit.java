@@ -25,6 +25,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.lqr.emoji.LQREmotionKit;
 import com.lr.biyou.R;
 import com.lr.biyou.api.Config;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -153,13 +154,16 @@ public class WfcUIKit implements AVEngineKit.AVEngineCallback, OnReceiveMessageL
 
     @Override
     public void onReceiveMessage(List<Message> messages, boolean hasMore) {
+        //后台运行收到消息
         if (isBackground) {
             // FIXME: 2018/5/28 只是临时方案，No_Persist消息，我觉得不应当到这儿，注册监听时，
             // 就表明自己关系哪些类型的消息, 设置哪些种类的消息
-
+            LogUtilDebug.i("show","后台运行收到全局消息");
             if (messages == null) {
                 return;
             }
+
+
 
             List<Message> msgs = new ArrayList<>(messages);
             long now = System.currentTimeMillis();
@@ -172,9 +176,32 @@ public class WfcUIKit implements AVEngineKit.AVEngineCallback, OnReceiveMessageL
                     iterator.remove();
                 }
             }
+
+           /* boolean b = PermissionUtils.checkPermission(BasicApplication.getContext());
+            if (b){
+                LogUtilDebug.i("show","运行悬浮窗:"+ ActivityManager.getInstance().currentActivity().getLocalClassName());
+                EasyFloat.with(ActivityManager.getInstance().currentActivity())
+                        .setLayout(R.layout.item_head_news_all)
+                        .setShowPattern(ShowPattern.ALL_TIME)
+                        .setSidePattern(SidePattern.RESULT_LEFT)
+                        // 设置浮窗是否可拖拽
+                        .setDragEnable(false)
+                        // 设置宽高是否充满父布局，直接在xml设置match_parent属性无效
+                        .setMatchParent(true, false)
+                        .show();
+
+                //EasyFloat.dismiss(ActivityManager.getInstance().currentActivity());
+
+
+            }else {
+                LogUtilDebug.i("show","禁止悬浮窗");
+                //请求授权悬浮窗权限
+            }
+*/
+            //系统通知栏显示未读消息
             WfcNotificationManager.getInstance().handleReceiveMessage(application, msgs);
         } else {
-            // do nothing
+            // do nothing 前台运行
         }
     }
 

@@ -258,8 +258,8 @@ public class RedListActivity extends BasicActivity implements RequestView, ReLoa
             refreshListView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
             refreshListView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
 
-            refreshListView.setPullRefreshEnabled(true);
-            refreshListView.setLoadMoreEnabled(true);
+            refreshListView.setPullRefreshEnabled(false);
+            refreshListView.setLoadMoreEnabled(false);
 
 
         } else {

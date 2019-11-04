@@ -105,7 +105,6 @@
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:padding="@dimen/dp_8"
-                        android:src="@drawable/ic_launcher"
                         android:scaleType="centerInside"
                         android:visibility="gone"
                         />

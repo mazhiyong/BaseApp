@@ -160,8 +160,8 @@ public class MainActivity extends BasicActivity implements RequestView {
         StatusBarUtil.setTranslucentForImageView(this, MbsConstans.ALPHA, null);
         initView();
 
-        mDownIntent = new Intent(this, DownloadService.class);
-        startService(mDownIntent);
+        //mDownIntent = new Intent(this, DownloadService.class);
+        //startService(mDownIntent);
 
         mIndexData = IndexData.getInstance();
 
@@ -173,9 +173,9 @@ public class MainActivity extends BasicActivity implements RequestView {
         //Intent msgIntent=new Intent(this, SocketService.class);
         //startService(msgIntent);
 
-       // getAppVersion();
+        // getAppVersion();
         getUserInfoAction();
-       // getNameCodeInfo();
+        // getNameCodeInfo();
 
         //mAutoScrollTextView = findViewById(R.id.scroll_text_view);
         //mAutoScrollTextView.setSelected(true);
@@ -183,28 +183,66 @@ public class MainActivity extends BasicActivity implements RequestView {
         imManager = IMManager.getInstance();
 
 
+
+      /*  //首次安装启动
+        String code = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.IS_FIRST_START, "") + "";
+        Log.i("show","code:"+code+"   APP_CODE:"+MbsConstans.UpdateAppConstans.VERSION_APP_CODE);
+        if (!code.equals(MbsConstans.UpdateAppConstans.VERSION_APP_CODE + "")) {
+            new AlertDialog.Builder(this)
+                    .setCancelable(false)
+                    .setTitle(R.string.title_dialog)
+                    .setMessage("开启系统悬浮窗,当应用置于后台时,可在第一时间收到消息通知")
+                    .setPositiveButton("开启", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dismiss();
+                            PermissionUtils.requestPermission(MainActivity.this, new OnPermissionResult() {
+                                @Override
+                                public void permissionResult(boolean b) {
+                                    if (b){
+                                        ToastUtils.showToast("悬浮窗开启成功");
+                                    }else {
+                                        ToastUtils.showToast("悬浮窗开启失败");
+                                    }
+                                }
+                            });
+                        }
+                    })
+                    .setNegativeButton("暂不", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dismiss();
+                        }
+                    })
+                    .show();
+
+            SPUtils.put(MainActivity.this, MbsConstans.SharedInfoConstans.IS_FIRST_START, MbsConstans.UpdateAppConstans.VERSION_APP_CODE+"");
+        }*/
+
+
+
         SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
         String id = sp.getString("id", null);
         String token = sp.getString("token", null);
         if (TextUtils.isEmpty(id) || TextUtils.isEmpty(token)) {
             if (UtilTools.empty(MbsConstans.RONGYUN_MAP)) {
-                String s = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
+                String s = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA, "").toString();
                 MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
             }
-            ChatManagerHolder.gChatManager.connect(MbsConstans.RONGYUN_MAP.get("id")+"", MbsConstans.RONGYUN_MAP.get("token")+"");
-            sp.edit().putString("id", MbsConstans.RONGYUN_MAP.get("id")+"")
-                    .putString("token",MbsConstans.RONGYUN_MAP.get("token")+"")
+            ChatManagerHolder.gChatManager.connect(MbsConstans.RONGYUN_MAP.get("id") + "", MbsConstans.RONGYUN_MAP.get("token") + "");
+            sp.edit().putString("id", MbsConstans.RONGYUN_MAP.get("id") + "")
+                    .putString("token", MbsConstans.RONGYUN_MAP.get("token") + "")
                     .apply();
         }
 
         ChatManagerHolder.gChatManager.addConnectionChangeListener(new OnConnectionStatusChangeListener() {
             @Override
             public void onConnectionStatusChange(int status) {
-                switch (status){
-                    case  ConnectionStatus.ConnectionStatusTokenIncorrect:
-                    case  ConnectionStatus.ConnectionStatusLogout:
-                    case  ConnectionStatus.ConnectionStatusUnconnected:
-                        Intent intent1 = new Intent(MainActivity.this,LoginActivity.class);
+                switch (status) {
+                    case ConnectionStatus.ConnectionStatusTokenIncorrect:
+                    case ConnectionStatus.ConnectionStatusLogout:
+                    case ConnectionStatus.ConnectionStatusUnconnected:
+                        Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(intent1);
                         finish();
                         break;
@@ -242,11 +280,11 @@ public class MainActivity extends BasicActivity implements RequestView {
 
 
         //0 红跌绿涨   1红涨绿跌
-        String colorType =  SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0").toString();
-        if (colorType.equals("0")){
+        String colorType = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE, "0").toString();
+        if (colorType.equals("0")) {
             MbsConstans.COLOR_LOW = MbsConstans.COLOR_RED;
             MbsConstans.COLOR_TOP = MbsConstans.COLOR_GREEN;
-        }else {
+        } else {
             MbsConstans.COLOR_LOW = MbsConstans.COLOR_GREEN;
             MbsConstans.COLOR_TOP = MbsConstans.COLOR_RED;
         }
@@ -265,26 +303,26 @@ public class MainActivity extends BasicActivity implements RequestView {
         conversationListViewModel.unreadCountLiveData().observe(this, unreadCount -> {
 
             if (unreadCount == null) {
-                if (requestUnReadCount == 0){
+                if (requestUnReadCount == 0) {
                     unreadNewLable.setVisibility(View.GONE);
-                }else {
+                } else {
                     unreadNewLable.setVisibility(View.VISIBLE);
-                    if (requestUnReadCount < 99){
-                        unreadNewLable.setText(requestUnReadCount+"");
-                    }else {
+                    if (requestUnReadCount < 99) {
+                        unreadNewLable.setText(requestUnReadCount + "");
+                    } else {
                         unreadNewLable.setText("99+");
                     }
                 }
 
             } else {
                 newsUnReadCount = unreadCount.unread;
-                if (newsUnReadCount ==0 && requestUnReadCount ==0){
+                if (newsUnReadCount == 0 && requestUnReadCount == 0) {
                     unreadNewLable.setVisibility(View.GONE);
-                }else {
+                } else {
                     unreadNewLable.setVisibility(View.VISIBLE);
-                    if ((newsUnReadCount+requestUnReadCount ) < 100){
-                        unreadNewLable.setText(newsUnReadCount+requestUnReadCount+"");
-                    }else {
+                    if ((newsUnReadCount + requestUnReadCount) < 100) {
+                        unreadNewLable.setText(newsUnReadCount + requestUnReadCount + "");
+                    } else {
                         unreadNewLable.setText("99+");
                     }
                 }
@@ -297,26 +335,26 @@ public class MainActivity extends BasicActivity implements RequestView {
         contactViewModel.friendRequestUpdatedLiveData().observe(this, count -> {
             if (count == null) {
                 unreadNewLable.setVisibility(View.GONE);
-                if (newsUnReadCount == 0){
+                if (newsUnReadCount == 0) {
                     unreadNewLable.setVisibility(View.GONE);
-                }else {
+                } else {
                     unreadNewLable.setVisibility(View.VISIBLE);
-                    if (newsUnReadCount < 99){
-                        unreadNewLable.setText(newsUnReadCount+"");
-                    }else {
+                    if (newsUnReadCount < 99) {
+                        unreadNewLable.setText(newsUnReadCount + "");
+                    } else {
                         unreadNewLable.setText("99+");
                     }
                 }
 
             } else {
-                if (newsUnReadCount == 0 && requestUnReadCount ==0){
+                if (newsUnReadCount == 0 && requestUnReadCount == 0) {
                     unreadNewLable.setVisibility(View.GONE);
-                }else {
+                } else {
                     requestUnReadCount = count;
                     unreadNewLable.setVisibility(View.VISIBLE);
-                    if ((newsUnReadCount+requestUnReadCount) < 100){
-                        unreadNewLable.setText(newsUnReadCount+requestUnReadCount+"");
-                    }else {
+                    if ((newsUnReadCount + requestUnReadCount) < 100) {
+                        unreadNewLable.setText(newsUnReadCount + requestUnReadCount + "");
+                    } else {
                         unreadNewLable.setText("99+");
                     }
                 }
@@ -329,11 +367,6 @@ public class MainActivity extends BasicActivity implements RequestView {
 
 
     }
-
-
-
-
-
 
 
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
@@ -392,7 +425,7 @@ public class MainActivity extends BasicActivity implements RequestView {
         mRequestTag = MethodUrl.USER_INFO;
         Map<String, Object> map = new HashMap<>();
         if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
-            MbsConstans.ACCESS_TOKEN = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN,"").toString();
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(MainActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -536,8 +569,6 @@ public class MainActivity extends BasicActivity implements RequestView {
     }
 
 
-
-
     private Handler mHandler;
     private boolean isOnKeyBacking;
 
@@ -606,6 +637,7 @@ public class MainActivity extends BasicActivity implements RequestView {
         }
 
     }
+
     @Override
     public void showProgress() {
         showProgressDialog();
@@ -652,15 +684,15 @@ public class MainActivity extends BasicActivity implements RequestView {
                 SPUtils.put(MainActivity.this, MbsConstans.SharedInfoConstans.NAME_CODE_DATA, result);
                 break;
             case MethodUrl.USER_INFO://用户信息 //{auth=1, firm_kind=0, head_pic=default, name=刘英超, tel=151****3298, idno=4107****3616, cmpl_info=0}
-                switch (tData.get("code")+""){
+                switch (tData.get("code") + "") {
                     case "0": //请求成功
                         MbsConstans.USER_MAP = (Map<String, Object>) tData.get("data");
-                        if (!UtilTools.empty(MbsConstans.USER_MAP)){
+                        if (!UtilTools.empty(MbsConstans.USER_MAP)) {
                             SPUtils.put(MainActivity.this, MbsConstans.SharedInfoConstans.LOGIN_INFO, JSONUtil.getInstance().objectToJson(MbsConstans.USER_MAP));
                         }
                         break;
                     case "-1": //请求失败
-                        showToastMsg(tData.get("msg")+"");
+                        showToastMsg(tData.get("msg") + "");
                         break;
 
                     case "1": //token过期
@@ -783,7 +815,7 @@ public class MainActivity extends BasicActivity implements RequestView {
                 break;
 
             case 1:
-                LogUtilDebug.i("show", "eventBus: update UI" );
+                LogUtilDebug.i("show", "eventBus: update UI");
                 getUserInfoAction();
                 break;
 
@@ -791,11 +823,11 @@ public class MainActivity extends BasicActivity implements RequestView {
     }
 
 
-    public void toHeYueFragment(){
+    public void toHeYueFragment() {
         rlay3.performClick();
     }
 
-    public void toBBFragment(String selectArea,String slectSymbol,String type){
+    public void toBBFragment(String selectArea, String slectSymbol, String type) {
         rlay4.performClick();
         mRepaymentFragment.TYPE = 0;
         mRepaymentFragment.selectSymbol = slectSymbol;
@@ -803,12 +835,10 @@ public class MainActivity extends BasicActivity implements RequestView {
         mRepaymentFragment.buySell = type;
     }
 
-    public void toFBFragment(){
+    public void toFBFragment() {
         rlay4.performClick();
         mRepaymentFragment.TYPE = 1;
     }
-
-
 
 
     /**
@@ -844,7 +874,6 @@ public class MainActivity extends BasicActivity implements RequestView {
             eventBus.unregister(this);
         }
     }
-
 
 
 }

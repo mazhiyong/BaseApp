@@ -103,6 +103,7 @@ public class ChatManager {
     private String deviceToken;
     private PushType pushType;
     private List<String> msgList = new ArrayList<>();
+    private List<Message> messagesList;
 
     private UserSource userSource;
 
@@ -111,6 +112,7 @@ public class ChatManager {
 
     private boolean isBackground = true;
     private List<OnReceiveMessageListener> onReceiveMessageListeners = new ArrayList<>();
+
     private List<OnConnectionStatusChangeListener> onConnectionStatusChangeListeners = new ArrayList<>();
     private List<OnSendMessageListener> sendMessageListeners = new ArrayList<>();
     private List<OnGroupInfoUpdateListener> groupInfoUpdateListeners = new ArrayList<>();
@@ -320,8 +322,12 @@ public class ChatManager {
      * @param hasMore  是否还有更多消息待收取
      */
     private void onReceiveMessage(final List<Message> messages, final boolean hasMore) {
+        messagesList = messages;
+        Log.i("show","全局收到新消息******");
+
         mainHandler.post(() -> {
             Iterator<OnReceiveMessageListener> iterator = onReceiveMessageListeners.iterator();
+
             OnReceiveMessageListener listener;
             while (iterator.hasNext()) {
                 listener = iterator.next();
@@ -439,6 +445,10 @@ public class ChatManager {
         onReceiveMessageListeners.add((listener));
     }
 
+
+
+
+
     /**
      * 删除消息监听
      *
@@ -450,6 +460,11 @@ public class ChatManager {
         }
         onReceiveMessageListeners.remove(listener);
     }
+
+
+
+
+
 
     /**
      * 添加发送消息监听
@@ -2298,7 +2313,7 @@ public class ChatManager {
         try {
             GroupInfo groupInfo = mClient.getGroupInfo(groupId, refresh);
             if (groupInfo == null) {
-                groupInfo = new NullGroupInfo(groupId);
+                groupInfo = mClient.getGroupInfo(groupId, refresh);
             }
             return groupInfo;
         } catch (RemoteException e) {

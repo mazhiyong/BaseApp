@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.lr.biyou.R;
+import com.lr.biyou.utils.tool.UtilTools;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,10 +40,15 @@ public class GroupViewHolder extends RecyclerView.ViewHolder {
 
     // TODO hide the last diver line
     public void onBind(GroupInfo groupInfo) {
-        this.groupInfo = groupInfo;
-        categoryTextView.setVisibility(View.GONE);
-        nameTextView.setText(this.groupInfo.name);
-        Glide.with(fragment).load(this.groupInfo.portrait).error(R.mipmap.ic_group_cheat).placeholder(R.mipmap.avatar_def).transforms(new CenterCrop(), new RoundedCorners(10)).into(portraitImageView);
+        if (groupInfo != null){
+            this.groupInfo = groupInfo;
+            categoryTextView.setVisibility(View.GONE);
+            if (!UtilTools.empty(this.groupInfo.name)){
+                nameTextView.setText(this.groupInfo.name);
+            }
+            Glide.with(fragment).load(this.groupInfo.portrait).error(R.mipmap.ic_group_cheat).placeholder(R.mipmap.avatar_def).transforms(new CenterCrop(), new RoundedCorners(10)).into(portraitImageView);
+        }
+
 
     }
 

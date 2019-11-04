@@ -46,18 +46,18 @@ public class ImageMessageContentViewHolder extends MediaMessageContentViewHolder
         int height = thumbnail != null ? thumbnail.getHeight() : 200;
         imageView.getLayoutParams().width = UIUtils.dip2Px(width > 200 ? 200 : width);
         imageView.getLayoutParams().height = UIUtils.dip2Px(height > 200 ? 200 : height);
-
         if (!TextUtils.isEmpty(imageMessage.localPath)) {
             Glide.with(fragment)
                     .load(imageMessage.localPath)
                     .centerCrop()
                     .into(imageView);
         } else {
+            Glide.with(fragment)
+                    .load(imageMessage.remoteUrl)
+                    .centerCrop()
+                    .into(imageView);
 
-
-
-          /*
-            GlideRequest<Drawable> request = Glide.with(fragment).load(imageMessage.remoteUrl);
+        /*    GlideRequest<Drawable> request = Glide.with(fragment).load(imageMessage.remoteUrl);
             if (thumbnail != null) {
                 request = options.placeholder(new BitmapDrawable(fragment.getResources(), imageMessage.getThumbnail()));
             } else {

@@ -8,8 +8,7 @@
         android:id="@+id/item_grida_image"
         android:layout_width="@dimen/dp_68"
         android:layout_height="@dimen/dp_68"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher" >
+        android:scaleType="centerCrop">
     </ImageView>
 
 </LinearLayout>

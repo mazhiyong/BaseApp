@@ -829,11 +829,11 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
 
                 isFirstLoad = true;
                 // 取消订阅
-                unSubKlineData();
+                //unSubKlineData();
                 kLineChartAdapter.clearData();
                 coinCoinKlineParams.range = klineTimeParams[tlTimeChoose.getSelectedTabPosition()];
                 // K线订阅
-                subKlineData();
+                //subKlineData();
 //                DataCache dataCache = ObjectBoxManager.queryData(subKlineDataParams.sub);
 //                if (dataCache != null) {
 //                    String resultContent = dataCache.getResultContent();
@@ -969,7 +969,7 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
         //handler.removeCallbacks(runnable);
         handler2.removeCallbacks(cnyRunnable);
         wsManage2.stopConnect();
-        unSubKlineData();
+        //unSubKlineData();
 //        unSub24HKlineData();
         wsManage1.stopConnect();
         if (wsManage1.getWebSocket() != null) {

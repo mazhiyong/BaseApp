@@ -3,8 +3,6 @@ package com.lr.biyou.ui.moudle.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
-import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.view.animation.Animation;
@@ -16,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
@@ -33,7 +30,6 @@ import java.io.File;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 /**
@@ -90,17 +86,18 @@ public class SplashActivity extends BasicActivity {
         return R.layout.activity_splash;
     }
 
+
     @Override
     public void init() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+      /*  if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             MbsConstans.ALPHA = 100;
             MbsConstans.TOP_BAR_COLOR = R.color.top_bar_bg;
-            StatusBarUtil.setTranslucentForImageView(this, MbsConstans.ALPHA, null);
+            StatusBarUtil.setTranslucent(this, MbsConstans.ALPHA);
         } else {
             MbsConstans.ALPHA = 0;
             MbsConstans.TOP_BAR_COLOR = R.color.top_bar_bg;
-            StatusBarUtil.setTranslucentForImageView(this, MbsConstans.ALPHA, null);
-        }
+            StatusBarUtil.setTranslucent(this, MbsConstans.ALPHA);
+        }*/
         mShared = getSharedPreferences(MbsConstans.SharedInfoConstans.LOGIN_INFO, Context.MODE_PRIVATE);
         AppUtil.getInstance(this).getAppVersion();
         setupView();
@@ -346,11 +343,6 @@ public class SplashActivity extends BasicActivity {
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 }
 

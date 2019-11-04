@@ -233,6 +233,9 @@ dependencies {
     //实现小圆点显示未读功能
     implementation 'q.rorbin:badgeview:1.1.3'
 
+    //系统悬浮窗
+    implementation 'com.github.princekin-f:EasyFloat:1.1.2'
+
     //页面滑动
     implementation 'com.komi.slider:slider:0.4.0'
 

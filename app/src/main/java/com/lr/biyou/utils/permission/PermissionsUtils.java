@@ -5,8 +5,10 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 
 import com.lr.biyou.R;
 import com.lr.biyou.utils.tool.LogUtilDebug;
@@ -14,12 +16,8 @@ import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
 
-
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 
 /**
  * Describe：6.0动态权限管理帮助类
@@ -117,7 +115,6 @@ public class PermissionsUtils {
      */
 
     public static void  requsetRunPermission(final Context context, final RePermissionResultBack mResultBack, final String[]... permissions){
-        LogUtilDebug.i("show","111.....");
         AndPermission.with(context)
                 .runtime()
                 .permission(permissions)

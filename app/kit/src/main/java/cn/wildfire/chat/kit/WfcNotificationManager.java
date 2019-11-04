@@ -31,6 +31,9 @@ import static androidx.core.app.NotificationCompat.DEFAULT_ALL;
 import static cn.wildfirechat.message.core.PersistFlag.Persist_And_Count;
 import static cn.wildfirechat.model.Conversation.ConversationType.Single;
 
+/**
+ * 系统通知栏
+ */
 public class WfcNotificationManager {
     private WfcNotificationManager() {
 
