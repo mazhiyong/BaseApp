@@ -50,7 +50,6 @@ import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -702,12 +701,6 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
 
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
 
 
     private final class TextSpanClick extends ClickableSpan {

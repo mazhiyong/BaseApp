@@ -1,7 +1,6 @@
 package cn.wildfire.chat.kit.conversation;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -40,15 +39,15 @@ public class ConversationInfoActivity extends WfcBaseActivity {
             case ChatRoom: //聊天室
                 // TODO
                 break;
-            case Channel:
+           /* case Channel:
                 //频道
                 fragment = ChannelConversationInfoFragment.newInstance(conversationInfo);
-                break;
+                break;*/
             default:
                 break;
         }
         if (fragment == null) {
-            Toast.makeText(this, "todo", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "todo", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }

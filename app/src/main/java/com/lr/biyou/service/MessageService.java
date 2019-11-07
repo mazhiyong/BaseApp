@@ -6,7 +6,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.manage.WebSocketMsgListner;
@@ -14,7 +15,6 @@ import com.lr.biyou.utils.tool.LogUtilDebug;
 
 import java.lang.ref.WeakReference;
 
-import androidx.annotation.Nullable;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.WebSocket;
@@ -55,6 +55,8 @@ public class MessageService extends Service {
         myRunnable=new MyRunnable(getBaseContext());
 
         LogUtilDebug.i("show","MessageService");
+
+
     }
 
     /**
@@ -69,7 +71,6 @@ public class MessageService extends Service {
                     .build();
 
             mWebSocket=okHttpClient.newWebSocket(request, WebSocketMsgListner.getInsance());
-
             //关闭okhttp客户端
             okHttpClient.dispatcher().executorService().shutdown();
             LogUtilDebug.i("show","开始连接到websocket服务器");

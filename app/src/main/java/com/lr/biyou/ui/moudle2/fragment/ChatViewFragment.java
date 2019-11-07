@@ -69,6 +69,8 @@ import cn.wildfire.chat.kit.ChatManagerHolder;
 import cn.wildfire.chat.kit.IMConnectionStatusViewModel;
 import cn.wildfire.chat.kit.IMServiceStatusViewModel;
 import cn.wildfire.chat.kit.WfcScheme;
+import cn.wildfire.chat.kit.channel.ChannelViewModel;
+import cn.wildfire.chat.kit.common.OperateResult;
 import cn.wildfire.chat.kit.contact.ContactListFragment;
 import cn.wildfire.chat.kit.contact.ContactViewModel;
 import cn.wildfire.chat.kit.contact.newfriend.SearchUserActivity;
@@ -190,6 +192,10 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
 
     private boolean isInitialized = false;
 
+    //频道
+    private ChannelViewModel channelViewModel;
+    private boolean isFollowed = false;
+
     private ContactViewModel contactViewModel;
     private ConversationListViewModel conversationListViewModel;
 
@@ -241,6 +247,28 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
             contactViewModel.reloadFriendRequestStatus();
             conversationListViewModel.reloadConversationUnreadStatus();
         }
+
+        if (channelViewModel == null){
+            channelViewModel = ViewModelProviders.of(this).get(ChannelViewModel.class);
+        }
+
+        isFollowed = channelViewModel.isListenedChannel("EjELELbb");
+        if (isFollowed){
+            LogUtilDebug.i("show","已经订阅当前频道");
+        }else {
+            LogUtilDebug.i("show","未订阅当前频道");
+            channelViewModel.listenChannel("EjELELbb", true).observe(this, new Observer<OperateResult<Boolean>>() {
+                @Override
+                public void onChanged(@Nullable OperateResult<Boolean> booleanOperateResult) {
+                    if (booleanOperateResult.isSuccess()) {
+                        LogUtilDebug.i("show","成功订阅当前频道");
+                    } else {
+                        LogUtilDebug.i("show","订阅当前频道失败");
+                    }
+                }
+            });
+        }
+
 
 
     }
