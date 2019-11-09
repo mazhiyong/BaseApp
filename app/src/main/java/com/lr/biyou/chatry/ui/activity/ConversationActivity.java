@@ -1100,15 +1100,12 @@ public class ConversationActivity extends BasicActivity {
     private void updata(Map<Object, Object> mapMessage) {
         GlideUtils.loadCircleImage(ConversationActivity.this, mapMessage.get("image") + "", headIv);
         nameTV.setText(mapMessage.get("name") + "");
-        LogUtilDebug.i("show", "content:" + mapMessage.get("content") + "");
         switch (mapMessage.get("type") + "") {
             case "0": //text
                 if (!UtilTools.empty(mapMessage.get("content") + "")) {
                     Map<String, Object> mapContent = JSONUtil.getInstance().jsonMap(mapMessage.get("content") + "");
                     if (!UtilTools.empty(mapContent)) {
-                        LogUtilDebug.i("show", "mapContent22:" + mapContent.toString());
                         contentTV.setText(mapContent.get("content") + "");
-                        LogUtilDebug.i("show", "Content:" + mapContent.get("content") + "");
                     }
                 }
                 break;
