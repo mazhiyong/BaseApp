@@ -278,11 +278,11 @@ public class TiBiActivity extends BasicActivity implements RequestView ,TradePas
                     case "0": //请求成功
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             Map<String,Object> map = (Map<String, Object>) tData.get("data");
-                            aviableMoneyTv.setText("可用 "+UtilTools.getNormalNumber(map.get("balance")+"")+" "+symbol);
-                            middleMoneyTv.setText("手续费: "+UtilTools.getNormalNumber(map.get("fee")+" ")+" "+symbol);
+                            aviableMoneyTv.setText("可用 "+UtilTools.getNormalMoney(map.get("balance")+"")+" "+symbol);
+                            middleMoneyTv.setText("手续费: "+UtilTools.getNormalMoney(map.get("fee")+" ")+" "+symbol);
                             number = map.get("balance")+"";
                             mTextView.setText("温馨提示：\n" +
-                                    "最小提币数量 "+UtilTools.getNormalNumber(number)+" "+symbol);
+                                    "最小提币数量 "+UtilTools.getNormalMoney(map.get("number")+"")+" "+symbol);
                         }
                         break;
                     case "-1": //请求失败

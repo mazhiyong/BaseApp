@@ -472,7 +472,7 @@
                             android:background="@drawable/btn_next_green"
                             android:gravity="center"
                             android:padding="@dimen/dp_10"
-                            android:text="买入BTC"
+                            android:text="买入"
                             android:textColor="@color/colorWhite"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"

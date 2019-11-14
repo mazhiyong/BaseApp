@@ -228,9 +228,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private String buysell2 = "0";
 
 
-
-
-
     private DecimalFormat decimalFormat = new DecimalFormat();
     private DecimalFormat decimalFormat1 = new DecimalFormat();
     private DecimalFormat decimalFormat3 = new DecimalFormat();
@@ -428,7 +425,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     case R.id.rbSell:
                         mKindType = "1";
                         //bundleSeekBar.setProgress(0);
-                        tvOperateCoin.setText("卖出 BTC");
+                        tvOperateCoin.setText("卖出");
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
                         rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house3);
                         rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house3);
@@ -450,7 +447,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     case R.id.rbBuy:
                         mKindType = "0";
                         //bundleSeekBar.setProgress(0);
-                        tvOperateCoin.setText("买入 BTC");
+                        tvOperateCoin.setText("买入");
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
                         rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
                         rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house2);
@@ -1478,10 +1475,12 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         clPrice.setVisibility(View.VISIBLE);
                         tvCnyPrice.setVisibility(View.GONE);
                         etPrice.setHint("价格");
+                        etNumber.setHint("数量");
                     }else { //卖出
                         clPrice.setVisibility(View.VISIBLE);
                         tvCnyPrice.setVisibility(View.GONE);
                         etPrice.setHint("价格");
+                        etNumber.setHint("数量");
                     }
 
 
@@ -1678,7 +1677,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         if (buysell.equals("1")){ //买入
             rbBuy.setChecked(true);
             mKindType = "0";
-            tvOperateCoin.setText("买入 BTC");
+            tvOperateCoin.setText("买入");
             tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
             rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
             rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house2);
@@ -1703,7 +1702,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             rbSell.setChecked(true);
 
             mKindType = "1";
-            tvOperateCoin.setText("卖出 BTC");
+            tvOperateCoin.setText("卖出");
             tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
             rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house3);
             rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house3);

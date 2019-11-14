@@ -1288,7 +1288,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                                 String pri = pairMap.get("price") + "";
                                 tvPrice.setText(UtilTools.getNormalMoney(pri));
                                 String cny = pairMap.get("cny_number") + "";
-                                tvCnyNumber.setText("≈" + UtilTools.getNormalNumber(cny) + "CNY");
+                                tvCnyNumber.setText("≈" + UtilTools.getNormalMoney(cny) + "CNY");
                                 bilv = Float.parseFloat(cny) / Float.parseFloat(pri);
                             }
 
