@@ -197,6 +197,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     PageView mPageView;
     @BindView(R.id.bundle_seekBar)
     BubbleSeekBar bundleSeekBar;
+    @BindView(R.id.areaTv)
+    TextView areaTv;
 
 
     public LoadingWindow mLoadingWindow;
@@ -240,8 +242,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private String mSelectType = "0"; // 0 限价  1 市价
     private String mKindType = "0"; // 0 买入  1 卖出
 
-    private String BTC_Account = "0";
-    private String USDT_Account = "0";
+    private String Symbol_Account = "0";
+    private String Area_Account = "0";
 
     private final int QUEST_CODE = 100;
 
@@ -425,7 +427,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     case R.id.rbSell:
                         mKindType = "1";
                         //bundleSeekBar.setProgress(0);
-                        tvOperateCoin.setText("卖出");
+                        tvOperateCoin.setText("卖出"+symbol);
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
                         rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house3);
                         rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house3);
@@ -447,7 +449,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     case R.id.rbBuy:
                         mKindType = "0";
                         //bundleSeekBar.setProgress(0);
-                        tvOperateCoin.setText("买入");
+                        tvOperateCoin.setText("买入"+symbol);
                         tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
                         rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
                         rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house2);
@@ -473,6 +475,24 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             }
         });
 
+        etNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()> 0 && mSelectType.equals("0") && !UtilTools.empty(etPrice.getText().toString())) {//限价
+                    tvTransactionAmount.setText(UtilTools.getNormalMoney(Double.parseDouble(s.toString()) * Double.parseDouble(s.toString())+"")+ "  "+ area);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         etPrice.addTextChangedListener(new TextWatcher() {
             @Override
@@ -486,52 +506,96 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     if (rbNumber1.isChecked()){
                         if (mKindType.equals("0")){ //买入
                             if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                //交易区总可用额度/用户输入的价格-> 用户可买的最大数量
+                                float maxNumber = Float.parseFloat(Area_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
                                 int number = (int) (maxNumber*0.1f);
                                 etNumber.setText(number+"");
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(s.toString())+"")+ "  "+ area);
                             }else { //市价
+                                // 用户任意输入数量
                                 etNumber.setText("10");
+                                tvTransactionAmount.setText("--");
                             }
 
+                        }else {
+                            //用户当前可卖的最大数量
+                            int number = (int) (Float.parseFloat(Symbol_Account) * 0.1f);
+                            etNumber.setText(number + "");
+                            if (mSelectType.equals("0")) { //限价
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(s.toString())+"")+ "  "+ area);
+                            } else {
+                                tvTransactionAmount.setText("--");
+                            }
                         }
                     }
 
                     if (rbNumber2.isChecked()){
                         if (mKindType.equals("0")){ //买入
                             if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                float maxNumber = Float.parseFloat(Area_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
                                 int number = (int) (maxNumber*0.2f);
                                 etNumber.setText(number+"");
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(s.toString())+"")+ "  "+ area);
                             }else { //市价
+                                // 用户任意输入数量
                                 etNumber.setText("20");
+                                tvTransactionAmount.setText("--");
                             }
 
+                        }else {
+                            int number = (int) (Float.parseFloat(Symbol_Account) * 0.2f);
+                            etNumber.setText(number + "");
+                            if (mSelectType.equals("0")) { //限价
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(s.toString())+"")+ "  "+ area);
+                            } else {
+                                tvTransactionAmount.setText("--");
+                            }
                         }
                     }
 
                     if (rbNumber3.isChecked()){
                         if (mKindType.equals("0")){ //买入
                             if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                float maxNumber = Float.parseFloat(Area_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
                                 int number = (int) (maxNumber*0.5f);
                                 etNumber.setText(number+"");
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(s.toString())+"")+ "  "+ area);
                             }else { //市价
                                 etNumber.setText("50");
+                                tvTransactionAmount.setText("--");
                             }
 
+                        }else {
+                            int number = (int) (Float.parseFloat(Symbol_Account) * 0.5f);
+                            etNumber.setText(number + "");
+                            if (mSelectType.equals("0")) { //限价
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(s.toString())+"")+ "  "+ area);
+                            } else {
+                                tvTransactionAmount.setText("--");
+                            }
                         }
                     }
 
                     if (rbNumber4.isChecked()){
                         if (mKindType.equals("0")){ //买入
                             if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                float maxNumber = Float.parseFloat(Area_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
                                 int number = (int) (maxNumber*1);
                                 etNumber.setText(number+"");
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(s.toString())+"")+ "  "+ area);
                             }else { //市价
                                 etNumber.setText("100");
+                                tvTransactionAmount.setText("--");
                             }
 
+                        }else {
+                            int number = (int) (Float.parseFloat(Symbol_Account));
+                            etNumber.setText(number + "");
+                            if (mSelectType.equals("0")) { //限价
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(s.toString())+"")+ "  "+ area);
+                            } else {
+                                tvTransactionAmount.setText("--");
+                            }
                         }
                     }
 
@@ -551,12 +615,10 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (mSelectType){
                     case "0": //限价
-                        if (mKindType.equals("0")){ //买入
-                            if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString().replaceAll(",","").trim())){
-                                showToastMsg("请输入价格");
-                                etNumber.setText("");
-                                return;
-                            }
+                        if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString().replaceAll(",","").trim())){
+                            showToastMsg("请输入价格");
+                            etNumber.setText("");
+                            return;
                         }
                         break;
 
@@ -569,62 +631,89 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     case R.id.rb_number1: //10
                         if (mKindType.equals("0")){ //买入
                             if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                float maxNumber = Float.parseFloat(Area_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
                                 int number = (int) (maxNumber*0.1f);
                                 etNumber.setText(number+"");
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(etPrice.getText().toString())+ "")+ "  "+ area);
                             }else { //市价
                                 etNumber.setText("10");
+                                tvTransactionAmount.setText("--");
                             }
 
                         }else { //卖出
-                            LogUtilDebug.i("show","BTC_Account:"+BTC_Account);
-                            int number = (int) (Float.parseFloat(BTC_Account)*0.1f);
+                            int number = (int) (Float.parseFloat(Symbol_Account)*0.1f);
                             etNumber.setText(number+"");
+                            if (mSelectType.equals("0")) { //限价
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(etPrice.getText().toString())+ "")+ "  "+ area);
+                            } else {
+                                tvTransactionAmount.setText("--");
+                            }
                         }
                         break;
                     case R.id.rb_number2: //20
                         if (mKindType.equals("0")){ //买入
                             if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                float maxNumber = Float.parseFloat(Area_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
                                 int number = (int) (maxNumber*0.2f);
                                 etNumber.setText(number+"");
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(etPrice.getText().toString())+ "")+ "  "+ area);
                             }else { //市价
                                 etNumber.setText("20");
+                                tvTransactionAmount.setText("--");
                             }
                         }else { //卖出
-                            int number = (int) (Float.parseFloat(BTC_Account)*0.2f);
+                            int number = (int) (Float.parseFloat(Symbol_Account)*0.2f);
                             etNumber.setText(number+"");
+                            if (mSelectType.equals("0")) { //限价
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(etPrice.getText().toString())+ "")+ "  "+ area);
+                            } else {
+                                tvTransactionAmount.setText("--");
+                            }
                         }
                         break;
 
                     case R.id.rb_number3: //50
                         if (mKindType.equals("0")){ //买入
                             if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                float maxNumber = Float.parseFloat(Area_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
                                 int number = (int) (maxNumber*0.5f);
                                 etNumber.setText(number+"");
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(etPrice.getText().toString())+ "")+ "  "+ area);
                             }else { //市价
                                 etNumber.setText("50");
+                                tvTransactionAmount.setText("--");
                             }
                         }else { //卖出
-                            int number = (int) (Float.parseFloat(BTC_Account)*0.5f);
+                            int number = (int) (Float.parseFloat(Symbol_Account)*0.5f);
                             etNumber.setText(number+"");
+                            if (mSelectType.equals("0")) { //限价
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(etPrice.getText().toString())+ "")+ "  "+ area);
+                            } else {
+                                tvTransactionAmount.setText("--");
+                            }
                         }
                         break;
 
                     case R.id.rb_number4: //100
                         if (mKindType.equals("0")){ //买入
                             if (mSelectType.equals("0")){ //限价
-                                float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                                float maxNumber = Float.parseFloat(Area_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
                                 int number = (int) (maxNumber*1.0f);
                                 etNumber.setText(number+"");
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(etPrice.getText().toString())+ "")+ "  "+ area);
                             }else { //市价
                                 etNumber.setText("100");
+                                tvTransactionAmount.setText("--");
                             }
 
                         }else { //卖出
-                            int number = (int) (Float.parseFloat(BTC_Account)*1.0f);
+                            int number = (int) (Float.parseFloat(Symbol_Account)*1.0f);
                             etNumber.setText(number+"");
+                            if (mSelectType.equals("0")) { //限价
+                                tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(etPrice.getText().toString())+ "")+ "  "+ area);
+                            } else {
+                                tvTransactionAmount.setText("--");
+                            }
                         }
                         break;
                 }
@@ -664,7 +753,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                     if (mKindType.equals("0")){ //买入
                         if (mSelectType.equals("0")){ //限价
-                            float maxNumber = Float.parseFloat(USDT_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
+                            float maxNumber = Float.parseFloat(Area_Account)/Float.parseFloat(etPrice.getText().toString().replaceAll(",","").trim());
                             int number = (int) (maxNumber*progress/100);
                             etNumber.setText(number+"");
                         }else { //市价
@@ -672,8 +761,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         }
 
                     }else { //卖出
-                        LogUtilDebug.i("show","BTC_Account:"+BTC_Account);
-                        int number = (int) (Float.parseFloat(BTC_Account)*progress/100);
+                        LogUtilDebug.i("show","Symbol_Account:"+ Symbol_Account);
+                        int number = (int) (Float.parseFloat(Symbol_Account)*progress/100);
                         etNumber.setText(number+"");
                     }
 
@@ -1026,7 +1115,32 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             public void OnMyItemClickListener(View view, int position) {
                 mConditionDialog.dismiss();
                 symbol = mDatas.get(position).get("name")+"";
-                selectTv.setText(area + "/" + symbol);
+                selectTv.setText(symbol + "/" + area);
+                areaTv.setText(symbol);
+                if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())){
+                    tvTransactionAmount.setText(UtilTools.getNormalMoney( Double.parseDouble(etNumber.getText().toString())* Double.parseDouble(etPrice.getText().toString())+"")+ "  "+ area);
+                }else {
+                    tvTransactionAmount.setText("--");
+                }
+                if (buysell.equals("1")) { //买入
+                    rbBuy.setChecked(true);
+                    mKindType = "0";
+                    tvOperateCoin.setText("买入"+symbol);
+                    tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
+                    rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
+                    rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house2);
+                    rbNumber3.setBackgroundResource(R.drawable.selector_open_close_house2);
+                    rbNumber4.setBackgroundResource(R.drawable.selector_open_close_house2);
+                }else {
+                    rbSell.setChecked(true);
+                    mKindType = "1";
+                    tvOperateCoin.setText("卖出"+symbol);
+                    tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
+                    rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house3);
+                    rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house3);
+                    rbNumber3.setBackgroundResource(R.drawable.selector_open_close_house3);
+                    rbNumber4.setBackgroundResource(R.drawable.selector_open_close_house3);
+                }
 
                 getEntrustListAction();
             }
@@ -1280,8 +1394,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     case "0":
                         Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
                         if (!UtilTools.empty(mapData)){
-                            BTC_Account = mapData.get("symbol")+"";
-                            USDT_Account = mapData.get("area")+"";
+                            Symbol_Account = mapData.get("symbol")+"";
+                            Area_Account = mapData.get("area")+"";
                         }
                         break;
                     case "1":
@@ -1471,6 +1585,11 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 tvLimitPrice.setText(map.get("name") + "");
                 if ((map.get("name") + "").equals("限价")) {
                     mSelectType = "0";
+                    if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())){
+                        tvTransactionAmount.setText(UtilTools.getNormalMoney( Double.parseDouble(etNumber.getText().toString())* Double.parseDouble(etPrice.getText().toString())+"")+ "  "+ area);
+                    }else {
+                        tvTransactionAmount.setText("--");
+                    }
                     if(mKindType.equals("0")){ //买入
                         clPrice.setVisibility(View.VISIBLE);
                         tvCnyPrice.setVisibility(View.GONE);
@@ -1486,7 +1605,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                 } else {
                     mSelectType = "1"; //市价
-
+                    tvTransactionAmount.setText("--");
                     if (mKindType.equals("0")){ //买入
                        /* clPrice.setVisibility(View.VISIBLE);
                         tvCnyPrice.setVisibility(View.GONE);
@@ -1677,7 +1796,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         if (buysell.equals("1")){ //买入
             rbBuy.setChecked(true);
             mKindType = "0";
-            tvOperateCoin.setText("买入");
+            tvOperateCoin.setText("买入"+symbol);
             tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
             rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
             rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house2);
@@ -1700,9 +1819,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
         }else {  //卖出
             rbSell.setChecked(true);
-
             mKindType = "1";
-            tvOperateCoin.setText("卖出");
+            tvOperateCoin.setText("卖出"+symbol);
             tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
             rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house3);
             rbNumber2.setBackgroundResource(R.drawable.selector_open_close_house3);
@@ -1720,8 +1838,13 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             }
         }
 
-        selectTv.setText(area + "/" + symbol);
-
+        selectTv.setText(symbol + "/" + area);
+        areaTv.setText(symbol);
+        if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())){
+            tvTransactionAmount.setText(UtilTools.getNormalMoney( Double.parseDouble(etNumber.getText().toString())* Double.parseDouble(etPrice.getText().toString())+"")+ "  "+ area);
+        }else {
+            tvTransactionAmount.setText("--");
+        }
         buysell2 = "0";
     }
 
