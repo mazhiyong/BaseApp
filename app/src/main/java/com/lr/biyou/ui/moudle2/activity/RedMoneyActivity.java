@@ -260,6 +260,8 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
 
     }
 
+
+
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         Intent intent;

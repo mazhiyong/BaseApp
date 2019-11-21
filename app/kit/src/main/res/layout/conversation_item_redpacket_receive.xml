@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingRight="@dimen/dp_140"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/bac_lay"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_165"
         android:layout_height="wrap_content"
         android:background="@drawable/de_ic_bubble_left"
         android:orientation="horizontal">
@@ -28,7 +27,7 @@
             android:lineSpacingExtra="@dimen/dp_6"
             android:text="大吉大利,恭喜发财"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_13" />
     </LinearLayout>
 
     <TextView

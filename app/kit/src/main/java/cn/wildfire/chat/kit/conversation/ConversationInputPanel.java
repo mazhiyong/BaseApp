@@ -36,10 +36,20 @@ import com.lqr.emoji.IEmotionSelectedListener;
 import com.lqr.emoji.LQREmotionKit;
 import com.lqr.emoji.MoonUtils;
 import com.lr.biyou.R;
+import com.lr.biyou.api.MethodUrl;
+import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.mvp.presenter.RequestPresenterImp;
+import com.lr.biyou.mvp.view.RequestView;
+import com.lr.biyou.utils.tool.JSONUtil;
+import com.lr.biyou.utils.tool.SPUtils;
+import com.lr.biyou.utils.tool.UtilTools;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,7 +73,7 @@ import cn.wildfirechat.model.GroupInfo;
 
 import static cn.wildfire.chat.kit.conversation.ConversationFragment.REQUEST_PICK_MENTION_CONTACT;
 
-public class ConversationInputPanel extends FrameLayout implements IEmotionSelectedListener {
+public class ConversationInputPanel extends FrameLayout implements IEmotionSelectedListener , RequestView {
 
     @BindView(R.id.inputContainerLinearLayout)
     LinearLayout inputContainerLinearLayout;
@@ -111,24 +121,27 @@ public class ConversationInputPanel extends FrameLayout implements IEmotionSelec
 
     private OnConversationInputPanelStateChangeListener onConversationInputPanelStateChangeListener;
 
+    private Context mContext;
+
     public ConversationInputPanel(@NonNull Context context) {
         super(context);
+        mContext = context;
     }
 
     public ConversationInputPanel(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
+        mContext = context;
     }
 
     public ConversationInputPanel(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
+        mContext = context;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ConversationInputPanel(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-
+        mContext = context;
     }
 
     public void setOnConversationInputPanelStateChangeListener(OnConversationInputPanelStateChangeListener onConversationInputPanelStateChangeListener) {
@@ -350,7 +363,6 @@ public class ConversationInputPanel extends FrameLayout implements IEmotionSelec
         if (TextUtils.isEmpty(content)) {
             return;
         }
-
         //群聊发送消息
         TextMessageContent txtContent = new TextMessageContent(content.toString().trim());
         if (conversation.type == Conversation.ConversationType.Group) {
@@ -375,6 +387,36 @@ public class ConversationInputPanel extends FrameLayout implements IEmotionSelec
         }
         messageViewModel.sendTextMsg(conversation, txtContent);
         editText.setText("");
+        setGroupMsgAction(conversation.target,txtContent);
+    }
+    RequestPresenterImp mRequestPresenterImp;
+
+    private void setGroupMsgAction(String targetId,TextMessageContent txtContent) {
+        if (mRequestPresenterImp == null){
+            mRequestPresenterImp = new RequestPresenterImp(this,mContext);
+        }
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(mContext, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
+        }
+        if (UtilTools.empty(MbsConstans.RONGYUN_MAP)){
+            String s = SPUtils.get(mContext, MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
+            MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("group_id", targetId);
+        Map<String,String> mapContent = new HashMap<>();
+        mapContent.put("FormID",targetId);
+        mapContent.put("FormuserID",MbsConstans.RONGYUN_MAP.get("id")+"");
+        Random random = new Random();
+        int num = random.nextInt(99)%(99-10+1) + 10;
+        mapContent.put("msgID",String.valueOf(System.currentTimeMillis())+num);
+        mapContent.put("time",String.valueOf(System.currentTimeMillis()));
+        mapContent.put("Content",txtContent.getContent());
+        mapContent.put("mentionedType","0");
+        map.put("content",JSONUtil.getInstance().objectToJson(mapContent));
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_ROBOT_SEND_NEWS, map);
     }
 
     public void onKeyboardShown() {
@@ -546,6 +588,26 @@ public class ConversationInputPanel extends FrameLayout implements IEmotionSelec
     public void onStickerSelected(String categoryName, String stickerName, String stickerBitmapPath) {
         String remoteUrl = sharedPreferences.getString(stickerBitmapPath, null);
         messageViewModel.sendStickerMsg(conversation, stickerBitmapPath, remoteUrl);
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void disimissProgress() {
+
+    }
+
+    @Override
+    public void loadDataSuccess(Map<String, Object> tData, String mType) {
+
+    }
+
+    @Override
+    public void loadDataError(Map<String, Object> map, String mType) {
+
     }
 
 

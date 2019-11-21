@@ -231,6 +231,7 @@ public class MethodUrl {
     public static final String CHAT_SWEEP_CODE = "chat/sweepCode";//扫码显示用户/群信息
     public static final String CHAT_SEND_NEWS = "chat_user/chatActive";//好友发送消息
     public static final String CHAT_GROUP_SEND_NEWS = "chat_group/chatActive";//群聊发送消息
+    public static final String CHAT_ROBOT_SEND_NEWS = "Robot/chatActive";//群员发送消息
     public static final String CHAT_SEND_RED = "chat_red/sendRed";//发红包操作
     public static final String CHAT_RED_PAGE = "chat_red/assets";//发红包页面信息
     public static final String CHAT_ZHUANZHANG_TYPE = "chat_red/coinType";//红包可以转账的类型

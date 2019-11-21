@@ -486,7 +486,11 @@ public class MainActivity extends BasicActivity implements RequestView {
         }
         if (currentTabIndex != index) {
             FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
-            trx.hide(fragments[currentTabIndex]);
+            for (Fragment fragment : fragments) {
+                if (fragment.isAdded()) {
+                    trx.hide(fragment);
+                }
+            }
             if (!fragments[index].isAdded()) {
                 trx.add(R.id.fragment_container, fragments[index]);
             } else {
@@ -533,6 +537,11 @@ public class MainActivity extends BasicActivity implements RequestView {
                 if (currentTabIndex != index) {
                     FragmentTransaction trx = getSupportFragmentManager().beginTransaction();
                     trx.hide(fragments[currentTabIndex]);
+                    for (Fragment fragment : fragments) {
+                        if (fragment.isAdded()) {
+                            trx.hide(fragment);
+                        }
+                    }
                     if (!fragments[index].isAdded()) {
                         trx.add(R.id.fragment_container, fragments[index]);
                     } else {

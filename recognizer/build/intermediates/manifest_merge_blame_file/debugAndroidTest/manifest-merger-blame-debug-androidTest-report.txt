@@ -3,24 +3,24 @@
 3    package="io.rong.recognizer.test" >
 4
 5    <uses-sdk
-5-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7360703935887602241.xml:5:5-74
+5-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:5:5-74
 6        android:minSdkVersion="19"
-6-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7360703935887602241.xml:5:15-41
+6-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:5:15-41
 7        android:targetSdkVersion="23" />
-7-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7360703935887602241.xml:5:42-71
+7-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:5:42-71
 8
 9    <instrumentation
-9-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7360703935887602241.xml:11:5-15:73
+9-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:11:5-15:73
 10        android:name="android.test.InstrumentationTestRunner"
-10-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7360703935887602241.xml:11:22-75
+10-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:11:22-75
 11        android:functionalTest="false"
-11-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7360703935887602241.xml:14:22-52
+11-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:14:22-52
 12        android:handleProfiling="false"
-12-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7360703935887602241.xml:13:22-53
+12-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:13:22-53
 13        android:label="Tests for io.rong.recognizer.test"
-13-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7360703935887602241.xml:15:22-71
+13-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:15:22-71
 14        android:targetPackage="io.rong.recognizer.test" />
-14-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7360703935887602241.xml:12:22-69
+14-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:12:22-69
 15    <!-- 访问相册，访问文件系统等 -->
 16    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 发送位置消息，实时位置共享 -->
 16-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:12:5-80
@@ -75,16 +75,16 @@
 32-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:20:22-76
 33
 34    <application
-34-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7360703935887602241.xml:7:5-9:19
+34-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:7:5-9:19
 35        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 35-->[androidx.core:core:1.0.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\4de34232979cbe134bd28b81339a3afe\core-1.0.0\AndroidManifest.xml:22:18-86
 36        android:debuggable="true"
-36-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7360703935887602241.xml:7:18-43
+36-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:7:18-43
 37        android:supportsRtl="true" >
 37-->[__tested_artifact__::recognizer] D:\android-project\biyou\BaseApp\recognizer\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:18-44
 38        <uses-library android:name="android.test.runner" />
-38-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7360703935887602241.xml:8:9-60
-38-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7360703935887602241.xml:8:23-57
+38-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:8:9-60
+38-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:8:23-57
 39
 40        <activity
 40-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:39:9-41:52

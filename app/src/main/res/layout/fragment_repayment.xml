@@ -30,14 +30,16 @@
         </androidx.appcompat.widget.Toolbar>
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smartRefreshLay"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolBar"
-            app:srlEnableRefresh="false">
-
+            app:layout_constraintTop_toBottomOf="@id/toolBar">
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -305,7 +307,7 @@
                                 android:layout_height="wrap_content"
                                 android:padding="@dimen/dp_5"
                                 android:text="BTC"
-                                android:visibility="invisible"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -600,7 +602,8 @@
                         app:layout_constraintTop_toBottomOf="@id/clLeft"
                         android:background="@color/body_bg"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_10">
+                        android:layout_height="@dimen/dp_10"
+                        android:orientation="horizontal">
 
                     </LinearLayout>
                     <LinearLayout

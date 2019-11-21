@@ -665,6 +665,24 @@ public class ConversationActivity extends BasicActivity {
         mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_SEND_NEWS, map);
     }
 
+    //组员发送消息
+    public void sendRobotMessageAction(String text, String ConId, Conversation.ConversationType ConType) {
+        conText = text;
+        conId = ConId;
+        conType = ConType;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(ConversationActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("group_id", targetId);
+        Map<String,String> mapContent = new HashMap<>();
+        map.put("content", JSONUtil.getInstance().objectToJson(mapContent));
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_GROUP_SEND_NEWS, map);
+    }
+
+
 
     @Override
     public void showProgress() {
