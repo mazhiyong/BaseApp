@@ -243,6 +243,13 @@ public class LoginActivity extends BasicActivity implements CompoundButton.OnChe
             LogUtilDebug.i("show","聊天服务器已断开");
         }
 
+        MbsConstans.USER_MAP = null;
+        MbsConstans.RONGYUN_MAP = null;
+        MbsConstans.ACCESS_TOKEN = "";
+        SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.LOGIN_OUT, true);
+        SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "");
+        SPUtils.put(LoginActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE, "0");
+
     }
 
 

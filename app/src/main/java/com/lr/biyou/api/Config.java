@@ -16,6 +16,8 @@ public interface Config {
     //String IM_SERVER_HOST = "8y2cdj.natappfree.cc";
     //String IM_SERVER_HOST = "39.97.238.99";
     String IM_SERVER_HOST = "47.75.185.156";
+    //String IM_SERVER_HOST = "47.244.198.69";
+
     //int IM_SERVER_PORT = 80;
     int IM_SERVER_PORT = 88;
 
@@ -23,6 +25,7 @@ public interface Config {
     //String APP_SERVER_ADDRESS = "http://wildfirechat.cn:8888";
     //String APP_SERVER_ADDRESS = "http://39.97.238.99:8888";
     String APP_SERVER_ADDRESS = "http://47.75.185.156:8888";
+    //String APP_SERVER_ADDRESS = "http://47.244.198.69:8888";
 
     String ICE_ADDRESS = "turn:turn.wildfirechat.cn:3478";
     String ICE_USERNAME = "wfchat";

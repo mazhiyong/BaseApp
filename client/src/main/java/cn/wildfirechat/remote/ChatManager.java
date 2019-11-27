@@ -1184,6 +1184,7 @@ public class ChatManager {
      * @return 是否是新用户。新用户需要同步信息，耗时较长，可以增加等待提示。
      */
     public boolean connect(String userId, String token) {
+        Log.i("show","@@@@@@@@@@@6");
         if (TextUtils.isEmpty(userId) || TextUtils.isEmpty(token)) {
             throw new IllegalArgumentException("userId and token must be empty!");
         }

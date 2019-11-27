@@ -43,6 +43,7 @@ import com.lr.biyou.utils.tool.UtilTools;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -597,8 +598,13 @@ public class ConversationFragment extends Fragment implements
     @Override
     public void onPause() {
         super.onPause();
-        inputPanel.onActivityPause();
-        messageViewModel.stopPlayAudio();
+        if (inputPanel != null){
+            inputPanel.onActivityPause();
+        }
+        if (messageViewModel != null){
+            messageViewModel.stopPlayAudio();
+        }
+
     }
 
     @Override
@@ -710,7 +716,7 @@ public class ConversationFragment extends Fragment implements
     private Runnable resetConversationTitleRunnable = this::resetConversationTitle;
 
     private void resetConversationTitle() {
-        if (!TextUtils.equals(conversationTitle, getActivity().getTitle())) {
+        if (!TextUtils.equals(conversationTitle, Objects.requireNonNull(getActivity()).getTitle())) {
             setActivityTitle(conversationTitle);
             handler.removeCallbacks(resetConversationTitleRunnable);
         }

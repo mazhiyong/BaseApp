@@ -3,290 +3,290 @@
 3    package="io.rong.recognizer.test" >
 4
 5    <uses-sdk
-5-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:5:5-74
+5-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079805385120528726.xml:5:5-74
 6        android:minSdkVersion="19"
-6-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:5:15-41
+6-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079805385120528726.xml:5:15-41
 7        android:targetSdkVersion="23" />
-7-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:5:42-71
+7-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079805385120528726.xml:5:42-71
 8
 9    <instrumentation
-9-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:11:5-15:73
+9-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079805385120528726.xml:11:5-15:73
 10        android:name="android.test.InstrumentationTestRunner"
-10-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:11:22-75
+10-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079805385120528726.xml:11:22-75
 11        android:functionalTest="false"
-11-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:14:22-52
+11-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079805385120528726.xml:14:22-52
 12        android:handleProfiling="false"
-12-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:13:22-53
+12-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079805385120528726.xml:13:22-53
 13        android:label="Tests for io.rong.recognizer.test"
-13-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:15:22-71
+13-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079805385120528726.xml:15:22-71
 14        android:targetPackage="io.rong.recognizer.test" />
-14-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:12:22-69
+14-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079805385120528726.xml:12:22-69
 15    <!-- 访问相册，访问文件系统等 -->
 16    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 发送位置消息，实时位置共享 -->
-16-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:12:5-80
-16-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:12:22-77
+16-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:12:5-80
+16-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:12:22-77
 17    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 拍照 -->
-17-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:14:5-81
-17-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:14:22-78
+17-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:14:5-81
+17-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:14:22-78
 18    <uses-permission android:name="android.permission.CAMERA" /> <!-- 拍照等 -->
-18-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:16:5-65
-18-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:16:22-62
+18-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:16:5-65
+18-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:16:22-62
 19    <uses-permission android:name="android.permission.WRITE_SETTINGS" /> <!-- 音视频 -->
-19-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:18:5-73
-19-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:18:22-70
+19-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:18:5-73
+19-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:18:22-70
 20    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-20-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:20:5-78
-20-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:20:22-75
+20-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:20:5-78
+20-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:20:22-75
 21    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" /> <!-- 网络 -->
-21-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:21:5-85
-21-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:21:22-82
+21-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:21:5-85
+21-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:21:22-82
 22    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-22-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:23:5-76
-22-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:23:22-73
+22-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:23:5-76
+22-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:23:22-73
 23    <uses-permission android:name="android.permission.INTERNET" />
-23-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:24:5-67
-23-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:24:22-64
+23-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:24:5-67
+23-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:24:22-64
 24    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-24-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:25:5-79
-24-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:25:22-76
+24-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:25:5-79
+24-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:25:22-76
 25    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 录音 -->
-25-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:26:5-76
-25-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:26:22-73
+25-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:26:5-76
+25-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:26:22-73
 26    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 使用ActivityManager需要 -->
-26-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:28:5-71
-26-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:28:22-68
+26-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:28:5-71
+26-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:28:22-68
 27    <uses-permission android:name="android.permission.GET_TASKS" /> <!-- 适配 Android 8.0 -->
-27-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:30:5-68
-27-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:30:22-65
+27-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:30:5-68
+27-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:30:22-65
 28    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" /> <!-- 保存图片，拍照等 -->
-28-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:32:5-83
-28-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:32:22-80
+28-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:32:5-83
+28-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:32:22-80
 29    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 新消息震动提醒 -->
-29-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:34:5-81
-29-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:34:22-78
+29-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:34:5-81
+29-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:34:22-78
 30    <uses-permission android:name="android.permission.VIBRATE" /> <!-- 消息通道保活 -->
-30-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:36:5-66
-30-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:36:22-63
+30-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:36:5-66
+30-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:36:22-63
 31    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- 定位，如果您不需要定位相关的功能，可以删掉 -->
-31-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:18:5-68
-31-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:18:22-65
+31-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:18:5-68
+31-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:18:22-65
 32    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-32-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:20:5-79
-32-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:20:22-76
+32-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:20:5-79
+32-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:20:22-76
 33
 34    <application
-34-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:7:5-9:19
+34-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079805385120528726.xml:7:5-9:19
 35        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 35-->[androidx.core:core:1.0.0] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\4de34232979cbe134bd28b81339a3afe\core-1.0.0\AndroidManifest.xml:22:18-86
 36        android:debuggable="true"
-36-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:7:18-43
+36-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079805385120528726.xml:7:18-43
 37        android:supportsRtl="true" >
 37-->[__tested_artifact__::recognizer] D:\android-project\biyou\BaseApp\recognizer\build\intermediates\library_manifest\debug\AndroidManifest.xml:11:18-44
 38        <uses-library android:name="android.test.runner" />
-38-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:8:9-60
-38-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger1998653194711062460.xml:8:23-57
+38-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079805385120528726.xml:8:9-60
+38-->D:\android-project\biyou\BaseApp\recognizer\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger3079805385120528726.xml:8:23-57
 39
 40        <activity
-40-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:39:9-41:52
+40-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:39:9-41:52
 41            android:name="io.rong.imkit.plugin.location.AMapLocationActivity"
-41-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:40:13-78
+41-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:40:13-78
 42            android:screenOrientation="portrait" />
-42-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:41:13-49
+42-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:41:13-49
 43        <activity
-43-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:42:9-44:52
+43-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:42:9-44:52
 44            android:name="io.rong.imkit.plugin.location.AMapLocationActivity2D"
-44-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:43:13-80
+44-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:43:13-80
 45            android:screenOrientation="portrait" />
-45-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:44:13-49
+45-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:44:13-49
 46        <activity android:name="io.rong.imkit.plugin.location.AMapPreviewActivity" />
-46-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:45:9-86
-46-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:45:19-83
+46-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:45:9-86
+46-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:45:19-83
 47        <activity android:name="io.rong.imkit.plugin.location.AMapPreviewActivity2D" />
-47-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:46:9-88
-47-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:46:19-85
+47-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:46:9-88
+47-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:46:19-85
 48        <activity android:name="io.rong.imkit.plugin.location.AMapRealTimeActivity" />
-48-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:47:9-87
-48-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:47:19-84
+48-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:47:9-87
+48-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:47:19-84
 49        <activity android:name="io.rong.imkit.plugin.location.AMapRealTimeActivity2D" />
-49-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:48:9-89
-49-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:48:19-86
+49-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:48:9-89
+49-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:48:19-86
 50        <activity
-50-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:49:9-52:71
+50-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:49:9-52:71
 51            android:name="io.rong.imkit.plugin.location.SearchLocationActivity"
-51-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:50:13-80
+51-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:50:13-80
 52            android:screenOrientation="portrait"
-52-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:51:13-49
+52-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:51:13-49
 53            android:windowSoftInputMode="stateVisible|adjustResize" />
-53-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:52:13-68
+53-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:52:13-68
 54        <activity
-54-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:53:9-56:52
+54-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:53:9-56:52
 55            android:name="io.rong.imkit.plugin.image.PictureSelectorActivity"
-55-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:54:13-78
+55-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:54:13-78
 56            android:configChanges="keyboardHidden|orientation|screenSize"
-56-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:55:13-74
+56-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:55:13-74
 57            android:screenOrientation="portrait" />
-57-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:56:13-49
+57-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:56:13-49
 58        <activity
-58-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:57:9-59:52
+58-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:57:9-59:52
 59            android:name="io.rong.imkit.plugin.image.PicturePreviewActivity"
-59-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:58:13-77
+59-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:58:13-77
 60            android:screenOrientation="portrait" /> <!-- 开发者可以修改 RongBaseActivity 的 rc_base_activity_layout 布局文件调整 actionbar -->
-60-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:59:13-49
+60-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:59:13-49
 61        <activity
-61-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:62:9-71:20
+61-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:62:9-71:20
 62            android:name="io.rong.imkit.tools.RongWebviewActivity"
-62-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:63:13-67
+62-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:63:13-67
 63            android:exported="false"
-63-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:64:13-37
+63-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:64:13-37
 64            android:screenOrientation="portrait" >
-64-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:65:13-49
+64-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:65:13-49
 65            <intent-filter>
-65-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:66:13-70:29
+65-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:66:13-70:29
 66                <action android:name="io.rong.imkit.intent.action.webview" />
-66-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:67:17-78
-66-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:67:25-75
+66-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:67:17-78
+66-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:67:25-75
 67
 68                <category android:name="android.intent.category.DEFAULT" />
-68-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:69:17-76
-68-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:69:27-73
+68-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:69:17-76
+68-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:69:27-73
 69            </intent-filter>
 70        </activity>
 71        <activity
-71-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:72:9-75:52
+71-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:72:9-75:52
 72            android:name="io.rong.imkit.widget.provider.TakingPicturesActivity"
-72-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:73:13-80
+72-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:73:13-80
 73            android:configChanges="orientation|keyboardHidden"
-73-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:74:13-63
+73-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:74:13-63
 74            android:screenOrientation="portrait" />
-74-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:75:13-49
+74-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:75:13-49
 75        <activity
-75-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:76:9-85:20
+75-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:76:9-85:20
 76            android:name="io.rong.imkit.activity.PicturePagerActivity"
-76-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:77:13-71
+76-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:77:13-71
 77            android:exported="false"
-77-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:78:13-37
+77-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:78:13-37
 78            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
-78-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:79:13-71
+78-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:79:13-71
 79            <intent-filter>
-79-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:80:13-84:29
+79-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:80:13-84:29
 80                <action android:name="io.rong.imkit.intent.action.picturepagerview" />
-80-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:81:17-87
-80-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:81:25-84
+80-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:81:17-87
+80-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:81:25-84
 81
 82                <category android:name="android.intent.category.DEFAULT" />
-82-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:69:17-76
-82-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:69:27-73
+82-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:69:17-76
+82-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:69:27-73
 83            </intent-filter>
 84        </activity>
 85        <activity
-85-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:86:9-89:67
+85-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:86:9-89:67
 86            android:name="io.rong.imkit.mention.MemberMentionedActivity"
-86-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:87:13-73
+86-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:87:13-73
 87            android:configChanges="orientation|keyboardHidden"
-87-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:88:13-63
+87-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:88:13-63
 88            android:windowSoftInputMode="adjustPan|stateHidden" />
-88-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:89:13-64
+88-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:89:13-64
 89        <activity android:name="io.rong.imkit.activity.FileManagerActivity" />
-89-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:90:9-79
-89-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:90:19-76
+89-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:90:9-79
+89-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:90:19-76
 90        <activity android:name="io.rong.imkit.activity.FileListActivity" />
-90-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:91:9-76
-90-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:91:19-73
+90-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:91:9-76
+90-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:91:19-73
 91        <activity
-91-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:92:9-101:20
+91-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:92:9-101:20
 92            android:name="io.rong.imkit.activity.FilePreviewActivity"
-92-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:93:13-70
+92-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:93:13-70
 93            android:exported="false"
-93-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:94:13-37
+93-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:94:13-37
 94            android:screenOrientation="portrait" >
-94-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:95:13-49
+94-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:95:13-49
 95            <intent-filter>
-95-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:96:13-100:29
+95-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:96:13-100:29
 96                <action android:name="io.rong.imkit.intent.action.openfile" />
-96-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:97:17-79
-96-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:97:25-76
+96-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:97:17-79
+96-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:97:25-76
 97
 98                <category android:name="android.intent.category.DEFAULT" />
-98-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:69:17-76
-98-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:69:27-73
+98-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:69:17-76
+98-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:69:27-73
 99            </intent-filter>
 100        </activity>
 101        <activity
-101-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:102:9-105:52
+101-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:102:9-105:52
 102            android:name="io.rong.imkit.activity.CSLeaveMessageActivity"
-102-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:103:13-73
+102-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:103:13-73
 103            android:configChanges="orientation|keyboardHidden"
-103-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:104:13-63
+103-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:104:13-63
 104            android:screenOrientation="portrait" /> <!-- imlib config begin -->
-104-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\9006fe118154623aa16d366274c66089\jetified-im_kit-2.9.19\AndroidManifest.xml:105:13-49
+104-->[cn.rongcloud.sdk:im_kit:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\7b8b5ae008d178be037b662e3995f046\jetified-im_kit-2.9.19\AndroidManifest.xml:105:13-49
 105        <meta-data
-105-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:25:9-27:43
+105-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:25:9-27:43
 106            android:name="RONG_CLOUD_APP_KEY"
-106-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:26:13-46
+106-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:26:13-46
 107            android:value="此处添加APP_KEY" />
-107-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:27:13-40
+107-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:27:13-40
 108
 109        <service
-109-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:29:9-32:38
+109-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:29:9-32:38
 110            android:name="io.rong.imlib.ipc.RongService"
-110-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:30:13-57
+110-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:30:13-57
 111            android:exported="true"
-111-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:31:13-36
+111-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:31:13-36
 112            android:process=":ipc" />
-112-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:32:13-35
+112-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:32:13-35
 113
 114        <receiver
-114-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:34:9-36:39
+114-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:34:9-36:39
 115            android:name="io.rong.imlib.ConnectChangeReceiver"
-115-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:35:13-63
+115-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:35:13-63
 116            android:exported="true" />
-116-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:36:13-36
+116-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:36:13-36
 117        <receiver
-117-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:37:9-39:38
+117-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:37:9-39:38
 118            android:name="io.rong.imlib.HeartbeatReceiver"
-118-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:38:13-59
+118-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:38:13-59
 119            android:process=":ipc" /> <!-- imlib config end -->
-119-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:39:13-35
+119-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:39:13-35
 120        <!-- 必选： SDK 核心功能 -->
 121        <service
-121-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:44:9-48:46
+121-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:44:9-48:46
 122            android:name="io.rong.push.rongpush.PushService"
-122-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:45:13-61
+122-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:45:13-61
 123            android:exported="true"
-123-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:46:13-36
+123-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:46:13-36
 124            android:permission="android.permission.BIND_JOB_SERVICE"
-124-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:47:13-69
+124-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:47:13-69
 125            android:process="io.rong.push" /> <!-- push 相关事件接收器 -->
-125-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:48:13-43
+125-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:48:13-43
 126        <receiver
-126-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:51:9-66:20
+126-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:51:9-66:20
 127            android:name="io.rong.push.rongpush.PushReceiver"
-127-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:52:13-62
+127-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:52:13-62
 128            android:process="io.rong.push" > <!-- 此处进程可以改名，名称需要和PushService所在进程统一 -->
-128-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:53:13-43
+128-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:53:13-43
 129            <!-- 心跳事件和网络切换事件监听,必须 -->
 130            <intent-filter>
-130-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:55:13-58:29
+130-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:55:13-58:29
 131                <action android:name="io.rong.push.intent.action.HEART_BEAT" />
-131-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:56:17-80
-131-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:56:25-77
+131-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:56:17-80
+131-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:56:25-77
 132                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-132-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:57:17-79
-132-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:57:25-76
+132-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:57:17-79
+132-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:57:25-76
 133            </intent-filter>
 134
 135            <!-- 部分用户事件监听, 用来提高推送拉活率; 可移除 -->
 136            <intent-filter>
-136-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:61:13-65:29
+136-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:61:13-65:29
 137                <action android:name="android.intent.action.USER_PRESENT" />
-137-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:62:17-77
-137-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:62:25-74
+137-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:62:17-77
+137-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:62:25-74
 138                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-138-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:63:17-87
-138-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:63:25-84
+138-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:63:17-87
+138-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:63:25-84
 139                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-139-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:64:17-90
-139-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\d1c3ed0db11f72ecfd8e56467c3d875e\jetified-im_lib-2.9.19\AndroidManifest.xml:64:25-87
+139-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:64:17-90
+139-->[cn.rongcloud.sdk:im_lib:2.9.19] C:\Users\Administrator\.gradle\caches\transforms-2\files-2.1\e2c45b05f6ec65a2ad68263534d77bbc\jetified-im_lib-2.9.19\AndroidManifest.xml:64:25-87
 140            </intent-filter>
 141        </receiver>
 142    </application>

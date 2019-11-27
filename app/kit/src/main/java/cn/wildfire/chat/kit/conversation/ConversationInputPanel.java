@@ -38,8 +38,10 @@ import com.lqr.emoji.MoonUtils;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.manage.ActivityManager;
 import com.lr.biyou.mvp.presenter.RequestPresenterImp;
 import com.lr.biyou.mvp.view.RequestView;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
@@ -355,7 +357,8 @@ public class ConversationInputPanel extends FrameLayout implements IEmotionSelec
         }
     }
 
-    //发送消息
+    //发送文本消息
+    TextMessageContent txtContent;
     @OnClick(R.id.sendButton)
     void sendMessage() {
         messageEmojiCount = 0;
@@ -363,9 +366,10 @@ public class ConversationInputPanel extends FrameLayout implements IEmotionSelec
         if (TextUtils.isEmpty(content)) {
             return;
         }
-        //群聊发送消息
-        TextMessageContent txtContent = new TextMessageContent(content.toString().trim());
+
+        txtContent = new TextMessageContent(content.toString().trim());
         if (conversation.type == Conversation.ConversationType.Group) {
+            //群聊发送消息
             MentionSpan[] mentions = content.getSpans(0, content.length(), MentionSpan.class);
             if (mentions != null && mentions.length > 0) {
                 txtContent.mentionedType = 1;
@@ -384,10 +388,12 @@ public class ConversationInputPanel extends FrameLayout implements IEmotionSelec
                     txtContent.mentionedTargets = mentionedIds;
                 }
             }
+            setGroupMsgAction(conversation.target,txtContent);
+            editText.setText("");
+        }else {
+            messageViewModel.sendTextMsg(conversation, txtContent);
+            editText.setText("");
         }
-        messageViewModel.sendTextMsg(conversation, txtContent);
-        editText.setText("");
-        setGroupMsgAction(conversation.target,txtContent);
     }
     RequestPresenterImp mRequestPresenterImp;
 
@@ -406,8 +412,9 @@ public class ConversationInputPanel extends FrameLayout implements IEmotionSelec
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("group_id", targetId);
         Map<String,String> mapContent = new HashMap<>();
-        mapContent.put("FormID",targetId);
-        mapContent.put("FormuserID",MbsConstans.RONGYUN_MAP.get("id")+"");
+        mapContent.put("FromID",targetId);
+        mapContent.put("FromuserID",MbsConstans.RONGYUN_MAP.get("id")+"");
+        mapContent.put("FromuserNickName",MbsConstans.RONGYUN_MAP.get("name")+"");
         Random random = new Random();
         int num = random.nextInt(99)%(99-10+1) + 10;
         mapContent.put("msgID",String.valueOf(System.currentTimeMillis())+num);
@@ -602,7 +609,24 @@ public class ConversationInputPanel extends FrameLayout implements IEmotionSelec
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
-
+        switch (mType){
+            case MethodUrl.CHAT_ROBOT_SEND_NEWS:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        messageViewModel.sendTextMsg(conversation, txtContent);
+                        break;
+                    case "-1": //请求失败
+                        //showToastMsg(tData.get("msg") + "");
+                        break;
+                    case "1": //token过期
+                        ActivityManager activityManager = ActivityManager.getInstance();
+                        activityManager.close();
+                        Intent intent = new Intent(mContext, LoginActivity.class);
+                        mContext.startActivity(intent);
+                        break;
+                }
+                break;
+        }
     }
 
     @Override

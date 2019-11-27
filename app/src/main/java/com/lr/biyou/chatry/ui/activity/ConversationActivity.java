@@ -55,6 +55,7 @@ import com.lr.biyou.chatry.utils.ScreenCaptureUtil;
 import com.lr.biyou.chatry.utils.SearchUtils;
 import com.lr.biyou.chatry.utils.log.SLog;
 import com.lr.biyou.chatry.viewmodel.ConversationViewModel;
+import com.lr.biyou.manage.ActivityManager;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle2.activity.ChatItemActivity;
 import com.lr.biyou.ui.moudle2.activity.GroupChatItemActivity;
@@ -817,7 +818,9 @@ public class ConversationActivity extends BasicActivity {
                         break;
 
                     case "1": //token过期
-                        closeAllActivity();
+                        ActivityManager activityManager = ActivityManager.getInstance();
+                        activityManager.close();
+                        finish();
                         Intent intent = new Intent(ConversationActivity.this, LoginActivity.class);
                         startActivity(intent);
                         break;

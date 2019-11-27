@@ -14,6 +14,7 @@ import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.manage.ActivityManager;
 import com.lr.biyou.mvp.presenter.RequestPresenterImp;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
@@ -208,6 +209,8 @@ public class ConversationActivity extends WfcBaseActivity implements RequestView
                         break;
 
                     case "1": //token过期
+                        ActivityManager activityManager = ActivityManager.getInstance();
+                        activityManager.close();
                         finish();
                         Intent intent = new Intent(this, LoginActivity.class);
                         startActivity(intent);

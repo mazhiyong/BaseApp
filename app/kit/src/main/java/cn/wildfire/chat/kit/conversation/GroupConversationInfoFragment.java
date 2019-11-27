@@ -241,9 +241,11 @@ public class GroupConversationInfoFragment extends Fragment implements Conversat
             if (listOperateResult.isSuccess()) {
                 if (listOperateResult.getResult() != null && listOperateResult.getResult().size()> 0){
                     for (GroupInfo info : listOperateResult.getResult()) {
-                        if (groupInfo != null && groupInfo.target.equals(info.target)) {
-                            markGroupSwitchButton.setChecked(true);
-                            break;
+                        if (groupInfo != null && groupInfo.target != null && info != null && info.target != null) {
+                            if (groupInfo.target.equals(info.target)){
+                                markGroupSwitchButton.setChecked(true);
+                                break;
+                            }
                         }
                     }
                 }

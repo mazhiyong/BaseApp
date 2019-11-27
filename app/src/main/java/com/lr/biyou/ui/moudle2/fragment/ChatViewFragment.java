@@ -287,8 +287,6 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
                     MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
                 }
                 ChatManagerHolder.gChatManager.connect(MbsConstans.RONGYUN_MAP.get("id")+"", MbsConstans.RONGYUN_MAP.get("token")+"");
-            }else {
-                LogUtilDebug.i("show","已经连接聊天服务器");
             }
         });
     }

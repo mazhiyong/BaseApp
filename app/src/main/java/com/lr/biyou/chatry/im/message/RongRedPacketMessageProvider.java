@@ -148,7 +148,6 @@ public class RongRedPacketMessageProvider extends IContainerItemProvider.Message
                         showRedPacketDialog(redPacketMessage);
                     }else {
                         Intent intent = new Intent(context, RedListActivity.class);
-                        LogUtilDebug.i("show","redPacketMessage000:"+redPacketMessage.getId());
                         intent.putExtra("id",redPacketMessage.getId());
                         context.startActivity(intent);
                     }

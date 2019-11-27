@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.lr.biyou.api.Config;
 import com.lr.biyou.basic.BasicApplication;
+import com.lr.biyou.mvp.view.RequestView;
 
 import java.io.File;
 import java.util.HashMap;
@@ -46,7 +47,7 @@ import cn.wildfirechat.remote.OnSendMessageListener;
 
 public class MessageViewModel extends ViewModel implements OnReceiveMessageListener,
         OnSendMessageListener,
-        OnRecallMessageListener, OnMessageUpdateListener, OnClearMessageListener {
+        OnRecallMessageListener, OnMessageUpdateListener, OnClearMessageListener , RequestView {
     private MutableLiveData<UiMessage> messageLiveData;
     private MutableLiveData<UiMessage> messageUpdateLiveData;
     private MutableLiveData<UiMessage> messageRemovedLiveData;
@@ -54,6 +55,10 @@ public class MessageViewModel extends ViewModel implements OnReceiveMessageListe
     private MutableLiveData<Object> clearMessageLiveData;
 
     private Message toPlayAudioMessage;
+    //private Context mContext;
+    //private TextMessageContent textMessageContent;
+    //private Conversation conversation;
+
 
     public MessageViewModel() {
         ChatManager.Instance().addOnReceiveMessageListener(this);
@@ -141,7 +146,7 @@ public class MessageViewModel extends ViewModel implements OnReceiveMessageListe
             @Override
             public void onFail(int errorCode) {
                 Log.e(MessageViewModel.class.getSimpleName(), "撤回失败: " + errorCode);
-                // TODO 撤回失败
+
             }
         });
     }
@@ -206,7 +211,10 @@ public class MessageViewModel extends ViewModel implements OnReceiveMessageListe
     }
 
     public void sendTextMsg(Conversation conversation, TextMessageContent txtContent) {
+        //this.mContext = mContext;
+        //this.conversation = conversation;
         txtContent.extra = "hello extra";
+        //textMessageContent = txtContent;
         sendMessage(conversation, txtContent);
         //设置聊天草稿
         ChatManager.Instance().setConversationDraft(conversation, null);
@@ -413,9 +421,44 @@ public class MessageViewModel extends ViewModel implements OnReceiveMessageListe
 
     @Override
     public void onSendSuccess(Message message) {
-        Log.i("show","onSendSuccess(Message message)");
         postMessageUpdate(new UiMessage(message));
+        //群聊消息
+        /*if (conversation.type == Conversation.ConversationType.Group) {
+            if (conversation.target != null){
+                setGroupMsgAction(conversation.target,textMessageContent);
+            }
+        }*/
     }
+
+      /*  RequestPresenterImp mRequestPresenterImp;
+        private void setGroupMsgAction(String targetId, TextMessageContent txtContent) {
+            if (mRequestPresenterImp == null){
+                mRequestPresenterImp = new RequestPresenterImp(this,mContext);
+            }
+
+            Map<String, Object> map = new HashMap<>();
+            if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+                MbsConstans.ACCESS_TOKEN = com.lr.biyou.utils.tool.SPUtils.get(mContext, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
+            }
+            if (UtilTools.empty(MbsConstans.RONGYUN_MAP)){
+                String s = SPUtils.get(mContext, MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
+                MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
+            }
+            map.put("token", MbsConstans.ACCESS_TOKEN);
+            map.put("group_id", targetId);
+            Map<String,String> mapContent = new HashMap<>();
+            mapContent.put("FormID",targetId);
+            mapContent.put("FormuserID",MbsConstans.RONGYUN_MAP.get("id")+"");
+            Random random = new Random();
+            int num = random.nextInt(99)%(99-10+1) + 10;
+            mapContent.put("msgID",String.valueOf(System.currentTimeMillis())+num);
+            mapContent.put("time",String.valueOf(System.currentTimeMillis()));
+            mapContent.put("Content", textMessageContent.getContent());
+            mapContent.put("mentionedType","0");
+            map.put("content",JSONUtil.getInstance().objectToJson(mapContent));
+            Map<String, String> mHeaderMap = new HashMap<String, String>();
+            mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHAT_ROBOT_SEND_NEWS, map);
+        }*/
 
     @Override
     public void onSendFail(Message message, int errorCode) {
@@ -468,5 +511,41 @@ public class MessageViewModel extends ViewModel implements OnReceiveMessageListe
         if (clearMessageLiveData != null) {
             clearMessageLiveData.postValue(new Object());
         }
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void disimissProgress() {
+
+    }
+
+    @Override
+    public void loadDataSuccess(Map<String, Object> tData, String mType) {
+       /* switch (mType){
+            case MethodUrl.CHAT_ROBOT_SEND_NEWS:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        break;
+                    case "-1": //请求失败
+                        //showToastMsg(tData.get("msg") + "");
+                        break;
+                    case "1": //token过期
+                        ActivityManager activityManager = ActivityManager.getInstance();
+                        activityManager.close();
+                        Intent intent = new Intent(mContext, LoginActivity.class);
+                        mContext.startActivity(intent);
+                        break;
+                }
+                break;
+        }*/
+    }
+
+    @Override
+    public void loadDataError(Map<String, Object> map, String mType) {
+
     }
 }

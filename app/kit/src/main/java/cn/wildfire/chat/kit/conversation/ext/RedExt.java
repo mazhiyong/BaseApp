@@ -8,8 +8,10 @@ import android.view.View;
 import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.manage.ActivityManager;
 import com.lr.biyou.mvp.presenter.RequestPresenterImp;
 import com.lr.biyou.mvp.view.RequestView;
+import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle2.activity.RedMoneyActivity;
 import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
@@ -116,8 +118,9 @@ public class RedExt extends ConversationExt implements RequestView {
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("group_id", targetId);
         Map<String,String> mapContent = new HashMap<>();
-        mapContent.put("FormID",targetId);
-        mapContent.put("FormuserID",MbsConstans.RONGYUN_MAP.get("id")+"");
+        mapContent.put("FromID",targetId);
+        mapContent.put("FromuserID",MbsConstans.RONGYUN_MAP.get("id")+"");
+        mapContent.put("FromuserNickName",MbsConstans.RONGYUN_MAP.get("name")+"");
         Random random = new Random();
         int num = random.nextInt(99)%(99-10+1) + 10;
         mapContent.put("msgID",String.valueOf(System.currentTimeMillis())+num);
@@ -141,7 +144,25 @@ public class RedExt extends ConversationExt implements RequestView {
 
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
-
+        switch (mType){
+            case MethodUrl.CHAT_ROBOT_SEND_NEWS:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                      /*  messageViewModel.sendTextMsg(conversation, txtContent);
+                        editText.setText("");*/
+                        break;
+                    case "-1": //请求失败
+                        //showToastMsg(tData.get("msg") + "");
+                        break;
+                    case "1": //token过期
+                        ActivityManager activityManager = ActivityManager.getInstance();
+                        activityManager.close();
+                        Intent intent = new Intent(activity, LoginActivity.class);
+                        activity.startActivity(intent);
+                        break;
+                }
+                break;
+        }
     }
 
     @Override

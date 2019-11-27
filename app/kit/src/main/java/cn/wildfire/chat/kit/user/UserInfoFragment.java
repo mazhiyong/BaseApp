@@ -23,6 +23,7 @@ import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
 import com.lr.biyou.R;
 import com.lr.biyou.utils.tool.LogUtilDebug;
+import com.lr.biyou.utils.tool.UtilTools;
 
 import java.util.ArrayList;
 
@@ -95,7 +96,7 @@ public class UserInfoFragment extends Fragment {
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         contactViewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
         String selfUid = userViewModel.getUserId();
-        if (selfUid.equals(userInfo.uid)) {
+        if (!UtilTools.empty(selfUid) && selfUid.equals(userInfo.uid)) {
             // self
             chatButton.setVisibility(View.GONE);
             voipChatButton.setVisibility(View.GONE);

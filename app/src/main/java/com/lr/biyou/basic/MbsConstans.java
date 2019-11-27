@@ -22,6 +22,8 @@ public class MbsConstans {
 
 
 	public static final String SERVER_URL = "http://by.qilinpz.com/index/";
+	//public static final String SERVER_URL = "http://chat.qilinpz.com/index/";
+
 	public static final String QRCODE_SERVER_URL = "http://qr.topscan.com/api.php?";
 
 	//WEBSOCKET BASE_URL

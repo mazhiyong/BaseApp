@@ -240,11 +240,14 @@ public class MainActivity extends BasicActivity implements RequestView {
             public void onConnectionStatusChange(int status) {
                 switch (status) {
                     case ConnectionStatus.ConnectionStatusTokenIncorrect:
+                        LogUtilDebug.i("show","聊天token过期");
                     case ConnectionStatus.ConnectionStatusLogout:
+                        LogUtilDebug.i("show","聊天退出登录");
                     case ConnectionStatus.ConnectionStatusUnconnected:
-                        Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
+                        LogUtilDebug.i("show","聊天未连接");
+                       /* Intent intent1 = new Intent(MainActivity.this, LoginActivity.class);
                         startActivity(intent1);
-                        finish();
+                        finish();*/
                         break;
                 }
 
