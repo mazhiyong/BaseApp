@@ -117,9 +117,9 @@ public class MoreTypeAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         if (mapList != null && mapList.size() > 0) {
-            if (mapList.size() > 10) {
+            /*if (mapList.size() > 10) {
                 return 10;
-            }
+            }*/
             return mapList.size();
         }
         return 0;

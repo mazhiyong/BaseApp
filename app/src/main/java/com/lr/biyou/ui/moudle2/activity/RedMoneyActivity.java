@@ -126,7 +126,7 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                     showToastMsg("请选择币种");
                 } else {
                     if (s.toString().length() > 0) {
-                        total = Float.parseFloat(rate) * Integer.parseInt(s.toString()) + "";
+                        total = Float.parseFloat(rate) * Float.parseFloat(s.toString()) + "";
                         cnyTv.setText("≈ " + total + "CNY");
                     } else {
                         cnyTv.setText("≈ 0.00CNY");

@@ -235,9 +235,9 @@ public class PayListActivity extends BasicActivity implements RequestView,ReLoad
                                 Map<String, Object> map = new HashMap<>();
                                 map.put("kind", "0");//0银行卡  1 支付宝 2 微信支付
                                 map.put("type", "1"); //0未添加  1 已添加
-                                map.put("name", mapData.get("bank_opener") + "");
+                                map.put("name", mapData.get("bank_name") + "");
                                 map.put("number", mapData.get("bank_number") + "");
-                                map.put("pay_message", mapData.get("bank_name") + "");
+                                map.put("pay_message", mapData.get("bank_opener") + "");
                                 mDataList.add(map);
                             } else {
                                 Map<String, Object> map = new HashMap<>();
