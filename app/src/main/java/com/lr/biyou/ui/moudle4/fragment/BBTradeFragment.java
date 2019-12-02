@@ -223,7 +223,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
     private List<List<String>> mDataListSell = new ArrayList<>();
     private List<Map<String, Object>> mDatas = new ArrayList<>();
     private List<Map<String, Object>> mtabsData = new ArrayList<>();
-    private int precision = 2;
+    private Map<String,Object> mPairPrecisionData = new HashMap<>();
+    private Map<String, Object> mPairPrecisionMap = new HashMap<>();
+
 
     List<Map<String,Object>> mapOneList = new ArrayList<>();
 
@@ -253,6 +255,10 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
     private final int QUEST_CODE = 100;
 
+
+    String pricePrecision = "2";
+    double precisionNum = 0;
+    double price;
 
     private Handler handler = new Handler();
 
@@ -349,8 +355,13 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             //账户当前交易区交易币可用
             getCurAreaAccountAction();
 
+            //查询价格和数量精度
+            getPariPrecionAction();
+
             //setWebsocketListener();
             //handler.post(runnable);
+
+
 
             handler.post(cnyRunnable);
             LogUtilDebug.i("show", "BB懒加载数据,每次进入界面加载");
@@ -358,6 +369,18 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             return true;
         }
         return false;
+    }
+
+    private void getPariPrecionAction() {
+        mRequestTag = MethodUrl.PAIR_PRECISION;
+        Map<String, Object> map = new HashMap<>();
+        /*if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(getParentFragment().getActivity(), MbsConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);*/
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.PAIR_PRECISION, map);
+
     }
 
     /**
@@ -895,13 +918,80 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
     }
 
-    @OnClick({R.id.select_iv, R.id.select_tv, R.id.iv_toCoinInfo, R.id.tv_all, R.id.tvLimitPrice, R.id.tvOperateCoin})
+    @OnClick({R.id.select_iv, R.id.select_tv,R.id.ivPlus,R.id.ivLess, R.id.iv_toCoinInfo, R.id.tv_all, R.id.tvLimitPrice, R.id.tvOperateCoin})
     public void onViewClicked(View view) {
         Intent intent;
+
         switch (view.getId()) {
+
             case R.id.select_iv:
             case R.id.select_tv:
                 initPopupWindow();
+                break;
+            case R.id.ivPlus:
+                if (!UtilTools.empty(mPairPrecisionMap) && !UtilTools.empty(mPairPrecisionMap.get("price"))){
+                    pricePrecision = mPairPrecisionMap.get("price")+"";
+                }else {
+                    pricePrecision = "2";
+                }
+                switch (pricePrecision){
+                    case "2":
+                        precisionNum = 0.01;
+                        break;
+                    case "4":
+                        precisionNum = 0.0001;
+                        break;
+                    case "6":
+                        precisionNum = 0.000001;
+                        break;
+                    case "8":
+                        precisionNum = 0.00000001;
+                        break;
+                    case "10":
+                        precisionNum = 0.0000000001;
+                        break;
+                }
+
+                if (UtilTools.empty(etPrice.getText())){
+                    price = 0;
+                }else {
+                    price = Double.parseDouble(etPrice.getText()+"");
+                }
+                price = price+precisionNum;
+                etPrice.setText(UtilTools.formatDecimal(price+"",Integer.parseInt(pricePrecision)));
+                break;
+            case R.id.ivLess:
+                if (!UtilTools.empty(mPairPrecisionMap) && !UtilTools.empty(mPairPrecisionMap.get("price"))){
+                    pricePrecision = mPairPrecisionMap.get("price")+"";
+                }else {
+                    pricePrecision = "2";
+                }
+                switch (pricePrecision){
+                    case "2":
+                        precisionNum = 0.01;
+                        break;
+                    case "4":
+                        precisionNum = 0.0001;
+                        break;
+                    case "6":
+                        precisionNum = 0.000001;
+                        break;
+                    case "8":
+                        precisionNum = 0.00000001;
+                        break;
+                    case "10":
+                        precisionNum = 0.0000000001;
+                        break;
+                }
+                if (UtilTools.empty(etPrice.getText())){
+                    price = 0;
+                }else {
+                    price = Double.parseDouble(etPrice.getText()+"");
+                    if (price > 0){
+                        price = price-precisionNum;
+                        etPrice.setText(UtilTools.formatDecimal(price+"",Integer.parseInt(pricePrecision)));
+                    }
+                }
                 break;
             case R.id.iv_toCoinInfo:
                 Intent intent1 = new Intent(getActivity(), CoinInfoDetailActivity.class);
@@ -1127,6 +1217,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 mConditionDialog.dismiss();
                 symbol = mDatas.get(position).get("name") + "";
                 selectTv.setText(symbol + "/" + area);
+                if (!UtilTools.empty(mPairPrecisionData) && !UtilTools.empty(mPairPrecisionData.get((symbol+area).toLowerCase()))){
+                    mPairPrecisionMap = (Map<String, Object>) mPairPrecisionData.get((symbol+area).toLowerCase());
+                }
                 areaTv.setText(area);
                 tvUnit.setText(symbol);
                 if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())) {
@@ -1373,6 +1466,24 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 }
                 break;
 
+            case MethodUrl.PAIR_PRECISION:
+                switch (tData.get("code") + "") {
+                    case "0":
+                        mPairPrecisionData = (Map<String, Object>) tData.get("data");
+                        break;
+                    case "1":
+                        if (getParentFragment().getActivity() != null) {
+                            getParentFragment().getActivity().finish();
+                        }
+                        intent = new Intent(getParentFragment().getActivity(), LoginActivity.class);
+                        startActivity(intent);
+                        break;
+                    case "-1":
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+                }
+                break;
+
             case MethodUrl.AREA_ITEM:
                 switch (tData.get("code") + "") {
                     case "0":
@@ -1457,12 +1568,12 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                         decimalFormat.setRoundingMode(RoundingMode.CEILING);
                                         decimalFormat.setGroupingUsed(false);
                                         String format;
-                                        if (precision >= 0) {
-                                            decimalFormat.setMaximumFractionDigits(precision);
+                                        if (Integer.parseInt(pricePrecision) >= 0) {
+                                            decimalFormat.setMaximumFractionDigits(Integer.parseInt(pricePrecision) );
                                             format = decimalFormat.format(Double.parseDouble(price));
                                         } else {
                                             decimalFormat.setMaximumFractionDigits(0);
-                                            format = BigDecimalUtils.mul(decimalFormat.format(Double.parseDouble(BigDecimalUtils.divide(price, RoundingMode.CEILING, 0 - precision).toString())), 0 - precision).toString();
+                                            format = BigDecimalUtils.mul(decimalFormat.format(Double.parseDouble(BigDecimalUtils.divide(price, RoundingMode.CEILING, 0 - Integer.parseInt(pricePrecision) ).toString())), 0 - Integer.parseInt(pricePrecision) ).toString();
                                         }
 
                                         if (mDataListBuy.size() > 0) {
@@ -1483,7 +1594,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                             mDataListBuy.add(strings1);
                                         }
                                     }
-                                    buyAdapter.setBuyTradeInfo(mDataListBuy, precision);
+                                    buyAdapter.setBuyTradeInfo(mDataListBuy, Integer.parseInt(pricePrecision) );
                                 }
 
                                 if (!UtilTools.empty(mListSell) && mListSell.size() > 0) {
@@ -1494,12 +1605,12 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                         decimalFormat.setRoundingMode(RoundingMode.CEILING);
                                         decimalFormat.setGroupingUsed(false);
                                         String format;
-                                        if (precision >= 0) {
-                                            decimalFormat.setMaximumFractionDigits(precision);
+                                        if (Integer.parseInt(pricePrecision)  >= 0) {
+                                            decimalFormat.setMaximumFractionDigits(Integer.parseInt(pricePrecision) );
                                             format = decimalFormat.format(Double.parseDouble(price));
                                         } else {
                                             decimalFormat.setMaximumFractionDigits(0);
-                                            format = BigDecimalUtils.mul(decimalFormat.format(Double.parseDouble(BigDecimalUtils.divide(price, RoundingMode.CEILING, 0 - precision).toString())), 0 - precision).toString();
+                                            format = BigDecimalUtils.mul(decimalFormat.format(Double.parseDouble(BigDecimalUtils.divide(price, RoundingMode.CEILING, 0 - Integer.parseInt(pricePrecision) ).toString())), 0 - Integer.parseInt(pricePrecision) ).toString();
                                         }
 
                                         if (mDataListSell.size() > 0) {
@@ -1520,7 +1631,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                                             mDataListSell.add(strings1);
                                         }
                                     }
-                                    sellAdapter.setSellTradeInfos(mDataListSell, precision);
+                                    sellAdapter.setSellTradeInfos(mDataListSell, Integer.parseInt(pricePrecision) );
                                 }
 
                             }
@@ -1848,6 +1959,9 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         }
 
         selectTv.setText(symbol + "/" + area);
+        if (!UtilTools.empty(mPairPrecisionData) && !UtilTools.empty(mPairPrecisionData.get((symbol+area).toLowerCase()))){
+            mPairPrecisionMap = (Map<String, Object>) mPairPrecisionData.get((symbol+area).toLowerCase());
+        }
         areaTv.setText(area);
         tvUnit.setText(symbol);
         if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())) {

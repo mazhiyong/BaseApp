@@ -275,6 +275,8 @@ public class MethodUrl {
     public static final String AREA_ALL = "Contract/areaAll";//交易区
     public static final String COIN_ACCOUNT = "Contract/queryCoinAccount";//用户合约币、USDT资产
     public static final String CONTRACT_TRADE = "contract_trade/index";//交易买卖
+    public static final String PAIR_PRECISION = "index/getPairPrecision";//获取币的价格和数量经度
+
 
 
 

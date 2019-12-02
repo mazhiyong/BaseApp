@@ -214,7 +214,7 @@
                             android:layout_height="wrap_content">
                             <ImageView
                                 android:layout_width="@dimen/dp_25"
-                                android:src="@drawable/icon_a2_s"
+                                android:src="@drawable/icon_a4_s"
                                 android:layout_gravity="center_vertical"
                                 android:layout_height="@dimen/dp_25" />
 

@@ -93,7 +93,7 @@ public class ChoseBiTypeActivity extends BasicActivity implements RequestView, R
     public void init() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
-        mTitleText.setText("充币");
+        mTitleText.setText("选择币种类型");
         mTitleText.setCompoundDrawables(null, null, null, null);
         if (getIntent() != null){
             Bundle bundle = getIntent().getExtras();
