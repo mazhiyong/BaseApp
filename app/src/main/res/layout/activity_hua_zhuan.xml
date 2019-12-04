@@ -88,13 +88,14 @@
                 <TextView
                     android:id="@+id/from_tv"
                     android:layout_width="0dp"
-                    android:text="请选择"
+                    android:text="法币账户"
                     android:layout_weight="1"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_15"
                     android:layout_height="wrap_content" />
                 <ImageView
+                    android:id="@+id/from_iv"
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:alpha="0.6"
@@ -122,13 +123,15 @@
                 <TextView
                     android:id="@+id/to_tv"
                     android:layout_width="0dp"
-                    android:text="请选择"
+                    android:text="币币账户"
                     android:layout_marginLeft="@dimen/dp_15"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_15"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />
                 <ImageView
+                    android:id="@+id/to_iv"
+                    android:visibility="gone"
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:alpha="0.6"

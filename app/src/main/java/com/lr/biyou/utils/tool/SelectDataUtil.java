@@ -853,10 +853,10 @@ public class SelectDataUtil {
         map1.put("code","0");
         mDataList.add(map1);
 
-        map1=new HashMap<>();
+     /*   map1=new HashMap<>();
         map1.put("name","币币账户");
         map1.put("code","1");
-        mDataList.add(map1);
+        mDataList.add(map1);*/
 
         map1=new HashMap<>();
         map1.put("name","合约账户");

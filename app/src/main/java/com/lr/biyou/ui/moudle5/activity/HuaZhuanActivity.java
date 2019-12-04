@@ -75,6 +75,10 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
     View divideLine;
     @BindView(R.id.to_lay)
     LinearLayout toLay;
+    @BindView(R.id.from_iv)
+    ImageView fromIv;
+    @BindView(R.id.to_iv)
+    ImageView toIv;
 
 
     private KindSelectDialog mDialog;
@@ -84,7 +88,7 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
     private String toStr;
     private String avaiableNumber;
 
-    private String mFormToType ="0";
+    private String mFormToType = "0";
 
     @Override
     public int getContentView() {
@@ -118,7 +122,7 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
     }
 
 
-    @OnClick({R.id.back_img, R.id.right_lay, R.id.from_lay,R.id.to_lay, R.id.change_iv, R.id.type_lay, R.id.selectall_tv, R.id.huzhuan_tv})
+    @OnClick({R.id.back_img, R.id.right_lay, R.id.from_lay, R.id.to_lay, R.id.change_iv, R.id.type_lay, R.id.selectall_tv, R.id.huzhuan_tv})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -137,11 +141,27 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
                 mFormToType = "1";
                 mDialog.showAtLocation(Gravity.BOTTOM, 0, 0);
                 break;
-            case R.id.change_iv:
+            case R.id.change_iv: //划转
                 fromStr = fromTv.getText().toString() + "";
                 toStr = toTv.getText().toString() + "";
                 fromTv.setText(toStr);
                 toTv.setText(fromStr);
+                if (fromTv.getText().toString().equals("币币账户")){
+                    fromLay.setEnabled(false);
+                    fromIv.setVisibility(View.GONE);
+                    toLay.setEnabled(true);
+                    toIv.setVisibility(View.VISIBLE);
+                }else {
+                    fromLay.setEnabled(true);
+                    fromIv.setVisibility(View.VISIBLE);
+                    toLay.setEnabled(false);
+                    toIv.setVisibility(View.GONE);
+                }
+
+                if (!type2Tv.getText().toString().equals("请选择")){
+                    getAviableMoneyAction(type2Tv.getText().toString());
+                }
+
                 break;
             case R.id.type_lay:
                 String type = "";
@@ -365,19 +385,19 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
         switch (type) {
             case 10:
                 String s = (String) map.get("name"); //选择账户
-                if (mFormToType.equals("0")){ //from
+                if (mFormToType.equals("0")) { //from
                     fromTv.setText(s);
-                }else {
+                } else {
                     toTv.setText(s);
                 }
 
                 break;
             case 30: //选择币种
                 String str = (String) map.get("name"); //选择账户
-                    typeTv.setText(str);
-                    type2Tv.setText(str);
-                    getAviableMoneyAction(str);
-                    huzhuanTv.setEnabled(true);
+                typeTv.setText(str);
+                type2Tv.setText(str);
+                getAviableMoneyAction(str);
+                huzhuanTv.setEnabled(true);
                 break;
         }
     }
