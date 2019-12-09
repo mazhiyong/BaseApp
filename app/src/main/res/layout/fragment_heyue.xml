@@ -865,12 +865,14 @@
                                 android:textSize="@dimen/sp_14" />
 
                             <EditText
+                                android:hint="0.00"
+                                android:paddingLeft="@dimen/dp_5"
                                 android:id="@+id/zhiying_et"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginRight="@dimen/dp_20"
-                                android:background="@drawable/background_corners_gray_light" />
+                                android:background="@drawable/background_corners_gray_lightest" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -892,12 +894,14 @@
                                 android:textSize="@dimen/sp_14" />
 
                             <EditText
+                                android:hint="0.00"
+                                android:paddingLeft="@dimen/dp_5"
                                 android:id="@+id/zhisun_et"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginRight="@dimen/dp_20"
-                                android:background="@drawable/background_corners_gray_light" />
+                                android:background="@drawable/background_corners_gray_lightest" />
                         </LinearLayout>
                     </LinearLayout>
 

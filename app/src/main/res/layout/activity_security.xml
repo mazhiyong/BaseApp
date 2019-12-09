@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:background="@color/white"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/top_layout"
@@ -12,7 +12,6 @@
 
     <LinearLayout
         android:id="@+id/phone_lay"
-        android:visibility="gone"
         android:layout_marginTop="@dimen/dp_10"
         android:layout_width="match_parent"
         android:background="@drawable/list_item_selector"
@@ -34,11 +33,11 @@
             android:id="@+id/phone_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray"
+            android:textColor="@color/black"
             android:textSize="@dimen/sp_14"
             android:layout_marginRight="@dimen/dp_10"
             android:layout_gravity="center"
-            android:text="18182818898"/>
+            android:text=""/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/item_padding"
@@ -81,7 +80,7 @@
             android:textSize="@dimen/sp_14"
             android:layout_marginRight="@dimen/dp_10"
             android:layout_gravity="center"
-            android:text="172712719@qq.com"/>
+            android:text=""/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/item_padding"
@@ -139,18 +138,16 @@
         android:layout_height="@dimen/divide_hight"
         android:background="@color/divide_line"/>
 
+
     <TextView
         android:id="@+id/exit_tv"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/dp_35"
-        android:text="退  出"
-        android:visibility="gone"
+        android:text="退出登录"
         android:padding="@dimen/dp_10"
         android:background="@drawable/btn_next"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_14"
         android:gravity="center_horizontal"
         android:layout_height="wrap_content" />
-
-
 </LinearLayout>

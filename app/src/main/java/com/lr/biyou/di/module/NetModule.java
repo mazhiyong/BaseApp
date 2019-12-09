@@ -17,6 +17,7 @@ import com.lzy.okgo.cookie.CookieJarImpl;
 import com.lzy.okgo.cookie.store.SPCookieStore;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -295,7 +296,7 @@ public class NetModule {
                     /**
                      * 改写数字的处理逻辑，将数字值分为整型与浮点型。
                      */
-                    double dbNum = in.nextDouble();
+                  /*  double dbNum = in.nextDouble();
 
                     // 数字超过long的最大值，返回浮点类型
                     if (dbNum > Long.MAX_VALUE) {
@@ -309,18 +310,17 @@ public class NetModule {
                     } else {
                         return dbNum;
                     }
-
-                    /*//将其作为一个字符串读取出来
+*/
+                    //将其作为一个字符串读取出来
                     String numberStr = in.nextString();
-
-
-                    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+numberStr);
                     //返回的numberStr不会为null
                     if (numberStr.contains(".") || numberStr.contains("e")
                             || numberStr.contains("E")) {
-                        return Double.parseDouble(numberStr);
+                        BigDecimal bigDecimal = new BigDecimal(Double.parseDouble(numberStr));
+                        return bigDecimal.toPlainString();
                     }
-                    return Long.parseLong(numberStr);*/
+                    BigDecimal bigDecimal = new BigDecimal(Long.parseLong(numberStr));
+                    return bigDecimal.toPlainString();
 
                 case BOOLEAN:
                     return in.nextBoolean();

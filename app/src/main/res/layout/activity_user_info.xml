@@ -461,6 +461,7 @@
                             android:background="@color/divide_line"/>
                         <TextView
                             android:id="@+id/exit_tv"
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_margin="@dimen/dp_35"
                             android:text="退  出  应  用"

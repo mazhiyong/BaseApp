@@ -16,8 +16,7 @@
         android:orientation="vertical"
         android:layout_height="wrap_content">
         <TextView
-
-            android:background="@drawable/yaoqing_bac"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/dp_15"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"
@@ -28,18 +27,16 @@
             android:paddingTop="@dimen/dp_15"
             android:lineSpacingExtra="@dimen/dp_10"
             android:paddingRight="@dimen/dp_100"
-            android:textColor="@color/white"
-            android:text="邀请好友增加活跃度，提高奖励
-            你可以获得下级奖励的10%"
+            android:textColor="@color/yellow"
+            android:text="10%"
             android:layout_gravity="center"
             android:layout_height="@dimen/dp_100"/>
 
         <ImageView
-            android:layout_marginTop="@dimen/dp_15"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_5"
             android:id="@+id/top_iv"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:gravity="center"
             android:paddingTop="@dimen/dp_15"

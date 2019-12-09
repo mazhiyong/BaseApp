@@ -61,8 +61,8 @@ public class CoinInfoAdapter extends BasicRecycleViewAdapter {
         CoinInfoViewHolder coinInfoViewHolder = (CoinInfoViewHolder) viewHolder;
         Map map = coinList.get(position);
        coinInfoViewHolder.tvCoinName.setText(map.get("name") + "/"+map.get("area"));
-       coinInfoViewHolder.tvCoinPrice.setText(UtilTools.getNormalMoney(map.get("price")+""));
-       coinInfoViewHolder.tvCoinConvert.setText("≈ "+map.get("cny")+" CNY");
+       coinInfoViewHolder.tvCoinPrice.setText(UtilTools.formatNumber(map.get("price")+"","#.########"));
+       coinInfoViewHolder.tvCoinConvert.setText("≈ "+UtilTools.formatDecimal(map.get("cny") + "",2)+" CNY");
        //coinInfoViewHolder.tvCoinConvert.setText(UiTools.getString(R.string.defaultCny).replace("%S", frontBean.getCnyNumber()));
 
         if (UtilTools.empty(MbsConstans.COLOR_LOW) || UtilTools.empty(MbsConstans.COLOR_TOP)){

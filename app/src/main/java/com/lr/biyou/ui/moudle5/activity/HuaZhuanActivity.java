@@ -109,7 +109,7 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
         rightImg.setVisibility(View.VISIBLE);
         rightImg.setImageResource(R.drawable.icon6_dingdan);
 
-
+        toLay.setEnabled(false);
         initDialog();
     }
 

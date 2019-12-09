@@ -1,5 +1,6 @@
 package com.lr.biyou.ui.moudle3.adapter;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class BuyAdapter extends BasicRecycleViewAdapter {
     public void setBuyTradeInfo(List<List<String>> buySell, int precision) {
         this.buySell = buySell;
         this.precision = precision;
+        Log.i("show","单位精度:"+precision);
         notifyDataSetChanged();
     }
 
@@ -80,7 +82,9 @@ public class BuyAdapter extends BasicRecycleViewAdapter {
             if ("--".equals(price)) {
                 buyViewHolder.tvPrice.setText(price);
             } else {
+
                 buyViewHolder.tvPrice.setText(UtilTools.formatDecimal(strings.get(0), precision));
+                //buyViewHolder.tvPrice.setText(UtilTools.formatNumber(strings.get(0), "#.########"));
             }
             buyViewHolder.tvPrice.setTextColor(ContextCompat.getColor(mContext,R.color.green_light));
         }

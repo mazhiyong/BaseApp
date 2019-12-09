@@ -447,7 +447,7 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                         Map<String,Object> mapData= (Map<String, Object>) map.get("data");
                         if (!UtilTools.empty(mapData)){
                             // 当前价
-                            tvCoinPrice.setText(mapData.get("price")+"");
+                            tvCoinPrice.setText(UtilTools.formatNumber(mapData.get("price")+"", "#.########"));
                             // 对应cny价格
                             tvCnyPrice.setText(getResources().getString(R.string.defaultCny).replace("%S", UtilTools.formatNumber(mapData.get("cny_number")+"", "#.##")));
                             // 高
@@ -1058,9 +1058,13 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
                         if (!UtilTools.empty(tData.get("data")+"")){
                             Map<String,Object> mapData = (Map<String, Object>) tData.get("data");
                             if (!UtilTools.empty(mapData)){
-                                tvCoinPrice.setText(mapData.get("price")+"");
-                                //tvCnyPrice.setText("≈"+mapData.get("cny_number")+"CNY");
+                                // 当前价
+                                tvCoinPrice.setText(UtilTools.formatNumber(mapData.get("price")+"", "#.########"));
+                                // 对应cny价格
                                 tvCnyPrice.setText(getResources().getString(R.string.defaultCny).replace("%S", UtilTools.formatNumber(mapData.get("cny_number")+"", "#.##")));
+                                //tvCoinPrice.setText(UtilTools.formatDecimal(mapData.get("price")+"",8));
+                                //tvCnyPrice.setText("≈"+UtilTools.formatDecimal(mapData.get("cny_number")+"",2)+"CNY");
+                                //tvCnyPrice.setText(getResources().getString(R.string.defaultCny).replace("%S", UtilTools.formatNumber(mapData.get("cny_number")+"", "#.##")));
                                 //0 红跌绿涨   1红涨绿跌
                                 String colorType =  SPUtils.get(CoinInfoDetailActivity.this, MbsConstans.SharedInfoConstans.COLOR_TYPE,"0").toString();
                                 if ((mapData.get("ratio")+"").contains("-")) { //跌

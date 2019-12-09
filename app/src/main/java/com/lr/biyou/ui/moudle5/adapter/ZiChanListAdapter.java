@@ -54,11 +54,11 @@ public class ZiChanListAdapter extends ListBaseAdapter {
 //        map.put("money2","909010");
 //        map.put("money3","608109291");
         viewHolder.typeTv.setText(item.get("symbol") + "");
-        viewHolder.moneyAvaivable.setText(UtilTools.formatDecimal(item.get("balance")+"",2));
+        viewHolder.moneyAvaivable.setText(UtilTools.formatDecimal(item.get("balance")+"",8));
         if (UtilTools.empty(item.get("frozen"))){
             viewHolder.dongjieLay.setVisibility(View.GONE);
         }else {
-            viewHolder.moneyLimit.setText(UtilTools.formatDecimal(item.get("frozen")+"",2));
+            viewHolder.moneyLimit.setText(UtilTools.formatDecimal(item.get("frozen")+"",8));
         }
         viewHolder.moneyZhehe.setText(UtilTools.formatDecimal(item.get("cny")+"",2));
 

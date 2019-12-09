@@ -82,23 +82,24 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
 
         mTimeCount = new TimeCount(1 * 60 * 1000, 1000);
 
-        mTitleText.setText("安全中心");
         mTitleText.setCompoundDrawables(null, null, null, null);
         divideLine.setVisibility(View.GONE);
 
         Bundle bundle =getIntent().getExtras();
-       /* if (bundle != null){
+        if (bundle != null){
             type =bundle.getString("TYPE");
             String account= bundle.getString("DATA");
-           *//* if (type.equals("0")){
+            if (type.equals("0")){
+                mTitleText.setText("修改邮箱");
                 etPhoneEmail.setHint("请输入邮箱帐号");
             }else {
+                mTitleText.setText("修改手机号");
                 etPhoneEmail.setHint("请输入手机号");
-            }*//*
-            etPhoneEmail.setHint("请输入手机/邮箱帐号");
-            etPhoneEmail.setText(account);
-        }*/
-        etPhoneEmail.setHint("请输入手机/邮箱帐号");
+            }
+            //etPhoneEmail.setHint("请输入手机/邮箱帐号");
+            //etPhoneEmail.setText(account);
+        }
+        //etPhoneEmail.setHint("请输入手机/邮箱帐号");
 
         etPhoneEmail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -167,7 +168,7 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
                     showToastMsg("请输入手机/邮箱账号");
                     return;
                 }
-                mTimeCount.start();
+
                 getMsgcodeAction();
                 break;
             case R.id.bt_next:
@@ -235,13 +236,28 @@ public class SecurityCheckActivity extends BasicActivity implements RequestView,
 
     }
 
-    // TODO: 2019/8/29  修改手机号和邮箱
     @Override
     public void loadDataSuccess(Map<String, Object> tData, String mType) {
         switch (mType){
             case MethodUrl.REGIST_SMSCODE:
-                showToastMsg(getResources().getString(R.string.code_phone_tip));
-                etCode.setText(tData.get("data")+"");
+                switch (tData.get("code")+""){
+                    case "0": //请求成功
+                        mTimeCount.start();
+                        showToastMsg(getResources().getString(R.string.code_phone_tip));
+                        etCode.setText(tData.get("data")+"");
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg")+"");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        Intent intent = new Intent(SecurityCheckActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        break;
+
+                }
+
                 break;
             case MethodUrl.EDIT_ACCOUNT:
 

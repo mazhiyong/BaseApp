@@ -274,7 +274,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     private int mPage = 1;
     private int maxPage = 1;
 
-    private int precision = 2;
+    private int precision = 4;
     private String precisionStr = "0.01";
     private String symbol = "BTC";
     private String kind = "0";

@@ -76,7 +76,8 @@ public class MoreTypeAdapter extends RecyclerView.Adapter {
 //                    .replace("BTC", listUpBean.getName()).replace("USDT", listUpBean.getArea())));
             riseRankViewHolder.tvCoinName.setText(listUpBean.get("name")+"");
             riseRankViewHolder.tvArea.setText("/" + listUpBean.get("area")+"");
-            riseRankViewHolder.tvCurrentPrice.setText(UtilTools.getNormalMoney(listUpBean.get("price")+""));
+
+            riseRankViewHolder.tvCurrentPrice.setText( UtilTools.formatNumber(listUpBean.get("price")+"","#.########"));
 //            riseRankViewHolder.tvCurrentPriceCny.setText(UiTools.getString(R.string.defaultCny4)
 //                    .replace("%s", UiTools.formatNumber(listUpBean.getCnyNumber(), "#.##")));
 //            riseRankViewHolder.tvCurrentPriceCny.setText(listUpBean.get("cnyNumber")+"CNY");

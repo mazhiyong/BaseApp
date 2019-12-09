@@ -1,6 +1,7 @@
 package com.lr.biyou.ui.moudle3.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class SellAdapter extends BasicRecycleViewAdapter {
     public void setSellTradeInfos(List<List<String>> buySell, int precision) {
         this.buySell = buySell;
         this.precision = precision;
+        Log.i("show","单位精度:"+precision);
         notifyDataSetChanged();
     }
 

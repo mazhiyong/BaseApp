@@ -314,8 +314,9 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
                     case "0": //请求成功
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             Map<String,Object> map = (Map<String, Object>) tData.get("data");
-                            bankMoneyTv.setText(UtilTools.getNormalMoney(map.get("total")+""));
-                            bankCardTv.setText("≈"+UtilTools.getNormalMoney(map.get("cny")+"")+"CNY");
+                            //bankMoneyTv.setText(UtilTools.getNormalMoney(map.get("total")+""));
+                            bankMoneyTv.setText(UtilTools.formatDecimal(map.get("total") + "",8));
+                            bankCardTv.setText("≈" + UtilTools.formatDecimal(map.get("cny") + "",2) + "CNY");
                         }
                         break;
                     case "-1": //请求失败
@@ -341,8 +342,10 @@ public class ZiChanFragment extends BasicFragment implements ReLoadingData, Requ
                             if (!UtilTools.empty(mapData)) {
                                 Map<String,Object> moneyMap = (Map<String, Object>) mapData.get("account");
                                 if (!UtilTools.empty(moneyMap)){
-                                    moneyTv.setText(UtilTools.getNormalMoney(moneyMap.get("btc")+""));
-                                    moneyTv2.setText("≈"+UtilTools.getNormalMoney(moneyMap.get("cny")+"")+"CNY");
+                                    //moneyTv.setText(UtilTools.getNormalMoney(moneyMap.get("btc")+""));
+                                    //moneyTv2.setText("≈"+UtilTools.getNormalMoney(moneyMap.get("cny")+"")+"CNY");
+                                    moneyTv.setText(UtilTools.formatDecimal(moneyMap.get("btc") + "",8));
+                                    moneyTv2.setText("≈" + UtilTools.formatDecimal(moneyMap.get("cny") + "",2)  + "CNY");
                                 }
 
                                 if (UtilTools.empty(mapData.get("coin") + "")) {
