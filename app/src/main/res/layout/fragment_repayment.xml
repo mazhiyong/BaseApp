@@ -326,7 +326,6 @@
                             app:layout_constraintTop_toBottomOf="@id/clNumber" />
 
                         <com.xw.repo.BubbleSeekBar
-                            android:visibility="gone"
                             android:id="@+id/bundle_seekBar"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp_10"
@@ -352,6 +351,7 @@
                             app:layout_constraintTop_toBottomOf="@id/tvAvailable"  />
                         <RadioGroup
                             android:id="@+id/coinCoinSeekBar"
+                            android:visibility="gone"
                             android:layout_width="@dimen/dp_0"
                             android:layout_height="@dimen/dp_32"
                             android:layout_marginTop="@dimen/dp_5"

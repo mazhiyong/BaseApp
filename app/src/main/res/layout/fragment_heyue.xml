@@ -146,6 +146,7 @@
                                     app:layout_constraintWidth_percent="0.4" />
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:id="@+id/tvLessChoose"
                                     android:layout_width="@dimen/dp_0"
                                     android:layout_weight="1"
@@ -452,7 +453,7 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/clHand">
 
-                                <RadioButton
+                                <com.lr.biyou.mywidget.view.ToggleRadioButton
                                     android:id="@+id/rb_number1"
                                     android:layout_width="@dimen/dp_0"
                                     android:layout_height="match_parent"
@@ -461,14 +462,14 @@
                                     android:background="@drawable/selector_open_close_house2"
                                     android:button="@null"
                                     android:gravity="center"
-                                    android:text="10"
+                                    android:text="10X"
                                     android:textColor="@drawable/selector_color_text2"
                                     android:textSize="@dimen/sp_12"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/rbOpen"
                                     app:layout_constraintTop_toTopOf="parent" />
 
-                                <RadioButton
+                                <com.lr.biyou.mywidget.view.ToggleRadioButton
                                     android:id="@+id/rb_number2"
                                     android:layout_width="@dimen/dp_0"
                                     android:layout_height="match_parent"
@@ -477,14 +478,14 @@
                                     android:background="@drawable/selector_open_close_house2"
                                     android:button="@null"
                                     android:gravity="center"
-                                    android:text="20"
+                                    android:text="20X"
                                     android:textColor="@drawable/selector_color_text2"
                                     android:textSize="@dimen/sp_12"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/rbOpen"
                                     app:layout_constraintTop_toTopOf="parent" />
 
-                                <RadioButton
+                                <com.lr.biyou.mywidget.view.ToggleRadioButton
                                     android:id="@+id/rb_number3"
                                     android:layout_width="@dimen/dp_0"
                                     android:layout_height="match_parent"
@@ -493,14 +494,14 @@
                                     android:background="@drawable/selector_open_close_house2"
                                     android:button="@null"
                                     android:gravity="center"
-                                    android:text="50"
+                                    android:text="50X"
                                     android:textColor="@drawable/selector_color_text2"
                                     android:textSize="@dimen/sp_12"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toEndOf="@id/rbOpen"
                                     app:layout_constraintTop_toTopOf="parent" />
 
-                                <RadioButton
+                                <com.lr.biyou.mywidget.view.ToggleRadioButton
                                     android:id="@+id/rb_number4"
                                     android:layout_width="@dimen/dp_0"
                                     android:layout_height="match_parent"
@@ -509,7 +510,7 @@
                                     android:background="@drawable/selector_open_close_house2"
                                     android:button="@null"
                                     android:gravity="center"
-                                    android:text="100"
+                                    android:text="100X"
                                     android:textColor="@drawable/selector_color_text2"
                                     android:textSize="@dimen/sp_12"
                                     app:layout_constraintEnd_toEndOf="parent"

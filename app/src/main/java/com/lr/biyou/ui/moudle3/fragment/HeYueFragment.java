@@ -54,6 +54,7 @@ import com.lr.biyou.mywidget.behavior.WeiboHeaderPagerBehavior;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
 import com.lr.biyou.mywidget.view.LoadingWindow;
 import com.lr.biyou.mywidget.view.PageView;
+import com.lr.biyou.mywidget.view.ToggleRadioButton;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle3.activity.CoinInfoDetailActivity;
 import com.lr.biyou.ui.moudle3.adapter.BuyAdapter;
@@ -189,13 +190,13 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
     @BindView(R.id.tv_loading_content)
     TextView tvLoadingContent;
     @BindView(R.id.rb_number1)
-    RadioButton rbNumber1;
+    ToggleRadioButton rbNumber1;
     @BindView(R.id.rb_number2)
-    RadioButton rbNumber2;
+    ToggleRadioButton rbNumber2;
     @BindView(R.id.rb_number3)
-    RadioButton rbNumber3;
+    ToggleRadioButton rbNumber3;
     @BindView(R.id.rb_number4)
-    RadioButton rbNumber4;
+    ToggleRadioButton rbNumber4;
     @BindView(R.id.seekBar)
     RadioGroup seekBar;
     @BindView(R.id.tvShouyi)
@@ -391,7 +392,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                     tvCnyPrice.setText("≈" + bilv * Float.parseFloat(s.toString()) + "CNY");
                     float maxNumber = 0;
                     int number = 0;
-                    if (rbNumber1.isChecked()){
+                    /*if (rbNumber1.isChecked()){
                         if (mSelectType.equals("0")) { //限价
                             maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etPrice.getText().toString());
                             LogUtilDebug.i("show", "限价maxNumber:" + maxNumber);
@@ -426,7 +427,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                             number = (int) (maxNumber * 1);
                             etHand.setText(number + "");
                         }
-                    }
+                    }*/
                 }else {
                     tvCnyPrice.setText("≈0 CNY");
                     etHand.setText("");
@@ -451,7 +452,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 if (s.toString().length()>0){
                     float maxNumber = 0;
                     int number = 0;
-                    if (rbNumber1.isChecked()){
+                   /* if (rbNumber1.isChecked()){
                         if (mSelectType.equals("1")) { //计划
                             maxNumber = Float.parseFloat(USDT_Account) / Float.parseFloat(etJihuaPrice.getText().toString());
                             LogUtilDebug.i("show", "计划委托maxNumber:" + maxNumber);
@@ -485,7 +486,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                             number = (int) (maxNumber * 1);
                             etHand.setText(number + "");
                         }
-                    }
+                    }*/
                 }else {
                     etHand.setText("");
                 }
@@ -497,6 +498,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             }
         });
 
+/*
         seekBar.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -640,6 +642,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 }
             }
         });
+*/
 
 
 
@@ -996,12 +999,32 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                 startActivityForResult(intent1, QUEST_CODE);
                 break;
             case R.id.rb_number1:
+                if (rbNumber1.isChecked()){
+                    cnyRatio = "1";
+                }else {
+                    cnyRatio = "10";
+                }
                 break;
             case R.id.rb_number2:
+                if (rbNumber2.isChecked()){
+                    cnyRatio = "1";
+                }else {
+                    cnyRatio = "20";
+                }
                 break;
             case R.id.rb_number3:
+                if (rbNumber3.isChecked()){
+                    cnyRatio = "1";
+                }else {
+                    cnyRatio = "50";
+                }
                 break;
             case R.id.rb_number4:
+                if (rbNumber4.isChecked()){
+                    cnyRatio = "1";
+                }else {
+                    cnyRatio = "100";
+                }
                 break;
             case R.id.seekBar:
                 break;

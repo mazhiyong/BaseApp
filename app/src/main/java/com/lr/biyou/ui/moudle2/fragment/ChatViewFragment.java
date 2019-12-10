@@ -91,7 +91,9 @@ import cn.wildfire.chat.kit.user.ChangeMyNameActivity;
 import cn.wildfire.chat.kit.user.UserInfoActivity;
 import cn.wildfire.chat.kit.user.UserViewModel;
 import cn.wildfirechat.client.ConnectionStatus;
+import cn.wildfirechat.model.GroupInfo;
 import cn.wildfirechat.remote.ChatManager;
+import cn.wildfirechat.remote.GetGroupsCallback;
 import q.rorbin.badgeview.QBadgeView;
 
 import static android.app.Activity.RESULT_CANCELED;
@@ -242,11 +244,26 @@ public class ChatViewFragment extends BasicFragment implements RequestView, ReLo
     @Override
     public void onResume() {
         super.onResume();
+
+
         isConnncted();
         if (contactViewModel != null) {
             contactViewModel.reloadFriendRequestStatus();
             conversationListViewModel.reloadConversationUnreadStatus();
         }
+        ChatManager.Instance().getMyGroups(new GetGroupsCallback() {
+            @Override
+            public void onSuccess(List<GroupInfo> groupInfos) {
+            }
+
+            @Override
+            public void onFail(int errorCode) {
+
+            }
+        });
+
+
+
 
         if (channelViewModel == null){
             channelViewModel = ViewModelProviders.of(this).get(ChannelViewModel.class);

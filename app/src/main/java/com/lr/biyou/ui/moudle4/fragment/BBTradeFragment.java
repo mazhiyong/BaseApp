@@ -778,11 +778,10 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             public void getProgressOnFinally(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat, boolean fromUser) {
                 switch (mSelectType) {
                     case "0": //限价
-                        if (mKindType.equals("0")) { //买入
-                            if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString().replaceAll(",", "").trim())) {
-                                showToastMsg("请输入价格");
-                                return;
-                            }
+                        if (UtilTools.empty(etPrice.getText().toString()) && UtilTools.empty(etPrice.getText().toString().replaceAll(",", "").trim())) {
+                            showToastMsg("请输入价格");
+                            etNumber.setText("");
+                            return;
                         }
                         break;
 
@@ -790,22 +789,29 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
 
                         break;
                 }
-
                 if (progress > 0) {
+
+
 
                     if (mKindType.equals("0")) { //买入
                         if (mSelectType.equals("0")) { //限价
                             float maxNumber = Float.parseFloat(Area_Account) / Float.parseFloat(etPrice.getText().toString().replaceAll(",", "").trim());
-                            int number = (int) (maxNumber * progress / 100);
+                            float number = (maxNumber * progress / 100);
                             etNumber.setText(number + "");
+                            tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(etPrice.getText().toString()) + "") + "  " + area);
                         } else { //市价
                             etNumber.setText(progress + "");
+                            tvTransactionAmount.setText("--");
                         }
 
                     } else { //卖出
-                        LogUtilDebug.i("show", "Symbol_Account:" + Symbol_Account);
-                        int number = (int) (Float.parseFloat(Symbol_Account) * progress / 100);
+                        float number = (Float.parseFloat(Symbol_Account) * progress / 100);
                         etNumber.setText(number + "");
+                        if (mSelectType.equals("0")) { //限价
+                            tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(etPrice.getText().toString()) + "") + "  " + area);
+                        } else {
+                            tvTransactionAmount.setText("--");
+                        }
                     }
 
                    /* if ( number > 0 ){
@@ -869,7 +875,8 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     etPrice.setText("0");
                 } else {
                     List<String> strings = sellAdapter.getBuySell().get(position);
-                    etPrice.setText(strings.get(0));
+                    etPrice.setText( UtilTools.formatDecimal(strings.get(0), pricePrecision));
+
                 }
             }
         });
@@ -888,7 +895,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     etPrice.setText("0");
                 } else {
                     List<String> strings = buyAdapter.getBuySell().get(position);
-                    etPrice.setText(strings.get(0));
+                    etPrice.setText( UtilTools.formatDecimal(strings.get(0), pricePrecision));
                 }
             }
         });
