@@ -15,6 +15,7 @@ import com.lr.biyou.listener.OnChildClickListener;
 import com.lr.biyou.ui.moudle.adapter.ListBaseAdapter;
 import com.lr.biyou.utils.imageload.GlideUtils;
 import com.lr.biyou.utils.tool.LogUtilDebug;
+import com.lr.biyou.utils.tool.UtilTools;
 
 import java.util.Map;
 
@@ -54,7 +55,7 @@ public class RedListAdapter extends ListBaseAdapter {
         }
         viewHolder.nameTv.setText(item.get("name") + "");
         viewHolder.contentTv.setText(item.get("time")+"");
-        viewHolder.moneyTv.setText(item.get("money")+" "+item.get("symbol"));
+        viewHolder.moneyTv.setText(UtilTools.formatDecimal(item.get("money")+" ",2)+item.get("symbol"));
         GlideUtils.loadImage(mContext,item.get("portrait")+"",viewHolder.headIv);
         viewHolder.tradeLay.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -55,13 +55,20 @@ public class DingDanListAdapter extends ListBaseAdapter {
             viewHolder.biliLay.setVisibility(View.GONE);
         }else {
             viewHolder.biliLay.setVisibility(View.VISIBLE);
-            viewHolder.biliTv.setText(item.get("tempo")+"");
+            String bili = item.get("tempo")+"";
+            if (bili.length()> 6){
+                viewHolder.biliTv.setText(bili.substring(0,bili.indexOf(".")+3)+"%");
+            }else {
+                viewHolder.biliTv.setText(bili);
+            }
+
+
         }
 
         viewHolder.typeTv.setText(item.get("title") + "");
         viewHolder.timeTv.setText(item.get("time") + "");
-        viewHolder.numberTv.setText(item.get("number") + "");
-        viewHolder.priceTv.setText(item.get("price") + "");
+        viewHolder.numberTv.setText(UtilTools.formatDecimal(item.get("number") + "",2));
+        viewHolder.priceTv.setText(UtilTools.formatDecimal(item.get("price") + "",2));
         viewHolder.stateTv.setText(item.get("statusText") + "");
 
     //viewHolder.mStatusTv.setText(item.get("abstract")+"");

@@ -57,7 +57,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 充提记录  界面
+ * transfer  界面
  */
 public class TradeListActivity extends BasicActivity implements RequestView,ReLoadingData,SelectBackListener{
 
@@ -115,7 +115,7 @@ public class TradeListActivity extends BasicActivity implements RequestView,ReLo
 
         mAnimUtil = new AnimUtil();
 
-        mTitleText.setText(getResources().getString(R.string.order_detail));
+        mTitleText.setText("充提记录");
         mTitleText.setCompoundDrawables(null,null,null,null);
 
         mRightImg.setVisibility(View.GONE);

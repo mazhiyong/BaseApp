@@ -38,7 +38,7 @@
     <!--我的-->
     <string name="all_money">总资产</string>
     <string name="my_money_card">银行账户</string>
-    <string name="order_detail">充提记录</string>
+    <string name="order_detail">transfer</string>
     <string name="my_larger_num">我的额度</string>
     <string name="same_people">我的合伙人</string>
     <string name="my_money_borrow">我的借款</string>

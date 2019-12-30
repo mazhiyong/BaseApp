@@ -112,8 +112,9 @@ public class CoinInfoDetailActivity extends BasicActivity implements View.OnClic
     private  String areaOptional = "";
 
 
-
     private  String colorType ="0";
+
+
 
    /* private Runnable currentPriceRunnable = new Runnable() {
         @Override

@@ -498,7 +498,7 @@ public class ConversationFragment extends Fragment implements
         } else if (conversation.type == Conversation.ConversationType.Group) {
             if (groupInfo != null) {
 
-                conversationTitle = groupInfo.name ;
+                conversationTitle = groupInfo.name +"("+groupInfo.memberCount+")";
             }
         } else if (conversation.type == Conversation.ConversationType.Channel) {
             ChannelViewModel channelViewModel = ViewModelProviders.of(this).get(ChannelViewModel.class);

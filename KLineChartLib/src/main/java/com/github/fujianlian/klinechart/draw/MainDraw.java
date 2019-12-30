@@ -18,6 +18,7 @@ import com.github.fujianlian.klinechart.base.IValueFormatter;
 import com.github.fujianlian.klinechart.entity.ICandle;
 import com.github.fujianlian.klinechart.entity.IKLine;
 import com.github.fujianlian.klinechart.formatter.ValueFormatter;
+import com.github.fujianlian.klinechart.utils.UtilTools;
 import com.github.fujianlian.klinechart.utils.ViewUtil;
 
 import java.util.ArrayList;
@@ -280,15 +281,26 @@ public class MainDraw implements IChartDraw<ICandle> {
         float width = 0;
         float left;
         float top = margin + view.getTopPadding();
-        float height = padding * 8 + textHeight * 5;
+        float height = padding * 8 + textHeight * 9;
 
         ICandle point = (ICandle) view.getItem(index);
         List<String> strings = new ArrayList<>();
-        strings.add(view.getAdapter().getDate(index));
-        strings.add("高:" + point.getHighPrice());
-        strings.add("低:" + point.getLowPrice());
-        strings.add("开:" + point.getOpenPrice());
-        strings.add("收:" + point.getClosePrice());
+        strings.add("时间    :  "+view.getAdapter().getDate(index));
+        strings.add("开        :  " + point.getOpenPrice());
+        strings.add("高        :  " + point.getHighPrice());
+        strings.add("低        :  " + point.getLowPrice());
+        strings.add("收        :  " + point.getClosePrice());
+
+        if (index > 0){
+            ICandle frontPoint = (ICandle) view.getItem(index-1);
+            strings.add("涨跌额:  "+ UtilTools.formatDecimal((point.getClosePrice() - frontPoint.getClosePrice())+"",2));
+            String a=(point.getClosePrice() - frontPoint.getClosePrice())/frontPoint.getClosePrice()*100+"";
+            strings.add("涨跌幅:  "+UtilTools.formatDecimal(a,2)+"%");
+        }else {
+            strings.add("涨跌额:  0" );
+            strings.add("涨跌幅:  0%");
+        }
+        strings.add("成交量:  " + point.getAmunt());
 
         for (String s : strings) {
             width = Math.max(width, mSelectorTextPaint.measureText(s));

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lr.biyou.R;
 import com.lr.biyou.ui.moudle.adapter.ListBaseAdapter;
+import com.lr.biyou.utils.tool.UtilTools;
 
 import java.util.Map;
 
@@ -44,7 +45,7 @@ public class TradeListAdapter extends ListBaseAdapter {
         }
         viewHolder.typeTv.setText(item.get("symbol")+"");
         viewHolder.timeTv.setText(item.get("time")+"");
-        viewHolder.numberTv.setText(item.get("number")+"");
+        viewHolder.numberTv.setText(UtilTools.formatDecimal(item.get("number")+"",2));
         viewHolder.stateTv.setText(item.get("status")+"");
 
         //viewHolder.mStatusTv.setText(item.get("abstract")+"");

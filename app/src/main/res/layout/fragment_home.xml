@@ -157,18 +157,21 @@
                     <LinearLayout
                         android:id="@+id/fast_buy_lay"
                         android:layout_width="@dimen/dp_0"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
                         android:layout_marginTop="@dimen/dp_5"
+                        android:padding="@dimen/dp_2"
                         android:layout_marginLeft="@dimen/dp_5"
                         android:layout_marginRight="@dimen/dp_5"
                         android:background="@color/white"
                         android:orientation="horizontal"
-                        android:layout_height="@dimen/dp_80">
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="match_parent">
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:orientation="vertical"
                             android:paddingLeft="@dimen/dp_10"
                             android:paddingRight="@dimen/dp_5"
+                            android:gravity="center_vertical"
                             android:layout_gravity="center_vertical"
                             android:layout_height="wrap_content">
                             <TextView
@@ -200,14 +203,13 @@
                         android:layout_marginTop="@dimen/dp_5"
                         android:layout_marginLeft="@dimen/dp_5"
                         android:layout_marginRight="@dimen/dp_5"
-                        android:layout_width="@dimen/dp_0"
-                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
                         android:orientation="vertical"
-                        android:layout_height="@dimen/dp_80">
+                        android:layout_height="wrap_content">
 
                         <LinearLayout
                             android:id="@+id/to_bb_lay"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:orientation="horizontal"
                             android:padding="@dimen/dp_5"
                             android:background="@color/white"
@@ -230,7 +232,7 @@
 
                         <LinearLayout
                             android:id="@+id/to_hy_lay"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:orientation="horizontal"
                             android:padding="@dimen/dp_5"
                             android:layout_marginTop="@dimen/dp_10"

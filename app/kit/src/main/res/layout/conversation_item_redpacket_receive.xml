@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/bac_lay"
+        android:id="@+id/contentLay"
         android:layout_width="@dimen/dp_165"
         android:layout_height="wrap_content"
         android:background="@drawable/de_ic_bubble_left"

@@ -29,9 +29,9 @@ public class GroupPrivateChatNotificationContent extends GroupNotificationMessag
             sb.append(ChatManager.Instance().getGroupMemberDisplayName(groupId, operator));
         }
         if (type == 0) {
-            sb.append("开启了成员私聊");
-        } else {
             sb.append("关闭了成员私聊");
+        } else {
+            sb.append("开启了成员私聊");
         }
 
         return sb.toString();

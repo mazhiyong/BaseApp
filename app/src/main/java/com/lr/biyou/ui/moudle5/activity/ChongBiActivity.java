@@ -177,7 +177,7 @@ public class ChongBiActivity extends BasicActivity implements RequestView {
             case R.id.back_img:
                 finish();
                 break;
-            case R.id.right_lay: //充提记录
+            case R.id.right_lay: //transfer
                 intent = new Intent(ChongBiActivity.this, TradeListActivity.class);
                 startActivity(intent);
                 break;

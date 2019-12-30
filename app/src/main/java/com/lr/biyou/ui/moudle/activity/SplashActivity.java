@@ -264,14 +264,14 @@ public class SplashActivity extends BasicActivity {
     }
 
     private void initSqlit() {
-        dataBaseHelper = new DataBaseHelper(this, MbsConstans.DATABASE_NAME, null, 1);
+        dataBaseHelper = new DataBaseHelper(this, MbsConstans.DATABASE_NAME, null, 2);
         dataBaseHelper.getWritableDatabase();
 
         File dbFile = this.getDatabasePath(MbsConstans.DATABASE_NAME);
         if (!dbFile.exists()) {
-
+            LogUtilDebug.i("show","数据库文件不存在");
         } else {
-
+            LogUtilDebug.i("show","数据库文件存在");
         }
 
     }

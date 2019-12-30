@@ -1,13 +1,14 @@
 package com.github.fujianlian.klinechart;
 
 import android.content.Context;
-import androidx.core.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.widget.OverScroller;
 import android.widget.RelativeLayout;
+
+import androidx.core.view.GestureDetectorCompat;
 
 /**
  * 可以滑动和放大的view
@@ -72,7 +73,8 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        return false;
+        isLongPress = !isLongPress;
+        return true;
     }
 
     @Override
@@ -84,10 +86,18 @@ public abstract class ScrollAndScaleView extends RelativeLayout implements
         return false;
     }
 
+
+
+
     @Override
     public void onLongPress(MotionEvent e) {
         isLongPress = true;
     }
+
+
+
+
+
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {

@@ -18,6 +18,7 @@ import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.db.RedHistoryData;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
@@ -81,6 +82,8 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
     private String rate;
     private String total;
 
+    private  Map<String, Object> redMap;
+
     @Override
     public int getContentView() {
         return R.layout.activity_red_money;
@@ -126,10 +129,10 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                     showToastMsg("请选择币种");
                 } else {
                     if (s.toString().length() > 0) {
-                        total = Float.parseFloat(rate) * Float.parseFloat(s.toString()) + "";
-                        cnyTv.setText("≈ " + total + "CNY");
+                        total = Float.parseFloat(s.toString())/ Float.parseFloat(rate) + "";
+                        cnyTv.setText("≈ " + UtilTools.formatDecimal(total,8) +typeTv.getText().toString());
                     } else {
-                        cnyTv.setText("≈ 0.00CNY");
+                        cnyTv.setText("≈ 0.00"+typeTv.getText().toString());
                     }
                 }
             }
@@ -140,9 +143,18 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
             }
         });
 
-
         //请求币种列表数据
         typeListAction();
+        String account = SPUtils.get(this, MbsConstans.SharedInfoConstans.LOGIN_ACCOUNT,"")+"";
+        redMap = RedHistoryData.getInstance().queryRedData(account, id);
+        if (!UtilTools.empty(redMap)){
+            typeTv.setText(redMap.get("red")+"");
+            getMoneyAction(redMap.get("red")+"");
+        }else {
+            typeTv.setText("USDT");
+            getMoneyAction("USDT");
+            RedHistoryData.getInstance().insertRedData(account,id,"USDT","USDT");
+        }
     }
 
     private void typeListAction() {
@@ -231,7 +243,7 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("symbol", typeTv.getText() + "");
         map.put("number", etnumber.getText() + "");
-        map.put("total", etmoney.getText()+"");
+        map.put("total",UtilTools.formatDecimal(total,8));
         if (UtilTools.empty(beizhuEt.getText().toString())){
             map.put("remake", "恭喜发财");
         }else {
@@ -326,14 +338,17 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                         List<Map<String, Object>> mDataList2;
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             mDataList2 = (List<Map<String, Object>>) tData.get("data");
-                            for (Map<String, Object> map : mDataList2) {
-                                map.put("name", map.get("symbol") + "");
+                            if (mDataList2 != null && mDataList2.size()> 0){
+                                for (Map<String, Object> map : mDataList2) {
+                                    map.put("name", map.get("symbol") + "");
+                                }
                             }
                         } else {
                             mDataList2 = new ArrayList<>();
                         }
                         mDialog2 = new KindSelectDialog(this, true, mDataList2, 30);
                         mDialog2.setSelectBackListener(this);
+
 
                         break;
                     case "-1": //请求失败
@@ -352,12 +367,12 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                     case "0": //请求成功
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             Map<String, Object> mapData = (Map<String, Object>) tData.get("data");
-                            yueTv.setText("余额:" + mapData.get("balance"));
-                            yueCnyTv.setText(" ≈" + mapData.get("cny") + "CNY");
+                            yueTv.setText("余额:" + UtilTools.formatDecimal(Float.parseFloat(mapData.get("balance")+""),2));
+                            yueCnyTv.setText(" ≈" +UtilTools.formatDecimal(Float.parseFloat(mapData.get("cny")+""),2)  + "CNY");
                             rate = mapData.get("rate") + "";
                             if (etmoney.getText().toString().length()>0){
                                 total = Float.parseFloat(rate)*Integer.parseInt(etmoney.getText().toString())+"";
-                                cnyTv.setText("≈ "+total+"CNY");
+                                cnyTv.setText("≈ "+UtilTools.formatDecimal(total,2)+typeTv.getText().toString());
                             }
                         }
                         break;
@@ -390,6 +405,11 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                 String str = (String) map.get("name"); //选择币种
                 typeTv.setText(str);
                 getMoneyAction(str);
+                if (UtilTools.empty(redMap)){
+                   redMap = RedHistoryData.getInstance().queryRedData(SPUtils.get(this, MbsConstans.SharedInfoConstans.LOGIN_ACCOUNT,"")+"",id);
+                }
+
+                RedHistoryData.getInstance().updateRedData(str,redMap.get("id")+"");
                 break;
         }
     }

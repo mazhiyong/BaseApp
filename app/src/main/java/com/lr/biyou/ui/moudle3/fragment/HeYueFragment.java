@@ -731,7 +731,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
             //tlTradeList2.addTab(tlTradeList2.newTab().setText(map.get("name") + ""));
         }*/
 
-        mAppbarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+        /*mAppbarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 //折叠时顶部
@@ -744,7 +744,7 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                     LogUtilDebug.i("show","************Nestscroll:"+coordintaorLay.isNestedScrollingEnabled());
                 }
             }
-        });
+        });*/
 
 
        /* CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppbarLayout.getLayoutParams();

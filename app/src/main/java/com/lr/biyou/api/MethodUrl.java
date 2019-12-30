@@ -165,6 +165,13 @@ public class MethodUrl {
     public static final String LOGIN_ACTION = "Register/userLogin";//登录
     public static final String REGIST_SMSCODE = "Register/code";//注册短信验证码
     public static final String REGIST_ACTION = "Register/userReg";//注册提交
+    public static final String REGIST_UPLOAD_ACTION = "Personal/portrait2";//注册上传头像
+    public static final String CHECK_PHONE_SHOW = "Personal/phone_status";//查询手机号是否可见
+    public static final String SET_PHONE_SHOW = "Personal/show_phone";//设置手机号是否可见
+
+
+
+
 
     public static final String BANNNER_INFO = "Home/index";// 首页公告信息
     public static final String NOTICE_LIST = "Home/noticeList";//公告列表

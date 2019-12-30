@@ -36,6 +36,7 @@ import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.chatry.ui.widget.switchbutton.SwitchButton;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.ShowImageDialog;
 import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
@@ -47,7 +48,6 @@ import com.lr.biyou.utils.permission.PermissionsUtils;
 import com.lr.biyou.utils.permission.RePermissionResultBack;
 import com.lr.biyou.utils.tool.AppUtil;
 import com.lr.biyou.utils.tool.JSONUtil;
-import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 import com.yanzhenjie.permission.Permission;
@@ -57,7 +57,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,12 +66,7 @@ import butterknife.OnClick;
 import cn.wildfire.chat.kit.WfcScheme;
 import cn.wildfire.chat.kit.common.OperateResult;
 import cn.wildfire.chat.kit.user.UserViewModel;
-import cn.wildfirechat.message.MessageContentMediaType;
-import cn.wildfirechat.model.ModifyGroupInfoType;
 import cn.wildfirechat.model.UserInfo;
-import cn.wildfirechat.remote.ChatManager;
-import cn.wildfirechat.remote.GeneralCallback;
-import cn.wildfirechat.remote.UploadMediaCallback;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -112,8 +106,11 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
     TextView exitTv;
     @BindView(R.id.iv_code)
     ImageView ivCode;
+    @BindView(R.id.swtich)
+    SwitchButton swtich;
 
     private String mRequestTag = "";
+    private String mCurrentStatus = "";
 
     private Map<String, Object> mHeadPath;
 
@@ -136,6 +133,20 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
 
         // GlideUtils.loadImage(UserInfoActivity.this,"http://tupian.qqjay.com/u/2017/1201/2_161641_2.jpg",mHeadImageView);
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+
+
+       swtich.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCurrentStatus.equals("0")){
+                    setPhoneStatusAction("1");
+                }else {
+                    setPhoneStatusAction("0");
+                }
+
+
+            }
+        });
     }
 
     @Override
@@ -149,6 +160,33 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
         } else {
             getUserInfoAction();
         }
+
+        getPhoneStatusAction();
+    }
+
+    private void getPhoneStatusAction() {
+        if (UtilTools.empty(MbsConstans.RONGYUN_MAP)){
+            String s = SPUtils.get(UserInfoActivity.this, MbsConstans.SharedInfoConstans.RONGYUN_DATA,"").toString();
+            MbsConstans.RONGYUN_MAP = JSONUtil.getInstance().jsonMap(s);
+        }
+        mRequestTag = MethodUrl.CHECK_PHONE_SHOW;
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", MbsConstans.RONGYUN_MAP.get("id")+"");
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.CHECK_PHONE_SHOW, map);
+    }
+
+    private void setPhoneStatusAction(String status) {
+
+        mRequestTag = MethodUrl.SET_PHONE_SHOW;
+        Map<String, Object> map = new HashMap<>();
+        if (UtilTools.empty(MbsConstans.ACCESS_TOKEN)) {
+            MbsConstans.ACCESS_TOKEN = SPUtils.get(UserInfoActivity.this, MbsConstans.SharedInfoConstans.ACCESS_TOKEN, "").toString();
+        }
+        map.put("token", MbsConstans.ACCESS_TOKEN);
+        map.put("status", status);
+        Map<String, String> mHeaderMap = new HashMap<String, String>();
+        mRequestPresenterImp.requestPostToMap(mHeaderMap, MethodUrl.SET_PHONE_SHOW, map);
     }
 
     /**
@@ -693,14 +731,54 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
                 intent = new Intent(UserInfoActivity.this, LoginActivity.class);
                 startActivity(intent);
                 break;
-            case MethodUrl.REFRESH_TOKEN://获取refreshToken返回结果
-                MbsConstans.REFRESH_TOKEN = tData.get("refresh_token") + "";
-                mIsRefreshToken = false;
-                switch (mRequestTag) {
-                    case MethodUrl.LOGIN_ACTION:
-                        logoutAction();
+
+            case MethodUrl.CHECK_PHONE_SHOW:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        mCurrentStatus = tData.get("data")+"";
+                        if (!UtilTools.empty(mCurrentStatus) && mCurrentStatus.equals("1")){
+                            swtich.setChecked(true);
+                        }else {
+                            swtich.setChecked(false);
+                        }
+
                         break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(UserInfoActivity.this, LoginActivity.class);
+                        startActivity(intent);
+
+                        break;
+
                 }
+
+              /*  intent = new Intent();
+                intent.setAction(MbsConstans.BroadcastReceiverAction.USER_INFO_UPDATE);
+                sendBroadcast(intent);*/
+                break;
+            case MethodUrl.SET_PHONE_SHOW:
+                switch (tData.get("code") + "") {
+                    case "0": //请求成功
+                        getPhoneStatusAction();
+                        break;
+                    case "-1": //请求失败
+                        showToastMsg(tData.get("msg") + "");
+                        break;
+
+                    case "1": //token过期
+                        closeAllActivity();
+                        intent = new Intent(UserInfoActivity.this, LoginActivity.class);
+                        startActivity(intent);
+
+                        break;
+
+                }
+
+
                 break;
         }
     }
@@ -719,4 +797,6 @@ public class UserInfoActivity extends BasicActivity implements RequestView {
 //        }
         super.onDestroy();
     }
+
+
 }

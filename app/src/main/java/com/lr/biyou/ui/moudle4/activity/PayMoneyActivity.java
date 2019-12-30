@@ -414,7 +414,7 @@ public class PayMoneyActivity extends BasicActivity implements RequestView, Sele
 
                                 dingdanNumberTv.setText(mapAppendInfo.get("order") + "");
                                 dingdanMoneyTv.setText(UtilTools.getRMBMoney(mapAppendInfo.get("price") + ""));
-                                dingdanAmountTv.setText(mapAppendInfo.get("number") + "");
+                                dingdanAmountTv.setText(UtilTools.formatDecimal(mapAppendInfo.get("number") + "",2));
                                 contactTv.setText(mapData.get("account")+"");
 
                                 status = mapAppendInfo.get("status") + "";

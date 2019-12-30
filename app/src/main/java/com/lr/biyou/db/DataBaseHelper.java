@@ -32,6 +32,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		db.execSQL("create table if not exists tb_index_data(id integer primary key,advert_json text,content_json text)");
 		//创建发票信息表
 		db.execSQL("create table if not exists tb_fapiao_data(id integer primary key,fp_code text,fp_money text,fp_number text,fp_date text)");
+		//创建红包/转账记忆信息表
+		db.execSQL("create table if not exists tb_redpackage_data(id integer primary key,account text,rcid text,red text,transfer text)");
 	}
 
 	@Override

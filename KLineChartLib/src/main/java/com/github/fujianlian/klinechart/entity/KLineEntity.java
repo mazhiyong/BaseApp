@@ -35,6 +35,11 @@ public class KLineEntity implements IKLine {
     }
 
     @Override
+    public float getAmunt() {
+        return amount;
+    }
+
+    @Override
     public float getMA5Price() {
         return MA5Price;
     }

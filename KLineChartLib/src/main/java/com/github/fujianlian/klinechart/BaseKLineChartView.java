@@ -8,10 +8,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
-import androidx.core.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+
+import androidx.core.view.GestureDetectorCompat;
 
 import com.github.fujianlian.klinechart.base.IAdapter;
 import com.github.fujianlian.klinechart.base.IChartDraw;
@@ -495,6 +496,17 @@ public abstract class BaseKLineChartView extends ScrollAndScaleView {
         if (mSelectedIndex > mStopIndex) {
             mSelectedIndex = mStopIndex;
         }
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        int lastIndex = mSelectedIndex;
+        calculateSelectedX(e.getX());
+        if (lastIndex != mSelectedIndex) {
+            onSelectedChanged(this, getItem(mSelectedIndex), mSelectedIndex);
+        }
+        invalidate();
+        return super.onSingleTapUp(e);
     }
 
     @Override

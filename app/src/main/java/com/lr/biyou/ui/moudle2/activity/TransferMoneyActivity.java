@@ -18,6 +18,7 @@ import com.lr.biyou.R;
 import com.lr.biyou.api.MethodUrl;
 import com.lr.biyou.basic.BasicActivity;
 import com.lr.biyou.basic.MbsConstans;
+import com.lr.biyou.db.RedHistoryData;
 import com.lr.biyou.listener.SelectBackListener;
 import com.lr.biyou.mvp.view.RequestView;
 import com.lr.biyou.mywidget.dialog.KindSelectDialog;
@@ -25,6 +26,7 @@ import com.lr.biyou.mywidget.dialog.TradePassDialog;
 import com.lr.biyou.ui.moudle.activity.LoginActivity;
 import com.lr.biyou.ui.moudle.activity.ResetPayPassButActivity;
 import com.lr.biyou.utils.imageload.GlideUtils;
+import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.SPUtils;
 import com.lr.biyou.utils.tool.UtilTools;
 
@@ -94,6 +96,9 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
     private String rate;
     private String total;
 
+
+    private  Map<String, Object> redMap;
+
     @Override
     public int getContentView() {
         return R.layout.activity_transfer_money;
@@ -131,16 +136,16 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                     if (s.toString().length()>0){
                         if (s.toString().contains(".")){
                             if (s.toString().length() > 3){
-                                total = Float.parseFloat(rate)*Float.parseFloat(s.toString())+"";
-                                cnyTv.setText("≈ "+total+"CNY");
+                                total =Float.parseFloat(s.toString())/ Float.parseFloat(rate)+"";
+                                cnyTv.setText("≈ "+UtilTools.formatDecimal(total,8)+typeTv.getText().toString());
                             }
                         }else {
-                            total = Float.parseFloat(rate)*Float.parseFloat(s.toString())+"";
-                            cnyTv.setText("≈ "+total+"CNY");
+                            total = Float.parseFloat(s.toString())/ Float.parseFloat(rate)+"";
+                            cnyTv.setText("≈ "+UtilTools.formatDecimal(total,8)+typeTv.getText().toString());
                         }
 
                     }else {
-                        cnyTv.setText("≈ 0.00CNY");
+                        cnyTv.setText("≈ 0.00"+typeTv.getText().toString());
                     }
                 }
             }
@@ -153,6 +158,17 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
 
         //请求币种列表数据
         typeListAction();
+        String account = SPUtils.get(this, MbsConstans.SharedInfoConstans.LOGIN_ACCOUNT,"")+"";
+        redMap = RedHistoryData.getInstance().queryRedData(account, id);
+        if (!UtilTools.empty(redMap)){
+            LogUtilDebug.i("show","transfer:"+redMap.get("transfer"));
+            typeTv.setText(redMap.get("transfer")+"");
+            getMoneyAction(redMap.get("transfer")+"");
+        }else {
+            typeTv.setText("USDT");
+            getMoneyAction("USDT");
+            RedHistoryData.getInstance().insertRedData(account,id,"USDT","USDT");
+        }
 
 
     }
@@ -247,7 +263,7 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
         }
         map.put("token", MbsConstans.ACCESS_TOKEN);
         map.put("symbol",typeTv.getText()+"");
-        map.put("total",etMoney.getText()+"");
+        map.put("total",UtilTools.formatDecimal(total,8));
         map.put("id",id);
         map.put("payment_password",pass);
         Map<String, String> mHeaderMap = new HashMap<String, String>();
@@ -275,7 +291,7 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                         String red_id = tData.get("data")+"";
                         intent = new Intent();
                         intent.putExtra("red_id",red_id);
-                        intent.putExtra("text","转账"+etMoney.getText()+"USDT,请查收");
+                        intent.putExtra("text","转账"+UtilTools.formatDecimal(total,8)+typeTv.getText().toString()+",请查收");
                         setResult(RESULT_OK,intent);
 
                         finish();
@@ -314,8 +330,12 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                         List<Map<String, Object>> mDataList2;
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             mDataList2 = (List<Map<String, Object>>) tData.get("data");
-                            for (Map<String,Object> map :mDataList2){
-                                map.put("name",map.get("symbol")+"");
+                            if (mDataList2 != null && mDataList2.size()> 0){
+                                for (Map<String, Object> map : mDataList2) {
+                                    map.put("name", map.get("symbol") + "");
+                                }
+                                //typeTv.setText(mDataList2.get(0).get("symbol")+"");
+                                //getMoneyAction(mDataList2.get(0).get("symbol")+"");
                             }
                         } else {
                             mDataList2 = new ArrayList<>();
@@ -345,7 +365,7 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                             rate = mapData.get("rate")+"";
                             if (etMoney.getText().toString().length()>0){
                                 total = Float.parseFloat(rate)*Integer.parseInt(etMoney.getText().toString())+"";
-                                cnyTv.setText("≈ "+total+"CNY");
+                                cnyTv.setText("≈ "+UtilTools.formatDecimal(total,2)+typeTv.getText().toString());
                             }
                         }
 
@@ -384,6 +404,12 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                 String str = (String) map.get("name"); //选择账户
                 typeTv.setText(str);
                 getMoneyAction(str);
+
+                if (UtilTools.empty(redMap)){
+                    redMap = RedHistoryData.getInstance().queryRedData(SPUtils.get(this, MbsConstans.SharedInfoConstans.LOGIN_ACCOUNT,"")+"",id);
+                }
+
+                RedHistoryData.getInstance().updateTransferData(str,redMap.get("id")+"");
                 break;
         }
     }

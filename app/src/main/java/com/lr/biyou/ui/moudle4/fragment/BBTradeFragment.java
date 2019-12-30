@@ -800,8 +800,14 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                             etNumber.setText(number + "");
                             tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(etPrice.getText().toString()) + "") + "  " + area);
                         } else { //市价
-                            etNumber.setText(progress + "");
-                            tvTransactionAmount.setText("--");
+
+                            //etNumber.setText(progress + "");
+                            //tvTransactionAmount.setText("--");
+
+                            float maxNumber = Float.parseFloat(Area_Account) / Float.parseFloat(tvCurrentPrice.getText().toString().replaceAll(",", "").trim());
+                            float number = (maxNumber * progress / 100);
+                            etNumber.setText(number + "");
+                            tvTransactionAmount.setText(UtilTools.getNormalMoney(number * Double.parseDouble(tvCurrentPrice.getText().toString()) + "") + "  " + area);
                         }
 
                     } else { //卖出
@@ -1257,7 +1263,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     }
                 }
                 areaTv.setText(area);
-                tvUnit.setText(symbol);
+
                 if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())) {
                     tvTransactionAmount.setText(UtilTools.getNormalMoney(Double.parseDouble(etNumber.getText().toString()) * Double.parseDouble(etPrice.getText().toString()) + "") + "  " + area);
                 } else {
@@ -1266,6 +1272,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 if (buysell.equals("1")) { //买入
                     rbBuy.setChecked(true);
                     mKindType = "0";
+                    tvUnit.setText(area);
                     tvOperateCoin.setText("买入" + symbol);
                     tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
                     rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
@@ -1275,6 +1282,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 } else {
                     rbSell.setChecked(true);
                     mKindType = "1";
+                    tvUnit.setText(symbol);
                     tvOperateCoin.setText("卖出" + symbol);
                     tvOperateCoin.setBackgroundResource(R.drawable.btn_next_red);
                     rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house3);

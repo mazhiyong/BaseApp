@@ -264,7 +264,7 @@
         android:id="@+id/aviable_tv"
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_width="wrap_content"
-        android:text="可用0.001BTC"
+        android:text="可用 --"
         android:textColor="@color/gray"
         android:textSize="@dimen/sp_12"
         android:layout_gravity="center_vertical"

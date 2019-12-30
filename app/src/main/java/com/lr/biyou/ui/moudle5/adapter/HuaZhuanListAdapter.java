@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.lr.biyou.R;
 import com.lr.biyou.ui.moudle.adapter.ListBaseAdapter;
+import com.wanou.framelibrary.utils.UiTools;
 
 import java.util.Map;
 
@@ -43,7 +44,7 @@ public class HuaZhuanListAdapter extends ListBaseAdapter {
 
         viewHolder.typeTv.setText(item.get("symbol") + "");
         viewHolder.timeTv.setText(item.get("time") + "");
-        viewHolder.numberTv.setText(item.get("number") + "");
+        viewHolder.numberTv.setText(UiTools.formatDecimal(item.get("number") + "",2));
         viewHolder.fromtoTv.setText(item.get("typeText") + "");
 
         //viewHolder.mStatusTv.setText(item.get("abstract")+"");

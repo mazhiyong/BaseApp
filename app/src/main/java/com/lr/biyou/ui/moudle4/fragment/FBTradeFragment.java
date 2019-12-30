@@ -501,7 +501,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 }else {
                     if (s.toString().length()>0){
                         float amount = Float.parseFloat(etPrice.getText().toString())*Float.parseFloat(s.toString());
-                        amountTv.setText("≈"+amount+"CNY");
+                        amountTv.setText("≈"+UtilTools.formatDecimal(amount,2)+"CNY");
                     }
                 }
             }
@@ -524,7 +524,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 if (!UtilTools.empty(mEtNumber.getText())){
                     if (s.toString().length()>0){
                         float amount = Float.parseFloat(mEtNumber.getText().toString())*Float.parseFloat(s.toString());
-                        amountTv.setText("≈"+amount+"CNY");
+                        amountTv.setText("≈"+UtilTools.formatDecimal(amount,2)+"CNY");
                     }
                 }
             }
@@ -1856,7 +1856,7 @@ public class FBTradeFragment extends BasicFragment implements RequestView, ReLoa
             case 30:
                 String strSysbol = map.get("name")+"";
                 BiTypeTv.setText(strSysbol);
-                ckPriceTv.setText("参考价:"+map.get("price"));
+                ckPriceTv.setText("参考价:"+UtilTools.formatDecimal(Float.parseFloat(map.get("price")+""),8));
                 break;
 
         }

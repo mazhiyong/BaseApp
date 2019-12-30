@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,7 +54,6 @@ public class GroupMemberPermissionFragment extends Fragment {
             groupViewModel.preventPrivateChat(groupInfo.target, isChecked).observe(this, booleanOperateResult -> {
                 if (!booleanOperateResult.isSuccess()) {
                     privateChatSwitchButton.setCheckedNoEvent(!isChecked);
-                    Toast.makeText(getActivity(), "设置群成员权限失败 " + booleanOperateResult.getErrorCode(), Toast.LENGTH_SHORT).show();
                 }
             });
         });

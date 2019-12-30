@@ -3,6 +3,7 @@ package cn.wildfire.chat.kit.user;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,18 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
 import com.lqr.imagepicker.ImagePicker;
 import com.lqr.imagepicker.bean.ImageItem;
 import com.lr.biyou.R;
+import com.lr.biyou.utils.tool.JSONUtil;
 import com.lr.biyou.utils.tool.LogUtilDebug;
 import com.lr.biyou.utils.tool.UtilTools;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +47,13 @@ import cn.wildfire.chat.kit.third.utils.ImageUtils;
 import cn.wildfire.chat.kit.widget.OptionItemView;
 import cn.wildfirechat.model.Conversation;
 import cn.wildfirechat.model.UserInfo;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class UserInfoFragment extends Fragment {
     @BindView(R.id.portraitImageView)
@@ -81,7 +94,53 @@ public class UserInfoFragment extends Fragment {
         Bundle args = getArguments();
         assert args != null;
         userInfo = args.getParcelable("userInfo");
+        getPhoneStatusAction(userInfo);
     }
+
+    private void getPhoneStatusAction(UserInfo userInfo) {
+        Log.i("show","uid:"+userInfo.uid);
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        Gson gson = new Gson();
+        Map<String,String> jsonMap = new HashMap<>();
+        jsonMap.put("id",userInfo.uid);
+        //{"id":"5"}
+        Log.i("show","uid22:"+gson.toJson(jsonMap));
+        RequestBody body = RequestBody.create(JSON, gson.toJson(jsonMap));
+        Request request = new Request.Builder()
+                .url("http://by.qilinpz.com/index/Personal/phone_status")
+                .post(body)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Map<String,Object> map = JSONUtil.getInstance().jsonMap(response.body().string());
+                String ststus = map.get("data")+"";
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!ststus.equals("") && ststus.equals("1")){
+                            //顯示
+                            if (userInfo != null){
+                                nameTextView.setText("账号:"+userInfo.name);
+                            }
+
+                        }else {
+                            nameTextView.setText("账号:***********");
+                        }
+                    }
+                });
+
+
+            }
+        });
+    }
+
 
     @Nullable
     @Override

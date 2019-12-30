@@ -338,7 +338,7 @@ public class HuaZhuanActivity extends BasicActivity implements RequestView, Trad
                     case "0": //请求成功
                         if (!UtilTools.empty(tData.get("data") + "")) {
                             avaiableNumber = tData.get("data") + "";
-                            aviableTv.setText("可用 " + UtilTools.getNormalMoney(avaiableNumber) + " " + typeTv.getText().toString());
+                            aviableTv.setText("可用 " + UtilTools.formatDecimal(avaiableNumber,2) + " " + typeTv.getText().toString());
                         }
                         break;
                     case "-1": //请求失败

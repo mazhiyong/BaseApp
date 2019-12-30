@@ -1,6 +1,7 @@
 package cn.wildfire.chat.kit.user;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,16 +11,30 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.gson.Gson;
 import com.jaeger.library.StatusBarUtil;
 import com.lr.biyou.R;
 import com.lr.biyou.basic.MbsConstans;
 import com.lr.biyou.mywidget.dialog.SureOrNoDialog;
 import com.lr.biyou.ui.moudle.activity.MainActivity;
+import com.lr.biyou.utils.tool.JSONUtil;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import cn.wildfire.chat.kit.WfcBaseActivity;
 import cn.wildfire.chat.kit.contact.ContactViewModel;
 import cn.wildfirechat.model.UserInfo;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 
 public class UserInfoActivity extends WfcBaseActivity {
     private UserInfo userInfo;
@@ -44,7 +59,12 @@ public class UserInfoActivity extends WfcBaseActivity {
                     .replace(R.id.containerFrameLayout, UserInfoFragment.newInstance(userInfo))
                     .commit();
         }
+
+
+
     }
+
+
 
     @Override
     protected int menu() {
