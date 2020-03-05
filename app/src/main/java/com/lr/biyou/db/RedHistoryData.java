@@ -34,6 +34,8 @@ public class RedHistoryData {
 	 * 打开数据库
 	 */
 	public void openDb(){
+
+
 		db= SQLiteDatabase.openOrCreateDatabase(dbPath, null);
 	}
 

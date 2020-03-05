@@ -309,6 +309,8 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
         public void run() {
             //获取合约价格以及深度信息
             getPairDepthAction();
+            //获取保证金
+            getAvaiableMoneyAction();
             handler.postDelayed(this, MbsConstans.SECOND_TIME_5000);
         }
     };
@@ -1277,11 +1279,11 @@ public class HeYueFragment extends BasicFragment implements RequestView, ReLoadi
                         Map<String, Object> map = (Map<String, Object>) tData.get("data");
                         if (!UtilTools.empty(map)) {
                             //可用
-                            tvCloseMore.setText(UtilTools.getNormalMoney(map.get("balance") + ""));
+                            tvCloseMore.setText(UtilTools.formatDecimal(map.get("balance") + "",precision));
                             //保证金
-                            tvCloseEmpty.setText(UtilTools.getNormalMoney(map.get("bond") + ""));
+                            tvCloseEmpty.setText(UtilTools.formatDecimal(map.get("bond") + "",precision));
                             //收益
-                            tvShouyi.setText(UtilTools.getNormalMoney(map.get("profit") + ""));
+                            tvShouyi.setText(UtilTools.formatDecimal(map.get("profit") + "",precision));
                         }
                         break;
                     case "-1": //请求失败

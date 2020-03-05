@@ -92,9 +92,9 @@ public class WeiTuoListAdapter extends ListBaseAdapter {
         }
 
         viewHolder.timeTv.setText(item.get("time") + "");
-        viewHolder.priceTv.setText(UtilTools.getNormalMoney(item.get("price") + ""));
-        viewHolder.numberTv.setText(UtilTools.getNormalMoney(item.get("total") + ""));
-        viewHolder.stateTv.setText(UtilTools.getNormalMoney(item.get("finish")+""));
+        viewHolder.priceTv.setText(UtilTools.formatDecimal(item.get("price") + "",2));
+        viewHolder.numberTv.setText(UtilTools.formatDecimal(item.get("total") + "",2));
+        viewHolder.stateTv.setText(UtilTools.formatDecimal(item.get("finish")+"",2));
 
         viewHolder.dealTv.setOnClickListener(new View.OnClickListener() {
             @Override

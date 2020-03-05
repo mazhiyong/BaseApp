@@ -280,7 +280,8 @@ public class TiBiActivity extends BasicActivity implements RequestView ,TradePas
                             Map<String,Object> map = (Map<String, Object>) tData.get("data");
                             aviableMoneyTv.setText("可用 "+UtilTools.getNormalMoney(map.get("balance")+"")+" "+symbol);
                             middleMoneyTv.setText("手续费: "+UtilTools.getNormalMoney(map.get("fee")+" ")+" "+symbol);
-                            number = map.get("balance")+"";
+                            //number = UtilTools.getNormalMoney(map.get("balance")+"");
+                            number = com.github.fujianlian.klinechart.utils.UtilTools.formatDecimal(map.get("balance")+"",2);
                             mTextView.setText("温馨提示：\n" +
                                     "最小提币数量 "+UtilTools.getNormalMoney(map.get("number")+"")+" "+symbol);
                         }

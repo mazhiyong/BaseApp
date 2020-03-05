@@ -224,7 +224,6 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                 }
 
                 showPassDialog();
-
                 break;
         }
     }
@@ -291,7 +290,8 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                         String red_id = tData.get("data")+"";
                         intent = new Intent();
                         intent.putExtra("red_id",red_id);
-                        intent.putExtra("text","转账"+UtilTools.formatDecimal(total,8)+typeTv.getText().toString()+",请查收");
+
+                        intent.putExtra("text","转账"+ UtilTools.formatDecimal(total,8)+typeTv.getText().toString()+",请查收");
                         setResult(RESULT_OK,intent);
 
                         finish();
@@ -364,8 +364,8 @@ public class TransferMoneyActivity extends BasicActivity implements RequestView,
                             GlideUtils.loadImage(TransferMoneyActivity.this,mapData.get("portrait")+"",headIv);
                             rate = mapData.get("rate")+"";
                             if (etMoney.getText().toString().length()>0){
-                                total = Float.parseFloat(rate)*Integer.parseInt(etMoney.getText().toString())+"";
-                                cnyTv.setText("≈ "+UtilTools.formatDecimal(total,2)+typeTv.getText().toString());
+                                total = Float.parseFloat(etMoney.getText().toString())/Float.parseFloat(rate)+"";
+                                cnyTv.setText("≈ "+UtilTools.formatDecimal(total,8)+typeTv.getText().toString());
                             }
                         }
 

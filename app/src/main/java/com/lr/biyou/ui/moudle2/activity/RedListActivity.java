@@ -175,7 +175,7 @@ public class RedListActivity extends BasicActivity implements RequestView, ReLoa
                         Map<String,Object> mapInfo = (Map<String, Object>) mapData.get("info");
                         GlideUtils.loadImage(RedListActivity.this,mapInfo.get("portrait")+"",headIv);
                         nameTv.setText(mapInfo.get("name")+"");
-                        moneyTv.setText(mapInfo.get("money")+" "+mapInfo.get("symbol"));
+                        moneyTv.setText(UtilTools.formatDecimal(mapInfo.get("money")+" ",8)+mapInfo.get("symbol"));
                         tipTv.setText(mapInfo.get("text")+"");
 
                         if (UtilTools.empty(mapData.get("list")+"")){
@@ -188,7 +188,12 @@ public class RedListActivity extends BasicActivity implements RequestView, ReLoa
                             if (UtilTools.empty(mDataList)) {
                                 pageView.showEmpty();
                             } else {
-                                totalTv.setText(mDataList.size()+"个红包");
+                                if (type.equals("1")){
+                                    totalTv.setText(mDataList.size()+"个红包");
+                                }else {
+                                    totalTv.setText("转账信息");
+                                }
+
                                 pageView.showContent();
                                 responseData();
                                 refreshListView.refreshComplete(10);

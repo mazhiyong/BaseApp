@@ -131,7 +131,7 @@ public class UserInfoFragment extends Fragment {
                             }
 
                         }else {
-                            nameTextView.setText("账号:***********");
+                            nameTextView.setText("账号:******");
                         }
                     }
                 });

@@ -269,8 +269,9 @@ public class SplashActivity extends BasicActivity {
 
         File dbFile = this.getDatabasePath(MbsConstans.DATABASE_NAME);
         if (!dbFile.exists()) {
-            LogUtilDebug.i("show","数据库文件不存在");
+            //Toast.makeText(SplashActivity.this,"数据库文件不存在",Toast.LENGTH_LONG).show();
         } else {
+            //Toast.makeText(SplashActivity.this,"数据库文件存在!",Toast.LENGTH_LONG).show();
             LogUtilDebug.i("show","数据库文件存在");
         }
 

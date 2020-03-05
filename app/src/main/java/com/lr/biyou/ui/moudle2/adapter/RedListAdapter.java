@@ -48,14 +48,14 @@ public class RedListAdapter extends ListBaseAdapter {
         final Map<String, Object> item = mDataList.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
         LogUtilDebug.i("show","integer:"+item.get("account")+"");
-        if ((item.get("type")+"").equals("0")){
-            viewHolder.shouqiTv.setVisibility(View.GONE);
-        }else {
+        if ((item.get("type")+"").equals("1")){
             viewHolder.shouqiTv.setVisibility(View.VISIBLE);
+        }else {
+            viewHolder.shouqiTv.setVisibility(View.GONE);
         }
         viewHolder.nameTv.setText(item.get("name") + "");
         viewHolder.contentTv.setText(item.get("time")+"");
-        viewHolder.moneyTv.setText(UtilTools.formatDecimal(item.get("money")+" ",2)+item.get("symbol"));
+        viewHolder.moneyTv.setText(UtilTools.formatDecimal(item.get("money")+" ",8)+item.get("symbol"));
         GlideUtils.loadImage(mContext,item.get("portrait")+"",viewHolder.headIv);
         viewHolder.tradeLay.setOnClickListener(new View.OnClickListener() {
             @Override

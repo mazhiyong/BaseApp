@@ -51,6 +51,10 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final Map<String, Object> item = mDataList.get(position);
         final ViewHolder viewHolder = (ViewHolder) holder;
+        String lever = item.get("lever")+"";
+        if (UtilTools.empty(lever)){
+            lever = "1";
+        }
         switch (item.get("kind")+""){
             case "0": //持仓
                 viewHolder.dongtaiTv.setText("收益(BTC)");
@@ -60,9 +64,17 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
                     viewHolder.tv3.setText("--");
                 }else {
                     //viewHolder.tv3.setText(UtilTools.getNormalMoney(profit));
-                    viewHolder.tv3.setText(profit);
+                    viewHolder.tv3.setText(UtilTools.formatDecimal(profit,8));
                 }
                 viewHolder.dealTv.setText("平仓");
+
+                if ((item.get("type") + "").equals("0")) { //开多
+                    viewHolder.typeTv.setText(item.get("typeText") + lever +"X");
+                    viewHolder.typeTv.setTextColor(ContextCompat.getColor(mContext,R.color.green_light));
+                } else { //开空
+                    viewHolder.typeTv.setText(item.get("typeText") + lever +"X");
+                    viewHolder.typeTv.setTextColor(ContextCompat.getColor(mContext,R.color.red_light));
+                }
                 break;
 
             case "1": //委托
@@ -72,9 +84,19 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
                     viewHolder.tv3.setText("--");
                 }else {
                     //viewHolder.tv3.setText(UtilTools.getNormalMoney(trigger));
-                    viewHolder.tv3.setText(trigger);
+                    viewHolder.tv3.setText(UtilTools.formatDecimal(trigger,8));
                 }
                 viewHolder.dealTv.setText("撤销");
+
+
+                if ((item.get("type") + "").equals("0")) { //开多
+                    viewHolder.typeTv.setText("开多" + lever +"X");
+                    viewHolder.typeTv.setTextColor(ContextCompat.getColor(mContext,R.color.green_light));
+                } else { //开空
+                    viewHolder.typeTv.setText("开空" + lever +"X");
+                    viewHolder.typeTv.setTextColor(ContextCompat.getColor(mContext,R.color.red_light));
+                }
+
                 break;
 
             case "2": //成交
@@ -84,27 +106,25 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
                     viewHolder.tv3.setText("--");
                 }else {
                     //viewHolder.tv3.setText(UtilTools.getNormalMoney(profit1));
-                    viewHolder.tv3.setText(profit1);
+                    viewHolder.tv3.setText(UtilTools.formatDecimal(profit1,8));
                 }
                 viewHolder.dealTv.setText("成交");
                 viewHolder.dealTv.setTextColor(ContextCompat.getColor(mContext,R.color.gray));
+
+                if ((item.get("type") + "").equals("0")) { //开多
+                    viewHolder.typeTv.setText(item.get("typeText") + lever +"X");
+                    viewHolder.typeTv.setTextColor(ContextCompat.getColor(mContext,R.color.green_light));
+                } else { //开空
+                    viewHolder.typeTv.setText(item.get("typeText") + lever +"X");
+                    viewHolder.typeTv.setTextColor(ContextCompat.getColor(mContext,R.color.red_light));
+                }
                 break;
         }
 
         //viewHolder.dealTv.setText(item.get("typeText")+"");
 
 
-        String lever = item.get("lever")+"";
-        if (UtilTools.empty(lever)){
-            lever = "1";
-        }
-        if ((item.get("type") + "").equals("0")) { //开多
-            viewHolder.typeTv.setText("开多" + lever +"X");
-            viewHolder.typeTv.setTextColor(ContextCompat.getColor(mContext,R.color.green_light));
-        } else { //开空
-            viewHolder.typeTv.setText("开空" + lever +"X");
-            viewHolder.typeTv.setTextColor(ContextCompat.getColor(mContext,R.color.red_light));
-        }
+
         String name = item.get("name")+"";
         if (UtilTools.empty(name)){
             viewHolder.nameTv.setText("--");
@@ -120,24 +140,24 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
         }
 
 
-        String number= item.get("number")+"";
+        String number= item.get("entrust_number")+"";
         if (UtilTools.empty(number)){
             viewHolder.tv1.setText("--");
         }else {
             //viewHolder.tv1.setText(UtilTools.getNormalMoney(number));
-            viewHolder.tv1.setText(number);
+            viewHolder.tv1.setText(UtilTools.formatDecimal(number,2));
         }
 
         String depot_avg= item.get("depot_avg")+"";
         if (UtilTools.empty(depot_avg)){
             viewHolder.tv2.setText("--");
         }else {
-            //viewHolder.tv2.setText(UtilTools.getNormalMoney(depot_avg));
-            viewHolder.tv2.setText(depot_avg);
+            viewHolder.tv2.setText(UtilTools.formatDecimal(depot_avg,8));
+            //viewHolder.tv2.setText(depot_avg);
         }
 
 
-        String finish_number = item.get("finish_number")+"";
+        String finish_number = item.get("number")+"";
         if (UtilTools.empty(finish_number)){
             viewHolder.tv4.setText("--");
         }else {
@@ -147,12 +167,12 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
 
 
 
-        String average_price = item.get("average_price")+"";
+        String average_price = item.get("depot_price")+"";
         if (UtilTools.empty(average_price)){
             viewHolder.tv5.setText("--");
         }else {
             //viewHolder.tv5.setText(UtilTools.getNormalMoney(average_price));
-            viewHolder.tv5.setText(average_price);
+            viewHolder.tv5.setText(UtilTools.formatDecimal(average_price,8));
         }
 
         String fee= item.get("fee")+"";
@@ -160,7 +180,7 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
             viewHolder.tv6.setText("--");
         }else {
             //viewHolder.tv6.setText(UtilTools.getNormalMoney(fee));
-            viewHolder.tv6.setText(fee);
+            viewHolder.tv6.setText(UtilTools.formatDecimal(fee,8));
         }
 
         String stop_profit= item.get("stop_profit")+"";
@@ -168,7 +188,7 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
             viewHolder.tv7.setText("--");
         }else {
             //viewHolder.tv7.setText(UtilTools.getNormalMoney(stop_profit));
-            viewHolder.tv7.setText(stop_profit);
+            viewHolder.tv7.setText(UtilTools.formatDecimal(stop_profit,8));
         }
 
         String loss_limit= item.get("loss_limit")+"";
@@ -176,7 +196,7 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
             viewHolder.tv8.setText("--");
         }else {
             //viewHolder.tv8.setText(UtilTools.getNormalMoney(loss_limit));
-            viewHolder.tv8.setText(loss_limit);
+            viewHolder.tv8.setText(UtilTools.formatDecimal(loss_limit,8));
         }
 
         String bond= item.get("bond")+"";
@@ -184,10 +204,8 @@ public class ShouMoneyListAdapter extends ListBaseAdapter {
             viewHolder.tv9.setText("--");
         }else {
             //viewHolder.tv9.setText(UtilTools.getNormalMoney(bond));
-            viewHolder.tv9.setText(bond);
+            viewHolder.tv9.setText(UtilTools.formatDecimal(bond,8));
         }
-
-
         viewHolder.dealTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -68,6 +68,7 @@
                 android:layout_width="wrap_content"
                 android:textSize="@dimen/sp_20"
                 android:textStyle="bold"
+                android:visibility="gone"
                 android:text="0.00USDT"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_gravity="center_horizontal"
@@ -78,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:textSize="@dimen/sp_14"
                 android:text="已存入币币账户,可直接消费"
-                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_25"
                 android:layout_gravity="center_horizontal"
                 android:textColor="#FFD685"
                 android:layout_height="wrap_content" />

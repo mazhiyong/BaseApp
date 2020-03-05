@@ -216,7 +216,7 @@
                                                     android:layout_weight="1"
                                                     android:layout_height="wrap_content"
                                                     android:layout_gravity="center"
-                                                    android:text="公开手机号"
+                                                    android:text="账号是否公开"
                                                     android:textSize="@dimen/sp_15"
                                                     android:textColor="@color/black"
                                                     />

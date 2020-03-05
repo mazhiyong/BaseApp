@@ -1270,9 +1270,15 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                     tvTransactionAmount.setText("--");
                 }
                 if (buysell.equals("1")) { //买入
+                    if (tvLimitPrice.getText().toString().equals("市价")){
+                        tvUnit.setText(area);
+                    }else {
+                        tvUnit.setText(symbol);
+                    }
+
                     rbBuy.setChecked(true);
                     mKindType = "0";
-                    tvUnit.setText(area);
+
                     tvOperateCoin.setText("买入" + symbol);
                     tvOperateCoin.setBackgroundResource(R.drawable.btn_next_green);
                     rbNumber1.setBackgroundResource(R.drawable.selector_open_close_house2);
@@ -1756,8 +1762,10 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         switch (type) {
             case 10: //限价
                 tvLimitPrice.setText(map.get("name") + "");
+                LogUtilDebug.i("show","symbol&&&&&&:"+symbol);
                 if ((map.get("name") + "").equals("限价")) {
                     mSelectType = "0";
+                    tvUnit.setText(symbol);
                     if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())) {
                         tvTransactionAmount.setText(UtilTools.getNormalMoney(Double.parseDouble(etNumber.getText().toString()) * Double.parseDouble(etPrice.getText().toString()) + "") + "  " + area);
                     } else {
@@ -1769,14 +1777,13 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                         tvCnyPrice.setVisibility(View.VISIBLE);
                         etPrice.setHint("价格");
                         etNumber.setHint("数量");
-                        tvUnit.setText(symbol);
+
                     } else { //卖出
                         clPrice.setVisibility(View.VISIBLE);
                         tvMarketPrice.setVisibility(View.GONE);
                         tvCnyPrice.setVisibility(View.VISIBLE);
                         etPrice.setHint("价格");
                         etNumber.setHint("数量");
-                        tvUnit.setText(symbol);
                     }
 
 
@@ -1971,6 +1978,7 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
         getEntrustListAction();
 
         LogUtilDebug.i("show", "buysell&&&&&&&&&&&:" + buysell);
+        tvUnit.setText(symbol);
         if (buysell.equals("1")) { //买入
             rbBuy.setChecked(true);
             mKindType = "0";
@@ -2014,7 +2022,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
                 etPrice.setHint("价格");
             } else { //市价 卖
                 etNumber.setHint("数量");
-                tvUnit.setText(symbol);
                 clPrice.setVisibility(View.GONE);
                 tvMarketPrice.setVisibility(View.VISIBLE);
                 tvCnyPrice.setVisibility(View.INVISIBLE);
@@ -2034,7 +2041,6 @@ public class BBTradeFragment extends BasicFragment implements RequestView, ReLoa
             }
         }
         areaTv.setText(area);
-        tvUnit.setText(symbol);
         if (!UtilTools.empty(etNumber.getText()) && !UtilTools.empty(etPrice.getText())) {
             tvTransactionAmount.setText(UtilTools.getNormalMoney(Double.parseDouble(etNumber.getText().toString()) * Double.parseDouble(etPrice.getText().toString()) + "") + "  " + area);
         } else {

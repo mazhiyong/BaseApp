@@ -126,6 +126,8 @@ public class ResetLoginPassButActivity extends BasicActivity implements RequestV
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         StatusBarUtil.setColorForSwipeBack(this, ContextCompat.getColor(this, MbsConstans.TOP_BAR_COLOR), MbsConstans.ALPHA);
 
+        //铃儿响叮当
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
@@ -234,7 +236,10 @@ public class ResetLoginPassButActivity extends BasicActivity implements RequestV
         if (mType.equals("0")) {
             //注册 设置密码
             mRequestTag = MethodUrl.REGIST_ACTION;
-
+            if (TextUtils.isEmpty(etNickname.getText())) {
+                showToastMsg("请设置用户昵称");
+                return;
+            }
         } else {
             //忘记密码重置
             mRequestTag = MethodUrl.RESET_PASSWORD;
@@ -254,10 +259,7 @@ public class ResetLoginPassButActivity extends BasicActivity implements RequestV
             return;
         }*/
 
-        if (TextUtils.isEmpty(etNickname.getText())) {
-            showToastMsg("请设置用户昵称");
-            return;
-        }
+
 
         if (!password.equals(passwordAgain)) {
             showToastMsg("两次输入密码不一样，请重新输入");

@@ -414,6 +414,18 @@ public class MainActivity extends BasicActivity implements RequestView {
                 .show(mHomeFrament)
                 .commitAllowingStateLoss();
 
+        PermissionsUtils.requsetRunPermission(MainActivity.this, new RePermissionResultBack() {
+            @Override
+            public void requestSuccess() {
+            }
+
+            @Override
+            public void requestFailer() {
+
+            }
+        }, Permission.Group.STORAGE);
+
+
     }
 
     @Override

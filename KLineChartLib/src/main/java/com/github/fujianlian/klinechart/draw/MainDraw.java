@@ -286,10 +286,10 @@ public class MainDraw implements IChartDraw<ICandle> {
         ICandle point = (ICandle) view.getItem(index);
         List<String> strings = new ArrayList<>();
         strings.add("时间    :  "+view.getAdapter().getDate(index));
-        strings.add("开        :  " + point.getOpenPrice());
-        strings.add("高        :  " + point.getHighPrice());
-        strings.add("低        :  " + point.getLowPrice());
-        strings.add("收        :  " + point.getClosePrice());
+        strings.add("开        :  " + UtilTools.formatDecimal(point.getOpenPrice(),8));
+        strings.add("高        :  " + UtilTools.formatDecimal(point.getHighPrice(),8));
+        strings.add("低        :  " + UtilTools.formatDecimal(point.getLowPrice(),8));
+        strings.add("收        :  " + UtilTools.formatDecimal(point.getClosePrice(),8));
 
         if (index > 0){
             ICandle frontPoint = (ICandle) view.getItem(index-1);

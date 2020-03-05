@@ -371,8 +371,8 @@ public class RedMoneyActivity extends BasicActivity implements RequestView, Trad
                             yueCnyTv.setText(" ≈" +UtilTools.formatDecimal(Float.parseFloat(mapData.get("cny")+""),2)  + "CNY");
                             rate = mapData.get("rate") + "";
                             if (etmoney.getText().toString().length()>0){
-                                total = Float.parseFloat(rate)*Integer.parseInt(etmoney.getText().toString())+"";
-                                cnyTv.setText("≈ "+UtilTools.formatDecimal(total,2)+typeTv.getText().toString());
+                                total = Float.parseFloat(etmoney.getText().toString())/Float.parseFloat(rate)+"";
+                                cnyTv.setText("≈ "+UtilTools.formatDecimal(total,8)+typeTv.getText().toString());
                             }
                         }
                         break;
